@@ -12,7 +12,7 @@
   @vite('resources/js/app.js')
   @livewireStyles
 </head>
-   <body class="flex flex-col antialiased bg-gray-200 min-h-screen">
+   <body class="flex flex-col antialiased min-h-screen  bg-gray-800">
      <!--HEADER OPTIONAL-->
      @yield('header')
      <!--END HEADER-->
@@ -21,9 +21,9 @@
      <!--END NAVBAR -->
 
      <!-- CONTENT - Injectable background-->
-     <div class="flex flex-row flex-1 justify-center @yield('background-pattern')">
+     <div class="flex flex-row  flex-1 justify-center @yield('background-pattern')">
        <!-- MAIN CONTENT -->
-       <main class="w-screen">
+       <main class="w-screen  bg-gray-800">
          @yield('content')
        </main>
        <!-- END MAIN CONTENT -->
