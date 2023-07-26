@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('business_requests', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->enum('status', ['PENDING', 'ACCEPTED', 'REJECTED'])->default('PENDING');
         });
     }
 

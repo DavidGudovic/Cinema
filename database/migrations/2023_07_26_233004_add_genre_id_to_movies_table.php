@@ -11,11 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tags', function (Blueprint $table) {
-            $table->id();
-            $table->string('name')->unique();
-            $table->string('description', 500);
-            $table->string('image_url', 500);
+        Schema::table('movies', function (Blueprint $table) {
+            $table->foreignId('genre_id')->constrained()->cascadeOnDelete();
         });
     }
 
@@ -24,6 +21,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tags');
+        Schema::table('movies', function (Blueprint $table) {
+            $table->dropForeign(['genre_id']);
+            $table->dropColumn('genre_id');
+        });
     }
 };

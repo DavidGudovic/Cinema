@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->foreignId('hall_id')->constrained()->cascadeOnDelete();
+            $table->datetime('start_time');
+            $table->integer('duration');
         });
     }
 

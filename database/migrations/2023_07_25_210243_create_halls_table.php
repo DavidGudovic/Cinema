@@ -13,7 +13,13 @@ return new class extends Migration
     {
         Schema::create('halls', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->string('name')->unique();
+            $table->string('description', 1000);
+            $table->integer('rows');
+            $table->integer('columns');
+            $table->string('image_url', 500);
+            $table->float('price_per_hour');
+
         });
     }
 

@@ -14,6 +14,12 @@ return new class extends Migration
         Schema::create('reclamations', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->enum('status', ['PENDING', 'ACCEPTED', 'REJECTED'])->default('PENDING');
+            $table->string('text', 1000);
+            $table->string('comment', 1000);
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('business_request_id')->constrained()->cascadeOnDelete();
+
         });
     }
 

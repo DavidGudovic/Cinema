@@ -14,6 +14,10 @@ return new class extends Migration
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->dateTime('date');
+            $table->string('text', 2000);
+            $table->enum('duration', ['MONTHLY', 'YEARLY', 'LIFETIME', 'YEAR_TO_DATE']);
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
         });
     }
 
