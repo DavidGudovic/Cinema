@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('screenings_tags', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::create('screening_tag', function (Blueprint $table) {
+            $table->foreignId('screening_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('tag_id')->constrained()->cascadeOnDelete();
         });
     }
 
@@ -22,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('screenings_tags');
+        Schema::dropIfExists('screening_tag');
     }
 };
