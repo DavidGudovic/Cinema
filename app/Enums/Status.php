@@ -4,7 +4,7 @@ namespace App\Enums;
 
 enum Status : string
 {
-  case ON_HOLD = "on hold";
+  case PENDING = "pending";
   case ACCEPTED = "accepted";
   case REJECTED = "rejected";
 }
