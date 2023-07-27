@@ -10,13 +10,17 @@ class Advert extends Model implements Requestable //pseudo extends Models/Busine
 {
     use HasFactory;
 
+    public $timestamps = false;
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
-
+        'screening_id',
+        'business_request_id',
+        'advert_url',
+        'slot_number'
     ];
 
     /**
@@ -36,4 +40,17 @@ class Advert extends Model implements Requestable //pseudo extends Models/Busine
     protected $casts = [
 
     ];
+
+    /**
+     * Eloquent relationships
+     */
+    public function screening(){
+        return $this->belongsTo(Screening::class);
+    }
+
+    //Polymorphic one to one with BusinessRequest
+    public function businessRequest(){
+        return $this->morphOne(BusinessRequest::class, 'requestable');
+    }
+
 }

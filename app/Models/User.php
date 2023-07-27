@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use app\Enums\Role;
 
 class User extends Authenticatable
 {
@@ -19,8 +20,12 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'last_name',
+        'username',
         'email',
         'password',
+        'role',
+
     ];
 
     /**
@@ -40,5 +45,36 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'role' => Role::class,
     ];
+
+
+    /**
+     * Eloquent relationships
+     */
+
+    public function tickets(){
+        return $this->hasMany(Ticket::class);
+    }
+
+    public function business_requests(){
+        return $this->hasMany(BusinessRequest::class);
+    }
+
+    public function halls(){
+        return $this->hasMany(Hall::class);
+    }
+
+    public function reclamations(){
+        return $this->hasMany(Reclamation::class);
+    }
+
+    public function report(){
+        return $this->hasOne(Report::class);
+    }
+
+    /**
+     * Local Eloquent scopes
+     */
+
 }

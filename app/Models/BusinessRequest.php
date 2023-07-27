@@ -9,14 +9,17 @@ use Illuminate\Database\Eloquent\Model;
 class BusinessRequest extends Model implements Requestable //pseudo superclass for Models/ Booking and Advert
 {
     use HasFactory;
-
-    /**
+               /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
-
+        'status',
+        'text',
+        'comment',
+        'price',
+        'user_id'
     ];
 
     /**
@@ -34,6 +37,27 @@ class BusinessRequest extends Model implements Requestable //pseudo superclass f
      * @var array<string, string>
      */
     protected $casts = [
-
     ];
+
+
+    /**
+     * Eloquent relationships
+     */
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
+    public function reclamation(){
+        return $this->hasOne(Reclamation::class);
+    }
+
+    // Polymorphic one to one with Advert and Booking
+    public function requestable(){
+        return $this->morphTo();
+    }
+
+    /**
+     * Local Eloquent scopes
+     */
 }
