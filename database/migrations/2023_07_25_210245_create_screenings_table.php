@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('movie_id')->constrained()->cascadeOnDelete();
             $table->foreignId('hall_id')->constrained()->cascadeOnDelete();
             $table->dateTime('start_time');
+            $table->dateTime('end_time');
             $table->integer('price');
             $table->integer('advert_slots');
             $table->integer('advert_duration');
