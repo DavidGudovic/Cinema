@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('comment', 1000);
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('business_request_id')->constrained()->cascadeOnDelete();
-
         });
     }
 

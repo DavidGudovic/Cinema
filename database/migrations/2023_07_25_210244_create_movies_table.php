@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('image_url', 500);
             $table->string('trailer_url', 500);
             $table->integer('duration');
+            $table->foreignId('genre_id')->constrained()->cascadeOnDelete();
         });
     }
 

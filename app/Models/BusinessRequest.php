@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Interfaces\Requestable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class BusinessRequest extends Model
+class BusinessRequest extends Model implements Requestable //pseudo superclass for Models/ Booking and Advert
 {
     use HasFactory;
-    
+
     /**
      * The attributes that are mass assignable.
      *

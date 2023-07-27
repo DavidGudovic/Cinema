@@ -15,6 +15,11 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->enum('status', ['PENDING', 'ACCEPTED', 'REJECTED'])->default('PENDING');
+            $table->string('text', 1000);
+            $table->string('comment', 1000);
+            $table->float('price');
+            $table->morphs('requestable');
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
         });
     }
 

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('columns');
             $table->string('image_url', 500);
             $table->float('price_per_hour');
-
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
         });
     }
 
