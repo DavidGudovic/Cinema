@@ -50,4 +50,6 @@ class Tag extends Model
     /**
      * Local Eloquent scopes
      */
+
+
 }

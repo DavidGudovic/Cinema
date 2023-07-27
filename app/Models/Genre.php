@@ -47,4 +47,9 @@ class Genre extends Model
     /**
      * Local Eloquent scopes
      */
+    public function scopeHasMovieScreeningsUpcoming($query){
+        return $query->whereHas('movies.screenings', function($query){
+            $query->upcoming();
+        });
+    }
 }

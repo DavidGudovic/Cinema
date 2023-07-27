@@ -12,10 +12,10 @@ class Booking extends Model implements Requestable //pseudo extends Models/Busin
     public $timestamps = false;
 
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+    * The attributes that are mass assignable.
+    *
+    * @var array<int, string>
+    */
     protected $fillable = [
         'start_time',
         'duration',
@@ -24,26 +24,26 @@ class Booking extends Model implements Requestable //pseudo extends Models/Busin
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
+    * The attributes that should be hidden for serialization.
+    *
+    * @var array<int, string>
+    */
     protected $hidden = [
 
     ];
 
     /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
+    * The attributes that should be cast.
+    *
+    * @var array<string, string>
+    */
     protected $casts = [
         'start_time' => 'datetime',
     ];
 
     /**
-     * Eloquent relationships
-     */
+    * Eloquent relationships
+    */
 
     public function hall(){
         return $this->belongsTo(Hall::class);
@@ -52,5 +52,33 @@ class Booking extends Model implements Requestable //pseudo extends Models/Busin
     //Polymorphic one to one with BusinessRequest
     public function businessRequest(){
         return $this->morphOne(BusinessRequest::class, 'requestable');
+    }
+
+    /**
+    * Local Eloquent scopes
+    */
+
+    public function scopeUpcoming($query){
+        return $query->where('start_time', '>', now());
+    }
+
+    public function scopePast($query){
+        return $query->where('start_time', '<', now());
+    }
+
+    public function scopeStatus($query, $status){
+        return $query->whereHas('businessRequest', function($query) use ($status){
+            $query->where('status', $status);
+        });
+    }
+
+    public function scopeUser($query, $user){
+        return $query->whereHas('businessRequest', function($query) use ($user){
+            $query->where('user_id', $user);
+        });
+    }
+
+    public function scopeHall($query, $hall){
+        return $query->where('hall_id', $hall);
     }
 }

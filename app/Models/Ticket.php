@@ -53,4 +53,13 @@ class Ticket extends Model
     /**
      * Local Eloquent scopes
      */
+
+    public function scopeDiscounted($query){
+        return $query->where('discounted', true);
+    }
+
+    public function scopeNotDiscounted($query){
+        return $query->where('discounted', false);
+    }
+
 }

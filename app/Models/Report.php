@@ -50,4 +50,21 @@ class Report extends Model
     /**
      * Local Eloquent scopes
      */
+
+    public function scopeDuration($query, $duration){
+        return $query->where('duration', $duration);
+    }
+
+    public function scopeFromYear($query, $year){
+        return $query->whereYear('date', $year);
+    }
+
+    public function scopeFromMonth($query, $month){
+        return $query->whereMonth('date', $month);
+    }
+
+    public function scopeByUser($query, $user){
+        return $query->where('user_id', $user->id);
+    }
+
 }
