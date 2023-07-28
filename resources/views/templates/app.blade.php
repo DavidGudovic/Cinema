@@ -8,11 +8,11 @@
   <meta name="csrf-token" content="{{csrf_token()}}">
 
   <title>Biskop Cinemanija</title>
-  <link rel="icon" href="{{URL('icon.svg')}}">
+  <link rel="icon" href="{{URL('images/logo_cut-min.svg')}}">
   @vite('resources/js/app.js')
   @livewireStyles
 </head>
-   <body class="flex flex-col antialiased min-h-screen  bg-gray-800">
+   <body class="flex flex-col antialiased min-h-screen bg-gray-800">
      <!--HEADER OPTIONAL-->
      @yield('header')
      <!--END HEADER-->
@@ -23,7 +23,7 @@
      <!-- CONTENT - Injectable background-->
      <div class="flex flex-row  flex-1 justify-center @yield('background-pattern')">
        <!-- MAIN CONTENT -->
-       <main class="w-screen  bg-gray-800">
+       <main class="w-screen">
          @yield('content')
        </main>
        <!-- END MAIN CONTENT -->
@@ -33,10 +33,9 @@
      <!--FOOTER-->
      @include('includes.footer')
      <!--END FOOTER-->
+
+     <!-- GLOBAL MODALS -->
+     <!-- END MODALS -->
      @livewireScripts
-     <!-- Global modals -->
-     @auth
-     @endauth
-     <!-- End global modals-->
    </body>
 </html>
