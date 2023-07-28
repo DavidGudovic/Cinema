@@ -9,9 +9,9 @@
         <!-- Products-->
         <div class="flex flex-col gap-10 w-[215px]">
             <p class="border-b-2 border-black">Usluge</p>
-            <a href="#">Projekcije</a>
-            <a href="#">Rentiranje sala</a>
-            <a href="#">Reklamni prostor</a>
+            <a href="#"><i class="fa-solid fa-film"></i> Projekcije</a>
+            <a href="#"><i class="fa-solid fa-people-roof"></i> Rentiranje sala</a>
+            <a href="#"><i class="fa-solid fa-rectangle-ad"></i> Reklamni prostor</a>
         </div>
         <!-- End products -->
         <!-- Contact -->
