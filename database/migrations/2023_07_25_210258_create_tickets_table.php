@@ -16,7 +16,8 @@ return new class extends Migration
             $table->timestamps();
             $table->foreignId('screening_id')->constrained()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->integer('first_seat');
+            $table->integer('first_seat_row');
+            $table->integer('first_seat_column');
             $table->integer('seat_number');
             $table->float('price');
             $table->boolean('discounted');

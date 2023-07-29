@@ -15,7 +15,8 @@ class Genre extends Model
      */
     protected $fillable = [
         'name',
-        'image_url'
+        'image_url',
+        'is_fiction'
     ];
 
     /**
@@ -51,5 +52,13 @@ class Genre extends Model
         return $query->whereHas('movies.screenings', function($query){
             $query->upcoming();
         });
+    }
+
+    public function scopeFiction(){
+        return $this->where('is_fiction', true);
+    }
+
+    public function scopeNonFiction(){
+        return $this->where('is_fiction', false);
     }
 }

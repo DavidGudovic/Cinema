@@ -14,7 +14,8 @@ class Ticket extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'first_seat',
+        'first_seat_row',
+        'first_seat_column',
         'seat_number',
         'price',
         'discounted',

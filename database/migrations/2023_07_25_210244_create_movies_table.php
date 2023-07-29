@@ -7,15 +7,17 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Run the migrations.
-     */
+    * Run the migrations.
+    */
     public function up(): void
     {
         Schema::create('movies', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->string('title', 500);
+            $table->string('director', 500);
             $table->string('description', 1000);
+            $table->string('banner_url', 500);
             $table->string('image_url', 500);
             $table->string('trailer_url', 500);
             $table->date('release_date');
@@ -25,8 +27,8 @@ return new class extends Migration
     }
 
     /**
-     * Reverse the migrations.
-     */
+    * Reverse the migrations.
+    */
     public function down(): void
     {
         Schema::dropIfExists('movies');

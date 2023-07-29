@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->string('image_url', 500);
+            $table->boolean('is_fiction');
         });
     }
 

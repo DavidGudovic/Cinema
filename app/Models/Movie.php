@@ -19,7 +19,9 @@ class Movie extends Model
         'image_url',
         'release_date',
         'duration',
-        'genre_id'
+        'genre_id',
+        'director',
+        'banner_url'
     ];
 
     /**
