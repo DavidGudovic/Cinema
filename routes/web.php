@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LandingPageController;
+use App\Http\Controllers\Authentication\LoginController;
+use App\Http\Controllers\Authentication\RegisterController;
+use App\Http\Controllers\Authentication\VerificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,3 +18,12 @@ use App\Http\Controllers\LandingPageController;
 */
 
 Route::get('/', [LandingPageController::class, 'index'])->name('home');
+
+// Authentication
+Route::resource('register', RegisterController::class, ['only' => ['create', 'store']]);
+Route::resource('login', LoginController::class, ['only' => ['create', 'store', 'destroy']]);
+
+Route::name('verify.')->controller(VerificationController::class)->group(function (){
+    Route::get('/verify/{id}/{email}')->name('show');
+    Route::put('/verify/{id}/{email}')->name('update');
+});
