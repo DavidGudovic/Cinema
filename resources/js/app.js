@@ -3,6 +3,7 @@ import "../css/app.css";
 import Alpine from "alpinejs";
 import "@fortawesome/fontawesome-free/css/all.css";
 import intersect from "@alpinejs/intersect";
+import "./carousel.js";
 
 window.Alpine = Alpine;
 

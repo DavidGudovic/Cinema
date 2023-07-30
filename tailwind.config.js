@@ -6,8 +6,9 @@ module.exports = {
             //background image
             backgroundImage: (theme) => ({
                 "business-pattern": "url('/images/biznis_showcase.png')",
+                "authentication": "url('/images/utility/login_back.png')",
             }),
         },
     },
-    plugins: [],
+    plugins: [require("@tailwindcss/line-clamp")],
 };
