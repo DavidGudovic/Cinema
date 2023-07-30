@@ -24,6 +24,6 @@ Route::resource('register', RegisterController::class, ['only' => ['create', 'st
 Route::resource('login', LoginController::class, ['only' => ['create', 'store', 'destroy']]);
 
 Route::name('verify.')->controller(VerificationController::class)->group(function (){
-    Route::get('/verify/{id}/{email}')->name('show');
-    Route::put('/verify/{id}/{email}')->name('update');
+    Route::get('/verify')->name('show');
+    Route::get('/verify/{id}/{email}', 'update')->name('update');
 });
