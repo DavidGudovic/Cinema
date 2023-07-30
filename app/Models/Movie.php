@@ -21,7 +21,8 @@ class Movie extends Model
         'duration',
         'genre_id',
         'director',
-        'banner_url'
+        'banner_url',
+        'is_showcased'
     ];
 
     /**
@@ -58,6 +59,9 @@ class Movie extends Model
     /**
     * Local Eloquent scopes
     */
+    public function scopeShowcased($query){
+        return $query->where('is_showcased', true);
+    }
 
     public function scopeDurationLongerThan($query, $duration){
         return $query->where('duration', '>', $duration);

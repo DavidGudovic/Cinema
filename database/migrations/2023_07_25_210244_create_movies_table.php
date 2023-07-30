@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('trailer_url', 500);
             $table->date('release_date');
             $table->integer('duration');
+            $table->boolean('is_showcased');
             $table->foreignId('genre_id')->constrained()->cascadeOnDelete();
         });
     }
