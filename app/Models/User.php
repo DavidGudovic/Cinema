@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use app\Enums\Role;
+use App\Enums\Roles;
 use app\Enums\Status;
 
 class User extends Authenticatable
@@ -21,7 +22,6 @@ class User extends Authenticatable
     */
     protected $fillable = [
         'name',
-        'last_name',
         'username',
         'email',
         'password',
@@ -46,7 +46,7 @@ class User extends Authenticatable
     */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'role' => Role::class,
+        'role' => Roles::class,
     ];
 
 
