@@ -1,6 +1,6 @@
 @extends('templates.app')
 
-@section('background-pattern') bg-authentication bg-cover bg-no-repeat bg-center brightness-75 @endsection
+@section('background-pattern') bg-authentication bg-cover bg-no-repeat bg-center @endsection
 
 @section('content')
 <!-- Login -->

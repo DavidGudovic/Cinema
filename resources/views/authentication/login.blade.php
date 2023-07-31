@@ -1,6 +1,6 @@
 @extends('templates.app')
 
-@section('background-pattern') bg-authentication bg-cover bg-no-repeat bg-center brightness-75 @endsection
+@section('background-pattern') bg-authentication bg-cover bg-no-repeat bg-center @endsection
 
 @section('content')
 <!-- Login -->
@@ -28,7 +28,7 @@
             <div class="mb-4">
                 <label for='username' class='sr-only'>Korisničko ime</label>
                 <input type="text" name="username" id='username' placeholder="Unesite korisničko ime"
-                class='bg-gray-700 border-2 text-white border-gray-600 w-full p-4 @error('username') border-red-500 @enderror' value='{{old('email')}}'>
+                class='form-control @error('username') border-red-500 @enderror' value='{{old('email')}}'>
                 @error('username')
                 <div class="text-red-500 mt-2 text-sm">
                     {{$message}}
@@ -39,7 +39,7 @@
             <div class="mb-4">
                 <label for= 'password' class='sr-only'>Lozinka</label>
                 <input type= 'password' name= 'password' id= 'password' placeholder="Unesite lozinku"
-                class='bg-gray-700 border-2 text-white border-gray-600 w-full p-4 @error('password') border-red-500 @enderror' >
+                class='form-control @error('password') border-red-500 @enderror' >
                 @error('password')
                 <div class="text-red-500 mt-2 text-sm">
                     {{$message}}
@@ -56,7 +56,7 @@
             <!-- end fields-->
             <!-- Buttons -->
             <div>
-                <button type="submit" class="bg-red-700 text-white px-4 py-3 font-medium w-full">Prijavi se</button>
+                <button type="submit" class="form-btn">Prijavi se</button>
             </div>
             <!-- End buttons -->
             <div>
