@@ -69,7 +69,7 @@ x-on:click="next(), manualMove()">
 </div>
 <!-- END Tech showcase -->
 
-<h2 class="text-4xl text-white font-bold mb-6">Projekcije</h2>
+<h2 class="text-4xl text-white font-bold mb-6">Repertoar</h2>
 
 <!-- Genre showcase -->
 <div class="flex flex-col justify-center mx-10 md:mx-20 md:flex-row ">

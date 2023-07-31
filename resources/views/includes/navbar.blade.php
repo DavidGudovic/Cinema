@@ -1,8 +1,8 @@
 <nav class="sticky w-full top-0 bg-gray-950 bg-opacity-60 hover:bg-opacity-100 hover:border-b-2 hover:border-white text-white z-50 p-4">
     <ul class="flex justify-around items-center">
         <div class="flex justify-around flex-grow">
-            <li class="hover:underline hover:text-red-600 hover:cursor-pointer"><a href="{{route('home')}}">Pocetna</a></li>
-            <li class="hover:underline hover:text-red-600 hover:cursor-pointer">Projekcije</li>
+            <li class="hover:underline hover:text-red-600 cursor-pointer"><a href="{{route('home')}}">Pocetna</a></li>
+            <li class="hover:underline hover:text-red-600 cursor-pointer">Repertoar</li>
         </div>
         <li class="flex items-center">
             <svg version="1.0" class="fill-current" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 249 251">
@@ -11,11 +11,24 @@
         </li>
         <div class="flex justify-around flex-grow">
             @guest
-            <li class="hover:underline hover:text-red-600 hover:cursor-pointer"><a href="{{ route('login.create') }}">Prijava</a></li>
-            <li class="hover:underline hover:text-red-600 hover:cursor-pointer"><a href="{{ route('register.create') }}">Registracija</a></li>
+            <li class="hover:underline hover:text-red-600 cursor-pointer"><a href="{{ route('login.create') }}">Prijava</a></li>
+            <li class="hover:underline hover:text-red-600 cursor-pointer"><a href="{{ route('register.create') }}">Registracija</a></li>
             @else
-            <li class="hover:underline hover:text-red-600 hover:cursor-pointer">Profil</li>
-            <li class="hover:underline hover:text-red-600 hover:cursor-pointer"><a href="{{ route('logout') }}">Odjava</a></li>
+            <li class="hover:underline hover:text-red-600 cursor-pointer"><a href="{{ route('register.create') }}">Karte</a></li>
+            <!-- Profile dropdown -->
+            <div x-data="{ open: false }" x-on:click.outside="open = false">
+                <button x-on:click="open = !open" class="hover:text-yellow-400">
+                    Profil <i class="fa-solid fa-caret-down" :class="{'rotate-180 inline-block': open}"></i>
+                </button>
+                <!-- hidden menu -->
+                <ul class="absolute flex flex-col gap-4 rounded-lg bg-gray-950 bg-opacity-60 hover:bg-opacity-100 hover:border-2 hover:border-white text-white  p-4 mt-4 " x-cloak x-show="open" x-transition.opacity>
+                    <li><a class="hover:text-red-600 cursor-pointer hover:underline" href="#">Informacije</a></li>
+                    <li><a class="hover:text-red-600 cursor-pointer hover:underline" href="#">Istorija</a></li>
+                    <li><a class="hover:text-red-600 cursor-pointer hover:underline" href="{{route('logout')}}">Odjava</a></li>
+                </ul>
+                <!-- end hidden menu -->
+            </div>
+            <!-- End profile dropdown -->
             @endguest
         </div>
     </ul>
