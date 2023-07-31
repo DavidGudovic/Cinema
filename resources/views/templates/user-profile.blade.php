@@ -5,7 +5,7 @@
 <!--Wrapper of profil-->
 <div class=" min-h-screen">
 
-  <h1>Profil Korisnika</h1>
+  <h1 class="font-extrabold text-3xl text-center my-12 text-white" >Profil Korisnika</h1>
 
 <!-- Profile -->
 <div class="flex flex-col md:flex-row gap-6 justify-center w-full h-full px-10 md:px-36 mb-20">
@@ -13,7 +13,7 @@
   <div class="flex flex-col gap-6">
     <!-- Profile links -->
     <div class="mb-6 md:mb-0">
-      <div class="flex flex-col border border-white px-8 md:w-72">
+      <div class="flex flex-col border border-white text-white bg-gray-950 bg-opacity-75 px-8 md:w-72">
         <a href="{{route('user.show', auth()->user())}}" class="py-7 border-b border-white font-bold text-xl">
           <i class="{{ Route::currentRouteName() === 'user.show' ? 'fa-solid fa-play fa-2xs' : '' }}"></i> Informacije</a>
         <a href="{{route('user.tickets.index', auth()->user())}}" class="py-7 border-b border-white font-bold text-xl">

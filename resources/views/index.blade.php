@@ -3,7 +3,7 @@
 @section('content')
 <div class="flex flex-col gap-12 items-center w-full h-full">
     <!-- Movie showcase -->
-    <div class="relative w-full h-52 md:h-[38rem] overflow-hidden"
+    <div class="relative w-full h-52 md:h-[38rem] overflow-hidden md:min-w-[70rem]"
     x-data="carousel()"
     x-init="startCarousel; setMovies({{$movies}})"
     x-on:unload.window="clearInterval(interval)">
