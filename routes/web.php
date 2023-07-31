@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\TicketController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\Authentication\LoginController;
 use App\Http\Controllers\Authentication\RegisterController;
@@ -29,4 +31,11 @@ Route::get('logout', [LoginController::class, 'destroy'])->name('logout');
 Route::name('verify.')->controller(VerificationController::class)->group(function (){
     Route::get('/show/{id}/{email}', 'show')->name('show');
     Route::get('/update/{id}/{email}', 'update')->name('update');
+});
+
+
+Route::middleware('auth', 'private')->group(function () {
+  Route::get('/user/{user}/delete', [UserController::class, 'delete'])->name('user.delete');
+  Route::resource('user', UserController::class);
+  Route::resource('user.tickets', TicketController::class);
 });
