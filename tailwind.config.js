@@ -5,7 +5,7 @@ module.exports = {
         extend: {
             //background image
             backgroundImage: (theme) => ({
-                "business-pattern": "url('/images/biznis_showcase.png')",
+                "business-pattern": "url('/images/utility/biznis_showcase.png')",
                 "authentication": "url('/images/utility/login_back.png')",
             }),
         },
