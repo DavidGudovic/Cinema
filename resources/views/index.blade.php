@@ -19,7 +19,7 @@
         <img :src="'{{URL('images/movies')}}' + '/' + movie.banner_url" alt="Movie Poster" class="w-full object-center">
 
         <!-- Movie info -->
-        <div class="absolute inset-0 bg-gray-950 bg-opacity-50 flex flex-col items-center justify-center w-full h-full p-6">
+        <div class="absolute inset-0 bg-gray-950 bg-opacity-40 flex flex-col items-center justify-center w-full  p-6">
             <div class="flex flex-col gap-2 md:gap-12 align-center justify-center text-center text-white w-full px-12 md:w-1/3">
                 <p class="text-base md:text-4xl font-extrabold" x-text="movie.title"></p>
                 <p class="text-sm md:text-xl line-clamp-3 md:line-clamp-none" x-text="movie.description"></p>
