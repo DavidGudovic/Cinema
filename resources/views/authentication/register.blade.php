@@ -72,17 +72,23 @@
                 class='bg-gray-700 border-2 text-white border-gray-600 w-full p-3 @error('password') border-red-500 @enderror' >
             </div>
             <!-- Account type -->
-            <div class="flex gap-4 w-full text-white justify-around p-4">
-                <div class="border-1 bg-transparent border-white">
-                    <input type="radio" name="role" id="client" value="CLIENT">
-                    <label class="hover:text-red-700 cursor-pointer" for="client" checked>Privatni profil</label>
+            <div class="flex flex-col gap-2 w-full justify-center @error('role') mt-4 @enderror">
+                <div class="flex gap-4 w-full text-white justify-around p-3 @error('role') border-2 border-red-500 @enderror">
+                    <div class="border-1 bg-transparent border-white">
+                        <input type="radio" name="role" id="client" value="CLIENT">
+                        <label class="hover:text-red-700 cursor-pointer" for="client" checked>Privatni profil</label>
+                    </div>
+                    <div class="border-1 bg-transparent border-white">
+                        <input type="radio" name="role" id="business" value="BUSINESS_CLIENT">
+                        <label class="hover:text-red-700 cursor-pointer" for="business">Biznis profil</label>
+                    </div>
                 </div>
-                <div class="border-1 bg-transparent border-white">
-                    <input type="radio" name="role" id="business" value="BUSINESS">
-                    <label class="hover:text-red-700 cursor-pointer" for="business">Biznis profil</label>
+                @error('role')
+                <div class="text-red-500 mt-2 text-sm w-full pb-4">
+                    {{$message}}
                 </div>
+                @enderror
             </div>
-
 
             <!-- End fields -->
             <!-- Buttons -->

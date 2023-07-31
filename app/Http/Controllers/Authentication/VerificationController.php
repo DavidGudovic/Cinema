@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Authentication;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Services\UserService;
 use App\Http\Controllers\Controller;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -13,9 +14,13 @@ class VerificationController extends Controller
     /*
     * Show the email verification form.
     */
-    public function show()
+    public function show($id, $email, UserService $userService)
     {
-        return view('authentication.verify-email');
+        $userService->sendVerificationEmail($id, $email);
+        return view('authentication.verification', [
+            'id' => $id,
+            'email' => $email,
+        ]);
     }
 
     /*
@@ -33,7 +38,11 @@ class VerificationController extends Controller
         $user->save();
         event(new Verified($user));
 
-        return redirect()->route('home');
+        return redirect()->route('login.create')
+        ->with([
+            'status' => 'success',
+            'status_msg' => 'Vaš email je verifikovan. Ulogujte se.'
+        ]);
     }
 
 }

@@ -13,9 +13,12 @@ class LoginController extends Controller
     /*
     * Show the login form.
     */
-    public function create()
+    public function create(?int $id = null, ?string $email = null)
     {
-        return view('authentication.login');
+        return view('authentication.login', [
+            'id' => $id ?? 0,
+            'email' => $email ?? '',
+        ]);;
     }
 
     /*
@@ -23,16 +26,27 @@ class LoginController extends Controller
     */
     public function store(LoginRequest $request)
     {
-        if (!auth()->attempt($request->only('email', 'password'), $request->remember)) {
-            return back()->with('status', 'Uneli ste pogrešne podatke.');
+        /*
+        * Attempt to authenticate the request.
+        */
+        if (!auth()->attempt($request->only('username', 'password'), $request->remember)) {
+            return back()->with(['status' => 'error', 'status_msg' => 'Uneli ste pogrešne podatke']);
         }
 
-        if (!auth()->user()->verified) {
+        /*
+        * Check if the user has verified their email.
+        */
+        if (auth()->user()->email_verified_at === null) {
+            $id = auth()->user()->id;
+            $email = auth()->user()->email;
             auth()->logout();
-            return back()->with('status', 'Morate potvrđivati svoj nalog. Proverite svoj email.');
+            return back()
+            ->with(['status' => 'error', 'status_msg' => 'Morate potvrditi svoj nalog. Proverite email.',
+            'verification_error' => true,
+            'id' => $id, 'email' => $email]);
         }
 
-        return redirect()->route('/');
+        return redirect()->route('home');
     }
 
     /*
@@ -41,6 +55,6 @@ class LoginController extends Controller
     public function destroy()
     {
         auth()->logout();
-        return redirect()->route('/');
+        return redirect()->route('home');
     }
 }

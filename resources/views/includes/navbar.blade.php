@@ -15,7 +15,7 @@
             <li class="hover:underline hover:text-red-600 hover:cursor-pointer"><a href="{{ route('register.create') }}">Registracija</a></li>
             @else
             <li class="hover:underline hover:text-red-600 hover:cursor-pointer">Profil</li>
-            <li class="hover:underline hover:text-red-600 hover:cursor-pointer">Odjava</li>
+            <li class="hover:underline hover:text-red-600 hover:cursor-pointer"><a href="{{ route('logout') }}">Odjava</a></li>
             @endguest
         </div>
     </ul>

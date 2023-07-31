@@ -21,9 +21,12 @@ Route::get('/', [LandingPageController::class, 'index'])->name('home');
 
 // Authentication
 Route::resource('register', RegisterController::class, ['only' => ['create', 'store']]);
-Route::resource('login', LoginController::class, ['only' => ['create', 'store', 'destroy']]);
+
+Route::resource('login', LoginController::class, ['only' => 'store']);
+Route::get('create/{id?}/{email?}', [LoginController::class, 'create'])->name('login.create');
+Route::get('logout', [LoginController::class, 'destroy'])->name('logout');
 
 Route::name('verify.')->controller(VerificationController::class)->group(function (){
-    Route::get('/verify')->name('show');
-    Route::get('/verify/{id}/{email}', 'update')->name('update');
+    Route::get('/show/{id}/{email}', 'show')->name('show');
+    Route::get('/update/{id}/{email}', 'update')->name('update');
 });
