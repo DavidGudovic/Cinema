@@ -11,8 +11,19 @@
 a{
     @apply hover:text-red-700 hover:underline cursor-pointer;
 }
+
 @tailwind utilities;
 
+/*
+  AlpineJS styles
+*/
+
+[x-cloak] {
+    display: none;
+}
+/*
+    Satoshi fonts
+*/
 @font-face {
     font-family: "Satoshi-Variable";
     src:

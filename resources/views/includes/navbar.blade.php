@@ -5,7 +5,28 @@
         </div>
 
         <div class="flex-1 flex justify-center items-center">
+            @guest
             <li class="hover:underline hover:text-red-600 cursor-pointer">Repertoar</li>
+            @endguest
+            @role('CLIENT')
+            <li class="hover:underline hover:text-red-600 cursor-pointer">Repertoar</li>
+            @elserole('BUSINESS_CLIENT')
+            <!-- Business dropdown -->
+            <div class="flex-1 flex justify-center items-center">
+                <div x-data="{ business_open: false }" x-on:click.outside="business_open = false">
+                    <button x-on:click="business_open = !business_open" class="hover:text-red-500 cursor-pointer hover:underline">
+                        Biznis <i class="fa-solid fa-caret-down" :class="{'rotate-180 inline-block': business_open}"></i>
+                    </button>
+                    <!-- hidden menu -->
+                    <ul class="absolute flex flex-col gap-4 rounded-lg bg-gray-950 bg-opacity-60 hover:bg-opacity-100 hover:border-2 hover:border-white text-white  p-4 mt-4 " x-cloak x-show="business_open" x-transition.opacity>
+                        <li><a class="hover:text-red-600 cursor-pointer hover:underline" href="{{route('user.show', auth()->user())}}">Rentiranje</a></li>
+                        <li><a class="hover:text-red-600 cursor-pointer hover:underline" href="{{route('user.show', auth()->user())}}">Oglašavanje</a></li>
+                    </ul>
+                    <!-- end hidden menu -->
+                </div>
+                <!-- End Business dropdown -->
+            </div>
+            @endrole
         </div>
 
         <div class="flex-1 hidden md:flex justify-center items-center">
@@ -27,8 +48,14 @@
         </div>
 
         @else
+
+
         <div class="flex-1 flex justify-center items-center">
+            @role('CLIENT')
             <li class="hover:underline hover:text-red-600 cursor-pointer"><a href="{{ route('register.create') }}">Karte</a></li>
+            @elserole('BUSINESS_CLIENT')
+            <li class="hover:underline hover:text-red-600 cursor-pointer"><a href="{{ route('register.create') }}">Zahtevi</a></li>
+            @endrole
         </div>
 
         <!-- Profile dropdown -->
@@ -40,8 +67,13 @@
                 <!-- hidden menu -->
                 <ul class="absolute flex flex-col gap-4 rounded-lg bg-gray-950 bg-opacity-60 hover:bg-opacity-100 hover:border-2 hover:border-white text-white  p-4 mt-4 " x-cloak x-show="open" x-transition.opacity>
                     <li><a class="hover:text-red-600 cursor-pointer hover:underline" href="{{route('user.show', auth()->user())}}">Informacije</a></li>
-                    <li><a class="hover:text-red-600 cursor-pointer hover:underline" href="{{route('user.tickets.index', auth()->user())}}">Istorija</a></li>
-                    <li><a class="hover:text-red-600 cursor-pointer hover:underline" href="{{route('logout')}}">Odjava</a></li>
+                    @role('CLIENT')
+                    <li><a class="hover:text-red-600 cursor-pointer hover:underline" href="{{route('user.tickets.index', auth()->user())}}">Istorija karata</a></li>
+                    @elserole('BUSINESS_CLIENT')
+                    <li><a class="hover:text-red-600 cursor-pointer hover:underline" href="{{route('user.requests.index', auth()->user())}}">Istorija zahteva</a></li>
+                    <li><a class="hover:text-red-600 cursor-pointer hover:underline" href="{{route('user.reclamations.index', auth()->user())}}">Reklamacije</a></li>
+                    @endrole
+                    <li><a class="hover:text-red-600 cursor-pointer hover:underline" href="{{route('logout', auth()->user())}}">Odjava</a></li>
                 </ul>
                 <!-- end hidden menu -->
             </div>
