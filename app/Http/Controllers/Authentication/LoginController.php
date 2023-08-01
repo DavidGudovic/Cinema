@@ -46,7 +46,7 @@ class LoginController extends Controller
             'verification_error' => true,
             'id' => $id, 'email' => $email]);
         }
-        return redirect()->intended('home');
+        return redirect()->intended(route('home'));
     }
 
     /*
