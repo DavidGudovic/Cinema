@@ -1,10 +1,10 @@
 @extends('templates.app')
 
-@section('background-pattern') bg-[conic-gradient(at_left,_var(--tw-gradient-stops))] from-gray-950 to-gray-500 bg-gradient-to-r @endsection
+@section('background-pattern')bg-gray-950 @endsection
 
 @section('content')
 
-    <h1 class="font-extrabold text-3xl text-center my-12 text-white ">Repertoar</h1>
+    <h1 class="font-extrabold text-3xl text-center my-12 text-white ">Trenutni Repertoar</h1>
 
   <!--Wrapper of products-->
   <div class="flex flex-col md:flex-row w-full p-10 pt-0 md:pr-6">

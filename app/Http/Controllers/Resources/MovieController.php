@@ -16,10 +16,10 @@ class MovieController extends Controller
     /**
      * Display a listing of Movies
      */
-    public function index(MovieService $movieService, GenreService $genreService, ?string $genre = null)
+    public function index(MovieService $movieService, GenreService $genreService, ?int $genre = null)
     {
         return view('resources.movies.index', [
-            'movies' => $movieService->getScreeningMoviesByGenres([$genre]),
+            'movies' => $movieService->getScreeningMoviesByGenres($genre ? [$genre] : null),
             'filters' => $genreService->getFiltersForGenres($genre),
         ]);
     }

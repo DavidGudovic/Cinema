@@ -12,8 +12,7 @@ class Filters extends Component
   public $search_query = ""; //search criteria
 
   //filter criteria
-  public $genre_list; //[K:GenreID -> V:true/false]
-  public $price_range;
+  public $genre_list; //[K:GenreID -> V:true/false]W
   public $sort_by = 'title';
   public $sort_direction = 'ASC';
 
@@ -52,7 +51,7 @@ class Filters extends Component
   public function submit() : void
   {
     $this->resetSearchBar();
-    $this->emit("filter", $this->genre_list, $this->price_range, $this->sort_by, $this->sort_direction);
+    $this->emit("filter", $this->genre_list, $this->sort_by, $this->sort_direction);
   }
 
   /*
@@ -70,7 +69,6 @@ class Filters extends Component
   {
     $this->sort_by = "title";
     $this->sort_direction = "ASC";
-    $this->price_range = null;
     foreach($this->genre_list as $genre => $checked){
       $this->genre_list[$genre] = false;
     }

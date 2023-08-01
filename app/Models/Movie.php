@@ -43,6 +43,13 @@ class Movie extends Model
         'release_date' => 'datetime',
     ];
 
+    /*
+    * Accessors
+    */
+    public function getReleaseYearAttribute()
+    {
+        return $this->release_date->format('Y');
+    }
 
     /**
     * Eloquent relationships

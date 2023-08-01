@@ -15,7 +15,7 @@ class MovieService
     {
         return Movie::with('genre')->when($genres, function ($query, $genres) {
             return $query->whereHas('genre', function ($query) use ($genres) {
-                $query->whereIn('name', $genres);
+                $query->whereIn('id', $genres);
             });
         })->get();
     }

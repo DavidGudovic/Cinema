@@ -20,30 +20,13 @@ class Index extends Component
   }
 
   /*
-  Applies filters to movie list. [genres, price_range, sorting]
+  Applies filters to movie list. [genres, sorting]
   Filter criteria provided by movies.filters component by raising a filter event
   */
-  public function filter(MovieService $movieService, $genre_list = [], $price_range = null, $sort_by='title', $sort_direction='ASC') : void
+  public function filter(MovieService $movieService, $genre_list = [], $sort_by='title', $sort_direction='ASC') : void
   {
     $this->movie_list = $movieService->getScreeningMoviesByGenres(array_keys($genre_list, true));
-
-    if(!empty($price_range)){
-      $this->filterPrice($price_range);
-    }
-
     $this->sort($sort_by, $sort_direction);
-  }
-
-  /*
-    Removes elements from $movie_list where item price is higher then $price_range
-  */
-  public function filterPrice(int $price_range) : void
-  {
-    foreach($this->movie_list as $movieCollectionKey => $movie){
-      if($movie->price > $price_range){
-        $this->movie_list->forget($movieCollectionKey);
-      }
-    }
   }
 
   /*
