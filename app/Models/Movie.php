@@ -59,6 +59,7 @@ class Movie extends Model
     /**
     * Local Eloquent scopes
     */
+
     public function scopeShowcased($query){
         return $query->where('is_showcased', true);
     }
@@ -106,4 +107,13 @@ class Movie extends Model
         });
     }
 
+    public function scopeSearch($query, $search_query){
+        $search_query = join("%", explode(" ", $search_query));
+        return  $query
+        ->where('title','LIKE','%'.$search_query.'%')
+        ->orWhere('director','LIKE','%'.$search_query.'%')
+        ->orWhereHas('genre', function($query) use ($search_query){
+            $query->where('name','LIKE','%'.$search_query.'%');
+        });
+    }
 }

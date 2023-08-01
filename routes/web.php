@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\Clients\UserController;
 use App\Http\Controllers\Clients\TicketController;
+use App\Http\Controllers\Resources\MovieController;
 use App\Http\Controllers\Authentication\LoginController;
 use App\Http\Controllers\Authentication\RegisterController;
 use App\Http\Controllers\Authentication\VerificationController;
@@ -34,7 +35,7 @@ Route::middleware('guest')->group(function () {
 
     // Login
     Route::resource('login', LoginController::class, ['only' => 'store']);
-    Route::get('create/{id?}/{email?}', [LoginController::class, 'create'])->name('login.create');
+    Route::get('login/{id?}/{email?}', [LoginController::class, 'create'])->name('login.create');
 
     // Verification
     Route::name('verify.')->controller(VerificationController::class)->group(function (){
@@ -49,7 +50,10 @@ Route::middleware('guest')->group(function () {
 */
 
 Route::middleware('auth', 'private')->group(function () {
+    /* Logout */
     Route::get('logout/{user}', [LoginController::class, 'destroy'])->name('logout');
+
+    /* User profile */
     Route::resource('user', UserController::class)->only(['show', 'update', 'destroy']);
     Route::get('user/delete/{user}', [UserController::class, 'delete'])->name('user.delete');
 
@@ -62,3 +66,5 @@ Route::middleware('auth', 'private')->group(function () {
         Route::resource('user.reclamations', ReclamationController::class)->only(['index', 'show', 'update']);
     });
 });
+
+Route::get('movies/{genre?}', [MovieController::class, 'index'])->name('movies.index');

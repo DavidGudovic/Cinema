@@ -6,10 +6,10 @@
 
         <div class="flex-1 flex justify-center items-center">
             @guest
-            <li class="hover:underline hover:text-red-600 cursor-pointer">Repertoar</li>
+            <li class="hover:underline hover:text-red-600 cursor-pointer"><a class="hover:text-red-600 cursor-pointer hover:underline" href="{{route('movies.index')}}">Repertoar</a></li>
             @endguest
             @role('CLIENT')
-            <li class="hover:underline hover:text-red-600 cursor-pointer">Repertoar</li>
+            <li class="hover:underline hover:text-red-600 cursor-pointer"><a class="hover:text-red-600 cursor-pointer hover:underline" href="{{route('movies.index')}}">Repertoar</a></li>
             @elserole('BUSINESS_CLIENT')
             <!-- Business dropdown -->
             <div class="flex-1 flex justify-center items-center">

@@ -79,7 +79,7 @@ x-on:click="next(), manualMove()">
         <div class="flex flex-row flex-wrap gap-16 justify-center">
             @foreach($fictionGenres as $genre)
             <!-- Image -->
-            <a href="#" class="overflow-hidden">
+            <a href="{{route('movies.index', $genre->id)}}" class="overflow-hidden">
                 <img class="w-56 md:w-48 hover:scale-110" width="200px" src="{{URL('images/genres/' . $genre->image_url)}}" alt="">
                 <p class="relative bottom-10 left-6 font-extrabold text-white text-xl md:text-base h-0 z-10"  style="text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">{{$genre->name}}</p>
             </a>
@@ -97,7 +97,7 @@ x-on:click="next(), manualMove()">
         <div class="flex flex-row flex-wrap gap-16 justify-center">
             @foreach($nonFictionGenres as $genre)
             <!-- Image -->
-            <a href="#" class="overflow-hidden">
+            <a href="{{route('movies.index', $genre->id)}}" class="overflow-hidden">
                 <img class="w-56 md:w-48 hover:scale-110" src="{{URL('images/genres/' . $genre->image_url)}}" alt="">
                 <p class="relative bottom-10 left-6 font-extrabold text-white text-xl md:text-base h-0 z-10" style="text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;" >{{$genre->name}}</p>
             </a>
