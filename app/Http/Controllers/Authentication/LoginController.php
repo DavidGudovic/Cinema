@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Authentication;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\LoginRequest;
 use App\Http\Controllers\Controller;
@@ -45,14 +46,13 @@ class LoginController extends Controller
             'verification_error' => true,
             'id' => $id, 'email' => $email]);
         }
-
-        return redirect()->route('home');
+        return redirect()->intended('home');
     }
 
     /*
     * Log the user out of the application.
     */
-    public function destroy()
+    public function destroy(User $user)
     {
         auth()->logout();
         return redirect()->route('home');

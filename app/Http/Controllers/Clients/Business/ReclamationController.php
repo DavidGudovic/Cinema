@@ -1,20 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Clients;
+namespace App\Http\Controllers\Clients\Business;
 
-use App\Models\User;
-use App\Models\Ticket;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Reclamation;
+use Illuminate\Http\Request;
 
-class TicketController extends Controller
+class ReclamationController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(User $user)
+    public function index()
     {
-        dd('user/#/tickets/index');
+        //
     }
 
     /**
@@ -28,7 +27,7 @@ class TicketController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, User $user)
+    public function store(Request $request)
     {
         //
     }
@@ -36,7 +35,7 @@ class TicketController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Ticket $ticket, User $user)
+    public function show(Reclamation $reclamation)
     {
         //
     }
@@ -44,7 +43,7 @@ class TicketController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Ticket $ticket)
+    public function edit(Reclamation $reclamation)
     {
         //
     }
@@ -52,7 +51,7 @@ class TicketController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Ticket $ticket)
+    public function update(Request $request, Reclamation $reclamation)
     {
         //
     }
@@ -60,7 +59,7 @@ class TicketController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Ticket $ticket)
+    public function destroy(Reclamation $reclamation)
     {
         //
     }
