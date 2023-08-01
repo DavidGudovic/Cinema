@@ -24,7 +24,7 @@
             x-transition:leave="transition duration-1000 ease-in-out"
             x-transition:leave-start="transform translate-y-0 opacity-100"
             x-transition:leave-end="transform translate-y-2 opacity-0"
-            x-cloak class="absolute bottom-0 w-full h-full bg-black bg-opacity-70 flex flex-col justify-center items-center">
+            x-cloak class="absolute bottom-0 w-full h-full bg-black bg-opacity-80 flex flex-col justify-center items-center">
             <!-- Tech-->
              <div  class="flex gap-2 justify-around absolute inset-x-0 text-center top-5">
                 <img class="h-10" src="{{URL('images/tags/4dx.png')}}" alt="">

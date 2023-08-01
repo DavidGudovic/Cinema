@@ -3,7 +3,7 @@
 @section('background-pattern') bg-user-profile bg-cover bg-no-repeat bg-center  @endsection
 
 @section('window')
-  <div class="flex h-full w-full flex-col gap-6 border border-white text-white p-5 md:p-16 bg-gray-950 bg-opacity-75  ">
+  <div class="flex h-full w-full flex-col gap-6 border border-white text-white p-5 md:p-16 md:px-20 bg-gray-950 bg-opacity-80  ">
     @if(session()->has('status'))
       <p class='text-center font-bold mb-5
       @if(session('status') == 'error') text-red-600 @else text-green-400 @endif'>{{session('status_msg')}}</p>
