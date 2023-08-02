@@ -17,16 +17,17 @@
         <!-- Contact -->
         <div class="flex flex-col gap-10 w-[215px]">
             <p class="border-b-2 border-white">Kontakt</p>
-            <p><i class="fa-solid fa-envelope"></i> info@cinemanija.rs</p>
-            <p><i class="fa-solid fa-phone"></i> 067/010-010</p>
+            <p><i class="fa-solid fa-envelope"></i> dgudovic.dev@gmail.com</p>
+            <p> <i class="fa-brands fa-github"></i> <a href="https://github.com/DavidGudovic">David Gudović</a></p>
             <p> <i class="fa-brands fa-instagram"></i> <a href="https://instagram.com/">Cinemanija Bioskop</a></p>
         </div>
         <!-- End contact -->
         <!-- Developer -->
         <div class="flex flex-col gap-10 w-[215px]">
-            <p class="border-b-2 border-white">Sajt kreirao</p>
-            <p><i class="fa-solid fa-envelope"></i> dgudovic.dev@gmail.com</p>
-            <p> <i class="fa-brands fa-github"></i> <a href="https://github.com/DavidGudovic">David Gudović</a></p>
+            <p class="border-b-2 border-white">Radno vreme</p>
+            <p><i class="fa-regular fa-calendar"></i> Pon - Pet: 10:00 - 22:00</p>
+            <p><i class="fa-regular fa-calendar"></i> Vikendi: Neradni</p>
+            <p><i class="fa-regular fa-copyright"></i> Cinemanija {{date('H:m')}}</p>
         </div>
         <!-- End developer -->
     </div>

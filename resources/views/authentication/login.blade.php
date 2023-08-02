@@ -12,7 +12,7 @@
 
         <!--Status message display-->
         @if(session()->has('status'))
-        <p class='text-center font-bold
+        <p class='text-center font-bold -mt-2
         @if(session('status') == 'error') text-red-600 @else text-green-400 @endif'>{{session('status_msg')}}
         @if(session()->has('verification_error')) <a class="text-red-500 hover:text-yellow-500 underline" href="{{route('verify.show', [session('id'), session('email')])}}">Pošalji ponovo</a> @endif </p>
         @endif
