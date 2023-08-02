@@ -144,7 +144,7 @@
 @section('scripts')
 <script>
     window.routes = {
-        'movies.show': "{{ route('movies.show', ['movie' => '_ID_']) }}"
+        'movies.show': "{{ route('movie.screenings.index', ['movie' => '_ID_']) }}"
     };
 </script>
 @endsection
