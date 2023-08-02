@@ -11,6 +11,20 @@ module.exports = {
                 'error': "url('/images/errors/error_md.png')",
                 'error-phone': "url('/images/errors/error_sm.png')",
             }),
+            keyframes: {
+                slideInFromLeft: {
+                    '0% '  :{transform: 'translateX(-100%) '},
+                    '100% ':{transform: 'translateX(0)' },
+                },
+                slideInFromTop: {
+                    '0% '  :{transform: 'translateY(-100%) '},
+                    '100% ':{transform: 'translateY(0)' },
+                },
+            },
+            animation: {
+                'apear-from-left': 'slideInFromLeft 1.5s',
+                'apear-from-top': 'slideInFromTop 1.5s',
+            },
         },
     },
     plugins: [require("@tailwindcss/line-clamp")],

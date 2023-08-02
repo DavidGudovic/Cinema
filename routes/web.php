@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Resources\ScreeningController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\Clients\UserController;
 use App\Http\Controllers\Clients\TicketController;
@@ -71,7 +72,7 @@ Route::middleware('auth')->group(function () {
      /*
      * Public routes - User can access any route that's not specific to his id
      */
-    Route::resource('screenings', ScreeningController::class)->only(['index', 'show']);
+    Route::resource('movie.screenings', ScreeningController::class)->only(['index', 'show']);
 });
 
 
