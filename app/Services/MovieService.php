@@ -18,7 +18,8 @@ class MovieService
     /*
     * Get all movies by title/director/genre query
     */
-    public function getBySearch(string $search_query){
+    public function getBySearch(string $search_query) : EloquentCollection
+    {
         return Movie::search($search_query)->get();
     }
 
