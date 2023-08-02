@@ -12,11 +12,11 @@ class Screening extends Model
     protected static function booted()
     {
         static::creating(function ($screening) {
-            $screening->duration = ceil(($screening->advert_slots * $this->advert_duration + $this->movie->duration)/ 60) * 60;
+            $screening->end_time = ceil(($screening->advert_slots * $this->advert_duration + $this->movie->duration)/ 60) * 60;
         });
 
         static::updating(function ($screening) {
-            $screening->duration = ceil(($this->advert_slots * $this->advert_duration + $this->movie->duration)/ 60) * 60;
+            $screening->end_time = ceil(($this->advert_slots * $this->advert_duration + $this->movie->duration)/ 60) * 60;
         });
     }
 
@@ -28,7 +28,6 @@ class Screening extends Model
     */
     protected $fillable = [
         'start_time',
-        'price',
         'advert_slots',
         'advert_duration',
         'advert_price',
@@ -49,8 +48,33 @@ class Screening extends Model
     * @var array<string, string>
     */
     protected $casts = [
+        'start_time' => 'datetime',
+        'end_time' => 'datetime'
     ];
 
+    /*
+    Accessors
+    */
+
+    public function getStartTimeAttribute($value)
+    {
+        return $value->format('H:i');
+    }
+
+    public function getEndTimeAttribute($value)
+    {
+        return $value->format('H:i');
+    }
+
+    public function getTicketPriceAttribute()
+    {
+        $price = 500;
+        $this->movie->duration > 120 ? $price += 200 : $price;
+        foreach($this->tags() as $tag){
+            $price += $tag->price_addon;
+        }
+        return $price;
+    }
 
     /**
     * Eloquent relationships

@@ -17,6 +17,7 @@ class Tag extends Model
         'name',
         'description',
         'image_url',
+        'price_addon'
     ];
 
     /**
