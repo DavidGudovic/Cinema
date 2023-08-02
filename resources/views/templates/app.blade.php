@@ -37,5 +37,6 @@
      <!-- GLOBAL MODALS -->
      <!-- END MODALS -->
      @livewireScripts
+     @yield('scripts')
    </body>
 </html>

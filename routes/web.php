@@ -23,20 +23,20 @@ use App\Http\Controllers\Clients\Business\RequestableController;
 */
 
 
-// Landing page
+/*
+* Public routes - Anyone can access these routes
+*/
 Route::get('/', [LandingPageController::class, 'index'])->name('home');
-
+Route::get('movies/{genre?}', [MovieController::class, 'index'])->name('movies.index');
 /*
 * Authentication routes - Only guests can access these routes
 */
 Route::middleware('guest')->group(function () {
     // Registration
     Route::resource('register', RegisterController::class, ['only' => ['create', 'store']]);
-
     // Login
     Route::resource('login', LoginController::class, ['only' => 'store']);
     Route::get('login/{id?}/{email?}', [LoginController::class, 'create'])->name('login.create');
-
     // Verification
     Route::name('verify.')->controller(VerificationController::class)->group(function (){
         Route::get('/show/{id}/{email}', 'show')->name('show');
@@ -45,29 +45,34 @@ Route::middleware('guest')->group(function () {
 });
 /*
 * User routes - Only authenticated users can access these routes
-* Private routes - User can only access the route that's specific to his id (user/{user})
-* i.e user id 1 can only access user/1, user id 2 can only access user/2 etc.
 */
+Route::middleware('auth')->group(function () {
+    /*
+    * Private routes - User can only access the route that's specific to his id (user/{user})
+    * i.e user id 1 can only access user/1, user id 2 can only access user/2 etc.
+    */
+    Route::middleware('private')->group(function () {
+        Route::get('logout/{user}', [LoginController::class, 'destroy'])->name('logout');
+        Route::get('user/delete/{user}', [UserController::class, 'delete'])->name('user.delete');
+        Route::resource('user', UserController::class)->only(['show', 'update', 'destroy']);
+        /*
+        * Only private clients can have/see tickets
+        */
+        Route::middleware('role:CLIENT')->group(function(){
+            Route::resource('user.tickets', TicketController::class)->only('index', 'show');
+        });
 
-Route::middleware('auth', 'private')->group(function () {
-    /* Logout */
-    Route::get('logout/{user}', [LoginController::class, 'destroy'])->name('logout');
-
-    /* User profile */
-    Route::resource('user', UserController::class)->only(['show', 'update', 'destroy']);
-    Route::get('user/delete/{user}', [UserController::class, 'delete'])->name('user.delete');
-
-    /* Only Private clients can buy, tickets*/
-    Route::middleware('role:CLIENT')->group(function(){
-    Route::resource('user.tickets', TicketController::class)->only('index', 'show')->middleware('role:CLIENT');
-    Route::resource('movies', MovieController::class)->only('show');
+        /* Only Business clients can have/see requests and reclamations */
+        Route::middleware('role:BUSINESS_CLIENT')->group(function(){
+            Route::resource('user.requests', RequestableController::class)->only(['index', 'show', 'update']);
+            Route::resource('user.reclamations', ReclamationController::class)->only(['index', 'show', 'update']);
+        });
     });
-
-    /* Only Business clients can see requests and reclamations */
-    Route::middleware('role:BUSINESS_CLIENT')->group(function(){
-        Route::resource('user.requests', RequestableController::class)->only(['index', 'show', 'update']);
-        Route::resource('user.reclamations', ReclamationController::class)->only(['index', 'show', 'update']);
-    });
+     /*
+     * Public routes - User can access any route that's not specific to his id
+     */
+    Route::resource('screenings', ScreeningController::class)->only(['index', 'show']);
 });
 
-Route::get('movies/{genre?}', [MovieController::class, 'index'])->name('movies.index');
+
+

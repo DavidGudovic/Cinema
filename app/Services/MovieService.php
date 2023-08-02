@@ -7,12 +7,21 @@ use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
 class MovieService
 {
+    public function eagerLoadMovie(int $id) : Movie
+    {
+        return Movie::with('genre', 'screenings.tags')
+        ->findOrFail($id);
+    }
     /**
     * Get all movies that have upcoming screenings now, tommorow or in the next week, filtered by genre when genre != NULL.
     */
     public function getMoviesByGenreScreeningTimes(?array $genres = NULL, ?string $screening_time = 'any') : EloquentCollection
     {
-        return Movie::with('genre')->hasScreenings()->fromGenres($genres)->screeningTime($screening_time)->get();
+        return Movie::with('genre')
+        ->hasScreenings()
+        ->fromGenres($genres)
+        ->screeningTime($screening_time)
+        ->get();
     }
 
     /*
@@ -24,7 +33,7 @@ class MovieService
     }
 
     /*
-    * Get destict tag image urls for each movie in the list [MovieID => [tag1, tag2, ...]]
+    * Get destict tag image urls for each movie that has screenings [MovieID => [tag1, tag2, ...]]
     */
     public function getDestinctTagUrls() : array
     {
@@ -37,8 +46,6 @@ class MovieService
                 ->pluck('tags.*.image_url')
                 ->flatten()
                 ->unique()
-                ->values()
-                ->all()
             ];
         })->toArray();
     }

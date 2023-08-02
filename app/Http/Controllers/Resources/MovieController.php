@@ -23,4 +23,11 @@ class MovieController extends Controller
             'filters' => $genreService->getFiltersForGenres($genre),
         ]);
     }
+
+    public function show(int $movie, MovieService $movieService)
+    {
+        return view('resources.movies.show', [
+            'movie' => $movieService->eagerLoadMovie($movie),
+        ]);
+    }
 }
