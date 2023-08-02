@@ -19,7 +19,7 @@ class MovieController extends Controller
     public function index(MovieService $movieService, GenreService $genreService, ?int $genre = null)
     {
         return view('resources.movies.index', [
-            'movies' => $movieService->getScreeningMoviesByGenres($genre ? [$genre] : null),
+            'movies' => $movieService->getMoviesByGenreScreeningTimes($genre ? [$genre] : null),
             'filters' => $genreService->getFiltersForGenres($genre),
         ]);
     }

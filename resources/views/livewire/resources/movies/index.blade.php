@@ -26,11 +26,10 @@
             x-transition:leave-end="transform translate-y-2 opacity-0"
             x-cloak class="absolute bottom-0 w-full h-full bg-black bg-opacity-60 flex flex-col justify-center items-center">
             <!-- Tech-->
-             <div  class="flex gap-2 justify-around absolute inset-x-0 text-center top-5">
-                <img class="h-10" src="{{URL('images/tags/4dx.png')}}" alt="">
-                <img class="h-10" src="{{URL('images/tags/dolby.png')}}" alt="">
-                <img class="h-10" src="{{URL('images/tags/imax.png')}}" alt="">
-                <img class="h-10" src="{{URL('images/tags/reald3d.png')}}" alt="">
+             <div  class="flex justify-center gap-5 absolute inset-x-0 text-center top-5">
+                @foreach ($movie_tags[$movie->id] as $tag)
+                    <img class="h-10" src="{{URL('images/tags/' . $tag)}}" alt="{{$tag}}">
+                @endforeach
             </div>
             <!-- End tech-->
 
@@ -42,9 +41,9 @@
             <!-- End details -->
 
             <!-- CTA -->
-            <div  class="flex flex-col gap-2 justify-center absolute inset-x-0 text-center bottom-10 text-white ">
-                <a href="#" class="underline">Rezervišite kartu <i class="fa-solid fa-ticket underline"></i></a>
-                <p class="text-white  ">Početak prikazivanja: 27.08</p>
+            <div  class="flex flex-col gap-2 justify-center absolute inset-x-0 text-center bottom-8 text-white ">
+                <a href="{{route('movies.show', $movie->id)}}" class="underline">Rezervišite kartu <i class="fa-solid fa-ticket underline"></i></a>
+                <p class="text-white text-sm ">Sledeće prikazivanje: {{$movies_next_screening[$movie->id]}}</p>
             </div>
             <!-- End CTA -->
         </div>

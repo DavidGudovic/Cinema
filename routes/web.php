@@ -58,7 +58,10 @@ Route::middleware('auth', 'private')->group(function () {
     Route::get('user/delete/{user}', [UserController::class, 'delete'])->name('user.delete');
 
     /* Only Private clients can buy, tickets*/
+    Route::middleware('role:CLIENT')->group(function(){
     Route::resource('user.tickets', TicketController::class)->only('index', 'show')->middleware('role:CLIENT');
+    Route::resource('movies', MovieController::class)->only('show');
+    });
 
     /* Only Business clients can see requests and reclamations */
     Route::middleware('role:BUSINESS_CLIENT')->group(function(){

@@ -56,16 +56,6 @@ class Screening extends Model
     Accessors
     */
 
-    public function getStartTimeAttribute($value)
-    {
-        return $value->format('H:i');
-    }
-
-    public function getEndTimeAttribute($value)
-    {
-        return $value->format('H:i');
-    }
-
     public function getTicketPriceAttribute()
     {
         $price = 500;

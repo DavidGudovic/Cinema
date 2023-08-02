@@ -8,11 +8,19 @@ use App\Services\MovieService;
 class Index extends Component
 {
   public $movie_list; //filtered result
+  public $movie_tags; //tags movie list [MovieID => [tag1, tag2, ...]]
+  public $movies_next_screening; // next screening for each movie [MovieID => Screening_Time]
 
   public $listeners = [
     'filter' => 'filter',
     'applySearch' => 'applySearch',
   ];
+
+  public function mount(MovieService $movieService)
+  {
+    $this->movie_tags = $movieService->getDestinctTagUrls();
+    $this->movies_next_screening = $movieService->getNextScreenings();
+  }
 
   public function render()
   {
