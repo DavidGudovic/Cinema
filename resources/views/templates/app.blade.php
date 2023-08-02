@@ -12,7 +12,7 @@
   @vite('resources/js/app.js')
   @livewireStyles
 </head>
-   <body class="flex flex-col antialiased min-h-screen bg-gray-950">
+   <body class="flex flex-col antialiased min-h-screen bg-gray-950 text-white">
      <!--HEADER OPTIONAL-->
      @yield('header')
      <!--END HEADER-->

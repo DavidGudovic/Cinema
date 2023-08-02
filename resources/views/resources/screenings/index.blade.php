@@ -1,39 +1,56 @@
 @extends('templates.app')
 
 @section('content')
-<!-- Wrapper for movie show -->
-<div class="flex flex-col gap-4 px-2 md:px-40 text-white">
-    <a href="{{route('movies.index')}}" class="font-bold underline py-6 mt-4 w-36"><< Vidi sve filmove</a>
-    <!-- movie -->
-    <div class="flex flex-col md:flex-row border-2 border-white px-4 md:pr-0 py-6">
-        <!-- Info -->
-        <div class="flex flex-col border-b border-white pb-4 px-6 md:px-0 md:flex-row md:pb-0 md:w-1/2 md:min-w-[500px] md:border-b-0 md:border-r ">
-            <img src="{{URL('/images/movies/' . $movie->image_url)}}" alt="Cover image of {{$movie->title}} "
-            class="h-full max-h-[600px] max-w-[400px] w-full md:h-[400px] md:w-[250px] mb-3 md:mb-0 md:mr-6">
-            <div class="flex flex-col justify-between gap-3 md:gap-6">
-                <p class="font-bold text-xl">{{$movie->title}}</p>
-                <!--Group Author, Isbn, genre -->
-                <div class="flex flex-col gap-1">
-                    <p>Režiser: {{$movie->director}}</p>
-                    <p>Kategorija: {{$movie->genre->name}}</p>
-                </div>
-                <!-- End group -->
-            </div>
-        </div>
-        <!-- End info-->
-        <!-- details-->
-        <div class="flex justify-center items-center p-6 md:w-1/2 md:min-w-[500px] overflow-hidden">
-            <p class="animate-apear-from-top md:animate-apear-from-left">{{$movie->description}}</p>
-        </div>
-        <!-- End details-->
-    </div>
-    <!-- End movie -->
+    <div class="flex flex-col gap-6 w-full h-full">
 
-    <!-- Screenings -->
-    <div class="mb-20 border-2 border-white pb-4">
-        <h1 class="font-extrabold text-3xl text-center my-12 text-white ">Projekcije</h1>
+        <!-- Header -->
+        <div class="relative w-full h-full  overflow-hidden md:min-w-[70rem] md:h-[38rem]">
+            <img src="{{URL('images/movies/' . $movie->banner_url)}}" alt="{{$movie->title}} banner image" class="w-full hidden md:block relative bottom-20">
+             <img src="{{URL('images/movies/' . $movie->image_url)}}" alt="{{$movie->title}} banner image" class="w-full md:hidden relative">
+            <!-- overlays -->
+            <div class="absolute w-full bottom-0 h-full bg-gradient-to-t from-gray-950 to-20% via-gray-950"></div>
+            <div class="absolute w-full bottom-0  h-full bg-gradient-to-r from-gray-950 to-20% via-gray-950 to-60% opacity-60"></div>
+            <div class="absolute inset-0 bg-gray-950 bg-opacity-40"></div>
+            <!-- End overlays -->
+
+            <!-- Back link -->
+            <a href="{{route('movies.index')}}" class="absolute top-4 left-4 text-white text-2xl font-bold">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <!-- End back link -->
+
+            <!-- Movie info -->
+            <div class="flex flex-col gap-4 w-[25rem] absolute bottom-32 left-20 text-white">
+                <h1 class="font-extrabold text-7xl">{{$movie->title}}</h1>
+
+                <div class="flex justify-between pr-4">
+                    <p class="font-bold">{{$movie->director}}</p>
+                    <div class="flex gap-2">
+                    <p class=" ">{{$movie->duration}} min</p>
+                    <span>&middot;</span>
+                    <p class=" ">{{$movie->genre->name}}</p>
+                    <span>&middot;</span>
+                    <p class="">{{$movie->release_year}}</p>
+                    </div>
+                </div>
+                <p>{{$movie->description}}</p>
+            </div>
+            <!-- End movie info -->
+        </div>
+        <!-- End header -->
+        <!-- Screenings -->
+        <div class="flex flex-col gap-12 w-full align-center justify-center md:-mt-12 z-20">
+            <div class="flex justify-center align-center w-full">
+               <img src="{{URL('images/utility/popcorn.png')}}" alt="popcorn" class="h-12 w-12 text-center">
+            </div>
+
+            <h2 class="text-3xl font-bold text-center">Projekcije</h2>
+            <!-- Screening List -->
+            <div class="md:min-w-[50rem]">
+
+            </div>
+            <!-- End Screening List -->
+        </div>
+        <!-- End screenings -->
     </div>
-    <!-- End Screenings -->
-</div>
-<!-- End wrapper -->
 @endsection
