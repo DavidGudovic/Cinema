@@ -15,6 +15,7 @@ class Filters extends Component
   public $genre_list; //[K:GenreID -> V:true/false]W
   public $sort_by = 'title';
   public $sort_direction = 'ASC';
+  public $screening_time = "any"; // 'any' 'now' 'tommorow' 'week'
 
 
   public $listeners = [
@@ -33,28 +34,6 @@ class Filters extends Component
   }
 
   /*
-  Soft resets filters
-  emits search query to livewire.movies.index
-  */
-  public function search() : void
-  {
-    $this->softResetFilter();
-    $this->emit("applySearch", $this->search_query);
-  }
-
-
-  /*
-  Emits filter criteria from form to livewire.movies.index
-  Called when applying filters
-  Resets search query (Items are filtered by filtes, not searchBar)
-  */
-  public function submit() : void
-  {
-    $this->resetSearchBar();
-    $this->emit("filter", $this->genre_list, $this->sort_by, $this->sort_direction);
-  }
-
-  /*
   Resets searchQuery, reRenders SearchBar
   */
   public function resetSearchBar() : void
@@ -69,6 +48,7 @@ class Filters extends Component
   {
     $this->sort_by = "title";
     $this->sort_direction = "ASC";
+    $this->screening_time = 'any';
     foreach($this->genre_list as $genre => $checked){
       $this->genre_list[$genre] = false;
     }
@@ -84,5 +64,26 @@ class Filters extends Component
     $this->resetSearchBar();
     $this->emit("filter");
   }
+  /*
+  Soft resets filters
+  emits search query to livewire.movies.index
+  */
+  public function search() : void
+  {
+    $this->softResetFilter();
+    $this->emit("applySearch", $this->search_query);
+  }
+  /*
+  Emits filter criteria from form to livewire.movies.index
+  Called when applying filters
+  Resets search query (Items are filtered by filtes, not searchBar)
+  */
+  public function submit() : void
+  {
+    $this->resetSearchBar();
+    $this->emit("filter", $this->genre_list, $this->sort_by, $this->sort_direction, $this->screening_time);
+  }
+
+
 
 }

@@ -71,48 +71,55 @@ class Movie extends Model
         return $query->where('is_showcased', true);
     }
 
-    public function scopeDurationLongerThan($query, $duration){
-        return $query->where('duration', '>', $duration);
-    }
-
-    public function scopeDurationShorterThan($query, $duration){
-        return $query->where('duration', '<', $duration);
-    }
-
-    public function scopeFromYear($query, $year){
-        return $query->whereYear('release_date', $year);
-    }
-
-    public function scopeBeforeYear($query, $year){
-        return $query->whereYear('release_date', '<', $year);
-    }
-
-    public function scopeAfterYear($query, $year){
-        return $query->whereYear('release_date', '>', $year);
-    }
-
-    public function scopeFromGenre($query, $genre){
-        return $query->where('genre_id', $genre);
-    }
-
-    public function scopeHasScreenings($query){
-        return $query->whereHas('screenings', function($q){
-            $q->where('date', '>', now());
+    protected function scopeFromGenres($query, array $genres = NULL){
+        return $query->when($genres, function ($query, $genres) {
+            return $query->whereHas('genre', function ($query) use ($genres) {
+                $query->whereIn('id', $genres);
+            });
         });
     }
 
-    public function scopeHasNoScreenings($query){
-        return $query->whereDoesntHave('screenings', function($q){
-            $q->where('date', '>', now());
+    #region Screening time scopes
+
+    public function scopeHasScreenings($query){
+        return $query->whereHas('screenings', function($q){
+            $q->where('start_time', '>', now());
         });
     }
 
     public function scopeScreeningToday($query){
         return $query->whereHas('screenings', function($q){
-            $q->where('date', '>', now()->startOfDay())
-            ->where('date', '<', now()->endOfDay());
+            $q->where('start_time', '>', now())
+            ->where('start_time', '<', now()->endOfDay());
         });
     }
+
+    public function scopeScreeningTommorow($query){
+        return $query->whereHas('screenings', function($q){
+            $q->where('start_time', '>', now()->addDay()->startOfDay())
+            ->where('start_time', '<', now()->addDay()->endOfDay());
+        });
+    }
+
+    public function scopeScreeningThisWeek($query){
+        return $query->whereHas('screenings', function($q){
+            $q->where('start_time', '>', now())
+            ->where('start_time', '<', now()->addWeek()->endOfDay());
+        });
+    }
+
+    public function scopeScreeningTime($query, string $screening_time){
+        return
+        $query->when($screening_time == 'now', function($query){
+            return $query->screeningToday();
+        })->when($screening_time == 'tommorow', function($query){
+            return $query->screeningTommorow();
+        })->when($screening_time == 'week', function($query){
+            return $query->screeningThisWeek();
+        });
+    }
+
+    #endregion
 
     public function scopeSearch($query, $search_query){
         $search_query = join("%", explode(" ", $search_query));

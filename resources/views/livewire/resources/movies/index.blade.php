@@ -11,7 +11,7 @@
         @forelse($movie_list as $movie)
 
         <!-- movie -->
-        <div x-data="{showDetails: false}" @mouseenter="showDetails = true"  @mouseleave="showDetails = false" class="relative h-[28rem] md:h-[24rem]  w-[19rem] md:w-[16rem]">
+        <div x-data="{showDetails: false}" x-on:mouseenter="showDetails = true"  x-on:mouseleave="showDetails = false" class="relative h-[28rem] md:h-[24rem]  w-[19rem] md:w-[16rem]">
 
 
             <img src="{{URL('/images/movies/'. $movie->image_url)}}" class=" w-full h-full">
@@ -24,7 +24,7 @@
             x-transition:leave="transition duration-1000 ease-in-out"
             x-transition:leave-start="transform translate-y-0 opacity-100"
             x-transition:leave-end="transform translate-y-2 opacity-0"
-            x-cloak class="absolute bottom-0 w-full h-full bg-black bg-opacity-80 flex flex-col justify-center items-center">
+            x-cloak class="absolute bottom-0 w-full h-full bg-black bg-opacity-60 flex flex-col justify-center items-center">
             <!-- Tech-->
              <div  class="flex gap-2 justify-around absolute inset-x-0 text-center top-5">
                 <img class="h-10" src="{{URL('images/tags/4dx.png')}}" alt="">

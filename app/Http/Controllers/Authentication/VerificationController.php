@@ -26,18 +26,9 @@ class VerificationController extends Controller
     /*
     * Mark the authenticated user's email address as verified.
     */
-    public function update(Request $request, $id, $hash)
+    public function update(Request $request, $id, $hash, UserService $userService)
     {
-        $user = User::find($id);
-
-        if (! $user || ! hash_equals((string) $hash, sha1($user->email))) {
-            throw new AuthorizationException;
-        }
-
-        $user->email_verified_at = now();
-        $user->save();
-        event(new Verified($user));
-
+        $userService->verifyEmail($id, $hash);
         return redirect()->route('login.create')
         ->with([
             'status' => 'success',

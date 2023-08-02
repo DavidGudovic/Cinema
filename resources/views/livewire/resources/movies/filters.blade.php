@@ -89,9 +89,10 @@ x-show="showFilters" x-transition.opacity x-ref="filters" x-on:click="showSearch
     <p class="text-opacity-70 text-sm">Prikazuje se:</p>
     <!-- Sort criteria -->
     <select wire:model="screening_time" name="screening_time" class="text-black  bg-gray-200 cursor-pointer">
-        <option value="today">Danas</option>
+        <option value="any">Bilo kada</option>
+        <option value="now">Danas</option>
         <option value="tommorow">Sutra</option>
-        <option value="this_week">Ove nedelje</option>
+        <option value="week">Ove sedmice</option>
     </select>
 </div>
 <!-- End Sort -->

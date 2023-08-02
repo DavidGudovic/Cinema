@@ -23,9 +23,9 @@ class Index extends Component
   Applies filters to movie list. [genres, sorting]
   Filter criteria provided by movies.filters component by raising a filter event
   */
-  public function filter(MovieService $movieService, $genre_list = [], $sort_by='title', $sort_direction='ASC') : void
+  public function filter(MovieService $movieService, $genre_list = [], $sort_by='title', $sort_direction='ASC', $screening_time='any') : void
   {
-    $this->movie_list = $movieService->getScreeningMoviesByGenres(array_keys($genre_list, true));
+    $this->movie_list = $movieService->getMoviesByGenreScreeningTimes(array_keys($genre_list, true), $screening_time);
     $this->sort($sort_by, $sort_direction);
   }
 

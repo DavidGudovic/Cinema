@@ -8,16 +8,11 @@ use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 class MovieService
 {
     /**
-    * Get all movies that have upcoming screenings, filtered by genre when genre != NULL.
+    * Get all movies that have upcoming screenings now, tommorow or in the next week, filtered by genre when genre != NULL.
     */
-
-    public function getScreeningMoviesByGenres(array $genres = NULL) : EloquentCollection
+    public function getMoviesByGenreScreeningTimes(array $genres = NULL, string $screening_time = 'any') : EloquentCollection
     {
-        return Movie::with('genre')->when($genres, function ($query, $genres) {
-            return $query->whereHas('genre', function ($query) use ($genres) {
-                $query->whereIn('id', $genres);
-            });
-        })->get();
+        return Movie::with('genre')->hasScreenings()->fromGenres($genres)->screeningTime($screening_time)->get();
     }
 
     /*
