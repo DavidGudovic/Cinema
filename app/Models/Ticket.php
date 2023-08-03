@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Ticket extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
         /**
      * The attributes that are mass assignable.
      *
@@ -59,8 +60,19 @@ class Ticket extends Model
         return $query->where('discounted', true);
     }
 
-    public function scopeNotDiscounted($query){
-        return $query->where('discounted', false);
+    public function scopeActive($query){
+        return $query->whereHas('screening', function($query){
+            $query->upcoming();
+        });
     }
 
+    public function scopeInactive($query){
+        return $query->whereHas('screening', function($query){
+            $query->past();
+        });
+    }
+
+    public function scopeCancelled($query){
+        return $query->where('soft_deleted', true);
+    }
 }

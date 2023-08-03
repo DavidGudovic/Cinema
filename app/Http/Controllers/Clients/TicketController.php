@@ -15,7 +15,10 @@ class TicketController extends Controller
      */
     public function index(User $user, TicketService $ticketService)
     {
-        return view('users.tickets.index', ['tickets' => $ticketService->getUsersTickets($user)]);
+        return view('users.tickets.index', [
+            'tickets' => $ticketService->getUsersTickets($user),
+            'movies' => $ticketService->getUniqueMovies($user)
+        ]);
     }
 
     /**

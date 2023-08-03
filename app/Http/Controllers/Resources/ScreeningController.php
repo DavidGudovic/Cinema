@@ -31,6 +31,9 @@ class ScreeningController extends Controller
      */
     public function show(Movie $movie, Screening $screening)
     {
-        //
+        return view('resources.screenings.show', [
+            'movie' => $movie,
+            'screening' => $screening,
+        ]);
     }
 }
