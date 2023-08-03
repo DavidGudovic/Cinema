@@ -47,7 +47,7 @@
         <h2 class="text-3xl font-bold text-center">Projekcije</h2>
         <!-- Screening List -->
         <div class="flex flex-col divide-y divide-white mx-auto mt-6">
-            @foreach($screenings_map as $date => $screenings)
+            @forelse($screenings_map as $date => $screenings)
             <!-- Date -> Screening, Screening -->
             <div class="flex p-4 gap-6">
                 <!-- Date -->
@@ -68,7 +68,9 @@
                     @endforeach
                 </div>
             </div>
-            @endforeach
+            @empty
+            <p class="text-3xl font-extrabold text-center w-full mt-8 mb-16">Uskoro!</p>
+            @endforelse
             <!-- End Date -> Screening, Screening -->
         </div>
         <!-- End Screening List -->
