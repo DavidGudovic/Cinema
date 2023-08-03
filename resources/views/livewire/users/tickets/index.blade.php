@@ -5,9 +5,11 @@
         <!-- Ticket border-->
         <div class="@if(!$loop->last)border-b-2 mb-3 md:mb-0 md:border-b-0 md:border-r-2 border-white @endif relative p-4 pr-3 flex-1 min-w-0 md:min-w-[26rem]">
             <!-- cancel button -->
+            @if($ticket->screening->start_time->subHours(2)->isAfter(now()))
             <button wire:click="cancelTicket({{$ticket->id}})" class="absolute top-3 right-3 hover:text-red-700 text-white">
-                 <i class="fa-solid fa-x"></i>
+                 <i class="fa-solid fa-trash"></i>
             </button>
+            @endif
             <!-- Ticket info-->
             <div class="flex flex-col justify-between h-full min-w-full px-2 md:px-4">
                 <div class="flex flex-col gap-3 ">
