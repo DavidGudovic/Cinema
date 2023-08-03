@@ -7,11 +7,6 @@ use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
 class MovieService
 {
-    public function eagerLoadMovie(int $id) : Movie
-    {
-        return Movie::with('genre', 'screenings.tags')
-        ->findOrFail($id);
-    }
     /**
     * Get all movies that have upcoming screenings now, tommorow or in the next week, filtered by genre when genre != NULL.
     */
@@ -52,7 +47,7 @@ class MovieService
 
 
     /*
-    *   [MovieID => Next_Screening_Time]
+    * Returns assoc array of next screening times for all movies with screenings  [MovieID => Next_Screening_Time]
     */
     public function getNextScreenings() : array
     {
@@ -68,5 +63,14 @@ class MovieService
 
             return [$movie->id => $next_screening];
         })->toArray();
+    }
+
+    /*
+    * Eager load all relevant direct/nested relationships for a movie
+    */
+    public function eagerLoadMovie(int $id) : Movie
+    {
+        return Movie::with('genre', 'screenings.tags')
+        ->findOrFail($id);
     }
 }

@@ -128,6 +128,15 @@ class Screening extends Model
             $query->where('name', $tagName);
         });
     }
+    // TODO: Figure out is this supposed to be a scope here or something else.
+    public function scopeWithOmmitedTag($query,string $filter)
+    {
+        return $query->with(['tags' => function ($q) use ($filter){
+            $q->where('name', 'not like', $filter)
+            ->select('image_url');
+        }]);
+    }
+
 
     public function scopeWithAdverts($query)
     {
