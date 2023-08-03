@@ -27,7 +27,7 @@
             <p class="border-b-2 border-white">Radno vreme</p>
             <p><i class="fa-regular fa-calendar"></i> Pon - Pet: 10:00 - 22:00</p>
             <p><i class="fa-regular fa-calendar"></i> Vikendi: 10:00 - 00:00</p>
-            <p><i class="fa-regular fa-copyright"></i> Cinemanija {{date('H:m')}}</p>
+            <p><i class="fa-regular fa-copyright"></i> Cinemanija {{date('Y')}}</p>
         </div>
         <!-- End developer -->
     </div>

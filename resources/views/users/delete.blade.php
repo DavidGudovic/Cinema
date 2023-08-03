@@ -5,7 +5,7 @@
 @section('window')
 <div class="h-full w-full border border-white text-white bg-gray-950 bg-opacity-75">
     <div class="flex flex-col p-5 md:p-28 gap-4 ">
-        <p class="font-bold">Deaktivacija naloga</p>
+        <p class="font-bold text-2xl">Deaktivacija naloga</p>
         <p>Ova akcija će ukloniti vaš Cinemanija nalog. Nećete moći da povratite informacije, kao ni sadržaj koji se u njemu nalazio.  Ako ste sigurni da želite da nastavite, unesite Vašu lozinku.</p>
         <form class="flex flex-col gap-5" action="{{route('user.destroy', auth()->user())}}" method="post">
             @method('DELETE')

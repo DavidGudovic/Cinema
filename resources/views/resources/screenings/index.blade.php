@@ -13,7 +13,7 @@
         <!-- End overlays -->
 
         <!-- Back link -->
-        <a href="{{route('movies.index')}}" class="absolute top-4 left-4 text-white text-2xl font-bold">
+        <a href="{{url()->previous()}}" class="absolute top-4 left-20 text-white text-2xl font-bold">
             <i class="fas fa-arrow-left"></i>
         </a>
         <!-- End back link -->

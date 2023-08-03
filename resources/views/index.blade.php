@@ -16,36 +16,38 @@
             <img :src="'{{URL('images/movies')}}' + '/' + movie.banner_url" alt="Movie Poster" class="w-full object-center">
 
             <!-- Movie info -->
-            <div class="absolute inset-0 bg-gray-950 bg-opacity-40 flex flex-col items-center justify-center w-full  p-6">
-                <div class="flex flex-col gap-2 md:gap-12 align-center justify-center text-center text-white w-full px-12 md:w-1/3">
-                    <p class="text-base md:text-4xl font-extrabold" x-text="movie.title"></p>
-                    <p class="text-sm md:text-xl line-clamp-3 md:line-clamp-none" x-text="movie.description"></p>
+            <div class="absolute inset-0 bg-gray-950 bg-opacity-60 flex flex-col items-center justify-center w-full h-full">
+                <div class="flex flex-col gap-2 md:gap-4 align-center justify-center text-center text-white w-80 md:w-[30rem] h-48 md:h-96 ">
+                    <p class="text-2xl font-extrabold md:text-7xl" x-text="movie.title"></p>
+                    <p class="text-sm md:text-xl line-clamp-3 md:line-clamp-none text-center" x-text="movie.description"></p>
 
-                    <div class="flex flex-row justify-around gap-4 md:mt-4 text-sm md:text-base">
-                        <a :href="routes['movies.show'].replace('_ID_', movie.id)" class="bg-transparent border-2 rounded-2xl border-white text-white hover:bg-gray-950 hover:text-yellow-500 px-2 py-1 md:px-4 md:py-2">
-                            <i class="fa-solid fa-ticket"></i> Karta
+                    <div class="flex flex-row justify-center gap-4 md:gap-6 md:mt-4 text-sm md:text-base mx-6">
+                          <a :href="'https://youtube.com/'" target="_blank" rel="noopener noreferrer" class="bg-transparent border-2 w-1/2 rounded-2xl border-white text-white hover:bg-gray-950 hover:text-yellow-500 px-2 py-1 md:px-4 md:py-2 backdrop-blur-sm">
+                            <i class="fa-brands fa-youtube"></i> <span class="hidden md:inline-flex">Vidi</span> Trailer
                         </a>
-                        <a :href="'https://youtube.com/'" target="_blank" rel="noopener noreferrer" class="bg-transparent border-2 rounded-2xl border-white text-white hover:bg-gray-950 hover:text-yellow-500 px-2 py-1 md:px-4 md:py-2">
-                            <i class="fa-brands fa-youtube"></i> Trailer
+                        <a :href="routes['movies.screening.index'].replace('_ID_', movie.id)" class="bg-transparent border-2 w-1/2 rounded-2xl border-white text-white hover:bg-gray-950 hover:text-yellow-500 px-2 py-1 md:px-4 md:py-2 backdrop-blur-sm">
+                            <i class="fa-solid fa-ticket"></i>
+                            <span class="hidden md:inline-flex">Rezerviši</span> Kart<span class="hidden md:inline-flex">u</span><span class="md:hidden inline-flex">a</span>
                         </a>
                     </div>
                 </div>
             </div>
+            <!-- End movie info -->
         </template>
 
         <!-- Buttons -->
-        <button  class="absolute inset-y-0 left-5 md:left-10 px-2  h-full text-white opacity-40 hover:text-yellow-500 hover:opacity-100 hover:cursor-pointer  z-10" x-on:click="prev(), manualMove()">
+        <button  class="absolute inset-y-0 left-5 md:left-10 px-2  h-full text-white opacity-40 hover:opacity-100 hover:cursor-pointer  z-10" x-on:click="prev(), manualMove()">
             <i class="fa-solid text-lg  md:text-7xl fa-chevron-left"></i>
         </button>
-        <button class="absolute inset-y-0 right-5 md:right-10 px-2  h-full text-white opacity-40 hover:text-yellow-500 hover:opacity-100 hover:cursor-pointer  z-10" x-on:click="next(), manualMove()">
+        <button class="absolute inset-y-0 right-5 md:right-10 px-2  h-full text-white opacity-40 hover:opacity-100 hover:cursor-pointer  z-10" x-on:click="next(), manualMove()">
             <i class="fa-solid text-lg  md:text-7xl fa-chevron-right"></i>
         </button>
 
         <!-- Navigation dots -->
         <div class="absolute bottom-0 w-full p-4 flex gap-4 justify-center space-x-2">
             <template x-for="(movie, index) in movies" :key="index">
-                <button class="h-2 md:h-3 w-2 md:w-3 ring-2 rounded-full bg-transparent hover:bg-white hover:cursor-pointer z-10  ring-gray-950"
-                :class="{ 'bg-white': current == index }"
+                <button class="h-2 md:h-3 w-2 md:w-3 rounded-full bg-white  hover:cursor-pointer hover:bg-opacity-100 z-10 "
+                :class="{ 'bg-opacity-100': current == index, 'bg-opacity-30': current != index }"
                 @click="current = index, manualMove()"></button>
             </template>
         </div>
@@ -144,7 +146,7 @@
 @section('scripts')
 <script>
     window.routes = {
-        'movies.show': "{{ route('movie.screenings.index', ['movie' => '_ID_']) }}"
+        'movies.screening.index': "{{ route('movie.screenings.index', ['movie' => '_ID_']) }}"
     };
 </script>
 @endsection
