@@ -24,7 +24,7 @@ class MovieService
     */
     public function getBySearch(string $search_query) : EloquentCollection
     {
-        return Movie::search($search_query)->get();
+        return Movie::search($search_query)->hasScreenings()->get();
     }
 
     /*

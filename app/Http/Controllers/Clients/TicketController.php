@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Clients;
 use App\Models\User;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
+use App\Services\TicketService;
 use App\Http\Controllers\Controller;
 
 class TicketController extends Controller
@@ -12,9 +13,9 @@ class TicketController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(User $user)
+    public function index(User $user, TicketService $ticketService)
     {
-        dd('user/#/tickets/index');
+        return view('users.tickets.index', ['tickets' => $ticketService->getUsersTickets($user)]);
     }
 
     /**

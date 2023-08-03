@@ -8,15 +8,15 @@
     <!-- End fixed-->
     <!-- List of Movies -->
     <div class="flex flex-row flex-wrap justify-center gap-10 ">
-        @forelse($movie_list as $movie)
+        @forelse($movie_list as $key => $movie)
 
         <!-- Movie -->
-        <div x-data="{showDetails: false}" x-on:mouseenter="showDetails = true"  x-on:mouseleave="showDetails = false" class="relative h-[28rem] md:h-[24rem]  w-[19rem] md:w-[16rem]">
+        <a href="{{route('movie.screenings.index', $movie->id)}}" x-data="{showDetails: false}" x-on:mouseenter="showDetails = true"  x-on:mouseleave="showDetails = false" class="relative h-[28rem] md:h-[24rem]  w-[19rem] md:w-[16rem]">
 
 
             <img src="{{URL('/images/movies/'. $movie->image_url)}}" class=" w-full h-full">
 
-            <a href="{{route('movie.screenings.index', $movie->id)}}"
+            <div
                 x-show="showDetails"
                 x-transition:enter="transition duration-600 ease-in-out"
                 x-transition:enter-start="transform translate-y-full opacity-0"
@@ -46,8 +46,8 @@
                     <p class="text-white text-sm ">Sledeće prikazivanje: {{$movies_next_screening[$movie->id]}}</p>
                 </div>
                 <!-- End CTA -->
-            </a>
-        </div>
+            </div>
+        </a>
         <!--End movie -->
 
         @empty
