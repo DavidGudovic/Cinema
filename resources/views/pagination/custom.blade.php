@@ -53,7 +53,7 @@
                   <!-- Current -->
                   @if ($page == $paginator->currentPage())
                     <span aria-current="page">
-                      <span class="text-white">{{ $page }}</span>
+                      <span class="text-red-700">{{ $page }}</span>
                     </span>
                   @else
                     <!-- 2 around current are dots -->

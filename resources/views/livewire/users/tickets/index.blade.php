@@ -3,7 +3,11 @@
     <div class="flex flex-1 flex-col md:flex-row justify-center w-full">
         @forelse($tickets as $ticket)
         <!-- Ticket border-->
-        <div class="@if(!$loop->last)border-b-2 mb-3 md:mb-0 md:border-b-0 md:border-r-2 border-white @endif p-4 pr-3 flex-1 min-w-0 md:min-w-[420px]">
+        <div class="@if(!$loop->last)border-b-2 mb-3 md:mb-0 md:border-b-0 md:border-r-2 border-white @endif relative p-4 pr-3 flex-1 min-w-0 md:min-w-[26rem]">
+            <!-- cancel button -->
+            <button wire:click="cancelTicket({{$ticket->id}})" class="absolute top-3 right-3 hover:text-red-700 text-white">
+                 <i class="fa-solid fa-x"></i>
+            </button>
             <!-- Ticket info-->
             <div class="flex flex-col justify-between h-full min-w-full px-2 md:px-4">
                 <div class="flex flex-col gap-3 ">
@@ -13,7 +17,7 @@
                         <p>Sala: {{$ticket->screening->hall_id}}</p>
                         <p>Sedišta:
                             @for($i = 0; $i < $ticket->seat_number; $i++)
-                            {{ chr(65 + $ticket->first_seat_row) }}{{ $ticket->first_seat_column + $i }}@if($i != $ticket->seat_number - 1), @endif
+                            {{ chr(65 + $ticket->first_seat_row - 1) }}{{ $ticket->first_seat_column + $i }}@if($i != $ticket->seat_number - 1), @endif
                             @endfor
                         </p>
                     </div>
@@ -99,7 +103,9 @@
         </div>
         <!-- End Ticket border-->
         @empty
-        <p class="text-2xl font-extrabold text-center">Nemate rezervisanih karata.</p>
+        <div class="flex flex-col w-full h-full justify-center">
+           <p class="text-4xl font-extrabold text-center">Nemate rezervisanih karata.</p>
+        </div>
         @endforelse
     </div>
     <!-- End Tickets-->

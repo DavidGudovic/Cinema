@@ -23,10 +23,10 @@ class Index extends Component
         return 'pagination.custom';
     }
 
-    public function render()
+    public function render(TicketService $ticketService)
     {
         return view('livewire.users.tickets.index', [
-            'tickets' => auth()->user()->tickets()->with('screening.movie')->paginate(2),
+            'tickets' => $ticketService->getFilteredTicketsPaginated($this->status_filter,$this->movie_filter)
         ]);
     }
 

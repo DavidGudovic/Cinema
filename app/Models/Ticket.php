@@ -72,7 +72,9 @@ class Ticket extends Model
         });
     }
 
-    public function scopeCancelled($query){
-        return $query->where('soft_deleted', true);
+    public function scopeForMovie($query, $movie){
+        return $query->whereHas('screening', function($query) use ($movie){
+            $query->where('movie_id', $movie);
+        });
     }
 }

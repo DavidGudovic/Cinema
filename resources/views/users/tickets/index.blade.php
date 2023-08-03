@@ -30,8 +30,8 @@
             <option value="inactive">Prosla</option>
         </select>
         <div class="flex flex-row gap-6 mt-4">
-            <button x-on:click.prevent="window.livewire.emit('setOrderFilters', statusFilter, monthFilter)" type="submit" class="form-btn py-1">Primeni</button>
-            <button x-on:click="movieFilter = 0; statusFilter = 0; window.livewire.emit('setMovieFilters', movieFilter, statusFilter)" type="reset" class="form-btn bg-gray-500 py-1">Resetuj</button>
+            <button x-on:click.prevent="window.livewire.emit('setTicketFilters', statusFilter, movieFilter)" type="submit" class="form-btn py-1">Primeni</button>
+            <button x-on:click="movieFilter = 0; statusFilter = 0; window.livewire.emit('setTicketFilters', movieFilter, statusFilter)" type="reset" class="form-btn bg-gray-500 py-1">Resetuj</button>
         </div>
     </form>
 </div>
