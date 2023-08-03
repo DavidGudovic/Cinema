@@ -29,7 +29,7 @@ class ScreeningController extends Controller
     /**
      * Display a screening
      */
-    public function show(Screening $screening)
+    public function show(Movie $movie, Screening $screening)
     {
         //
     }
