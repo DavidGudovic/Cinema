@@ -21,7 +21,6 @@ class Index extends Component
 
     public function refresh()
     {
-        $this->resetPage();
     }
     public function paginationView()
     {

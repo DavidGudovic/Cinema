@@ -7,7 +7,7 @@
             <!-- delete button -->
             @if($ticket->screening->start_time->subHours(2)->isAfter(now()) && !$ticket->deleted_at)
             <button  x-data='{}' x-on:click.prevent="window.livewire.emitTo('users.tickets.delete-modal', 'showModal' , {{$ticket->id}})" class="absolute top-3 right-3 hover:text-red-700 text-white">
-                 <i class="fa-solid fa-trash"></i>
+                <i class="fa-solid fa-trash"></i>
             </button>
             <!-- end delete button -->
             @endif
@@ -107,7 +107,7 @@
         <!-- End Ticket border-->
         @empty
         <div class="flex flex-col w-full h-full justify-center">
-           <p class="text-4xl font-extrabold text-center">Nemate rezervisanih karata.</p>
+            <p class="text-4xl font-extrabold text-center">Nemate rezervisanih karata.</p>
         </div>
         @endforelse
     </div>

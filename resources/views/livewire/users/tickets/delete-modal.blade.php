@@ -1,7 +1,9 @@
 <div x-data="{ showModal: @entangle('showModal') }" x-show="showModal" x-trap.noscroll="showModal" x-on:keydown.escape.window="showModal = false" x-cloak class="flex justify-center items-center h-full fixed inset-0 px-4 py-6 md:py-6 z-50">
 
     <!-- Modal Background -->
-    <div x-show="showModal" class="fixed inset-0 transform backdrop-blur-sm" x-on:click="showModal=false"></div>
+    <div x-show="showModal" class="fixed inset-0 transform backdrop-blur-sm" x-on:click="showModal=false">
+
+    </div>
 
     <!-- Modal body -->
     @if(isset($ticket))
@@ -24,3 +26,4 @@
     @endif
     <!-- End Modal Body -->
 </div>
+

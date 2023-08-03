@@ -22,6 +22,6 @@ class DeleteModal extends ModalBase
     {
         $ticketService->cancelTicket($this->ticket);
         session()->flash('success','Uspešno ste otkazali kartu');
-        $this->emitTo('livewire.users.tickets.index','ticketCancelled');
+        $this->emit('ticketCancelled');
     }
 }
