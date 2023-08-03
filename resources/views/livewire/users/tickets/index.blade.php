@@ -4,11 +4,12 @@
         @forelse($tickets as $ticket)
         <!-- Ticket border-->
         <div class="@if(!$loop->last)border-b-2 mb-3 md:mb-0 md:border-b-0 md:border-r-2 border-white @endif relative p-4 pr-3 flex-1 min-w-0 md:min-w-[26rem]">
-            <!-- cancel button -->
-            @if($ticket->screening->start_time->subHours(2)->isAfter(now()))
-            <button wire:click="cancelTicket({{$ticket->id}})" class="absolute top-3 right-3 hover:text-red-700 text-white">
+            <!-- delete button -->
+            @if($ticket->screening->start_time->subHours(2)->isAfter(now()) && !$ticket->deleted_at)
+            <button  x-data='{}' x-on:click.prevent="window.livewire.emitTo('users.tickets.delete-modal', 'showModal' , {{$ticket->id}})" class="absolute top-3 right-3 hover:text-red-700 text-white">
                  <i class="fa-solid fa-trash"></i>
             </button>
+            <!-- end delete button -->
             @endif
             <!-- Ticket info-->
             <div class="flex flex-col justify-between h-full min-w-full px-2 md:px-4">
@@ -114,4 +115,6 @@
 
     <!-- Paginator -->
     <span class="text-center w-max">{{$tickets->links()}}</span>
+    <!-- Modal -->
+    <livewire:users.tickets.delete-modal/>
 </div>

@@ -10,14 +10,19 @@ use App\Services\TicketService;
 class Index extends Component
 {
     use WithPagination;
-    public $status_filter = "";
+    public $status_filter = "all";
     public $movie_filter = 0;
 
     public $listeners = [
         'setTicketFilters' => 'setTicketFilters',
         'cancelTicket' => 'cancelTicket',
+        'ticketCancelled' => 'refresh'
     ];
 
+    public function refresh()
+    {
+        $this->resetPage();
+    }
     public function paginationView()
     {
         return 'pagination.custom';

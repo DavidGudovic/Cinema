@@ -8,6 +8,13 @@ use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
 class TicketService{
     /*
+    * Get a ticket by id
+    */
+    public function getTicket(int $id) : Ticket
+    {
+        return Ticket::with('screening.movie')->withTrashed()->findOrFail($id);
+    }
+    /*
     * Get all tickets for a user
     */
     public function getUsersTickets(User $user) : EloquentCollection
@@ -33,14 +40,14 @@ class TicketService{
     */
     public function cancelTicket(Ticket $ticket) : void
     {
-        $ticket->softDelete();
+        $ticket->delete();
     }
 
     /*
     * Get all tickets for a user with optional filters, paginated
     * Todo find cleaner way - ugly wall of code
     */
-    public function getFilteredTicketsPaginated(string $status, int $movie, ?int $quantity = 2) : LengthAwarePaginator
+    public function getFilteredTicketsPaginated(string $status = 'all', int $movie, ?int $quantity = 2) : LengthAwarePaginator
     {
         return Ticket::with('screening.movie')
         ->where('user_id', auth()->user()->id)
@@ -54,6 +61,8 @@ class TicketService{
             return $query->inactive();
         })->when($movie != 0, function($query) use ($movie){
             return $query->forMovie($movie);
-        })->paginate($quantity);
+        })
+        ->orderBy('created_at', 'desc')
+        ->paginate($quantity);
     }
 }
