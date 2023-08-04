@@ -1,7 +1,7 @@
-<div class="flex flex-col gap-12 justify-center md:w-1/2">
+<div class="flex flex-col gap-12 justify-center md:w-1/2 h-min">
     <!-- Screen -->
     <div class="flex justify-center md:mx-14">
-        <div class="w-full h-12 border-t-4 border-white rounded-t-2xl">
+        <div class=" w-full h-12 border-t-4 border-white rounded-t-2xl">
             <p class="text-center text-white">Platno</p>
         </div>
     </div>

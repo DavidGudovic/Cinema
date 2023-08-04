@@ -30,4 +30,12 @@ class ScreeningService
         })
         ->take($quantity);
     }
+
+    /*
+    Eager loads screening
+    */
+    public function eagerLoadScreening($screening)
+    {
+        return Screening::with('movie')->with('hall')->where('id', $screening)->first();
+    }
 }
