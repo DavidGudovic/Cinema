@@ -10,17 +10,17 @@
     <!-- Seats -->
     <div x-data="{ selectedSeats: @entangle('selectedSeats') }" class="flex gap-12 md:gap-24 justify-center">
         <!-- Left seats -->
-        <div class="flex flex-col gap-2 md:gap-4">
-            @for ($i = 0; $i < $screening->hall->columns; $i++)
-            <div class="flex flex-row gap-2 md:gap-4">
-                @for ($j = 1; $j <= ($screening->hall->rows)/2; $j++)
-                @if(in_array([$i, $j], $takenSeats))
-                <div class="w-6 h-6 text-[0.7rem] pt-[0.3rem] border-2 border-white opacity-50 rounded-t-xl align-center justify-center flex">
+        <div class="flex flex-row gap-2 md:gap-4">
+            @for ($row = 1; $row <= ($screening->hall->rows / 2); $row++)
+            <div class="flex flex-col gap-2 md:gap-4">
+                @for ($column = 1; $column <= $screening->hall->columns; $column++)
+                @if(in_array([$row, $column], $takenSeats))
+                <div class="w-6 h-6 text-[0.7rem] pt-[0.3rem] border-2 border-red-700 opacity-50 rounded-t-xl align-center justify-center flex">
                     <i class="fa-solid fa-xmark"></i>
                 </div>
                 @else
-                <div  :class="{ 'bg-green-300': {{ $this->isSelected($i, $j) ? 'true' : 'false' }} }" wire:click="toggleSeat({{ $i }}, {{ $j }})" class="w-6 h-6 text-[0.7rem] pt-[0.3rem] border-2 border-white rounded-t-xl cursor-pointer hover:bg-white">
-                    <span class=" w-full align-center justify-center flex "> {{ chr(65 + $i) }}{{ $j }}</span>
+                <div  :class="{ 'bg-green-300': {{ $this->isSelected($row, $column) ? 'true' : 'false' }} }" wire:click="toggleSeat({{ $row }}, {{ $column }})" class="w-6 h-6 text-[0.7rem] pt-[0.3rem] border-2 border-white rounded-t-xl cursor-pointer hover:bg-white">
+                    <span class=" w-full align-center justify-center flex "> {{ chr(64 + $column) }}{{ $row }}</span>
                 </div>
                 @endif
                 @endfor
@@ -29,17 +29,17 @@
         </div>
         <!-- End left seats -->
         <!-- Right seats -->
-        <div class="flex flex-col gap-2 md:gap-4">
-            @for ($i = 0; $i < $screening->hall->columns; $i++)
-            <div  class="flex flex-row gap-2 md:gap-4">
-                @for ($j = ($screening->hall->rows)/2 + 1; $j <= $screening->hall->rows; $j++)
-                @if(in_array([$i, $j], $takenSeats))
-                <div class="w-6 h-6 text-[0.7rem] pt-[0.3rem] border-2 border-white opacity-50 rounded-t-xl align-center justify-center flex">
+        <div class="flex flex-row gap-2 md:gap-4">
+            @for ($row = ($screening->hall->rows / 2) + 1; $row <= $screening->hall->rows; $row++)
+            <div class="flex flex-col gap-2 md:gap-4">
+                @for ($column = 1; $column <= $screening->hall->columns; $column++)
+                @if(in_array([$row, $column], $takenSeats))
+                <div class="w-6 h-6 text-[0.7rem] pt-[0.3rem] border-2 border-red-700 opacity-50 rounded-t-xl align-center justify-center flex">
                     <i class="fa-solid fa-xmark"></i>
                 </div>
                 @else
-                <div :class="{ 'bg-green-300': {{ $this->isSelected($i, $j) ? 'true' : 'false' }} }" wire:click="toggleSeat({{ $i }}, {{ $j }})" class="w-6 h-6 text-[0.7rem] pt-[0.3rem] border-2 border-white rounded-t-xl cursor-pointer hover:bg-white">
-                    <span class=" w-full align-center justify-center flex "> {{ chr(65 + $i) }}{{ $j }}</span>
+                <div  :class="{ 'bg-green-300': {{ $this->isSelected($row, $column) ? 'true' : 'false' }} }" wire:click="toggleSeat({{ $row }}, {{ $column }})" class="w-6 h-6 text-[0.7rem] pt-[0.3rem] border-2 border-white rounded-t-xl cursor-pointer hover:bg-white">
+                    <span class=" w-full align-center justify-center flex "> {{ chr(64 + $column) }}{{ $row }}</span>
                 </div>
                 @endif
                 @endfor
