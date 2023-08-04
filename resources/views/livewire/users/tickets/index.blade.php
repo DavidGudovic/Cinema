@@ -17,7 +17,7 @@
                     <p class="font-bold text-xl">Film: {{$ticket->screening->movie->title}}</p>
                     <p class="">Vreme: {{$ticket->screening->start_time->format('d/m H:i')}}</p>
                     <div class="flex justify-between border-b-2 border-white">
-                        <p>Sala: {{$ticket->screening->hall_id}}</p>
+                        <p class="w-24">Sala: {{$ticket->screening->hall_id}}</p>
                         <p>Sedišta:
                             @foreach($ticket->seats->sortBy(['column','row']) as $seat)
                             {{chr(64 + $seat->column) }}{{ $seat->row }}@if(!$loop->last), @endif
