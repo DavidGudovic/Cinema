@@ -1,4 +1,9 @@
-<div class="w-full flex flex-col items-center p-2 pt-4 bg-gray-950 bg-opacity-80">
+<div class="relative w-full flex flex-col items-center p-2 pt-4 bg-gray-950 bg-opacity-80">
+    <!-- Loading -->
+    <div wire:loading class="absolute w-10 h-10 top-2 md:bottom-2 left-2 md:top-0 ">
+        <x-loading-indicator/>
+    </div>
+    <!-- End loading -->
     <!-- Tickets -->
     <div class="flex flex-1 flex-col md:flex-row justify-center w-full">
         @forelse($tickets as $ticket)

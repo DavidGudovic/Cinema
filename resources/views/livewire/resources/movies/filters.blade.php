@@ -41,8 +41,8 @@
     <form wire:submit.prevent="submit" class="flex flex-col gap-4 border-2 border-gray-800 bg-gray-950 bg-opacity-90 p-6 md:mr-9 min-w-[250px] text-white" x-show="showFilters" x-transition.opacity x-ref="filters" x-on:click="showSearchBar = false">
         <div class="flex flex-row justify-center">
             <p class="font-bold text-center">Filteri</p>
-            <div wire:loading wire:target="submit, resetFilter" class="w-8 h-8">
-                <img src="{{URL('/images/utility/loading.gif')}}" alt="">
+            <div wire:loading class="w-8 h-8">
+                <x-loading-indicator/>
             </div>
         </div>
 

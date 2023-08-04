@@ -2,7 +2,7 @@
     <!-- Fixed -->
     <!-- Search loading indicator -->
     <div wire:loading class="fixed m-auto right-0 left-0 top-32 h-16 w-16">
-        <img src="{{URL('/images/utility/loading.gif')}}" alt="">
+        <x-loading-indicator/>
     </div>
     <!-- End loading indicator -->
     <!-- End fixed-->

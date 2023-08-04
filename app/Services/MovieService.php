@@ -56,6 +56,7 @@ class MovieService
         ->get()
         ->mapWithKeys(function ($movie) {
             $next_screening = $movie->screenings
+            ->where('start_time', '>=', now())
             ->sortBy('start_time')
             ->first()
             ->start_time

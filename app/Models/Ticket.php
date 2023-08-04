@@ -24,7 +24,6 @@ class Ticket extends Model
     }
 
     protected $fillable = [
-        'discounted',
     ];
 
     /**
@@ -60,7 +59,11 @@ protected $casts = [
     }
 
     public function getDiscountAttribute(){
-        return $this->discounted ? $this->subtotal * 0.2 : 0;
+        return $this->seats->count() > config('pricing.seat_discount_threshold') ? $this->subtotal * config('pricing.seat_discount') : 0;
+    }
+
+    public function getIsDiscountedAttribute(){
+        return $this->discount > 0;
     }
 
     public function getTotalAttribute(){

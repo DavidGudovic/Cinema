@@ -48,7 +48,7 @@ class TicketService{
 
     /*
     * Get all tickets for a user with optional filters, paginated
-    * Todo find cleaner way - ugly wall of code
+    * TODO Refactor
     */
     public function getFilteredTicketsPaginated(string $status = 'all', int $movie, ?int $quantity = 2) : LengthAwarePaginator
     {
