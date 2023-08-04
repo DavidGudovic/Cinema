@@ -59,7 +59,7 @@ protected $casts = [
     }
 
     public function getDiscountAttribute(){
-        return $this->seats->count() > config('pricing.seat_discount_threshold') ? $this->subtotal * config('pricing.seat_discount') : 0;
+        return $this->seats->count() >= config('pricing.seat_discount_threshold') ? $this->subtotal * config('pricing.seat_discount') : 0;
     }
 
     public function getIsDiscountedAttribute(){

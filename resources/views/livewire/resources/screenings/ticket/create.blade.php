@@ -68,26 +68,27 @@
                     <div class="flex flex-row justify-between border-b-[0.0005rem] border-opacity-50 border-white gap-2">
                         <!-- Left info-->
                         <div class="flex flex-col gap-3">
-                            <span>Popust:</span>
-                        </div>
-                        <!-- Right info-->
-                        <div class="flex flex-row justify-between md:w-16">
-                            <span class="text-sm">{{$ticket->discount}}</span>
-                            <span class="text-sm">RSD</span>
-                        </div>
-                        <!-- End info-->
-                    </div>
-                    <!-- End item -->
-                    <!-- Item -->
-                    <div class="flex flex-row justify-between border-b-[0.0005rem] border-opacity-50 border-white gap-2">
-                        <!-- Left info-->
-                        <div class="flex flex-col gap-3">
                             <span>Broj sedišta:</span>
                         </div>
                         <!-- Right info-->
                         <div class="flex flex-row justify-between md:w-16">
                             <span class="text-sm"> x </span>
                             <span class="text-sm">{{$ticket->seats->count() ?? 0}}</span>
+                        </div>
+                        <!-- End info-->
+                    </div>
+                    <!-- End item -->
+
+                    <!-- Item -->
+                    <div class="flex flex-row justify-between border-b-[0.0005rem] border-opacity-50 border-white gap-2">
+                        <!-- Left info-->
+                        <div class="flex flex-col gap-3">
+                            <span>Popust:</span>
+                        </div>
+                        <!-- Right info-->
+                        <div class="flex flex-row justify-between md:w-16">
+                            <span class="text-sm">{{$ticket->discount}}</span>
+                            <span class="text-sm">RSD</span>
                         </div>
                         <!-- End info-->
                     </div>
@@ -105,12 +106,18 @@
                 </div>
                 <!-- End footer info-->
                 <!-- Action -->
-                <a href="#" class="text-center bg-transparent border rounded-xl border-white text-white p-2 w-48">
-                    <i class="fa-solid fa-ticket"></i> Rezerviši Kartu
-                </a>
+                <div class="flex justify-between">
+                    <a href="{{route('user.tickets.store',auth()->user(), $ticket)}}" class="text-center bg-transparent border rounded-xl border-white text-white p-2 w-48">
+                        <i class="fa-solid fa-ticket"></i> Rezerviši Kartu
+                    </a>
+                    <a wire:click.prevent="resetSelectedSeats()" class="text-center bg-transparent border rounded-xl border-white text-white p-2 w-48">
+                        <i class="fa-solid fa-x"></i> Otkaži rezervisanje
+                    </a>
+                </div>
+
                 <!-- End action -->
                 <!-- Discount -->
-                 <p class="text-sm">
+                <p class="text-sm">
                     <span class="font-bold">*Napomena:</span>
                     Ako rezervišete {{config('pricing.seat_discount_threshold')}} ili više sedišta na jednoj ulaznici, dobijate popust od {{config('pricing.seat_discount') * 100}}%. Ova posebna ponuda je naš način da Vam se zahvalimo što dolazite u naš bioskop sa porodicom ili prijateljima. Uživajte u filmu i uštedite kupovinom više karata odjednom!
                 </p>

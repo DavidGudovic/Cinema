@@ -7,6 +7,18 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
 class TicketService{
+
+    /*
+    * Create a ticket
+    */
+    public function createTicket($request, User $user, Ticket $ticket) : void
+    {
+        $ticket->user_id = $user->id;
+        $ticket->screening_id = $request->screening_id;
+        $ticket->save();
+        $ticket->seats()->attach($request->seats);
+    }
+
     /*
     * Get a ticket by id
     */

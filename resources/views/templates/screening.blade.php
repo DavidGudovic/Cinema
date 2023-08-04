@@ -9,7 +9,7 @@
         <img src="{{URL('images/movies/' . $movie->banner_url)}}" alt="{{$movie->title}} banner image" class="w-full hidden md:block relative bottom-20">
         <img src="{{URL('images/movies/' . $movie->image_url)}}" alt="{{$movie->title}} banner image" class="w-full md:hidden relative">
         <!-- overlays -->
-        <div class="absolute w-full bottom-0 h-full bg-gradient-to-t from-gray-950 to-20% via-gray-900"></div>
+        <div class="absolute w-full bottom-0 h-full bg-gradient-to-t from-gray-950 to-20% via-neutral-900"></div>
         <div class="absolute inset-0 bg-gray-950 bg-opacity-40"></div>
         <!-- End overlays -->
 

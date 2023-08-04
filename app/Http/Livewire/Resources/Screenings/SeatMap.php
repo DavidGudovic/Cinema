@@ -12,6 +12,11 @@ class SeatMap extends Component
     public $selectedSeats = [];
     public Screening $screening;
 
+    protected $listeners =
+    [
+        'resetSelectedSeats' => 'resetSelectedSeats',
+    ];
+
     public function mount(SeatService $seatService)
     {
         $this->takenSeats = $seatService->getTakenSeatsMap($this->screening);
@@ -20,6 +25,12 @@ class SeatMap extends Component
     public function render()
     {
         return view('livewire.resources.screenings.seat-map');
+    }
+
+    public function resetSelectedSeats() : void
+    {
+        $this->selectedSeats = [];
+        $this->render();
     }
 
     public function toggleSeat($row, $column) : void

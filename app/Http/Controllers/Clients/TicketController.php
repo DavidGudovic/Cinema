@@ -22,50 +22,12 @@ class TicketController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, User $user)
+    public function store(Request $request, User $user, Ticket $ticket, TicketService $ticketService)
     {
-        //
+        $ticketService->createTicket($request, $user, $ticket);
+        return redirect()->route('resources.screenings.ticket.store', $ticket);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Ticket $ticket, User $user)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Ticket $ticket)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Ticket $ticket)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Ticket $ticket)
-    {
-        //
-    }
 }

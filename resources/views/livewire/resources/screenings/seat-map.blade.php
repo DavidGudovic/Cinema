@@ -8,18 +8,18 @@
     <!-- End Screen -->
 
     <!-- Seats -->
-    <div x-data="{ selectedSeats: @entangle('selectedSeats') }" x-ref="target" class="flex gap-12 md:gap-24 justify-center">
+    <div x-ref="target" class="flex gap-12 md:gap-24 justify-center">
         <!-- Left seats -->
         <div class="flex flex-row gap-2 md:gap-4">
             @for ($row = 1; $row <= ($screening->hall->rows / 2); $row++)
             <div class="flex flex-col gap-2 md:gap-4">
                 @for ($column = 1; $column <= $screening->hall->columns; $column++)
                 @if(in_array([$row, $column], $takenSeats))
-                <div class="w-6 h-6 text-[0.7rem] pt-[0.3rem] border-2 border-red-700 opacity-50 rounded-t-xl align-center justify-center flex">
+                <div class="w-6 h-6 text-[0.7rem] pt-[0.3rem] border border-opacity-80 border-red-700 opacity-50 rounded-t-xl align-center justify-center flex">
                     <i class="fa-solid fa-xmark"></i>
                 </div>
                 @else
-                <div  :class="{ 'bg-green-300': {{ $this->isSelected($row, $column) ? 'true' : 'false' }} }" wire:click="toggleSeat({{ $row }}, {{ $column }})" class="w-6 h-6 text-[0.7rem] pt-[0.3rem] border-2 border-white rounded-t-xl cursor-pointer hover:bg-white">
+                <div  :class="{ 'bg-green-300': {{ $this->isSelected($row, $column) ? 'true' : 'false' }} }" wire:click="toggleSeat({{ $row }}, {{ $column }})" class="w-6 h-6 text-[0.7rem] pt-[0.3rem] border border-opacity-80 border-white rounded-t-xl cursor-pointer hover:bg-white">
                     <span class=" w-full align-center justify-center flex "> {{ chr(64 + $column) }}{{ $row }}</span>
                 </div>
                 @endif
@@ -34,11 +34,11 @@
             <div class="flex flex-col gap-2 md:gap-4">
                 @for ($column = 1; $column <= $screening->hall->columns; $column++)
                 @if(in_array([$row, $column], $takenSeats))
-                <div class="w-6 h-6 text-[0.7rem] pt-[0.3rem] border-2 border-red-700 opacity-50 rounded-t-xl align-center justify-center flex">
+                <div class="w-6 h-6 text-[0.7rem] pt-[0.3rem] border border-opacity-80 border-red-700 opacity-50 rounded-t-xl align-center justify-center flex">
                     <i class="fa-solid fa-xmark"></i>
                 </div>
                 @else
-                <div  :class="{ 'bg-green-300': {{ $this->isSelected($row, $column) ? 'true' : 'false' }} }" wire:click="toggleSeat({{ $row }}, {{ $column }})" class="w-6 h-6 text-[0.7rem] pt-[0.3rem] border-2 border-white rounded-t-xl cursor-pointer hover:bg-white">
+                <div  :class="{ 'bg-green-300': {{ $this->isSelected($row, $column) ? 'true' : 'false' }} }" wire:click="toggleSeat({{ $row }}, {{ $column }})" class="w-6 h-6 text-[0.7rem] pt-[0.3rem] border border-opacity-80 border-white rounded-t-xl cursor-pointer hover:bg-white">
                     <span class=" w-full align-center justify-center flex "> {{ chr(64 + $column) }}{{ $row }}</span>
                 </div>
                 @endif
