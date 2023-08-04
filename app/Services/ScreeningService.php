@@ -30,27 +30,4 @@ class ScreeningService
         })
         ->take($quantity);
     }
-
-    /*
-    * Returns an array of taken seats for a screening
-    */
-    public function getTakenSeats(Screening $screening): array
-    {
-        $tickets = Ticket::forScreening($screening)->get();
-        $takenSeats = [];
-        foreach ($tickets as $ticket) {
-            $row = $ticket->first_seat_row;
-            $column = $ticket->first_seat_column;
-            $seatNumber = $ticket->seat_number;
-
-            // Add the coordinates of the subsequent seats to the right
-            for ($i = 0; $i <= $seatNumber - 1; $i++) {
-                $takenSeats[] = [$row - 1, $column + $i];
-            }
-        }
-
-        return $takenSeats;
-    }
-
-
 }

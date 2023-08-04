@@ -15,9 +15,6 @@ class Ticket extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'first_seat_row',
-        'first_seat_column',
-        'seat_number',
         'price',
         'discounted',
     ];
@@ -52,7 +49,11 @@ class Ticket extends Model
         return $this->belongsTo(User::class);
     }
 
-    /**
+    public function seats(){
+        return $this->hasMany(Seat::class);
+    }
+
+    /*
      * Local Eloquent scopes
      */
 

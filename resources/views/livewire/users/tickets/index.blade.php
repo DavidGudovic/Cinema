@@ -19,9 +19,9 @@
                     <div class="flex justify-between border-b-2 border-white">
                         <p>Sala: {{$ticket->screening->hall_id}}</p>
                         <p>Sedišta:
-                            @for($i = 0; $i < $ticket->seat_number; $i++)
-                            {{ chr(65 + $ticket->first_seat_row - 1) }}{{ $ticket->first_seat_column + $i }}@if($i != $ticket->seat_number - 1), @endif
-                            @endfor
+                            @foreach($ticket->seats as $seat)
+                            {{chr(65 + $seat->row - 1) }}{{ $seat->column }}@if(!$loop->last), @endif
+                            @endforeach
                         </p>
                     </div>
                     <p class="font-bold text-xl">Račun:</p>

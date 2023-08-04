@@ -12,7 +12,9 @@ class TicketService{
     */
     public function getTicket(int $id) : Ticket
     {
-        return Ticket::with('screening.movie')->withTrashed()->findOrFail($id);
+        return Ticket::with('screening.movie')->with('seats')
+        ->withTrashed()
+        ->findOrFail($id);
     }
     /*
     * Get all tickets for a user
@@ -50,7 +52,7 @@ class TicketService{
     */
     public function getFilteredTicketsPaginated(string $status = 'all', int $movie, ?int $quantity = 2) : LengthAwarePaginator
     {
-        return Ticket::with('screening.movie')
+        return Ticket::with('screening.movie')->with('seats')
         ->where('user_id', auth()->user()->id)
         ->when($status == 'all', function($query){
             return $query->withTrashed();
