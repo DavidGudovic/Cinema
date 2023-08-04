@@ -77,4 +77,8 @@ class Ticket extends Model
             $query->where('movie_id', $movie);
         });
     }
+
+    public function scopeForScreening($query, $screening){
+        return $query->where('screening_id', $screening->id);
+    }
 }
