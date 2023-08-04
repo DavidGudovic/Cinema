@@ -54,7 +54,7 @@ Route::middleware('auth')->group(function () {
         });
     });
     /* Public Authenticated routes - User can access any route that's not specific to his id*/
-    Route::resource('movie.screenings', ScreeningController::class)->only(['show']);
+    Route::resource('movie.screenings', ScreeningController::class)->only(['show'])->middleware('screening');
 });
 
 

@@ -65,5 +65,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'private' => \App\Http\Middleware\PrivateInfo::class,
         'role' => \App\Http\Middleware\CheckRole::class,
+        'screening' => \App\Http\Middleware\EnsureScreeningIsForMovie::class,
     ];
 }
