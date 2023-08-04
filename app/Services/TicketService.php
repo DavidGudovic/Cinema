@@ -29,6 +29,7 @@ class TicketService{
     */
     public function getUniqueMovies(User $user){
         return $user->tickets()
+        ->withTrashed()
         ->with('screening.movie')
         ->get()
         ->pluck('screening.movie')
