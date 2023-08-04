@@ -114,4 +114,26 @@ protected $casts = [
     public function scopeForScreening($query, $screening){
         return $query->where('screening_id', $screening->id);
     }
+
+    public function scopeForUser($query, $user){
+        return $query->where('user_id', $user->id);
+    }
+
+    public function scopeFilterByStatus($query, $status){
+        switch($status){
+            case 'active':
+            return $query->active();
+            case 'inactive':
+            return $query->inactive();
+            case 'cancelled':
+            return $query->onlyTrashed();
+            default:
+            return $query->withTrashed();
+        }
+    }
+
+    public function scopeFilterByMovie($query, $movie)
+    {
+        return $movie != 0 ? $query->forMovie($movie) : $query;
+    }
 }

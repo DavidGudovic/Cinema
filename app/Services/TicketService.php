@@ -10,26 +10,6 @@ use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 class TicketService{
 
     /*
-    *  Gets passed an in-memory instance of a ticket model and creates a ticket with seats in the database
-    */
-    public function createTicket(Ticket $ticket) : Ticket
-    {
-        $ticket->user_id = auth()->user()->id;
-        $ticket->screening_id = $ticket->screening->id;
-        $ticket->save();
-
-        foreach($ticket->seats as $seat){
-            Seat::create([
-                'ticket_id' => $ticket->id,
-                'row' => $seat['row'],
-                'column' => $seat['column']
-            ]);
-        }
-        return $ticket;
-    }
-
-
-    /*
     * Get a ticket by id
     */
     public function getTicket(int $id) : Ticket
@@ -70,24 +50,35 @@ class TicketService{
 
     /*
     * Get all tickets for a user with optional filters, paginated
-    * TODO Refactor
+    *
     */
     public function getFilteredTicketsPaginated(string $status = 'all', int $movie, ?int $quantity = 2) : LengthAwarePaginator
     {
         return Ticket::with('screening.movie')->with('seats')->with('screening.tags') // <---------- with half the database
         ->where('user_id', auth()->user()->id)
-        ->when($status == 'all', function($query){
-            return $query->withTrashed();
-        })->when($status == 'active', function($query){
-            return $query->active();
-        })->when($status == 'cancelled', function($query){
-            return $query->onlyTrashed();
-        })->when($status == 'inactive', function($query){
-            return $query->inactive();
-        })->when($movie != 0, function($query) use ($movie){
-            return $query->forMovie($movie);
-        })
+        ->filterByStatus($status)
+        ->filterByMovie($movie)
         ->orderBy('created_at', 'desc')
         ->paginate($quantity);
     }
+
+    /*
+    *  Gets passed an in-memory instance of a ticket model and creates a ticket with seats in the database
+    */
+    public function createTicket(Ticket $ticket) : Ticket
+    {
+        $ticket->user_id = auth()->user()->id;
+        $ticket->screening_id = $ticket->screening->id;
+        $ticket->save();
+
+        foreach($ticket->seats as $seat){
+            Seat::create([
+                'ticket_id' => $ticket->id,
+                'row' => $seat['row'],
+                'column' => $seat['column']
+            ]);
+        }
+        return $ticket;
+    }
+
 }

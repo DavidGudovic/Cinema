@@ -72,6 +72,20 @@ class Movie extends Model
 
     #region Screening time scopes
 
+    public function scopeScreeningTime($query, string $screening_time)
+    {
+        switch($screening_time){
+            case 'now':
+                return $query->screeningToday();
+            case 'tommorow':
+                return $query->screeningTommorow();
+            case 'week':
+                return $query->screeningThisWeek();
+            default:
+                return $query->hasScreenings();
+        }
+    }
+
     public function scopeHasScreenings($query){
         return $query->whereHas('screenings', function($q){
             $q->where('start_time', '>', now());
@@ -96,17 +110,6 @@ class Movie extends Model
         return $query->whereHas('screenings', function($q){
             $q->where('start_time', '>', now())
             ->where('start_time', '<', now()->addWeek()->endOfDay());
-        });
-    }
-
-    public function scopeScreeningTime($query, string $screening_time){
-        return
-        $query->when($screening_time == 'now', function($query){
-            return $query->screeningToday();
-        })->when($screening_time == 'tommorow', function($query){
-            return $query->screeningTommorow();
-        })->when($screening_time == 'week', function($query){
-            return $query->screeningThisWeek();
         });
     }
 
