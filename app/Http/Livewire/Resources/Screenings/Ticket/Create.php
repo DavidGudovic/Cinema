@@ -6,6 +6,7 @@ use App\Models\Seat;
 use App\Models\Ticket;
 use Livewire\Component;
 use App\Models\Screening;
+use App\Services\TicketService;
 use App\Services\ScreeningService;
 
 class Create extends Component
@@ -29,11 +30,19 @@ class Create extends Component
 
     public function render()
     {
-        $this->ticket->setRelation('seats', $this->seats);
-        $this->ticket->setRelation('screening', $this->screening);
+        $this->setRelations();
         return view('livewire.resources.screenings.ticket.create');
     }
 
+    /*
+    *  Sets the relations for the ticket model
+    *  Livewire resets state on every hydrate, so the relations need to be reset on every request afaik
+    */
+    public function setRelations()
+    {
+        $this->ticket->setRelation('seats', $this->seats);
+        $this->ticket->setRelation('screening', $this->screening);
+    }
     /*
     *  listens for event from livewire.resources.screenings.seat-map component
     */
@@ -61,6 +70,18 @@ class Create extends Component
     {
         $this->seats = collect();
         $this->emit('resetSelectedSeats');
+    }
+
+    /*
+    *  Handles the creation of a ticket and redirects to TicketController@show
+    */
+    public function store()
+    {
+        $this->setRelations();
+        $ticketService = new TicketService(); // Livewire doesnt like dependency injection, i dont know.
+        $ticket_final = $ticketService->createTicket($this->ticket, $this->seats);
+        $this->emit('ticketCreated');
+        return redirect()->route('user.tickets.show', [ 'user' => auth()->user(), 'ticket' => $ticket_final]);
     }
 }
 

@@ -45,7 +45,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('user', UserController::class)->only(['show', 'update', 'destroy']);
         /* Only private clients can have/see tickets         */
         Route::middleware('role:CLIENT')->group(function(){
-            Route::resource('user.tickets', TicketController::class)->only('index', 'show', 'store');
+            Route::resource('user.tickets', TicketController::class)->only('index', 'show');
         });
         /* Only Business clients can have/see requests and reclamations */
         Route::middleware('role:BUSINESS_CLIENT')->group(function(){

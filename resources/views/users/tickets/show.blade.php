@@ -1,18 +1,30 @@
-<div class="md:w-1/2 h-full">
-    <!-- Ticket border-->
-    <div class=" border-white  relative mx-6 flex-1 min-w-0 md:min-w-[26rem]">
-        <!-- Ticket info-->
-        <div class="flex flex-col justify-between h-full min-w-full px-2 md:px-4">
+@extends('templates.app')
 
-            @if ($ticket->seats->isNotEmpty())
+@section('content')
+<!-- Wrapper -->
+<div class="flex flex-col justify-center p-14 gap-12">
+    <!-- Heading -->
+    <h1 class="text-3xl font-bold text-center">Vaša karta</h1>
+
+    <!-- Ticket border-->
+    <div class=" mx-6 p-5 rounded-sm w-full md:w-1/2 h-full border-white border">
+        <div class="flex flex-col justify-between h-full px-2 md:px-4">
 
             <div class="relative flex flex-col gap-3 ">
-                <!-- Loading indicator-->
-                <div wire:loading class="absolute top-0 left-16 w-9 h-9">
-                    <x-loading-indicator />
-                </div>
-                <!-- End loading indicator-->
                 <!-- Ticket header -->
+                <p class="font-bold text-xl">Film: {{$ticket->screening->movie->title}}</p>
+                <p class="">Vreme: {{$ticket->screening->start_time->format('d/m H:i')}}</p>
+                <div class="flex justify-between border-b-2 border-white">
+                    <p class="w-24">Sala: {{$ticket->screening->hall_id}}</p>
+                    <p>Sedišta:
+                        @foreach($ticket->seats->sortBy(['column','row']) as $seat)
+                        {{chr(64 + $seat->column) }}{{ $seat->row }}@if(!$loop->last), @endif
+                        @endforeach
+                    </p>
+                </div>
+                <!-- End ticket header-->
+
+                <!-- Ticket billable -->
                 <p class="font-bold text-xl w-34">
                     Račun:
                 </p>
@@ -93,7 +105,6 @@
                         <!-- End info-->
                     </div>
                     <!-- End item -->
-
                 </div>
                 <!-- End Ticket items -->
             </div>
@@ -105,37 +116,12 @@
                     <p class="font-bold">{{$ticket->total}} RSD</p>
                 </div>
                 <!-- End footer info-->
-                <!-- Action -->
-                <div class="flex justify-between">
-                    <a wire:click.prevent="store()" class="text-center bg-transparent border rounded-xl border-white text-white p-2 w-48">
-                        <i class="fa-solid fa-ticket"></i> Rezerviši Kartu
-                    </a>
-                    <a wire:click.prevent="resetSelectedSeats()" class="text-center bg-transparent border rounded-xl border-white text-white p-2 w-48">
-                        <i class="fa-solid fa-x"></i> Otkaži rezervisanje
-                    </a>
-                </div>
-
-                <!-- End action -->
-                <!-- Discount -->
-                <p class="text-sm">
-                    <span class="font-bold">*Napomena:</span>
-                    Ako rezervišete {{config('pricing.seat_discount_threshold')}} ili više sedišta na jednoj ulaznici, dobijate popust od {{config('pricing.seat_discount') * 100}}%. Ova posebna ponuda je naš način da Vam se zahvalimo što dolazite u naš bioskop sa porodicom ili prijateljima. Uživajte u filmu i uštedite kupovinom više karata odjednom!
-                </p>
-                <!--End Discount-->
             </div>
             <!-- End Ticket footer -->
-            @else
-            <div class="flex flex-col h-full gap-8">
-                <p class="text-center text-2xl font-extrabold">Izaberite sedište</p>
-                <p class="text-sm">
-                    <span class="font-bold">*Napomena:</span>
-                    Imajte na umu da raspored stvarne sale u našem bioskopu može da se razlikuje od one prikazane na ekranu. Trudimo se da pružimo najtačnije informacije, ali zbog različitih okolnosti, promene su moguće. Molimo vas da proverite tačne detalje pre početka projekcije.
-                </p>
-            </div>
-            @endif
         </div>
         <!-- End Ticket info-->
     </div>
-    <!-- Booking -->
-
+    <!-- End Ticket border-->
 </div>
+<!-- End Wrapper -->
+@endsection

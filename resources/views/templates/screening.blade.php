@@ -14,9 +14,15 @@
         <!-- End overlays -->
 
         <!-- Back link -->
+        @if (preg_match('#^' . url('movie/\d+/screenings/\d+') . '$#', url()->previous()))
+         <a href="{{route('home')}}" class="absolute top-4 left-5 md:left-20 text-white text-2xl font-bold">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+        @else
         <a href="{{url()->previous()}}" class="absolute top-4 left-5 md:left-20 text-white text-2xl font-bold">
             <i class="fas fa-arrow-left"></i>
         </a>
+        @endif
         <!-- End back link -->
 
         <!-- Movie info -->

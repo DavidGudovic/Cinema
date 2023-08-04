@@ -22,12 +22,12 @@ class TicketController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Display the specified resource.
      */
-    public function store(Request $request, User $user, Ticket $ticket, TicketService $ticketService)
+    public function show(User $user, Ticket $ticket, TicketService $ticketService)
     {
-        $ticketService->createTicket($request, $user, $ticket);
-        return redirect()->route('resources.screenings.ticket.store', $ticket);
+        return view('users.tickets.show', [
+            'ticket' => $ticketService->getTicket($ticket->id)
+        ]);
     }
-
 }

@@ -1,6 +1,7 @@
 <?php
 namespace App\Services;
 
+use App\Models\Seat;
 use App\Models\User;
 use App\Models\Ticket;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -9,15 +10,24 @@ use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 class TicketService{
 
     /*
-    * Create a ticket
+    *  Gets passed an in-memory instance of a ticket model and creates a ticket with seats in the database
     */
-    public function createTicket($request, User $user, Ticket $ticket) : void
+    public function createTicket(Ticket $ticket) : Ticket
     {
-        $ticket->user_id = $user->id;
-        $ticket->screening_id = $request->screening_id;
+        $ticket->user_id = auth()->user()->id;
+        $ticket->screening_id = $ticket->screening->id;
         $ticket->save();
-        $ticket->seats()->attach($request->seats);
+
+        foreach($ticket->seats as $seat){
+            Seat::create([
+                'ticket_id' => $ticket->id,
+                'row' => $seat['row'],
+                'column' => $seat['column']
+            ]);
+        }
+        return $ticket;
     }
+
 
     /*
     * Get a ticket by id
