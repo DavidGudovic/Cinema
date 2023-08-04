@@ -1,15 +1,12 @@
-@extends('templates.app')
+@extends('templates.screening')
 
-@section('content')
-<div class="flex flex-col w-full h-full mb-12">
-
-
+@section('screening-content')
     <!-- Header -->
-    <h1 class="text-center my-8 font-extrabold text-3xl">Rezervacija</h1>
+    <h1 class="text-center my-8 mb-12 font-extrabold text-2xl">Sala {{$screening->hall->name }} {{$screening->human_date}} u {{$screening->human_time}}</h1>
     <!-- End Header -->
 
     <!-- Content -->
-    <div class="flex flex-col md:flex-row items-center text-white">
+    <div  class="flex flex-col md:flex-row items-center text-white">
 
         <!-- SEAT MAP -->
         @livewire('resources.screenings.seat-map', ['screening' => $screening])
@@ -22,5 +19,4 @@
         <!-- End booking form -->
     </div>
     <!-- End content -->
-</div>
 @endsection

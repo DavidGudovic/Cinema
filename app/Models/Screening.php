@@ -66,6 +66,16 @@ class Screening extends Model
         return $price;
     }
 
+    public function getHumanDateAttribute()
+    {
+        return $this->start_time->format('d/m');
+    }
+
+    public function getHumanTimeAttribute()
+    {
+        return $this->start_time->format('H:i');
+    }
+
     /**
     * Eloquent relationships
     */

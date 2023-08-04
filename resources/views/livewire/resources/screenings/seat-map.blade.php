@@ -8,7 +8,7 @@
     <!-- End Screen -->
 
     <!-- Seats -->
-    <div x-data="{ selectedSeats: @entangle('selectedSeats') }" class="flex gap-12 md:gap-24 justify-center">
+    <div x-data="{ selectedSeats: @entangle('selectedSeats') }" x-ref="target" class="flex gap-12 md:gap-24 justify-center">
         <!-- Left seats -->
         <div class="flex flex-row gap-2 md:gap-4">
             @for ($row = 1; $row <= ($screening->hall->rows / 2); $row++)
