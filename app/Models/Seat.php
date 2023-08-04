@@ -9,6 +9,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Seat extends Model
 {
     use HasFactory, SoftDeletes;
+
+
+    public $timestamps = false;
+
+
     /**
     * The attributes that are mass assignable.
     *

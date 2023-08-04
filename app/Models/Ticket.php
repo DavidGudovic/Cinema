@@ -9,37 +9,66 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Ticket extends Model
 {
     use HasFactory, SoftDeletes;
-        /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+    /**
+    * The attributes that are mass assignable.
+    *
+    * @var array<int, string>
+    */
+
+    protected static function booted()
+    {
+        // Soft delete all associated seats when the ticket is soft deleted
+        static::deleted(function ($ticket) {
+            $ticket->seats()->delete();
+        });
+    }
+
     protected $fillable = [
-        'price',
         'discounted',
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
+    * The attributes that should be hidden for serialization.
+    *
+    * @var array<int, string>
+    */
     protected $hidden = [
 
     ];
 
     /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
+    * The attributes that should be cast.
+    *
+    * @var array<string, string>
+    */
+protected $casts = [
     ];
 
+    /*
+    Accessors
+    */
+    public function getTechnologyPriceAddonAttribute(){
+        return $this->screening->tags->sum('price_addon');
+    }
 
+    public function getLongMovieAddonAttribute(){
+        return $this->screening->movie->duration > config('pricing.long_movie_duration') ? config('pricing.long_movie_addon') : 0;
+    }
+    public function getSubtotalAttribute(){
+        return (config('pricing.base_price') + $this->technology_price_addon + $this->long_movie_addon)
+        * $this->seats->count();
+    }
+
+    public function getDiscountAttribute(){
+        return $this->discounted ? $this->subtotal * 0.2 : 0;
+    }
+
+    public function getTotalAttribute(){
+        return $this->subtotal - $this->discount;
+    }
     /**
-     * Eloquent relationships
-     */
+    * Eloquent relationships
+    */
 
     public function screening(){
         return $this->belongsTo(Screening::class);
@@ -54,8 +83,8 @@ class Ticket extends Model
     }
 
     /*
-     * Local Eloquent scopes
-     */
+    * Local Eloquent scopes
+    */
 
     public function scopeDiscounted($query){
         return $query->where('discounted', true);

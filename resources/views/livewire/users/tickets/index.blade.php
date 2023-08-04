@@ -19,8 +19,8 @@
                     <div class="flex justify-between border-b-2 border-white">
                         <p>Sala: {{$ticket->screening->hall_id}}</p>
                         <p>Sedišta:
-                            @foreach($ticket->seats as $seat)
-                            {{chr(65 + $seat->row - 1) }}{{ $seat->column }}@if(!$loop->last), @endif
+                            @foreach($ticket->seats->sortBy(['column','row']) as $seat)
+                            {{chr(64 + $seat->column) }}{{ $seat->row }}@if(!$loop->last), @endif
                             @endforeach
                         </p>
                     </div>
@@ -36,7 +36,7 @@
                             </div>
                             <!-- Right info-->
                             <div class="flex flex-row justify-between md:w-16">
-                                <span class="text-sm">500</span>
+                                <span class="text-sm">{{config('pricing.base_price')}}</span>
                                 <span class="text-sm">RSD</span>
                             </div>
                             <!-- End info-->
@@ -51,7 +51,7 @@
                             </div>
                             <!-- Right info-->
                             <div class="flex flex-row justify-between md:w-16">
-                                <span class="text-sm">@if($ticket->screening->movie->duration > 120) 200 @else 0 @endif</span>
+                                <span class="text-sm">{{$ticket->long_movie_addon}}</span>
                                 <span class="text-sm">RSD</span>
                             </div>
                             <!-- End info-->
@@ -66,7 +66,7 @@
                             </div>
                             <!-- Right info-->
                             <div class="flex flex-row justify-between md:w-16">
-                                <span class="text-sm">500</span>
+                                <span class="text-sm">{{$ticket->technology_price_addon}}</span>
                                 <span class="text-sm">RSD</span>
                             </div>
                             <!-- End info-->
@@ -81,8 +81,22 @@
                             </div>
                             <!-- Right info-->
                             <div class="flex flex-row justify-between md:w-16">
-                                <span class="text-sm">0</span>
+                                <span class="text-sm">{{$ticket->discount}}</span>
                                 <span class="text-sm">RSD</span>
+                            </div>
+                            <!-- End info-->
+                        </div>
+                        <!-- End item -->
+                        <!-- Item -->
+                        <div class="flex flex-row justify-between border-b border-white gap-2">
+                            <!-- Left info-->
+                            <div class="flex flex-col gap-3">
+                                <span>Broj sedišta:</span>
+                            </div>
+                            <!-- Right info-->
+                            <div class="flex flex-row justify-between md:w-16">
+                                <span class="text-sm"> x </span>
+                                <span class="text-sm">{{$ticket->seats->count() ?? 0}}</span>
                             </div>
                             <!-- End info-->
                         </div>
@@ -96,7 +110,7 @@
                     <!-- Footer info -->
                     <div class="flex flex-row justify-between">
                         <p class="font-bold">Ukupno: </p>
-                        <p class="font-bold">{{$ticket->price}} RSD</p>
+                        <p class="font-bold">{{$ticket->total}} RSD</p>
                     </div>
                     <!-- End footer info-->
                 </div>
