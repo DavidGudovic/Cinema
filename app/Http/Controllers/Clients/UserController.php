@@ -16,45 +16,45 @@ use App\Http\Requests\UpdateRequest;
 class UserController extends Controller
 {
 
-  /*
-  Displays the form for deleting the account
-  */
-  public function delete(User $user)
-  {
-    return view('users.delete');
-  }
+    /*
+    Displays the form for deleting the account
+    */
+    public function delete(User $user)
+    {
+        return view('users.delete');
+    }
 
-  /**
-  * Display the users information.
-  */
-  public function show(User $user)
-  {
-    return view('users.show', ['user' => $user]);
-  }
+    /**
+    * Display the users information.
+    */
+    public function show(User $user)
+    {
+        return view('users.show', ['user' => $user]);
+    }
 
-  /**
-  *  Update users information if password is correct
-  */
-  public function update(UpdateRequest $request,UserService $userService, User $user)
-  {
-  if(!Hash::check($request->input('current_password'), $user->password)){
-    return back()->withErrors(['current_password'=>'Uneli ste pogrešnu šifru']);
-  }
-  $userService->updateUser($request->validated());
-  return back()->with(['status'=> 'success', 'status_msg' => 'Uspešno ste izmenili podatke!']);
-}
+    /**
+    *  Update users information if password is correct
+    */
+    public function update(UpdateRequest $request,UserService $userService, User $user)
+    {
+        if(!Hash::check($request->input('current_password'), $user->password)){
+            return back()->withErrors(['current_password'=>'Uneli ste pogrešnu šifru']);
+        }
+        $userService->updateUser($request->validated());
+        return back()->with(['status'=> 'success', 'status_msg' => 'Uspešno ste izmenili podatke!']);
+    }
 
 
-/**
-*  Delete users account from database if password is correct
-*/
-public function destroy(User $user, UserService $userService,Request $request)
-{
-  if(!Hash::check($request->input('password'), $user->password)){
-    return back()->withErrors(['password'=>'Uneli ste pogrešnu šifru']);
-  }
+    /**
+    *  Delete users account from database if password is correct
+    */
+    public function destroy(User $user, UserService $userService,Request $request)
+    {
+        if(!Hash::check($request->input('password'), $user->password)){
+            return back()->withErrors(['password'=>'Uneli ste pogrešnu šifru']);
+        }
 
-  $userService->deleteUser($user->id);
-  return redirect()->route('home');
-}
+        $userService->deleteUser($user->id);
+        return redirect()->route('home');
+    }
 }

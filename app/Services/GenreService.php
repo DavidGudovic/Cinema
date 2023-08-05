@@ -40,14 +40,12 @@ class GenreService
     */
     public function getFiltersForGenres($selected_genre) : array
     {
-        $all_genres = $this->getGenres();
-        $filters = [];
-
-        foreach($all_genres as $genre){
-            $filters[$genre->id] = $genre->id == $selected_genre;
-        }
-
-        return $filters;
+        return $this->getGenres()
+        ->mapWithKeys(function($genre) use ($selected_genre){
+            return [
+                $genre->id => $genre->id == $selected_genre
+            ];
+        })->toArray();
     }
 
 }

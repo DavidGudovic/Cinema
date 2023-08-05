@@ -13,7 +13,10 @@
             x-transition:leave="transition ease-in duration-500"
             x-transition:leave-start="opacity-100"
             x-transition:leave-end="opacity-0" class="absolute inset-0">
-            <img :src="'{{URL('images/movies')}}' + '/' + movie.banner_url" alt="Movie Poster" class="w-full object-center">
+
+            <!-- Movie poster -->
+            <img :src="'{{URL('images/movies')}}' + '/' + movie.banner_url" alt="Movie Poster" class="w-full object-cover">
+            <!-- End movie poster -->
 
             <!-- Movie info -->
             <div class="absolute inset-0 bg-gray-950 bg-opacity-70 flex flex-col items-center justify-center w-full h-full">
