@@ -6,9 +6,25 @@ use App\Models\User;
 use App\Models\Ticket;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Barryvdh\DomPDF\PDF as DomPDF;
 
 class TicketService{
 
+    /*
+    * Get a PDF of a ticket
+    */
+    public function getTicketPDF(User $user, Ticket $ticket) : DomPDF
+    {
+       return PDF::loadView('pdf.ticket', [
+            'ticket' => $ticket,
+            'user' => $user,
+            'movie' => $ticket->screening->movie,
+            'screening' => $ticket->screening,
+            'seats' => $ticket->seats
+            ])
+            ->setPaper('a5', 'landscape');
+    }
     /*
     * Get a ticket by id
     */

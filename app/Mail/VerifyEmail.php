@@ -24,7 +24,6 @@ class VerifyEmail extends Mailable implements ShouldQueue
             now()->addMinutes(60),
             ['id' => $this->id, 'email' => sha1($this->email)]
         );
-
     }
 
     /**

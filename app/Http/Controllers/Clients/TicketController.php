@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Clients;
 
 use App\Models\User;
 use App\Models\Ticket;
-use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use App\Services\TicketService;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\TicketEmail;
 
 
 class TicketController extends Controller
@@ -29,25 +31,20 @@ class TicketController extends Controller
     */
     public function show(User $user, Ticket $ticket, TicketService $ticketService)
     {
+        $mailable = new TicketEmail($user->username, $ticket->screening->movie->title, $user, $ticket);
+        Mail::to($user->email)->send($mailable);
+
         return view('users.tickets.show', [
-            'ticket' => $ticketService->getTicket($ticket->id),
-            'user' => $user
+            'ticket' => $ticket,
+            'user' => $user,
         ]);
     }
 
     /**
     * Print the specified resource.
     */
-    public function print(User $user, Ticket $ticket)
+    public function print(User $user, Ticket $ticket, TicketService $ticketService)
     {
-        return PDF::loadView('pdf.ticket', [
-            'ticket' => $ticket,
-            'user' => $user,
-            'movie' => $ticket->screening->movie,
-            'screening' => $ticket->screening,
-            'seats' => $ticket->seats
-            ])
-            ->setPaper('a5', 'landscape')
-            ->download('ticket.pdf');
+        return $ticketService->getTicketPDF($user, $ticket)->download('ticket.pdf');
     }
 }
