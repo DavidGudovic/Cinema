@@ -1,4 +1,4 @@
-<div class="fixed inset-0 h-full w-full" x-data="{ open_sidebar: false }" @open_sidebar.window="open_sidebar = true">
+<div class="hidden fixed inset-0 h-full w-full" x-data="{ open_sidebar: false }" @open_sidebar.window="open_sidebar = true">
     <!-- The sidebar -->
     <div
         x-cloak

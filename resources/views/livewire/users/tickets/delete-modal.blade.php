@@ -8,7 +8,9 @@
     <!-- Modal body -->
     @if(isset($ticket))
     <div class="bg-gray-950 fixed flex flex-col items-center rounded-lg p-6 z-50 text-white">
-        <x-close-button/>
+
+        <x-close-button class="top-6 right-6"/>
+
         <p class="text-center text-2xl font-extrabold">Otkazivanje karte</p>
         @if(session('success'))
         <p class="text-center text-xl m-4">{{session('success')}}</p>
