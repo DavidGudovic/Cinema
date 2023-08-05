@@ -46,6 +46,7 @@ Route::middleware('auth')->group(function () {
         /* Only private clients can have/see tickets         */
         Route::middleware('role:CLIENT')->group(function(){
             Route::resource('user.tickets', TicketController::class)->only('index', 'show');
+            Route::get('user/{user}/tickets/{ticket}/print', [TicketController::class, 'print'])->name('user.tickets.print');
         });
         /* Only Business clients can have/see requests and reclamations */
         Route::middleware('role:BUSINESS_CLIENT')->group(function(){
