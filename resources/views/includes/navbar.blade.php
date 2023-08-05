@@ -50,9 +50,9 @@
         @else
 
 
-        <div class="flex-1 flex justify-center items-center">
+        <div x-data="{}" class="flex-1 flex justify-center items-center">
             @role('CLIENT')
-            <li class="hover:underline hover:text-red-600 cursor-pointer"><a href="{{ route('register.create') }}">Karte</a></li>
+            <li class="hover:underline hover:text-red-600 cursor-pointer"><a x-on:click.prevent="$dispatch('open_sidebar')" x-on:open_sidebar="console.log('EVENT')" >Karte</a></li>
             @elserole('BUSINESS_CLIENT')
             <li class="hover:underline hover:text-red-600 cursor-pointer"><a href="{{ route('register.create') }}">Zahtevi</a></li>
             @endrole

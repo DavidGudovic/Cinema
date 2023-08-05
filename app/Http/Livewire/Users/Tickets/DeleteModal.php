@@ -10,6 +10,9 @@ class DeleteModal extends ModalBase
 {
     public Ticket $ticket;
 
+    /*
+    * Extracts ticket from ...$params of ModalBase
+    */
     public function render(TicketService $ticketService)
     {
         if (isset($this->params[0])) {
@@ -18,6 +21,9 @@ class DeleteModal extends ModalBase
         return view('livewire.users.tickets.delete-modal');
     }
 
+    /*
+    * Cancels ticket, flashes message to the modal and emits event to the parent component
+    */
     public function cancelTicket(TicketService $ticketService)
     {
         $ticketService->cancelTicket($this->ticket);

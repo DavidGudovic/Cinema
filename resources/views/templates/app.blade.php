@@ -34,8 +34,11 @@
     @include('includes.footer')
     <!--END FOOTER-->
 
-    <!-- GLOBAL MODALS -->
-    @yield('sidebar')
+    <!-- MODALS -->
+    <x-side-bar>
+        @yield('sidebar')
+    </x-side-bar>
+
     @yield('modal')
     <!-- END MODALS -->
     @livewireScripts
