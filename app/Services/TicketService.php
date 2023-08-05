@@ -4,10 +4,11 @@ namespace App\Services;
 use App\Models\Seat;
 use App\Models\User;
 use App\Models\Ticket;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Barryvdh\DomPDF\PDF as DomPDF;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
 class TicketService{
 
@@ -47,7 +48,8 @@ class TicketService{
     /*
     * Get all unique movies a user has purchased a ticket for
     */
-    public function getUniqueMovies(User $user){
+    public function getUniqueMovies(User $user) : Collection
+    {
         return $user->tickets()
         ->withTrashed()
         ->with('screening.movie')
@@ -70,8 +72,8 @@ class TicketService{
     */
     public function getFilteredTicketsPaginated(string $status = 'all', int $movie, ?int $quantity = 2) : LengthAwarePaginator
     {
-        return Ticket::with('screening.movie')->with('seats')->with('screening.tags') // <---------- with half the database
-        ->where('user_id', auth()->user()->id)
+        return Ticket::with('screening.movie')->with('seats') // <---------- with half the database
+        ->forUser(auth()->user())
         ->filterByStatus($status)
         ->filterByMovie($movie)
         ->orderBy('created_at', 'desc')

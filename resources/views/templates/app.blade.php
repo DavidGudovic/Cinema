@@ -34,13 +34,26 @@
     @include('includes.footer')
     <!--END FOOTER-->
 
+    @auth
     <!-- MODALS -->
-    <x-side-bar>
-        @yield('sidebar')
-    </x-side-bar>
 
+    <!-- Sidebars-->
+
+        @role('CLIENT')
+        <!-- User active tickets -->
+        @livewire('users.tickets.index-side-bar')
+        <!-- End user active tickets -->
+        @endrole
+
+    <!-- End Sidebars -->
+
+    <!-- Modal -->
     @yield('modal')
+    <!-- End Modal -->
+
     <!-- END MODALS -->
+    @endauth
+
     @livewireScripts
     @yield('scripts')
 </body>
