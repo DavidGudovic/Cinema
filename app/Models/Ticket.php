@@ -100,6 +100,8 @@ protected $casts = [
     * Local Eloquent scopes
     */
 
+
+    #region Status Filters
     public function scopeActive($query){
         return $query->whereHas('screening', function($query){
             $query->upcoming();
@@ -111,6 +113,20 @@ protected $casts = [
             $query->past();
         });
     }
+
+    public function scopeFilterByStatus($query, $status){
+        switch($status){
+            case 'active':
+            return $query->active();
+            case 'inactive':
+            return $query->inactive();
+            case 'cancelled':
+            return $query->onlyTrashed();
+            default:
+            return $query->withTrashed();
+        }
+    }
+    #endregion
 
     public function scopeForMovie($query, $movie){
         return $query->whereHas('screening', function($query) use ($movie){
@@ -126,18 +142,6 @@ protected $casts = [
         return $query->where('user_id', $user->id);
     }
 
-    public function scopeFilterByStatus($query, $status){
-        switch($status){
-            case 'active':
-            return $query->active();
-            case 'inactive':
-            return $query->inactive();
-            case 'cancelled':
-            return $query->onlyTrashed();
-            default:
-            return $query->withTrashed();
-        }
-    }
 
     public function scopeFilterByMovie($query, $movie)
     {

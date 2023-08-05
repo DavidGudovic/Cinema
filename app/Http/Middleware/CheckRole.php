@@ -16,7 +16,8 @@ class CheckRole
      */
     public function handle(Request $request, Closure $next, string $role): Response
     {
-        if (auth()->user()->role->value != $role ) throw new AuthorizationException();
-        return $next($request);
+        return auth()->user()->role->value == $role
+        ? $next($request)
+        : throw new AuthorizationException();
     }
 }
