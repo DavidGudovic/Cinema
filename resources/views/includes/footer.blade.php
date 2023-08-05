@@ -1,4 +1,4 @@
-<footer class="flex-col w-full h-fit px-10 py-6 bg-gray-950 text-white border-t-2 border-gray-200 relative bottom-0 ">
+<footer class="flex-col w-full h-fit px-10 py-6 bg-gray-950 text-white border-t border-gray-200 relative bottom-0 ">
     <div class="flex flex-wrap gap-11 justify-evenly">
         <!-- Logo -->
 
@@ -8,7 +8,7 @@
         <!-- End logo -->
         <!-- Products-->
         <div class="flex flex-col gap-10 w-[215px]">
-            <p class="border-b-2 border-white">Usluge</p>
+            <p class="border-b border-white">Usluge</p>
             <a href="{{route('movies.index')}}"><i class="fa-solid fa-film"></i> Projekcije</a>
             <a href="#"><i class="fa-solid fa-people-roof"></i> Rentiranje sala</a>
             <a href="#"><i class="fa-solid fa-rectangle-ad"></i> Reklamni prostor</a>
@@ -16,7 +16,7 @@
         <!-- End products -->
         <!-- Contact -->
         <div class="flex flex-col gap-10 w-[215px]">
-            <p class="border-b-2 border-white">Kontakt</p>
+            <p class="border-b border-white">Kontakt</p>
             <p><i class="fa-solid fa-envelope"></i> dgudovic.dev@gmail.com</p>
             <p> <i class="fa-brands fa-github"></i> <a href="https://github.com/DavidGudovic">David Gudović</a></p>
             <p> <i class="fa-brands fa-instagram"></i> <a href="https://instagram.com/">Cinemanija Bioskop</a></p>
@@ -24,7 +24,7 @@
         <!-- End contact -->
         <!-- Developer -->
         <div class="flex flex-col gap-10 w-[215px]">
-            <p class="border-b-2 border-white">Radno vreme</p>
+            <p class="border-b border-white">Radno vreme</p>
             <p><i class="fa-regular fa-calendar"></i> Pon - Pet: 10:00 - 22:00</p>
             <p><i class="fa-regular fa-calendar"></i> Vikendi: 10:00 - 00:00</p>
             <p><i class="fa-regular fa-copyright"></i> Cinemanija {{date('Y')}}</p>

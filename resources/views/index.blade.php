@@ -25,10 +25,10 @@
                     <p class="text-sm md:text-xl line-clamp-3 md:line-clamp-none text-center" x-text="movie.description"></p>
 
                     <div class="flex flex-row justify-center gap-4 md:gap-6 md:mt-4 text-sm md:text-base mx-6">
-                          <a :href="'https://youtube.com/'" target="_blank" rel="noopener noreferrer" class="bg-transparent border-2 w-1/2 rounded-2xl border-white text-white hover:bg-gray-950 hover:text-yellow-500 px-2 py-1 md:px-4 md:py-2 backdrop-blur-sm">
+                          <a :href="'https://youtube.com/'" target="_blank" rel="noopener noreferrer" class="bg-transparent border w-1/2 rounded-2xl border-white text-white hover:bg-gray-950 hover:text-yellow-500 px-2 py-1 md:px-4 md:py-2 backdrop-blur-sm">
                             <i class="fa-brands fa-youtube"></i> <span class="hidden md:inline-flex">Vidi</span> Trailer
                         </a>
-                        <a :href="routes['movies.screening.index'].replace('_ID_', movie.id)" class="bg-transparent border-2 w-1/2 rounded-2xl border-white text-white hover:bg-gray-950 hover:text-yellow-500 px-2 py-1 md:px-4 md:py-2 backdrop-blur-sm">
+                        <a :href="routes['movies.screening.index'].replace('_ID_', movie.id)" class="bg-transparent border w-1/2 rounded-2xl border-white text-white hover:bg-gray-950 hover:text-yellow-500 px-2 py-1 md:px-4 md:py-2 backdrop-blur-sm">
                             <i class="fa-solid fa-ticket"></i>
                             <span class="hidden md:inline-flex">Rezerviši</span> Kart<span class="hidden md:inline-flex">u</span><span class="md:hidden inline-flex">a</span>
                         </a>
@@ -133,7 +133,7 @@
                     </p>
                     <!-- END Counter -->
                     <!-- Call to action -->
-                    <a class="border-2 border-white text-center text-white rounded-xl px-3 py-2 font-medium w-full hover:border-red-600 hover:text-red-600" href="#">Započni saradnju</a>
+                    <a class="border border-white text-center text-white rounded-xl px-3 py-2 font-medium w-full hover:border-red-600 hover:text-red-600" href="#">Započni saradnju</a>
                     <!-- END Call to action -->
                 </div>
                 <!-- END Text wrapper -->

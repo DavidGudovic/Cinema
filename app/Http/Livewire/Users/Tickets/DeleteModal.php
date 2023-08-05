@@ -6,6 +6,9 @@ use App\Http\Livewire\ModalBase;
 use App\Models\Ticket;
 use App\Services\TicketService;
 
+/*
+* This component is used to display the delete modal for tickets
+*/
 class DeleteModal extends ModalBase
 {
     public Ticket $ticket;

@@ -7,6 +7,9 @@ use App\Services\TicketService;
 use App\Http\Livewire\SidebarBase;
 use Livewire\WithPagination;
 
+/*
+* This component is used to display the global sidebar for active tickets index
+*/
 class IndexSideBar extends SidebarBase
 {
     use WithPagination;
@@ -23,15 +26,5 @@ class IndexSideBar extends SidebarBase
             'tickets' => $ticketService->getFilteredTicketsPaginated('active', 0, 1),
             'user' => auth()->user()
         ]);
-    }
-
-    /*
-    * Cancels ticket, flashes message to the modal and emits event to the parent component
-    */
-    public function cancelTicket(TicketService $ticketService)
-    {
-        $ticketService->cancelTicket($this->ticket);
-        session()->flash('success','Uspešno ste otkazali kartu');
-        $this->emit('ticketCancelled');
     }
 }

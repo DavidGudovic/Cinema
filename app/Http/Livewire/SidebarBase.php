@@ -4,6 +4,9 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 
+/*
+* Base Sidebar class
+*/
 class SidebarBase extends Component
 {
   public $showSideBar = false;

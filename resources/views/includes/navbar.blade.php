@@ -1,15 +1,15 @@
-<nav class="sticky w-full top-0 bg-gray-950 bg-opacity-60 hover:bg-opacity-100 hover:border-b-2 hover:border-white text-white z-50 p-4">
+<nav class="sticky w-full top-0 bg-gray-950 bg-opacity-60 hover:bg-opacity-100 hover:border-b hover:border-white text-white z-50 p-4">
     <ul class="flex justify-around items-center">
         <div class="flex-1 flex justify-center items-center">
-            <li class="hover:underline hover:text-red-600 cursor-pointer"><a href="{{route('home')}}">Početna</a></li>
+            <li class=""><a class="hover:underline" href="{{route('home')}}">Početna</a></li>
         </div>
 
         <div class="flex-1 flex justify-center items-center">
             @guest
-            <li class="hover:underline hover:text-red-600 cursor-pointer"><a class="hover:text-red-600 cursor-pointer hover:underline" href="{{route('movies.index')}}">Repertoar</a></li>
+            <li class=""><a class="hover:text-red-600 cursor-pointer hover:underline" href="{{route('movies.index')}}">Repertoar</a></li>
             @endguest
             @role('CLIENT')
-            <li class="hover:underline hover:text-red-600 cursor-pointer"><a class="hover:text-red-600 cursor-pointer hover:underline" href="{{route('movies.index')}}">Repertoar</a></li>
+            <li class=""><a class="hover:text-red-600 cursor-pointer hover:underline" href="{{route('movies.index')}}">Repertoar</a></li>
             @elserole('BUSINESS_CLIENT')
             <!-- Business dropdown -->
             <div class="flex-1 flex justify-center items-center">
@@ -18,7 +18,7 @@
                         Biznis <i class="fa-solid fa-caret-down" :class="{'rotate-180 inline-block': business_open}"></i>
                     </button>
                     <!-- hidden menu -->
-                    <ul class="absolute flex flex-col gap-4 rounded-lg bg-gray-950 bg-opacity-60 hover:bg-opacity-100 hover:border-2 hover:border-white text-white  p-4 mt-4 " x-cloak x-show="business_open" x-transition.opacity>
+                    <ul class="absolute flex flex-col gap-4 rounded-lg bg-gray-950 bg-opacity-60 hover:bg-opacity-100 hover:border hover:border-white text-white  p-4 mt-4 " x-cloak x-show="business_open" x-transition.opacity>
                         <li><a class="hover:text-red-600 cursor-pointer hover:underline" href="{{route('user.show', auth()->user())}}">Rentiranje</a></li>
                         <li><a class="hover:text-red-600 cursor-pointer hover:underline" href="{{route('user.show', auth()->user())}}">Oglašavanje</a></li>
                     </ul>
@@ -40,11 +40,11 @@
         @guest
 
         <div class="flex-1 flex justify-center items-center">
-            <li class="hover:underline hover:text-red-600 cursor-pointer"><a href="{{ route('login.create') }}">Prijava</a></li>
+            <li class=""><a href="{{ route('login.create') }}">Prijava</a></li>
         </div>
 
         <div class="flex-1 flex justify-center items-center">
-            <li class="hover:underline hover:text-red-600 cursor-pointer"><a href="{{ route('register.create') }}">Registracija</a></li>
+            <li class=""><a href="{{ route('register.create') }}">Registracija</a></li>
         </div>
 
         @else
@@ -52,9 +52,9 @@
 
         <div x-data="{}" class="flex-1 flex justify-center items-center">
             @role('CLIENT')
-            <li class="hover:underline hover:text-red-600 cursor-pointer"><a x-data="{}" x-on:click="window.livewire.emit('showSideBar')" >Rezervacije</a></li>
+            <li class=""><a class="hover:underline" x-data="{}" x-on:click="window.livewire.emit('showSideBar')" >Rezervacije</a></li>
             @elserole('BUSINESS_CLIENT')
-            <li class="hover:underline hover:text-red-600 cursor-pointer"><a href="{{ route('register.create') }}">Zahtevi</a></li>
+            <li class=""><a href="{{ route('register.create') }}">Zahtevi</a></li>
             @endrole
         </div>
 
@@ -65,7 +65,7 @@
                     Profil <i class="fa-solid fa-caret-down" :class="{'rotate-180 inline-block': open}"></i>
                 </button>
                 <!-- hidden menu -->
-                <ul class="absolute flex flex-col gap-4 rounded-lg bg-gray-950 bg-opacity-60 hover:bg-opacity-100 hover:border-2 hover:border-white text-white  p-4 mt-4 " x-cloak x-show="open" x-transition.opacity>
+                <ul class="absolute flex flex-col gap-4 rounded-lg bg-gray-950 bg-opacity-60 hover:bg-opacity-100 hover:border hover:border-white text-white  p-4 mt-4 " x-cloak x-show="open" x-transition.opacity>
                     <li><a class="hover:text-red-600 cursor-pointer hover:underline" href="{{route('user.show', auth()->user())}}">Informacije</a></li>
                     @role('CLIENT')
                     <li><a class="hover:text-red-600 cursor-pointer hover:underline" href="{{route('user.tickets.index', auth()->user())}}">Istorija karata</a></li>

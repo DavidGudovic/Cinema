@@ -1,6 +1,6 @@
 <div class="fixed inset-0 h-full w-full z-50" x-data="{ showSideBar: @entangle('showSideBar') }" x-trap.noscroll="showSideBar" x-show="showSideBar" x-on:keydown.escape.window="showSideBar = false" x-cloak>
     <!-- The backdrop -->
-    <div x-cloak x-show="showSideBar" x-transition:enter="transition ease-in-out duration-500" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in-out duration-500" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="fixed inset-0 backdrop-blur-sm z-10" @click="showSideBar = false"></div>
+    <div x-cloak x-show="showSideBar" x-transition:enter="transition ease-in-out duration-500" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in-out duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="fixed inset-0 backdrop-blur-sm z-10" @click="showSideBar = false"></div>
     <!-- The sidebar -->
     <div x-cloak  x-transition:enter="transition ease-in-out duration-500 transform" x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0" x-transition:leave="transition ease-in-out duration-1000 transform" x-transition:leave-start="translate-x-0" x-transition:leave-end="translate-x-full"  x-show="showSideBar"class="rounded-l-xl fixed right-0 w-full md:w-1/2  bg-neutral-900 h-full z-50 px-6" @click.away="showSideBar = false" >
 
@@ -27,7 +27,7 @@
 
                 <!-- PRINT -->
                 <a href="{{route('user.tickets.print', [$user,$ticket])}}" class="absolute top-7 right-6 hover:text-red-700 text-white">
-                    <span class="hidden md:inline-block">Štampaj  </span><i class="fa-regular fa-file-pdf"></i>
+                    <span class="hidden md:inline-block">Štampaj</span>  <i class="fa-regular fa-file-pdf"></i>
                 </a>
                 <!--End Print-->
 

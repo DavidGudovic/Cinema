@@ -7,6 +7,9 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use App\Services\TicketService;
 
+/*
+* This component is used to display the tickets index
+*/
 class Index extends Component
 {
     use WithPagination;
