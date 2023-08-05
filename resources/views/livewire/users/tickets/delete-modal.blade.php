@@ -11,7 +11,7 @@
         <x-close-button/>
         <p class="text-center text-2xl font-extrabold">Otkazivanje karte</p>
         @if(session('success'))
-        <p class="text-center text-xl mt-4">{{session('success')}}</p>
+        <p class="text-center text-xl m-4">{{session('success')}}</p>
         @else
         <p class="text-center text-xl">
             Da li ste sigurni da želite da otkažete kartu za prikazivanje filma

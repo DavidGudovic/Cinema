@@ -22,6 +22,7 @@ class Index extends Component
     public function refresh()
     {
     }
+
     public function paginationView()
     {
         return 'pagination.custom';
@@ -30,7 +31,8 @@ class Index extends Component
     public function render(TicketService $ticketService)
     {
         return view('livewire.users.tickets.index', [
-            'tickets' => $ticketService->getFilteredTicketsPaginated($this->status_filter,$this->movie_filter)
+            'tickets' => $ticketService->getFilteredTicketsPaginated($this->status_filter,$this->movie_filter),
+            'user' => auth()->user()
         ]);
     }
 

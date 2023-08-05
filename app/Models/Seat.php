@@ -37,6 +37,10 @@ class Seat extends Model
     Accessors
     */
 
+    public function getHumanSeatAttribute()
+    {
+        return chr(64 + $this->column) . $this->row;
+    }
     /**
     * Eloquent relationships
     */

@@ -16,6 +16,11 @@
             </button>
             <!-- end delete button -->
             @endif
+            @if(!$ticket->deleted_at)
+              <a href="{{route('user.tickets.print', [$user,$ticket])}}" class="absolute top-3 right-10 hover:text-red-700 text-white">
+                <i class="fa-regular fa-file-pdf"></i>
+             </a>
+            @endif
             <!-- Ticket info-->
             <div class="flex flex-col justify-between h-full min-w-full px-2 md:px-4">
                 <div class="flex flex-col gap-3 ">
@@ -25,7 +30,7 @@
                         <p class="w-24">Sala: {{$ticket->screening->hall_id}}</p>
                         <p>Sedišta:
                             @foreach($ticket->seats->sortBy(['column','row']) as $seat)
-                            {{chr(64 + $seat->column) }}{{ $seat->row }}@if(!$loop->last), @endif
+                            {{$seat->human_seat}}@if(!$loop->last), @endif
                             @endforeach
                         </p>
                     </div>

@@ -1,20 +1,20 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ticket</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
+    <title>Karta</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <style type="text/css">
+        * {
+            font-family: DejaVu Sans, sans-serif;
         }
+
         .container {
             width: 602px;
             height: 200px;
             margin: 0 auto;
             border-radius: 4px;
-            background-color: #4537de;
+            background-color: #1c1b27;
             box-shadow: 0 8px 16px rgba(35, 51, 64, 0.25);
         }
         .column-1 {
@@ -29,37 +29,37 @@
             height: 200px;
         }
         .text-frame {
-            padding: 40px;
+            padding: 10px;
             height: 120px;
         }
         .qr-holder {
             position: relative;
             width: 160px;
             height: 160px;
-            margin: 20px;
-            background-color: #fff;
+            background-color: #1f1a1a;
             text-align: center;
             line-height: 30px;
             z-index: 1;
         }
-        .qr-holder > img {
-            margin-top: 20px;
+         img {
+            margin: 11px -60px;
         }
+
         .event {
             font-size: 24px;
-            color: #fff;
+            color: #ffffff;
             letter-spacing: 1px;
         }
         .date {
             font-size: 18px;
             line-height: 30px;
-            color: #a8bbf8;
+            color: #ffffff;
         }
         .name,
-        .ticket-id {
+        .text {
             font-size: 16px;
             line-height: 22px;
-            color: #fff;
+            color: #ffffff;
         }
     </style>
 </head>
@@ -67,17 +67,28 @@
     <div class="container">
         <div class="column-1">
             <div class="text-frame">
-                <div class="event">{{$ticket->screening->movie->title}}</div>
-                <div class="date">Početak: {{$ticket->screening->human_date}} {{$ticket->screening->human_time}}</div>
-                <br />
-                <div class="name">Sala: {{$ticket->screening->hall_id}}</div>
-                <div class="ticket-id">{{$user->name}}</div>
+                <div class="event">{{$movie->title}}</div>
+                <div class="date">Početak: {{$screening->human_date}} {{$screening->human_time}}</div>
+                <div class="name">Sala: {{$screening->hall_id}}</div>
+                </br>
+                <div class="text">{{$user->name}}</div>
+                <div class="text">Sedišta:
+                    @foreach($seats as $seat)
+                       {{ $seat->human_seat}}
+                        @if(!$loop->last)
+                            ,
+                        @endif
+                    @endforeach
+                </div>
             </div>
         </div>
 
         <div class="column-2">
             <div class="qr-holder">
-                <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(160)->generate($ticket->id)) !!} ">
+                <?php
+                $svg = '<svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="140" height="140" fill="#fff" viewBox="0 0 249 251"><path d="M111.5 8.1C85.9 11 58.4 25 40.1 44.6 17.9 68.4 6.8 98.3 8.3 129.8c1.6 31.8 13.8 58.6 36.3 80.2 9 8.7 15.2 13.3 24.4 18.3 18.8 10.4 35.8 14.7 57.5 14.7 30.8.1 58.7-11.1 81.6-32.7 7.2-6.8 15.8-17.7 20.3-25.4l2.7-4.7-11.3-6.5c-6.2-3.6-20.7-11.9-32.2-18.6-11.6-6.7-21.2-12.1-21.5-12.1-.3.1-2.2 2.6-4.1 5.6-14.5 23-48.6 25.8-67.1 5.6-16-17.5-15.6-42.7 1-59.2 13-12.9 31.9-16.3 48.6-8.6 6.2 2.8 16.2 11.8 19.1 17.1 1 1.9 2.2 3.5 2.6 3.5 1 0 61.9-34.9 63.5-36.4 2.8-2.6-15.5-26.1-28.2-36.2-26.7-21.5-56-30-90-26.3zM143 16c9 1.3 17.5 3.9 16.3 5.1-.5.5-12 .8-27.9.7l-26.9-.3-.3-2.3c-.4-2.8.3-3 11.3-4 9.4-.9 16.5-.7 27.5.8zM96 51.5v32.4l-6.5 6.6-6.5 6.6V60.6c0-27.7.3-36.7 1.2-37.3 1.3-.8 9.8-4.1 11.1-4.2.4-.1.7 14.5.7 32.4zm82.5-23.7 5 2.7v57.9l-5.4 3.2c-3 1.8-5.8 3.1-6.3 2.8-.4-.3-.8-16-.8-35 0-26.9.3-34.4 1.3-34.4.6 0 3.5 1.3 6.2 2.8zM75.1 29.2c0 .9 0 166-.1 192 0 1.5-2 .8-7-2.3l-5-3.1V34.5l5.2-3.3c5.8-3.5 6.8-3.8 6.9-2zm88.4 6.3v6l-29.7.3-29.8.2V29l29.8.2 29.7.3v6zm35.5 6.6 6.1 5-.3 14.6-.3 14.7-5.5 3.3c-3 1.8-5.8 3.3-6.2 3.3-.5 0-.8-10.4-.8-23 0-12.7.2-23 .4-23 .3 0 3.2 2.3 6.6 5.1zM54.8 56.2l-.3 6.3-9.2.3c-5.1.1-9.3-.1-9.3-.5s2-3.4 4.5-6.6c4.4-5.6 4.6-5.7 9.6-5.7h5l-.3 6.2zm108.7.3v6l-29.7.3-29.8.2V50l29.8.2 29.7.3v6zm53.9 6c1.5 2.5 2.7 4.7 2.5 4.9-2.1 1.6-5.5 3.6-6.1 3.6-.5 0-.8-2.9-.8-6.5s.3-6.5.8-6.5c.4 0 2 2 3.6 4.5zM54.8 76.7l.3 6.2-14.2.3c-7.7.2-14.6 0-15.2-.4-.8-.5-.6-1.8.7-4.5 4.1-8.8 3.3-8.4 16.4-8.1l11.7.3.3 6.2zm108.6-5.1c.9 2.3.7 17.4-.2 17.4-.4 0-3.3-1.9-6.4-4.3-13.6-10.1-31-13-46.7-7.6-3 1.1-5.6 1.9-5.8 1.9-.1 0-.3-2-.3-4.5V70h29.4c25.9 0 29.5.2 30 1.6zM54.5 97.5v6l-18.4.3-18.3.2.6-2.7c.4-1.6 1.2-4.5 1.7-6.6l1-3.7 16.7.2 16.7.3v6zm.3 20.7-.3 6.3h-38l-.3-4.9c-.5-8-1.6-7.6 19.8-7.6h19.1l-.3 6.2zM50.6 133H55v5.9c0 4.4-.4 6-1.6 6.5-3.2 1.2-32.9.7-34.6-.7-.9-.6-1.9-3.5-2.3-6.4l-.7-5.2 13.9-.3c7.6-.2 14.4-.2 15.1-.1.8.2 3.4.3 5.8.3zm3.9 26.5v6l-15.3.3-15.3.3-1.5-3.6c-.8-2-1.7-4.9-2.1-6.6l-.6-2.9 17.4.2 17.4.3v6zm35.5.7 6 6.2v32.3c0 20-.4 32.3-1 32.3-.5 0-3.4-.9-6.5-2.1l-5.5-2v-36.5c0-20 .2-36.4.5-36.4.2 0 3.1 2.8 6.5 6.2zm93.5 30.3v28.9l-5.7 3.2c-3.1 1.8-5.9 2.9-6.2 2.6-.8-.7-.8-68.7 0-69.4.3-.3 3.1.8 6.2 2.6l5.7 3.2v28.9zm-19.8-26.1c-.4.9-1.6 1.6-2.7 1.6-2.4 0-2.5-.8-.3-3.2 1.9-2.1 4-.9 3 1.6zm35.2 6.1 6.1 3.6V202.8l-5.7 5.1c-3.1 2.8-6.1 5.1-6.5 5.1-.4 0-.8-10.4-.8-23 0-12.7.2-23 .4-23 .3 0 3.2 1.6 6.5 3.5zm-144.1 9.7-.3 6.3h-20l-3.2-5c-1.8-2.7-3.3-5.5-3.3-6.2 0-1 3.3-1.3 13.5-1.3h13.6l-.3 6.2zm73.2-5c5.8-.2 16.1-.4 23-.5l12.5-.2v12l-29.7.3-29.8.2v-13.3l6.8.9c3.7.5 11.4.7 17.2.6zm91.5 7.8c.6 1-4.4 8.9-5.7 9-.5 0-.8-2.9-.8-6.5v-6.6l2.9 1.6c1.7.8 3.3 1.9 3.6 2.5zM55 201.5c0 3.6-.4 6.5-.8 6.5s-3.7-2.9-7.2-6.5l-6.4-6.5H55v6.5zm108.8-.8-.3 5.8-29.7.3-29.8.2v-12h60.1l-.3 5.7zm-.3 20.8v6l-29.7.3-29.8.2v-13l29.8.2 29.7.3v6z"/></svg>';
+                echo '<img src="data:image/svg+xml;base64,'.base64_encode($svg).'"  width="100" height="100" />';
+                ?>
             </div>
         </div>
     </div>

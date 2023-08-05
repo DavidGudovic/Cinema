@@ -19,7 +19,8 @@ class TicketController extends Controller
     {
         return view('users.tickets.index', [
             'tickets' => $ticketService->getUsersTickets($user),
-            'movies' => $ticketService->getUniqueMovies($user)
+            'movies' => $ticketService->getUniqueMovies($user),
+            'user' => $user
         ]);
     }
 
@@ -39,7 +40,14 @@ class TicketController extends Controller
     */
     public function print(User $user, Ticket $ticket)
     {
-        $pdf = PDF::loadView('pdf.ticket', ['ticket' => $ticket, 'user' => $user])->setPaper('a5', 'landscape');
-        return $pdf->download('ticket.pdf');
+        return PDF::loadView('pdf.ticket', [
+            'ticket' => $ticket,
+            'user' => $user,
+            'movie' => $ticket->screening->movie,
+            'screening' => $ticket->screening,
+            'seats' => $ticket->seats
+            ])
+            ->setPaper('a5', 'landscape')
+            ->download('ticket.pdf');
     }
 }
