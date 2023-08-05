@@ -42,7 +42,7 @@
                         </div>
                         <!-- Right info-->
                         <div class="flex flex-row justify-between md:w-16">
-                            <span class="text-sm">{{$ticket->long_movie_addon}}</span>
+                            <span class="text-sm">{{$ticket->calc_long_movie_addon}}</span>
                             <span class="text-sm">RSD</span>
                         </div>
                         <!-- End info-->
@@ -57,7 +57,7 @@
                         </div>
                         <!-- Right info-->
                         <div class="flex flex-row justify-between md:w-16">
-                            <span class="text-sm">{{$ticket->technology_price_addon}}</span>
+                            <span class="text-sm">{{$ticket->calc_technology_price_addon}}</span>
                             <span class="text-sm">RSD</span>
                         </div>
                         <!-- End info-->
@@ -87,7 +87,7 @@
                         </div>
                         <!-- Right info-->
                         <div class="flex flex-row justify-between md:w-16">
-                            <span class="text-sm">{{$ticket->discount}}</span>
+                            <span class="text-sm">{{$ticket->calc_discount}}</span>
                             <span class="text-sm">RSD</span>
                         </div>
                         <!-- End info-->
@@ -102,7 +102,7 @@
                 <!-- Footer info -->
                 <div class="flex flex-row justify-between">
                     <p class="font-bold">Ukupno: </p>
-                    <p class="font-bold">{{$ticket->total}} RSD</p>
+                    <p class="font-bold">{{$ticket->calc_total}} RSD</p>
                 </div>
                 <!-- End footer info-->
                 <!-- Action -->

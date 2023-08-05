@@ -20,6 +20,17 @@ class Ticket extends Model
         // Soft delete all associated seats when the ticket is soft deleted
         static::deleted(function ($ticket) {
             $ticket->seats()->delete();
+            $ticket->seat_count = 0;
+            $ticket->save();
+        });
+
+        static::creating(function ($ticket) {
+            $ticket->technology_price_addon = $ticket->calc_technology_price_addon;
+            $ticket->long_movie_addon = $ticket->calc_long_movie_addon;
+            $ticket->subtotal = $ticket->calc_subtotal;
+            $ticket->discount = $ticket->calc_discount;
+            $ticket->total = $ticket->calc_total;
+            $ticket->seat_count = $ticket->seats->count();
         });
     }
 
@@ -46,28 +57,28 @@ protected $casts = [
     /*
     Accessors
     */
-    public function getTechnologyPriceAddonAttribute(){
+    public function getCalcTechnologyPriceAddonAttribute(){
         return $this->screening->tags->sum('price_addon');
     }
 
-    public function getLongMovieAddonAttribute(){
+    public function getCalcLongMovieAddonAttribute(){
         return $this->screening->movie->duration > config('pricing.long_movie_duration') ? config('pricing.long_movie_addon') : 0;
     }
-    public function getSubtotalAttribute(){
-        return (config('pricing.base_price') + $this->technology_price_addon + $this->long_movie_addon)
+    public function getCalcSubtotalAttribute(){
+        return (config('pricing.base_price') + $this->calc_technology_price_addon + $this->calc_long_movie_addon)
         * $this->seats->count();
     }
 
-    public function getDiscountAttribute(){
-        return $this->seats->count() >= config('pricing.seat_discount_threshold') ? $this->subtotal * config('pricing.seat_discount') : 0;
+    public function getCalcDiscountAttribute(){
+        return $this->seats->count() >= config('pricing.seat_discount_threshold') ? $this->calc_subtotal * config('pricing.seat_discount') : 0;
     }
 
     public function getIsDiscountedAttribute(){
-        return $this->discount > 0;
+        return $this->calc_discount > 0;
     }
 
-    public function getTotalAttribute(){
-        return $this->subtotal - $this->discount;
+    public function getCalcTotalAttribute(){
+        return $this->calc_subtotal - $this->calc_discount;
     }
     /**
     * Eloquent relationships
@@ -88,10 +99,6 @@ protected $casts = [
     /*
     * Local Eloquent scopes
     */
-
-    public function scopeDiscounted($query){
-        return $query->where('discounted', true);
-    }
 
     public function scopeActive($query){
         return $query->whereHas('screening', function($query){

@@ -30,8 +30,10 @@
                         </p>
                     </div>
                     <p class="font-bold text-xl">Račun:</p>
+
+                    @if($ticket->seat_count > 0)
                     <!-- Ticket items-->
-                    <div class="flex flex-col w-full gap-4 overflow-y-auto md: ">
+                    <div class="flex flex-col w-full gap-4 overflow-y-auto">
 
                         <!-- Item -->
                         <div class="flex flex-row justify-between border-b border-white gap-2">
@@ -109,6 +111,13 @@
 
                     </div>
                     <!-- End Ticket items -->
+                    @else
+                    <!-- Canceled -->
+                    <div class="flex flex-col items-center justify-center">
+                        <p class="text-center text-2xl font-bold">Otkazana rezervacija</p>
+                    </div>
+                    <!-- End Cancelled -->
+                    @endif
                 </div>
                 <!-- Ticket footer -->
                 <div class="flex flex-col  border-t border-white">
