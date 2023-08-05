@@ -15,36 +15,6 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    protected static function booted()
-    {
-        static::deleting(function ($user) {
-
-            // Delete all associated tickets when the user is deleted
-            foreach($user->tickets as $ticket)
-            {
-                $ticket->user_id = null;
-                $ticket->save();
-                $ticket->delete();
-            }
-
-            // Delete all associated business requests when the user is deleted
-            foreach($user->business_requests as $business_request)
-            {
-                $business_request->user_id = null;
-                $business_request->save();
-                $business_request->delete();
-            }
-
-            // Unasign all associated halls when the user is deleted
-            foreach($user->halls as $hall)
-            {
-                $hall->user_id = null;
-                $hall->save();
-            }
-        });
-    }
-
-
     /**
     * The attributes that are mass assignable.
     *
