@@ -19,7 +19,7 @@
             <!-- End movie poster -->
 
             <!-- Movie info -->
-            <div class="absolute inset-0 bg-gray-950 bg-opacity-70 flex flex-col items-center justify-center w-full h-full">
+            <div class="absolute inset-0 bg-gray-950 bg-opacity-60 flex flex-col items-center justify-center w-full h-full">
                 <div class="flex flex-col gap-2 md:gap-4 align-center justify-center text-center text-white w-80 md:w-[30rem] h-48 md:h-96 ">
                     <p class="text-2xl font-extrabold md:text-7xl" x-text="movie.title"></p>
                     <p class="text-sm md:text-xl line-clamp-3 md:line-clamp-none text-center" x-text="movie.description"></p>
