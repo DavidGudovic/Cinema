@@ -99,7 +99,7 @@
     <!-- Genre showcase mobile-->
      <div class="flex flex-col md:hidden gap-6 mx-4">
             @foreach ($genres as $genre)
-            <a class="overflow-hidden relative">
+            <a class="overflow-hidden relative cursor-pointer" href="{{route('movies.index', $genre)}}">
                  <img src="{{URL('images/genres/' . $genre->image_url)}}" class="object-cover"/>
             </a>
             @endforeach
