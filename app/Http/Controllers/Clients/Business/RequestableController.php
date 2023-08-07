@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\Clients\Business;
 
-use App\Http\Controllers\Controller;
-use App\Models\BusinessRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\BusinessRequest;
+use App\Http\Controllers\Controller;
 
 class RequestableController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(User $user, BusinessRequest $businessRequest)
     {
         //
     }

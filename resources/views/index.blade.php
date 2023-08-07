@@ -28,10 +28,12 @@
                           <a :href="'https://youtube.com/'" target="_blank" rel="noopener noreferrer" class="bg-transparent border w-1/2 rounded-2xl border-white text-white hover:bg-gray-950 hover:text-yellow-500 px-2 py-1 md:px-4 md:py-2 backdrop-blur-sm">
                             <i class="fa-brands fa-youtube"></i> <span class="hidden md:inline-flex">Vidi</span> Trailer
                         </a>
+                        @role('CLIENT')
                         <a :href="routes['movies.screening.index'].replace('_ID_', movie.id)" class="bg-transparent border w-1/2 rounded-2xl border-white text-white hover:bg-gray-950 hover:text-yellow-500 px-2 py-1 md:px-4 md:py-2 backdrop-blur-sm">
                             <i class="fa-solid fa-ticket"></i>
                             <span class="hidden md:inline-flex">Rezerviši</span> Kart<span class="hidden md:inline-flex">u</span><span class="md:hidden inline-flex">a</span>
                         </a>
+                        @endrole
                     </div>
                 </div>
             </div>

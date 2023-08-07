@@ -3,9 +3,10 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
+use App\Exceptions\RoleNotAuthorizedException;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class CheckRole
 {
@@ -18,6 +19,6 @@ class CheckRole
     {
         return auth()->user()->role->value == $role
         ? $next($request)
-        : throw new AuthorizationException();
+        : throw new RoleNotAuthorizedException('Vaš tip profila nema pristup ovoj stranici',418);
     }
 }

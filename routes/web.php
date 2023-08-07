@@ -53,9 +53,18 @@ Route::middleware('auth')->group(function () {
             Route::resource('user.requests', RequestableController::class)->only(['index', 'show', 'update']);
             Route::resource('user.reclamations', ReclamationController::class)->only(['index', 'show', 'update']);
         });
+        /* Only Managers can access all requests and reclamations */
+        Route::middleware('role:MANAGER')->group(function(){
+            // TODO: Add routes
+        });
+        /* Only Admins can access all requests and reclamations */
+        Route::middleware('role:ADMIN')->group(function(){
+            // TODO: Add routes
+        });
     });
+
     /* Public Authenticated routes - User can access any route that's not specific to his id*/
-    Route::resource('movie.screenings', ScreeningController::class)->only(['show'])->middleware('screening');
+    Route::resource('movie.screenings', ScreeningController::class)->only(['show'])->middleware(['screening', 'role:CLIENT']);
 });
 
 

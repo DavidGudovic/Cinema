@@ -18,7 +18,7 @@
         <div class="flex flex-col items-center justify-center w-full h-full bg-black bg-opacity-50">
             <div class="flex flex-col flex-1 items-center justify-center">
                 <h1 class="text-4xl font-bold text-red-500">Greška @yield('heading')</h1>
-                <h2 class="text-2xl font-bold text-white">@yield('text')</h2>
+                <h2 class="text-2xl font-bold text-white text-center px-12">@yield('text')</h2>
             </div>
             <div class="h-2/5"></div>
         </div>

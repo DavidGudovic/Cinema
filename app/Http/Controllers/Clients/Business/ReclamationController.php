@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\Clients\Business;
 
-use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Models\Reclamation;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class ReclamationController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(User $user, Reclamation $reclamation)
     {
         //
     }
