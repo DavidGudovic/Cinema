@@ -11,10 +11,10 @@
         @forelse($movie_list as $key => $movie)
 
         <!-- Movie -->
-        <a href="{{route('movie.screenings.index', $movie->id)}}" x-data="{showDetails: false}" x-on:mouseenter="showDetails = true"  x-on:mouseleave="showDetails = false" class="relative h-[28rem] md:h-[24rem]  w-[19rem] md:w-[16rem]">
+        <a href="{{route('movie.screenings.index', $movie->id)}}" x-data="{showDetails: false}" x-on:mouseenter="showDetails = true"  x-on:mouseleave="showDetails = false" class="relative h-[28rem] md:h-[26rem]  w-[19rem] md:w-[18rem]">
 
 
-            <img src="{{URL('/images/movies/'. $movie->image_url)}}" class="brightness-75 w-full h-full">
+            <img src="{{URL('/images/movies/'. $movie->image_url)}}" class="brightness-[0.6] w-full h-full">
 
             <div
                 x-show="showDetails"

@@ -19,21 +19,7 @@ class GenreService
         return Genre::all();
     }
 
-    /*
-    * Get all fiction genres.
-    */
-    public function getFictionGenres() : EloquentCollection
-    {
-        return Genre::fiction()->get();
-    }
 
-    /*
-    * Get all non-fiction genres.
-    */
-    public function getNonFictionGenres() : EloquentCollection
-    {
-        return Genre::nonFiction()->get();
-    }
 
     /*
     * Get Filters for Livewire/Resources/Movies/Filters [GenreID => bool(selected)]

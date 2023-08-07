@@ -9,6 +9,7 @@
 
     <title>Biskop Cinemanija</title>
     <link rel="icon" href="{{URL('images/logo_cut-min.svg')}}">
+    @yield('head-scripts')
     @vite('resources/js/app.js')
     @livewireStyles
 </head>
@@ -23,7 +24,7 @@
     <!-- CONTENT - Injectable background-->
     <div class="flex flex-row flex-1 justify-center @yield('background-pattern')">
         <!-- MAIN CONTENT -->
-        <main class="w-screen">
+        <main class="w-screen ">
             @yield('content')
         </main>
         <!-- END MAIN CONTENT -->

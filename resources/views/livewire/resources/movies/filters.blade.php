@@ -38,7 +38,7 @@
     <!--End fixed elements-->
 
     <!-- Filters Responsive Form -->
-    <form wire:submit.prevent="submit" class="flex flex-col gap-4 border-2 border-gray-800 bg-gray-950 bg-opacity-90 p-6 md:mr-9 min-w-[250px] text-white" x-show="showFilters" x-transition.opacity x-ref="filters" x-on:click="showSearchBar = false">
+    <form wire:submit.prevent="submit" class="flex flex-col gap-4 border-2 border-gray-800 bg-gray-950 bg-opacity-90 p-6 md:mr-9 md:w-[10rem] min-w-[250px] text-white" x-show="showFilters" x-transition.opacity x-ref="filters" x-on:click="showSearchBar = false">
         <div class="flex flex-row justify-center">
             <p class="font-bold text-center">Filteri</p>
             <div wire:loading class="w-8 h-8">
@@ -46,30 +46,17 @@
             </div>
         </div>
 
-        <!--Fiction-->
-        <div class="flex gap-2 justify-between border-b-2 border-gray-200 pb-2">
-            <div class="flex flex-col ">
-                <p class="text-opacity-70 text-sm">Fikcija</p>
-                @foreach($fiction_genres as $genre)
-                <div class="cursor-pointer">
-                    <input class="cursor-pointer" wire:model="genre_list.{{$genre->id}}" type="checkbox" id="{{$genre->id}}" name="{{$genre->id}}" @if($genre_list[$genre->id]) checked @endif>
-                    <label for="{{$genre->id}}" class="cursor-pointer">{{$genre->name}}</label>
-                </div>
-                @endforeach
+        <!--Genres-->
+        <div class="flex flex-wrap gap-x-4 md:gap-0 justify-between border-b-2 border-gray-200 pb-2">
+            @foreach($genres as $genre)
+            <div class="w-2/5 flex text-ellipsis cursor-pointer">
+                <input class="cursor-pointer" wire:model="genre_list.{{$genre->id}}" type="checkbox" id="{{$genre->id}}" name="{{$genre->id}}" @if($genre_list[$genre->id]) checked @endif>
+                <label for="{{$genre->id}}" class="cursor-pointer">{{$genre->name}}</label>
             </div>
-            <!--End Fiction-->
-            <!--NonFiction-->
-            <div class="flex flex-col ">
-                <p class="text-opacity-70 text-sm">Dokumentarci</p>
-                @foreach($nonFiction_genres as $genre)
-                <div class="cursor-pointer">
-                    <input class="cursor-pointer" wire:model="genre_list.{{$genre->id}}" type="checkbox" id="{{$genre->id}}" name="{{$genre->id}}" @if($genre_list[$genre->id]) checked @endif>
-                    <label for="{{$genre->id}}" class="cursor-pointer">{{$genre->name}}</label>
-                </div>
-                @endforeach
-            </div>
+            @endforeach
         </div>
-        <!--End NonFiction-->
+
+        <!--End Genres-->
 
         <!-- Screening when-->
         <div class="flex flex-col gap-2 mt-2">

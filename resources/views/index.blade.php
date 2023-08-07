@@ -1,7 +1,7 @@
 @extends('templates/app')
 
 @section('content')
-<div class="flex flex-col gap-12 items-center w-full h-full">
+<div class="flex flex-col gap-12 items-center w-full h-full overflow-x-hidden">
     <!-- Movie showcase -->
     <div class="relative w-full h-52 md:h-[38rem] overflow-hidden md:min-w-[70rem]" x-data="carousel()"x-init="startCarousel; setMovies({{$movies}})" x-on:unload.window="clearInterval(interval)">
 
@@ -25,7 +25,7 @@
                     <p class="text-sm md:text-xl line-clamp-3 md:line-clamp-none text-center" x-text="movie.description"></p>
 
                     <div class="flex flex-row justify-center gap-4 md:gap-6 md:mt-4 text-sm md:text-base mx-6">
-                          <a :href="'https://youtube.com/'" target="_blank" rel="noopener noreferrer" class="bg-transparent border w-1/2 rounded-2xl border-white text-white hover:bg-gray-950 hover:text-yellow-500 px-2 py-1 md:px-4 md:py-2 backdrop-blur-sm">
+                        <a :href="'https://youtube.com/'" target="_blank" rel="noopener noreferrer" class="bg-transparent border w-1/2 rounded-2xl border-white text-white hover:bg-gray-950 hover:text-yellow-500 px-2 py-1 md:px-4 md:py-2 backdrop-blur-sm">
                             <i class="fa-brands fa-youtube"></i> <span class="hidden md:inline-flex">Vidi</span> Trailer
                         </a>
                         @role('CLIENT')
@@ -68,55 +68,51 @@
     </div>
     <!-- END Tech showcase -->
 
-    <h2 class="text-4xl text-white font-bold mb-6">Repertoar</h2>
+    <h2 class="text-4xl text-white font-bold mb-6" aria-selected="none">Repertoar žanrova</h2>
 
-    <!-- Genre showcase -->
-    <div class="flex flex-col justify-center mx-10 md:mx-20 md:flex-row ">
-        <!-- Fiction -->
-        <div class="flex flex-col-reverse mx-2 md:flex-col ">
-            <!-- Fiction imgs-->
-            <div class="flex flex-row flex-wrap gap-16 justify-center">
-                @foreach($fictionGenres as $genre)
-                <!-- Image -->
-                <a href="{{route('movies.index', $genre->id)}}" class="overflow-hidden">
-                    <img class="w-56 md:w-48 hover:scale-110" width="200px" src="{{URL('images/genres/' . $genre->image_url)}}" alt="">
-                    <p class="relative bottom-10 left-6 font-extrabold text-white text-xl md:text-base h-0 z-10"  style="text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">{{$genre->name}}</p>
-                </a>
-                <!-- End Image -->
-                @endforeach
-            </div>
-            <!--End fiction imgs-->
-            <h2 class="text-3xl text-center mb-4 mt-2 md:mt-6 text-white">Fikcija</h2>
+    <!-- Genre Paralax MD only -->
+    <div class="h-96 mb-4 hidden md:flex">
+        <div id="image-track" data-mouse-down-at="0" data-prev-percentage="0" class="image-paralax-wrap">
+            @foreach ($genres as $genre)
+            <img class="image cursor-grab w-[19rem] h-[26rem]" src="{{URL('images/genres/' . $genre->image_url)}}" id="image" draggable="false" />
+            @endforeach
         </div>
-        <!--End Fiction-->
-
-        <!-- nonFiction -->
-        <div class="flex flex-col-reverse mx-2 md:flex-col ">
-            <!-- nonFiction images-->
-            <div class="flex flex-row flex-wrap gap-16 justify-center">
-                @foreach($nonFictionGenres as $genre)
-                <!-- Image -->
-                <a href="{{route('movies.index', $genre->id)}}" class="overflow-hidden">
-                    <img class="w-56 md:w-48 hover:scale-110" src="{{URL('images/genres/' . $genre->image_url)}}" alt="">
-                    <p class="relative bottom-10 left-6 font-extrabold text-white text-xl md:text-base h-0 z-10" style="text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;" >{{$genre->name}}</p>
-                </a>
-                <!-- End Image -->
-                @endforeach
-            </div>
-            <!--End nonFiction images-->
-            <h2 class="text-3xl text-center mb-4 mt-2 md:mt-6 text-white">Dokumentarci</h2>
-        </div>
-        <!--End nonFiction-->
     </div>
-    <!-- END Genre Showcase -->
+    <!-- CTA -->
+    @role('CLIENT')
+    <div class="hidden md:flex justify-center items-center">
+        <a href="{{route('movies.index')}}" class="bg-transparent border rounded-xl border-white text-white hover:bg-gray-950 hover:text-yellow-500 px-2 py-1 md:px-3 md:py-2 ">
+            Pogledajte ceo repertoar
+        </a>
+    </div>
+    @endrole
+     @guest
+    <div class="hidden md:flex justify-center items-center">
+        <a href="{{route('movies.index')}}" class="bg-transparent border rounded-xl border-white text-white hover:bg-gray-950 hover:text-yellow-500 px-2 py-1 md:px-3 md:py-2 ">
+            Pogledajte ceo repertoar
+        </a>
+    </div>
+    @endguest
+    <!-- End CTA -->
+    <!-- End genre paralax -->
 
-    <h2 class="text-4xl text-white font-bold mb-6">Oglašavanje <span class="hidden md:inline-block">i rentiranje</span></h2>
+    <!-- Genre showcase mobile-->
+     <div class="flex flex-col md:hidden gap-6 mx-4">
+            @foreach ($genres as $genre)
+            <a class="overflow-hidden relative">
+                 <img src="{{URL('images/genres/' . $genre->image_url)}}" class="object-cover"/>
+            </a>
+            @endforeach
+    </div>
+    <!--end Genre mobile showcase -->
+
+    <h2 class="text-4xl text-white font-bold md:mb-6">Oglašavanje <span class="hidden md:inline-block">i rentiranje</span></h2>
 
     <!-- Business showcase -->
     <div class="w-full mb-12">
         <div class="flex p-4 rounded-2xl bg-business-pattern bg-no-repeat bg-cover mx-4 md:mx-40 h-[32rem]">
             <!-- Image left side wrapper-->
-            <div class="md:w-1/2 flex flex-col gap-4 p-2 md:p-4 items-center justify-around">
+            <div class="md:w-1/2 flex flex-col gap-12 md:gap-4 p-2 md:p-4 items-center justify-around">
                 <!-- Text wrapper -->
                 <div x-data="{ count1: 0, count2: 0, count3: 0, target: 100000, isIntersecting: false }" x-intersect.full="let intervalId = setInterval(() => { if(count1 < target) {count1 += 1000;count2 += 100, count3 += 10 }else clearInterval(intervalId); }, 10.0)" class="flex flex-col gap-11">
                     <p class="text-2xl md:text-3xl font-bold text-white ">Zašto izabrati Cinemaniju?</p>
@@ -149,9 +145,14 @@
 @endsection
 
 @section('scripts')
+@vite('resources/js/tech_paralax.js')
 <script>
     window.routes = {
         'movies.screening.index': "{{ route('movie.screenings.index', ['movie' => '_ID_']) }}"
     };
 </script>
+@endsection
+
+@section('head-scripts')
+@vite('resources/js/carousel.js')
 @endsection

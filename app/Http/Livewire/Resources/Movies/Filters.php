@@ -7,8 +7,7 @@ use App\Services\GenreService;
 
 class Filters extends Component
 {
-  public $fiction_genres; //mounted
-  public $nonFiction_genres; //mounted
+  public $genres; //mounted
   public $search_query = ""; //search criteria
 
   //filter criteria
@@ -24,8 +23,7 @@ class Filters extends Component
 
   public function mount(GenreService $genreService)
   {
-    $this->fiction_genres = $genreService->getFictionGenres();
-    $this->nonFiction_genres = $genreService->getNonFictionGenres();
+    $this->genres = $genreService->getGenres();
   }
 
   public function render()

@@ -11,9 +11,10 @@ class LandingPageController extends Controller
 {
     public function index(GenreService $genreService, TagService $tagService)
     {
-        return view('index', ['movies' => Movie::showcased()->get(),
-                              'tags' => $tagService->getTags(),
-                              'fictionGenres' => $genreService->getFictionGenres(),
-                              'nonFictionGenres' => $genreService->getNonFictionGenres()]);
+        return view('index', [
+            'movies' => Movie::showcased()->get(),
+            'tags' => $tagService->getTags(),
+            'genres' => $genreService->getGenres()
+        ]);
     }
 }
