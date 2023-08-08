@@ -29,7 +29,8 @@ class Index extends Component
 
     public function submit($from_date, $start_time, $duration, HallService $hallService)
     {
-        $date = Carbon::createFromFormat('Y-m-d', $from_date)->setTime(0,0)->addHours($start_time);
-        $this->halls_map = $hallService->getAvailableDatesMap($date, $date->addHours($duration), 7);
+        $start_date = Carbon::createFromFormat('Y-m-d', $from_date)->setTime(0,0)->addHours($start_time);
+        $end_date = Carbon::createFromFormat('Y-m-d', $from_date)->setTime(0,0)->addHours($start_time)->addHours($duration);
+        $this->halls_map = $hallService->getAvailableDatesMap($start_date, $end_date, 7);
     }
 }

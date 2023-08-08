@@ -20,39 +20,40 @@ class HallService {
 
     /*
     * Get an associative array of halls available at $start_time for the next $for_days.
-    * [Hall => [Date, Date, Date..]..]
+    * [Date => [Hall, Hall, Hall..]..]
     */
     public function getAvailableDatesMap($start_time, $end_time, $for_days) : Collection {
-
         $screening_map = $this->getHallsWithoutMap('screenings', $start_time, $end_time, $for_days);
         $booking_map = $this->getHallsWithoutMap('bookings', $start_time, $end_time, $for_days);
-        $matching_keys = array_keys(array_intersect_key($booking_map, $screening_map));
-        // Merge the two arrays on intersects, remove duplicates and remap to Hall as key, date array as value
-        return collect($matching_keys)->mapWithKeys(function ($key) use ($booking_map, $screening_map) {
-            return [$key => $booking_map[$key]->intersect($screening_map[$key])];
+
+        return collect($screening_map)->intersectByKeys($booking_map)->map(function ($dates, $hall) use ($booking_map) {
+            return $dates->intersect($booking_map[$hall]);
         });
     }
+
     /*
-    * Gets an assoc array of halls without booking/screening for the next $for_days at $start_time - $end_time
-    * [Date => [Hall, Hall, Hall..]..]
+    * Gets an associative array of halls that don't have bookings/screenings ($relationship interchangeable) at $start_time for the next $for_days.
+    * [Hall => [Date, Date, Date..]..
+    * Used to get arrays for bookings and screenings then is merged on intersect and rekeyed in getAvailableDatesMap().
     */
     private function getHallsWithoutMap($relationship, $start_time, $end_time, $for_days) : array {
         $map = [];
-        $start_time = clone $start_time;
-        $end_time = clone $end_time;
-        $date = $start_time->format('Y-m-d');
+        $startDate = clone $start_time;
+        $endDate = clone $end_time;
 
         for ($i = 0; $i < $for_days; $i++) {
-            $map[$date] = Hall::whereDoesntHave($relationship, function ($query) use ($start_time, $end_time, $date) {
-                $query->whereDate('start_time', $date)
-                ->overlapsWithTime($start_time, $end_time);
+            $formattedDate = $startDate->format('Y-m-d');
+            $map[$formattedDate] = Hall::whereDoesntHave($relationship, function ($query) use ($formattedDate, $startDate, $endDate) {
+                $query->whereDate('start_time', $formattedDate)
+                ->overlapsWithTime($startDate, $endDate);
             })->get();
 
-            $start_time = $start_time->addDays(1);
-            $end_time = $end_time->addDays(1);
-            $date = Carbon::parse($date)->addDays(1)->format('Y-m-d');
+            $startDate->addDay();
+            $endDate->addDay();
         }
+
         return $map;
     }
+
 
 }
