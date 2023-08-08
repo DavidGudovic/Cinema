@@ -118,6 +118,12 @@ class Screening extends Model
         return $query->where('hall_id', $hallId);
     }
 
+    public function scopeOverlapsWithTime($query, $start_time, $end_time)
+    {
+        return $query->where('start_time', '<=', $end_time)
+        ->where('end_time', '>', $start_time);
+    }
+
     public function scopeScreeningGenre($query, $genreId)
     {
         return $query->whereHas('movie', function ($query) use ($genreId) {
@@ -145,11 +151,5 @@ class Screening extends Model
             $q->where('name', 'not like', $filter)
             ->select('image_url');
         }]);
-    }
-
-
-    public function scopeWithAdverts($query)
-    {
-        return $query->whereHas('adverts');
     }
 }

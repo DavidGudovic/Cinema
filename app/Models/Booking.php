@@ -66,6 +66,12 @@ class Booking extends Model implements Requestable //pseudo extends Models/Busin
         return $query->where('start_time', '<', now());
     }
 
+    public function scopeOverlapsWithTime($query, $start_time, $end_time)
+    {
+        return $query->where('start_time', '<=', $end_time)
+        ->where('end_time', '>', $start_time);
+    }
+
     public function scopeStatus($query, $status){
         return $query->whereHas('businessRequest', function($query) use ($status){
             $query->where('status', $status);

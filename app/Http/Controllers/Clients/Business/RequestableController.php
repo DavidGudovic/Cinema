@@ -2,17 +2,15 @@
 
 namespace App\Http\Controllers\Clients\Business;
 
-use App\Models\User;
-use Illuminate\Http\Request;
-use App\Models\BusinessRequest;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class RequestableController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(User $user, BusinessRequest $businessRequest)
+    public function index()
     {
         //
     }
@@ -36,7 +34,7 @@ class RequestableController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(BusinessRequest $businessRequest)
+    public function show(string $id)
     {
         //
     }
@@ -44,7 +42,7 @@ class RequestableController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(BusinessRequest $businessRequest)
+    public function edit(string $id)
     {
         //
     }
@@ -52,7 +50,7 @@ class RequestableController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, BusinessRequest $businessRequest)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -60,7 +58,7 @@ class RequestableController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(BusinessRequest $businessRequest)
+    public function destroy(string $id)
     {
         //
     }

@@ -1,15 +1,17 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Resources\ScreeningController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\Clients\UserController;
 use App\Http\Controllers\Clients\TicketController;
 use App\Http\Controllers\Resources\MovieController;
+use App\Http\Controllers\Resources\ScreeningController;
 use App\Http\Controllers\Authentication\LoginController;
 use App\Http\Controllers\Authentication\RegisterController;
 use App\Http\Controllers\Authentication\VerificationController;
+use App\Http\Controllers\Clients\Business\HallController;
 use App\Http\Controllers\Clients\Business\ReclamationController;
+use App\Http\Controllers\Clients\Business\BookingController;
 use App\Http\Controllers\Clients\Business\RequestableController;
 
 /*
@@ -50,7 +52,9 @@ Route::middleware('auth')->group(function () {
         });
         /* Only Business clients can have/see requests and reclamations */
         Route::middleware('role:BUSINESS_CLIENT')->group(function(){
-            Route::resource('user.requests', RequestableController::class)->only(['index', 'show', 'update']);
+            Route::resource('user.halls', HallController::class)->only(['index']);
+            Route::resource('user.requests', RequestableController::class)->only(['index', 'show', 'destroy' ]);
+            Route::resource('user.halls.booking', BookingController::class)->only(['create','store','destroy']);
             Route::resource('user.reclamations', ReclamationController::class)->only(['index', 'show', 'update']);
         });
         /* Only Managers can access all requests and reclamations */

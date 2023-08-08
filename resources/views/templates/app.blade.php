@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="author" content="David Gudović">
     <meta name="description" content="Online bioskop">
-    <meta name="viewport" content="width=device-width, initial-scale=1, max-width=1920px">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{csrf_token()}}">
 
     <title>Biskop Cinemanija</title>

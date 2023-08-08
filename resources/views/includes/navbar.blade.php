@@ -19,8 +19,8 @@
                     </button>
                     <!-- hidden menu -->
                     <ul class="absolute flex flex-col gap-4 rounded-lg bg-gray-950 bg-opacity-60 hover:bg-opacity-100 hover:border hover:border-white text-white  p-4 mt-4 " x-cloak x-show="business_open" x-transition.opacity>
-                        <li><a class="hover:text-red-600 cursor-pointer hover:underline" href="{{route('user.show', auth()->user())}}">Rentiranje</a></li>
-                        <li><a class="hover:text-red-600 cursor-pointer hover:underline" href="{{route('user.show', auth()->user())}}">Oglašavanje</a></li>
+                        <li><a class="hover:text-red-600 cursor-pointer hover:underline" href="{{route('user.halls.index', auth()->user())}}">Rentiranje</a></li>
+                        <li><a class="hover:text-red-600 cursor-pointer hover:underline" href="{{route('user.halls.index', auth()->user())}}">Oglašavanje</a></li>
                     </ul>
                     <!-- end hidden menu -->
                 </div>
