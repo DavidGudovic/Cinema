@@ -41,6 +41,16 @@ class Booking extends Model implements Requestable //pseudo extends Models/Busin
         'start_time' => 'datetime',
     ];
 
+
+
+    /*
+    * Accessors
+    */
+
+    public function getEndTimeAttribute(){
+        return $this->start_time->addHours($this->duration);
+    }
+
     /**
     * Eloquent relationships
     */
@@ -69,8 +79,9 @@ class Booking extends Model implements Requestable //pseudo extends Models/Busin
     public function scopeOverlapsWithTime($query, $start_time, $end_time)
     {
         return $query->where('start_time', '<=', $end_time)
-        ->where('end_time', '>', $start_time);
+        ->whereRaw('ADDTIME(start_time, duration) > ?', [$start_time]);
     }
+
 
     public function scopeStatus($query, $status){
         return $query->whereHas('businessRequest', function($query) use ($status){

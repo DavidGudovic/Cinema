@@ -23,15 +23,13 @@ class HallService {
     * [Hall => [Date, Date, Date..]..]
     */
     public function getAvailableDatesMap($start_time, $end_time, $for_days) : Collection {
-        $booking_map = $this->getHallsWithoutMap('bookings', $start_time, $end_time, $for_days);
-        $screening_map = $this->getHallsWithoutMap('screenings', $start_time, $end_time, $for_days);
-        $matching_keys = array_keys(array_intersect_key($booking_map, $screening_map));
 
+        $screening_map = $this->getHallsWithoutMap('screenings', $start_time, $end_time, $for_days);
+        $booking_map = $this->getHallsWithoutMap('bookings', $start_time, $end_time, $for_days);
+        $matching_keys = array_keys(array_intersect_key($booking_map, $screening_map));
         // Merge the two arrays on intersects, remove duplicates and remap to Hall as key, date array as value
         return collect($matching_keys)->mapWithKeys(function ($key) use ($booking_map, $screening_map) {
-            $merged_array = array_merge($booking_map[$key], $screening_map[$key]);
-            $unique_values = collect($merged_array)->values()->unique();
-            return [$key => $unique_values];
+            return [$key => $booking_map[$key]->intersect($screening_map[$key])];
         });
     }
     /*
@@ -40,15 +38,20 @@ class HallService {
     */
     private function getHallsWithoutMap($relationship, $start_time, $end_time, $for_days) : array {
         $map = [];
+        $start_time = clone $start_time;
+        $end_time = clone $end_time;
+        $date = $start_time->format('Y-m-d');
 
         for ($i = 0; $i < $for_days; $i++) {
-            $date = Carbon::now()->addDays($i)->format('Y-m-d');
             $map[$date] = Hall::whereDoesntHave($relationship, function ($query) use ($start_time, $end_time, $date) {
                 $query->whereDate('start_time', $date)
                 ->overlapsWithTime($start_time, $end_time);
             })->get();
-        }
 
+            $start_time = $start_time->addDays(1);
+            $end_time = $end_time->addDays(1);
+            $date = Carbon::parse($date)->addDays(1)->format('Y-m-d');
+        }
         return $map;
     }
 

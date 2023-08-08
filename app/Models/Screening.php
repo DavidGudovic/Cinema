@@ -12,11 +12,12 @@ class Screening extends Model
     protected static function booted()
     {
         static::creating(function ($screening) {
-            $screening->end_time = ceil(($screening->advert_slots * $this->advert_duration + $this->movie->duration)/ 60) * 60;
+            $screening->end_time = ceil((config('restrictions.advertisement_time') + $screening->movie->duration) / 3600) * 3600;
+
         });
 
         static::updating(function ($screening) {
-            $screening->end_time = ceil(($this->advert_slots * $this->advert_duration + $this->movie->duration)/ 60) * 60;
+            $screening->end_time = ceil((config('restrictions.advertisement_time') + $screening->movie->duration) / 3600) * 3600;
         });
     }
 
@@ -28,9 +29,7 @@ class Screening extends Model
     */
     protected $fillable = [
         'start_time',
-        'advert_slots',
-        'advert_duration',
-        'advert_price',
+        'duration',
     ];
 
     /**
@@ -56,15 +55,6 @@ class Screening extends Model
     Accessors
     */
 
-    public function getTicketPriceAttribute()
-    {
-        $price = 500;
-        $this->movie->duration > 120 ? $price += 200 : $price;
-        foreach($this->tags() as $tag){
-            $price += $tag->price_addon;
-        }
-        return $price;
-    }
 
     public function getHumanDateAttribute()
     {

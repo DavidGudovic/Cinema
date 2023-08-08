@@ -8,4 +8,5 @@ return [
     'min_booking' => 1,
     'max_guests' => 100,
     'min_guests' => 10,
+    'advert_duration' => 30,
 ];
