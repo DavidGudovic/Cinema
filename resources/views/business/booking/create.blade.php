@@ -61,9 +61,9 @@
             <div class="flex flex-col gap-2 md:gap-0 md:flex-row md:justify-between">
                 <!-- Per hour -->
                 <div class="flex flex-col gap-2 md:w-1/2 md:pr-4">
-                    <label for="price" class="font-bold">Cena po satu</label>
+                    <label for="price_per_hour" class="font-bold">Cena po satu</label>
                     <div class="relative">
-                        <input type="text" name="price" id="price" class="p-2 w-full border border-white bg-neutral-900 text-white rounded-xl" value="{{$hall->price_per_hour}}" readonly>
+                        <input type="text" name="price_per_hour" id="price_per_hour" class="p-2 w-full border border-white bg-neutral-900 text-white rounded-xl" value="{{$hall->price_per_hour}}" readonly>
                         <span class="absolute right-3 top-[0.6rem] text-white opacity-80"> RSD </span>
                     </div>
                 </div>
@@ -87,12 +87,15 @@
                     <p class="text-sm">Unesite detalje vašeg zahteva, koliko gostiju očekujete, da li Vam je potreban film iz našeg repertoara ili donosite svoj medij, kako planirate da koristite salu i ostale podatke. Ovi detalji pomažu u brzini obrade Vašeg zahteva od strane naših zaposlenih, Hvala Vam!</p>
                 </div>
                 <!-- End details tooltip -->
-                <textarea class="p-2 w-full border border-white bg-neutral-900 text-white rounded-xl resize-none" x-ref="counted" x-on:keyup="count = $refs.counted.value.length"
+                <textarea class="p-2 w-full border  bg-neutral-900 text-white rounded-xl resize-none @error('text') border-red-500 @else border-white @enderror" x-ref="counted" x-on:keyup="count = $refs.counted.value.length"
                 name="text" maxlength="1000" rows="10" placeholder="Unesite detalje rentiranja"></textarea>
                 <!-- Char count -->
                 <div class="text-white text-sm text-center" :class="count > 900 ? 'text-red-400' : '' ">
                     <span x-html="count" ></span> <span>/</span> <span x-html="$refs.counted.maxLength" ></span>
                 </div>
+                @error('text')
+                    <span class="text-red-500 text-sm ">{{$message}}</span>
+                @enderror
                 <!-- End char count -->
             </div>
             <!-- End text -->

@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Clients\Business;
 
+use Carbon\Carbon;
 use App\Models\Hall;
 use App\Models\User;
 use App\Models\Booking;
 use Illuminate\Http\Request;
+use App\Services\BookingService;
 use App\Http\Controllers\Controller;
-use Carbon\Carbon;
+use App\Http\Requests\BookingRequest;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Encryption\DecryptException;
 
@@ -42,9 +44,10 @@ class BookingController extends Controller
     /**
     * Store a newly created resource in storage.
     */
-    public function store(Request $request, User $user, Hall $hall)
+    public function store(BookingRequest $request, User $user, Hall $hall, BookingService $bookingService)
     {
-        dd($request->all(), $user, $hall);
+        $bookingService->tryCreateBooking($user->id, $hall->id, $request->text, $request->price, $request->start_time, $request->end_time);
+        return redirect()->route('business.halls.index', $user->id)->with('success', 'Uspešno ste poslali zahtev za rezervaciju, Hvala na poverenju!');
     }
 
     /**
