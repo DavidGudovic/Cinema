@@ -1,5 +1,5 @@
 <div>
-     <!-- hall List -->
+    <!-- hall List -->
     <div class="flex flex-col divide-y divide-white mx-auto mt-6">
         @forelse($halls_map as $date => $halls)
         <!-- Date -> hall, hall -->
@@ -24,7 +24,11 @@
             </div>
         </div>
         @empty
+        @if(session()->has('success'))
+        <p class="text-3xl font-extrabold text-center text-green-500 w-full mt-8 mb-16">{{session('success')}}</p>
+        @else
         <p class="text-3xl font-extrabold text-center w-full mt-8 mb-16">Unesite detalje vašeg zahteva</p>
+        @endif
         @endforelse
         <!-- End Date -> hall, hall -->
     </div>
