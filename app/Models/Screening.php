@@ -12,12 +12,7 @@ class Screening extends Model
     protected static function booted()
     {
         static::creating(function ($screening) {
-            $screening->end_time = ceil((config('restrictions.advertisement_time') + $screening->movie->duration) / 3600) * 3600;
-
-        });
-
-        static::updating(function ($screening) {
-            $screening->end_time = ceil((config('restrictions.advertisement_time') + $screening->movie->duration) / 3600) * 3600;
+            $screening->end_time = $this->start_time->addMinutes(config('advertising.duration') * config('advertising.per_screening') + $screening->movie->duration);
         });
     }
 
@@ -29,7 +24,7 @@ class Screening extends Model
     */
     protected $fillable = [
         'start_time',
-        'duration',
+        'end_time',
     ];
 
     /**
