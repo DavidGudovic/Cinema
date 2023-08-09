@@ -12,14 +12,14 @@ class BookingService {
     /*
     * Create a new booking as well as a new business request, associate the two and return the booking
     */
-    public function tryCreateBooking($user, $hall, $text, $price, $start_time, $end_time) : Booking
+    public function tryCreateBooking( $hall, $text, $price, $start_time, $end_time) : Booking
     {
         try {
             DB::beginTransaction();  // Make the insert atomic
 
             $businessRequest = BusinessRequest::make([
                 'price' => $price,
-                'user_id' => $user,
+                'user_id' => auth()->user()->id,
                 'text' => $text,
             ]);
             $booking = Booking::create([

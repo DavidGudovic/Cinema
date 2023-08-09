@@ -37,7 +37,7 @@
     <div class="flex flex-col w-full items-center justify-center mb-12 md:md-0 md:-mt-12 z-20">
         <h1 class="text-center my-4 font-extrabold text-3xl">Detalji rentiranja</h1>
         <!-- Form -->
-        <form action="{{route('user.halls.booking.store', [auth()->user(), $hall])}}" method="POST" class="flex flex-col gap-2 w-full px-4 md:px-0 md:w-[30rem]">
+        <form action="{{route('halls.booking.store',  $hall)}}" method="POST" class="flex flex-col gap-2 w-full px-4 md:px-0 md:w-[30rem]">
             <input type="hidden" name="date" value="{{$date}}">
             @csrf
             <!-- Date -->

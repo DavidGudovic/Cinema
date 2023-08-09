@@ -13,7 +13,7 @@
             <!-- hall -->
             <div class="flex flex-wrap justify-center md:gap-8">
                 @forelse($halls as $hall)
-                <a href="{{route('user.halls.booking.create', ['user' => auth()->user(), 'hall' => $hall, 'date' => encrypt($date), 'start_time' => encrypt($start_time),'end_time' => encrypt($end_time)])}}" class="relative flex flex-col gap-2 w-40 justify-center">
+                <a href="{{route('halls.booking.create', ['hall' => $hall, 'date' => encrypt($date), 'start_time' => encrypt($start_time),'end_time' => encrypt($end_time)])}}" class="relative flex flex-col gap-2 w-40 justify-center">
                     <img src="{{URL('images/halls/' . $hall->image_url)}}" alt="hall tag" class="object-center">
                     <p class="font-bold">{{$hall->name}}</p>
                 </a>

@@ -40,7 +40,10 @@ Route::middleware('guest')->group(function () {
 */
 Route::middleware('auth')->group(function () {
 
-    /* Private routes - User can only access the route that's specific to his id (user/{user})*/
+    /*
+    * Private routes - User can only access the route that's specific to his id (user/{user})
+    * This is done to prevent users from accessing other users data, tickets, bookings, etc.
+    */
     Route::middleware('private')->group(function () {
 
         Route::get('logout/{user}', [LoginController::class, 'destroy'])->name('logout');
@@ -53,11 +56,9 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::middleware('role:BUSINESS_CLIENT')->group(function(){
-            Route::resource('user.halls', HallController::class)->only(['index']);
             Route::resource('user.requests', RequestableController::class)->only(['index', 'show', 'destroy' ]);
-            Route::resource('user.halls.booking', BookingController::class)->only(['create','store','destroy']);
             Route::resource('user.adverts', AdvertController::class)->only(['destroy']);
-            Route::resource('user.reclamations', ReclamationController::class)->only(['index', 'show', 'update']);
+            Route::resource('user.reclamations', ReclamationController::class)->only(['index','show', 'update']);
         });
 
         Route::middleware('role:MANAGER')->group(function(){
@@ -68,15 +69,21 @@ Route::middleware('auth')->group(function () {
             // TODO: Add routes
         });
     });
-    /* End private routes */
+    /****************************************** End private routes ****************************************/
 
-    /* Public Authenticated routes - User can access any route that's not specific to his id*/
+
+    /*
+    * Public Authenticated routes - User can access any route that's not specific to his id
+    * Access controller by Roles
+    */
     Route::middleware('role:CLIENT')->group(function(){
         Route::resource('movie.screenings', ScreeningController::class)->only(['show'])->middleware(['screening']);
     });
 
     Route::middleware('role:BUSINESS_CLIENT')->group(function(){
         Route::resource('adverts', AdvertController::class)->only(['create', 'store']);
+        Route::resource('halls', HallController::class)->only(['index']);
+        Route::resource('halls.booking', BookingController::class)->only(['create','store']);
     });
 
     Route::middleware('role:MANAGER')->group(function(){

@@ -15,11 +15,10 @@ use Illuminate\Contracts\Encryption\DecryptException;
 
 class BookingController extends Controller
 {
-
     /**
     * Show the form for creating a new resource.
     */
-    public function create(Request $request, User $user, Hall $hall)
+    public function create(Request $request, Hall $hall)
     {
         // Dates are encrypted as a quickfix to users manually changing URL to get any time they want.. TODO better safequard against this
         try{
@@ -44,29 +43,14 @@ class BookingController extends Controller
     /**
     * Store a newly created resource in storage.
     */
-    public function store(BookingRequest $request, User $user, Hall $hall, BookingService $bookingService)
+    public function store(BookingRequest $request, Hall $hall, BookingService $bookingService)
     {
         // Date repacking
         $start_time = Carbon::createFromFormat('Y-m-d H:i', substr($request->date , 0, -8) . ' ' . $request->start_time);
         $end_time = Carbon::createFromFormat('Y-m-d H:i', substr($request->date , 0, -8) . ' ' . $request->end_time);
 
-        $bookingService->tryCreateBooking($user->id, $hall->id, $request->text, $request->price, $start_time, $end_time);
-        return redirect()->route('user.halls.index', $user->id)->with('success', 'Uspešno ste poslali zahtev za rezervaciju, Hvala na poverenju!');
+        $bookingService->tryCreateBooking($hall->id, $request->text, $request->price, $start_time, $end_time);
+        return redirect()->route('halls.index')->with('success', 'Uspešno ste poslali zahtev za rezervaciju, Hvala na poverenju!');
     }
 
-    /**
-    * Display the specified resource.
-    */
-    public function show(Booking $booking)
-    {
-        //
-    }
-
-    /**
-    * Remove the specified resource from storage.
-    */
-    public function destroy(Booking $booking)
-    {
-        //
-    }
 }
