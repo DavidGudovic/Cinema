@@ -11,7 +11,7 @@ return new class extends Migration
     */
     public function up(): void
     {
-        Schema::table('adverts', function (Blueprint $table) {
+        Schema::table('bookings', function (Blueprint $table) {
             // Drop the foreign key constraint
             $table->dropForeign(['business_request_id']);
             // Modify the column to be nullable
@@ -24,7 +24,7 @@ return new class extends Migration
     */
     public function down(): void
     {
-        Schema::table('adverts', function (Blueprint $table) {
+        Schema::table('bookings', function (Blueprint $table) {
             // Modify the column to be non-nullable
             $table->foreignId('business_request_id')->nullable(false)->change();
             // Add the foreign key constraint back
