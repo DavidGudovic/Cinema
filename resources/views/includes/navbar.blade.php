@@ -54,7 +54,7 @@
             @role('CLIENT')
             <li class=""><a class="hover:underline" x-data="{}" x-on:click="window.livewire.emit('showSideBar')" >Rezervacije</a></li>
             @elserole('BUSINESS_CLIENT')
-            <li class=""><a href="{{ route('#') }}">Zahtevi</a></li>
+            <li class=""><a href="'#'">Zahtevi</a></li>
             @endrole
         </div>
 
