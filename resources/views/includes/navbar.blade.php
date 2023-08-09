@@ -20,7 +20,7 @@
                     <!-- hidden menu -->
                     <ul class="absolute flex flex-col gap-4 rounded-lg bg-gray-950 bg-opacity-60 hover:bg-opacity-100 hover:border hover:border-white text-white  p-4 mt-4 " x-cloak x-show="business_open" x-transition.opacity>
                         <li><a class="hover:text-red-600 cursor-pointer hover:underline" href="{{route('halls.index')}}">Rentiranje</a></li>
-                        <li><a class="hover:text-red-600 cursor-pointer hover:underline" href="{{route('halls.index')}}">Oglašavanje</a></li>
+                        <li><a class="hover:text-red-600 cursor-pointer hover:underline" href="{{route('adverts.create')}}">Oglašavanje</a></li>
                     </ul>
                     <!-- end hidden menu -->
                 </div>
@@ -54,7 +54,7 @@
             @role('CLIENT')
             <li class=""><a class="hover:underline" x-data="{}" x-on:click="window.livewire.emit('showSideBar')" >Rezervacije</a></li>
             @elserole('BUSINESS_CLIENT')
-            <li class=""><a href="{{ route('register.create') }}">Zahtevi</a></li>
+            <li class=""><a href="{{ route('#') }}">Zahtevi</a></li>
             @endrole
         </div>
 

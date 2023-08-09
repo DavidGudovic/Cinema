@@ -12,7 +12,7 @@
             <a href="{{route('movies.index')}}"><i class="fa-solid fa-film"></i> Projekcije</a>
             @auth()
             <a href="{{route('halls.index')}}"><i class="fa-solid fa-people-roof"></i> Rentiranje sala</a>
-            <a href="#"><i class="fa-solid fa-rectangle-ad"></i> Reklamni prostor</a>
+            <a href="{{route('adverts.create')}}"><i class="fa-solid fa-rectangle-ad"></i> Reklamni prostor</a>
             @endauth
             @guest
             <a href="{{route('login.create')}}"><i class="fa-solid fa-people-roof"></i> Rentiranje sala</a>

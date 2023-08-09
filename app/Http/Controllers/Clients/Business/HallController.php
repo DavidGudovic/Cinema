@@ -12,7 +12,7 @@ class HallController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(User $user, HallService $hallService)
+    public function index(HallService $hallService)
     {
         return view('resources.halls.index', [
             'halls' => $hallService->getHalls(),

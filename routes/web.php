@@ -13,6 +13,7 @@ use App\Http\Controllers\Clients\Business\HallController;
 use App\Http\Controllers\Clients\Business\ReclamationController;
 use App\Http\Controllers\Clients\Business\BookingController;
 use App\Http\Controllers\Clients\Business\RequestableController;
+use App\Http\Controllers\Clients\Business\AdvertController;
 
 /*
 * Public routes - Anyone can access these routes
@@ -40,9 +41,9 @@ Route::middleware('guest')->group(function () {
 */
 Route::middleware('auth')->group(function () {
 
+    /**************************************  Private routes ************************************************/
     /*
-    * Private routes - User can only access the route that's specific to his id (user/{user})
-    * This is done to prevent users from accessing other users data, tickets, bookings, etc.
+    * Sensitive data, prevent users from accessing other users data, tickets, bookings, advertising stats etc.
     */
     Route::middleware('private')->group(function () {
 
@@ -69,12 +70,11 @@ Route::middleware('auth')->group(function () {
             // TODO: Add routes
         });
     });
-    /****************************************** End private routes ****************************************/
+    /****************************************** End private routes ********************************************/
 
-
+    /*************************************** Public authenticated routes **************************************/
     /*
-    * Public Authenticated routes - User can access any route that's not specific to his id
-    * Access controller by Roles
+    * All endpoints are public to every user with the correct role.
     */
     Route::middleware('role:CLIENT')->group(function(){
         Route::resource('movie.screenings', ScreeningController::class)->only(['show'])->middleware(['screening']);
@@ -93,7 +93,7 @@ Route::middleware('auth')->group(function () {
     Route::middleware('role:ADMIN')->group(function(){
         // TODO: Add routes
     });
-    /* End public authenticated routes */
+    /*************************************** End public authenticated routes ************************************/
 
 });
 
