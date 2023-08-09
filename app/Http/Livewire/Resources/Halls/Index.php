@@ -10,6 +10,8 @@ class Index extends Component
 {
     //[Date => [Hall, Hall]..]
     public $halls_map = [];
+    public $start_time;
+    public $end_time;
 
     protected $listeners = [
         'refreshIndex' => '$refresh',
@@ -24,6 +26,8 @@ class Index extends Component
 
     public function submit($from_date, $start_time, $duration, HallService $hallService)
     {
+        $this->start_time = Carbon::createFromFormat('H', $start_time)->format('H:i');
+        $this->end_time = Carbon::createFromFormat('H',$start_time + $duration)->format('H:i');
         $start_date = Carbon::createFromFormat('Y-m-d', $from_date)->setTime(0,0)->addHours($start_time);
         $end_date = Carbon::createFromFormat('Y-m-d', $from_date)->setTime(0,0)->addHours($start_time)->addHours($duration);
         $this->halls_map = $hallService->getAvailableHallsForDateMap($start_date, $end_date, 7);
