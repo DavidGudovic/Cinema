@@ -2,7 +2,7 @@
 
 
 @section('content')
-<div class="flex flex-col items-center gap-10 w-full h-full overflow-x-hidden">
+<div class="flex flex-col items-center gap-10 w-full h-full overflow-x-hidden my-12">
 
     <h1 class="font-extrabold text-4xl text-center">Rentiranje sala</h1>
 

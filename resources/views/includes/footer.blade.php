@@ -1,5 +1,5 @@
-<footer class="flex-col w-full h-fit px-10 py-6 bg-gray-950 text-white border-t border-gray-200 relative bottom-0 ">
-    <div class="flex flex-wrap gap-11 justify-evenly">
+<footer class="flex-col w-full h-fit px-10 py-6 bg-gray-950 text-white border-t border-gray-200 relative bottom-0 z-50">
+    <div class="flex flex-wrap gap-11 justify-evenly ">
         <!-- Logo -->
 
         <svg version="1.0" class="fill-white" xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 581 429">
