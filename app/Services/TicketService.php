@@ -72,7 +72,7 @@ class TicketService{
     */
     public function getFilteredTicketsPaginated(string $status = 'all', int $movie, ?int $quantity = 2) : LengthAwarePaginator
     {
-        return Ticket::with('screening.movie')->with('seats') // <---------- with half the database
+        return Ticket::with('screening.movie')->with('seats')
         ->forUser(auth()->user())
         ->filterByStatus($status)
         ->filterByMovie($movie)

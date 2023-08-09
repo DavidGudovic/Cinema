@@ -22,9 +22,9 @@ class HallService {
     * Get an associative array of halls available at $start_time for the next $for_days.
     * [Date => [Hall, Hall, Hall..]..]
     */
-    public function getAvailableDatesMap($start_time, $end_time, $for_days) : Collection {
-        $screening_map = $this->getHallsWithoutMap('screenings', $start_time, $end_time, $for_days);
-        $booking_map = $this->getHallsWithoutMap('bookings', $start_time, $end_time, $for_days);
+    public function getAvailableHallsForDateMap($start_time, $end_time, $for_days) : Collection {
+        $screening_map = $this->getAvailableDatesForHallMap('screenings', $start_time, $end_time, $for_days);
+        $booking_map = $this->getAvailableDatesForHallMap('bookings', $start_time, $end_time, $for_days);
 
         return collect($screening_map)->intersectByKeys($booking_map)->map(function ($dates, $hall) use ($booking_map) {
             return $dates->intersect($booking_map[$hall]);
@@ -32,11 +32,11 @@ class HallService {
     }
 
     /*
-    * Gets an associative array of halls that don't have bookings/screenings ($relationship interchangeable) at $start_time for the next $for_days.
+    * Gets an associative array of dates a hall doesn't have bookings/screenings ($relationship interchangeable) at $start_time for the next $for_days.
     * [Hall => [Date, Date, Date..]..
-    * Used to get arrays for bookings and screenings then is merged on intersect and rekeyed in getAvailableDatesMap().
+    * Used to get arrays for bookings and screenings that is merged on intersect and rekeyed in getAvailableDatesMap().
     */
-    private function getHallsWithoutMap($relationship, $start_time, $end_time, $for_days) : array {
+    private function getAvailableDatesForHallMap($relationship, $start_time, $end_time, $for_days) : array {
         $map = [];
         $startDate = clone $start_time;
         $endDate = clone $end_time;

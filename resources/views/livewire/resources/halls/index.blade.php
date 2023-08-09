@@ -13,7 +13,7 @@
             <!-- hall -->
             <div class="flex flex-wrap justify-center md:gap-8">
                 @forelse($halls as $hall)
-                <a href="#" class="relative flex flex-col gap-2 w-40 justify-center">
+                <a href="{{route('user.halls.booking.create', [auth()->user(), $hall, $date])}}" class="relative flex flex-col gap-2 w-40 justify-center">
                     <img src="{{URL('images/halls/' . $hall->image_url)}}" alt="hall tag" class="object-center">
                     <p class="font-bold">{{$hall->name}}</p>
                 </a>

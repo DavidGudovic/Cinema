@@ -16,14 +16,9 @@ class Index extends Component
         'submit' => 'submit',
     ];
 
-    public function mount()
-    {
-
-    }
-
     public function render()
     {
-              setlocale(LC_TIME, 'sr_Latn_RS.UTF-8');
+        setlocale(LC_TIME, 'sr_Latn_RS.UTF-8');
         return view('livewire.resources.halls.index');
     }
 
@@ -31,6 +26,6 @@ class Index extends Component
     {
         $start_date = Carbon::createFromFormat('Y-m-d', $from_date)->setTime(0,0)->addHours($start_time);
         $end_date = Carbon::createFromFormat('Y-m-d', $from_date)->setTime(0,0)->addHours($start_time)->addHours($duration);
-        $this->halls_map = $hallService->getAvailableDatesMap($start_date, $end_date, 7);
+        $this->halls_map = $hallService->getAvailableHallsForDateMap($start_date, $end_date, 7);
     }
 }
