@@ -36,39 +36,58 @@ Route::middleware('guest')->group(function () {
     });
 });
 /*
-* User routes - Only authenticated users can access these routes
+* Authenticated routes - Only authenticated users can access these routes
 */
 Route::middleware('auth')->group(function () {
 
     /* Private routes - User can only access the route that's specific to his id (user/{user})*/
     Route::middleware('private')->group(function () {
+
         Route::get('logout/{user}', [LoginController::class, 'destroy'])->name('logout');
         Route::get('user/delete/{user}', [UserController::class, 'delete'])->name('user.delete');
         Route::resource('user', UserController::class)->only(['show', 'update', 'destroy']);
-        /* Only private clients can have/see tickets         */
+
         Route::middleware('role:CLIENT')->group(function(){
             Route::resource('user.tickets', TicketController::class)->only('index', 'show');
             Route::get('user/{user}/tickets/{ticket}/print', [TicketController::class, 'print'])->name('user.tickets.print');
         });
-        /* Only Business clients can have/see requests and reclamations */
+
         Route::middleware('role:BUSINESS_CLIENT')->group(function(){
             Route::resource('user.halls', HallController::class)->only(['index']);
             Route::resource('user.requests', RequestableController::class)->only(['index', 'show', 'destroy' ]);
             Route::resource('user.halls.booking', BookingController::class)->only(['create','store','destroy']);
+            Route::resource('user.adverts', AdvertController::class)->only(['destroy']);
             Route::resource('user.reclamations', ReclamationController::class)->only(['index', 'show', 'update']);
         });
-        /* Only Managers can access all requests and reclamations */
+
         Route::middleware('role:MANAGER')->group(function(){
             // TODO: Add routes
         });
-        /* Only Admins can access all requests and reclamations */
+
         Route::middleware('role:ADMIN')->group(function(){
             // TODO: Add routes
         });
     });
+    /* End private routes */
 
     /* Public Authenticated routes - User can access any route that's not specific to his id*/
-    Route::resource('movie.screenings', ScreeningController::class)->only(['show'])->middleware(['screening', 'role:CLIENT']);
+    Route::middleware('role:CLIENT')->group(function(){
+        Route::resource('movie.screenings', ScreeningController::class)->only(['show'])->middleware(['screening']);
+    });
+
+    Route::middleware('role:BUSINESS_CLIENT')->group(function(){
+        Route::resource('adverts', AdvertController::class)->only(['create', 'store']);
+    });
+
+    Route::middleware('role:MANAGER')->group(function(){
+        // TODO: Add routes
+    });
+
+    Route::middleware('role:ADMIN')->group(function(){
+        // TODO: Add routes
+    });
+    /* End public authenticated routes */
+
 });
 
 
