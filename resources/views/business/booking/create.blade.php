@@ -90,7 +90,7 @@
                 <textarea class="p-2 w-full border  bg-neutral-900 text-white rounded-xl resize-none @error('text') border-red-500 @else border-white @enderror" x-ref="counted" x-on:keyup="count = $refs.counted.value.length"
                 name="text" maxlength="1000" rows="10" placeholder="Unesite detalje rentiranja"></textarea>
                 <!-- Char count -->
-                <div class="text-white text-sm text-center" :class="count > 900 ? 'text-red-400' : '' ">
+                <div class="text-white text-sm text-center bg-transparent" :class="count > 900 ? 'text-red-400' : '' ">
                     <span x-html="count" ></span> <span>/</span> <span x-html="$refs.counted.maxLength" ></span>
                 </div>
                 @error('text')

@@ -23,10 +23,10 @@ class BookingController extends Controller
     {
         // Dates are encrypted as a quickfix to users manually changing URL to get any time they want.. TODO better safequard against this
         try{
-        $date = Carbon::parse(decrypt($request->query('date')));
-        $start_time = Carbon::parse(decrypt($request->query('start_time')));
-        $end_time = Carbon::parse(decrypt($request->query('end_time')));
-        $duration = $end_time->diffInHours($start_time);
+            $date = Carbon::parse(decrypt($request->query('date')));
+            $start_time = Carbon::parse(decrypt($request->query('start_time')));
+            $end_time = Carbon::parse(decrypt($request->query('end_time')));
+            $duration = $end_time->diffInHours($start_time);
         } catch(DecryptException $e){   //URL is manually changed
             throw new AuthorizationException(403);
         }
@@ -46,8 +46,12 @@ class BookingController extends Controller
     */
     public function store(BookingRequest $request, User $user, Hall $hall, BookingService $bookingService)
     {
-        $bookingService->tryCreateBooking($user->id, $hall->id, $request->text, $request->price, $request->start_time, $request->end_time);
-        return redirect()->route('business.halls.index', $user->id)->with('success', 'Uspešno ste poslali zahtev za rezervaciju, Hvala na poverenju!');
+        // Date repacking
+        $start_time = Carbon::createFromFormat('Y-m-d H:i', substr($request->date , 0, -8) . ' ' . $request->start_time);
+        $end_time = Carbon::createFromFormat('Y-m-d H:i', substr($request->date , 0, -8) . ' ' . $request->end_time);
+
+        $bookingService->tryCreateBooking($user->id, $hall->id, $request->text, $request->price, $start_time, $end_time);
+        return redirect()->route('user.halls.index', $user->id)->with('success', 'Uspešno ste poslali zahtev za rezervaciju, Hvala na poverenju!');
     }
 
     /**
