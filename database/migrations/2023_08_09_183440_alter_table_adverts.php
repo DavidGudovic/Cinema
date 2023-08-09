@@ -16,6 +16,8 @@ return new class extends Migration
             $table->dropForeign(['business_request_id']);
             // Modify the column to be nullable
             $table->foreignId('business_request_id')->nullable()->change();
+
+            $table->foreign('business_request_id')->references('id')->on('business_requests');
         });
     }
 
@@ -27,9 +29,6 @@ return new class extends Migration
         Schema::table('adverts', function (Blueprint $table) {
             // Modify the column to be non-nullable
             $table->foreignId('business_request_id')->nullable(false)->change();
-            // Add the foreign key constraint back
-            $table->foreign('business_request_id')->references('id')->on('business_requests');
         });
     }
-
 };
