@@ -18,7 +18,7 @@ class Booking extends Model implements Requestable //pseudo extends Models/Busin
     */
     protected $fillable = [
         'start_time',
-        'duration',
+        'end_time',
         'hall_id',
         'business_request_id'
     ];
@@ -79,7 +79,7 @@ class Booking extends Model implements Requestable //pseudo extends Models/Busin
     public function scopeOverlapsWithTime($query, $start_time, $end_time)
     {
         return $query->where('start_time', '<=', $end_time)
-        ->whereRaw('ADDTIME(start_time, duration) > ?', [$start_time]);
+        ->where('end_time', '>', $start_time);
     }
 
 

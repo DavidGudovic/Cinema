@@ -28,8 +28,8 @@ class Index extends Component
     {
         $this->start_time = Carbon::createFromFormat('H', $start_time)->format('H:i');
         $this->end_time = Carbon::createFromFormat('H',$start_time + $duration)->format('H:i');
-        $start_date = Carbon::createFromFormat('Y-m-d', $from_date)->setTime(0,0)->addHours($start_time);
-        $end_date = Carbon::createFromFormat('Y-m-d', $from_date)->setTime(0,0)->addHours($start_time)->addHours($duration);
-        $this->halls_map = $hallService->getAvailableHallsForDateMap($start_date, $end_date, 7);
+        $start_datetime = Carbon::createFromFormat('Y-m-d', $from_date)->setTime(0,0)->addHours($start_time);
+        $end_datetime = Carbon::createFromFormat('Y-m-d', $from_date)->setTime(0,0)->addHours($start_time)->addHours($duration);
+        $this->halls_map = $hallService->getAvailableHallsForDateMap($start_datetime, $end_datetime, 7);
     }
 }
