@@ -10,7 +10,7 @@
         <div class="flex flex-col gap-10 w-[215px]">
             <p class="border-b border-white">Usluge</p>
             <a href="{{route('movies.index')}}"><i class="fa-solid fa-film"></i> Projekcije</a>
-            <a href="#"><i class="fa-solid fa-people-roof"></i> Rentiranje sala</a>
+            <a href="{{route('user.halls.index', auth()->user())}}"><i class="fa-solid fa-people-roof"></i> Rentiranje sala</a>
             <a href="#"><i class="fa-solid fa-rectangle-ad"></i> Reklamni prostor</a>
         </div>
         <!-- End products -->
