@@ -13,7 +13,7 @@
                 <!-- Datum -->
                 <div class="flex flex-col gap-1">
                     <p class="font-bold text-neutral-700 opacity-50">Pretraži od datuma</p>
-                    <input type="date"  x-model="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" max="{{ \Carbon\Carbon::now()->addMonths(1)->format('Y-m-d') }}"  x-on:keydown="return false;" class="rounded-md border text-neutral-700 border-neutral-700 p-1">
+                    <input type="date"  x-model="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" max="{{ \Carbon\Carbon::now()->addMonths(1)->format('Y-m-d') }}"  x-on:keydown="false;" class="rounded-md border text-neutral-700 border-neutral-700 p-1">
                 </div>
                 <!-- end datum -->
                 <!-- StartTime -->
