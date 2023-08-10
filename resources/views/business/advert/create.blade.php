@@ -69,9 +69,9 @@
                 </div>
                 <!-- End details tooltip -->
                 <textarea class="p-2 w-full border  bg-neutral-950 bg-opacity-80 border-opacity-70 text-white rounded-xl resize-none @error('text') border-red-500 @else border-white @enderror" x-ref="counted" x-on:keyup="count = $refs.counted.value.length"
-                name="text" maxlength="1000" rows="10" placeholder="Unesite detalje rentiranja"></textarea>
+                name="text" maxlength="1000" rows="10" placeholder="Unesite detalje oglašavanja"></textarea>
                 <!-- Char count -->
-                <div class="text-white text-sm text-center bg-transparent" :class="count > 900 ? 'text-red-400' : '' ">
+                <div class="text-white text-sm text-center bg-transparent absolute -bottom-6 inset-x-0" :class="count > 900 ? 'text-red-400' : '' ">
                     <span x-html="count" ></span> <span>/</span> <span x-html="$refs.counted.maxLength" ></span>
                 </div>
                 @error('text')
@@ -80,6 +80,23 @@
                 <!-- End char count -->
             </div>
             <!-- End text -->
+            <!-- Quanity -->
+            <div x-data="{showDetailsSlots: false, quantity: 1}" class="flex flex-col gap-1 relative px-12 mb-6 mt-2 md:mt-0">
+                <label for="text" class="font-bold">Broj slotova <i x-on:mouseenter="showDetailsSlots = true" x-on:mouseleave="showDetailsSlots = false" class="fa-regular fa-circle-question"></i></label>
+                <!-- Details tooltip -->
+                <div x-show="showDetailsSlots" class="absolute top-6 left-30 border border-white bg-neutral-950 bg-opacity-80 border-opacity-70 text-white p-2 rounded-xl shadow-lg text-justify">
+                    <p class="text-sm">Reklame u našem bioskopu prikazuju se u formatu od {{config('advertising.duration')}} minuta, po {{config('advertising.per_screening')}} pred svako prikazivanje filma.Hvala Vam na saradnji!</p>
+                </div>
+                <!-- End details tooltip -->
+                <input type="text" name="quantity" x-model="quantity" readonly id="advert_url" class="text-center p-2 w-full border border-white bg-neutral-950 bg-opacity-80 border-opacity-70 text-white rounded-xl">
+                <i x-on:click="quantity == 1 ? false : quantity--" class="absolute bottom-7 left-1 fa-solid fa-2xl h-5 cursor-pointer text-white opacity-70 hover:text-red-700 fa-chevron-left"></i>
+                <i x-on:click="quantity++" class="absolute bottom-7 right-1 fa-solid fa-2xl h-5 cursor-pointer text-white opacity-70 hover:text-red-700 fa-chevron-right"></i>
+                <!-- price -->
+                <p class="text-center font-bold text-sm md:text-base">Ukupno minuta: <span x-text="quantity * {{config('advertising.duration')}}"></span> Cena: <span x-text="quantity * {{config('advertising.price')}}"></span> RSD</p>
+                <!-- End price -->
+            </div>
+            <!-- End quanity -->
+
             <!-- Submit -->
             <input type="submit" class="text-center bg-neutral-950 bg-opacity-80 border-opacity-70 border rounded-xl border-white text-white p-2 hover:bg-neutral-200 hover:text-red-700 cursor-pointer" value="Rezerviši">
             <!-- End submit -->
