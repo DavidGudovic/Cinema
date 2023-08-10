@@ -24,38 +24,39 @@
         <form action="{{route('adverts.store')}}" method="post" class="md:w-[36rem] w-full px-2 flex flex-col gap-2">
             @csrf
             <h2 class="font-extrabold text-xl md:text-3xl text-white text-center mb-6">Molimo ispunite formu</h2>
-              <!-- Date -->
+            <!-- Date -->
             <div class="flex flex-col gap-1 md:gap-0 md:flex-row md:justify-between">
                 <!-- Start time -->
                 <div class="flex flex-col gap-1 md:w-1/2 relative md:pr-4">
-                    <label for="start_time" class="font-bold">Početak</label>
-                    <input type="text" name="start_time" id="start_time" class="p-2 border border-white bg-neutral-950 bg-opacity-80 border-opacity-70 text-white rounded-xl" value="">
+                    <label for="title" class="font-bold">Naslov reklame</label>
+                    <input type="text" name="title" id="title" class="p-2 border border-white  @error('title') border-red-500 @else border-white @enderror bg-neutral-950 bg-opacity-80 border-opacity-70 text-white rounded-xl" value="">
+                    @error('title')
+                    <span class="text-red-500 text-sm ">{{$message}}</span>
+                    @enderror
                 </div>
                 <!-- End time -->
                 <div class="flex flex-col gap-1 md:w-1/2 relative md:pl-4">
-                    <label for="end_time" class="font-bold">Kraj</label>
-                    <input type="text" name="end_time" id="end_time" class="p-2 border border-white bg-neutral-950 bg-opacity-80 border-opacity-70 text-white rounded-xl" value="">
+                    <label for="company" class="font-bold">Naziv delatnosti</label>
+                    <input type="text" name="company" id="company" class="p-2 border border-white  @error('company') border-red-500 @else border-white @enderror  bg-neutral-950 bg-opacity-80 border-opacity-70 text-white rounded-xl" value="">
+                    @error('company')
+                    <span class="text-red-500 text-sm ">{{$message}}</span>
+                    @enderror
                 </div>
+
                 <!-- End time -->
             </div>
             <!-- End date -->
             <!-- Price -->
-            <div class="flex flex-col gap-1 md:gap-0 md:flex-row md:justify-between">
+            <div class="flex">
                 <!-- Per hour -->
-                <div class="flex flex-col gap-1 md:w-1/2 md:pr-4">
-                    <label for="price_per_hour" class="font-bold">Cena po satu</label>
-                    <div class="relative">
-                        <input type="text" name="price_per_hour" id="price_per_hour" class="p-2 w-full border border-white bg-neutral-950 bg-opacity-80 border-opacity-70 text-white rounded-xl" value="">
-                    </div>
+                <div class="flex flex-col gap-1 w-full">
+                    <label for="advert_url" class="font-bold">URL vaše reklame</label>
+                    <input type="text" name="advert_url" id="advert_url" class="p-2 w-full border border-white @error('advert_url') border-red-500 @else border-white @enderror bg-neutral-950 bg-opacity-80 border-opacity-70 text-white rounded-xl" placeholder="https://dropbox.com/reklama ili slično">
+                    @error('advert_url')
+                    <span class="text-red-500 text-sm ">{{$message}}</span>
+                    @enderror
                 </div>
                 <!-- Total -->
-                <div class="flex flex-col gap-1 md:w-1/2 md:pl-4">
-                    <label for="price" class="font-bold">Ukupno</label>
-                    <div class="relative">
-                        <input type="text" name="price" id="price" class="p-2 w-full border border-white bg-neutral-950 bg-opacity-80 border-opacity-70 text-white rounded-xl" value="">
-                    </div>
-                </div>
-                <!-- End total -->
             </div>
             <!-- End price -->
 
@@ -64,7 +65,7 @@
                 <label for="text" class="font-bold mb-2">Tekst zahteva <i x-on:mouseenter="showDetails = true" x-on:mouseleave="showDetails = false" class="fa-regular fa-circle-question"></i></label>
                 <!-- Details tooltip -->
                 <div x-show="showDetails" class="absolute top-6 left-30 border border-white bg-neutral-950 bg-opacity-80 border-opacity-70 text-white p-2 rounded-xl shadow-lg text-justify">
-                    <p class="text-sm">Unesite detalje vašeg zahteva, koliko gostiju očekujete, da li Vam je potreban film iz našeg repertoara ili donosite svoj medij, kako planirate da koristite salu i ostale podatke. Ovi detalji pomažu u brzini obrade Vašeg zahteva od strane naših zaposlenih, Hvala Vam!</p>
+                    <p class="text-sm">Unesite detalje vaše narudžbine za dvominutni reklamni oglas za bioskopsku projekciju. Molimo Vas da navedete specifične informacije o Vašem oglasu, kao što su sadržaj, format, i ciljna publika. Ovi detalji su ključni za precizno kreiranje i postavljanje Vašeg oglasa. Hvala Vam na saradnji!</p>
                 </div>
                 <!-- End details tooltip -->
                 <textarea class="p-2 w-full border  bg-neutral-950 bg-opacity-80 border-opacity-70 text-white rounded-xl resize-none @error('text') border-red-500 @else border-white @enderror" x-ref="counted" x-on:keyup="count = $refs.counted.value.length"
@@ -74,7 +75,7 @@
                     <span x-html="count" ></span> <span>/</span> <span x-html="$refs.counted.maxLength" ></span>
                 </div>
                 @error('text')
-                    <span class="text-red-500 text-sm ">{{$message}}</span>
+                <span class="text-red-500 text-sm ">{{$message}}</span>
                 @enderror
                 <!-- End char count -->
             </div>
