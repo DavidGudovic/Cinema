@@ -21,9 +21,9 @@
                     <p class="font-bold text-neutral-700 opacity-50">Početak</p>
                     <div class="relative flex gap-2 items-center rounded-md border text-neutral-700 border-neutral-700 bg-white p-[0.3rem] mr-4">
                         <span class="text-center text-neutral-700" readonly x-text="hour + ':00'"></span><i class="fa-regular fa-clock text-center text-neutral-700 opacity-50"></i>
-                        <div class="absolute -right-6 bottom-0 flex flex-col justify-center items-center">
-                            <i x-on:click="hour == {{config('restrictions.closing_time') - 1}} ? false : hour++" class="fa-solid text-lg cursor-pointer text-neutral-700 opacity-70 hover:text-red-700 fa-chevron-up"></i>
-                            <i x-on:click="hour == {{config('restrictions.opening_time')}} ? false : hour--" class="fa-solid text-lg cursor-pointer text-neutral-700 opacity-70 hover:text-red-700 fa-chevron-down"></i>
+                        <div class="absolute -right-8 top-1 flex flex-col justify-between">
+                            <i x-on:click="hour == {{config('restrictions.closing_time') - 1}} ? false : hour++" class="fa-solid fa-xl h-5 cursor-pointer text-neutral-700 opacity-70 hover:text-red-700 fa-chevron-up"></i>
+                            <i x-on:click="hour == {{config('restrictions.opening_time')}} ? false : hour--" class="fa-solid fa-xl h-5 cursor-pointer text-neutral-700 opacity-70 hover:text-red-700 fa-chevron-down"></i>
                         </div>
                     </div>
                 </div>
@@ -37,9 +37,9 @@
                     <p class="font-bold text-neutral-700 opacity-50">Trajanje</p>
                     <div  class=" relative flex items-center gap-2 rounded-md border text-neutral-700 border-neutral-700 bg-white p-[0.3rem] mr-4 cursor-pointer">
                         <span class="text-center text-neutral-700" readonly x-text="duration"></span><i class="ml-2 fa-solid fa-hourglass-start opacity-50 text-neutral-700"></i>
-                        <div class="absolute -right-6 bottom-0 flex flex-col justify-center items-center">
-                            <i x-on:click="duration == {{config('restrictions.max_booking')}} ? false : duration++" class="fa-solid text-lg hover:text-red-700 text-neutral-700 opacity-70 fa-chevron-up"></i>
-                            <i x-on:click="duration == {{config('restrictions.min_booking')}} ? false : duration--" class="fa-solid text-lg hover:text-red-700 text-neutral-700 opacity-70 fa-chevron-down"></i>
+                        <div class="absolute -right-8 top-1 flex flex-col justify-between">
+                            <i x-on:click="duration == {{config('restrictions.max_booking')}} ? false : duration++" class="fa-solid fa-xl h-5 hover:text-red-700 text-neutral-700 opacity-70 fa-chevron-up"></i>
+                            <i x-on:click="duration == {{config('restrictions.min_booking')}} ? false : duration--" class="fa-solid fa-xl h-5 hover:text-red-700 text-neutral-700 opacity-70 fa-chevron-down"></i>
                         </div>
                     </div>
                 </div>
