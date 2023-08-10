@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Clients\Business;
 
-use App\Http\Controllers\Controller;
 use App\Models\Advert;
 use Illuminate\Http\Request;
+use App\Services\AdvertService;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\AdvertRequest;
 
 class AdvertController extends Controller
@@ -22,9 +23,10 @@ class AdvertController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(AdvertRequest $request)
+    public function store(AdvertRequest $request, AdvertService $advertService)
     {
-        //
+        $advertService->tryCreateAdvert($request['text'], $request['quantity'], $request['title'], $request['company'], $request['advert_url']);
+        return redirect()->route('adverts.create')->with('success', 'Advert created successfully');
     }
 
 

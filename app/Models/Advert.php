@@ -20,7 +20,9 @@ class Advert extends Model implements Requestable //pseudo extends Models/Busine
         'screening_id',
         'business_request_id',
         'advert_url',
-        'slot_number'
+        'company',
+        'title',
+        'quantity'
     ];
 
     /**
@@ -44,8 +46,8 @@ class Advert extends Model implements Requestable //pseudo extends Models/Busine
     /**
     * Eloquent relationships
     */
-    public function screening(){
-        return $this->belongsTo(Screening::class);
+    public function screenings(){
+        return $this->belongsToMany(Screening::class)->as('screenings');
     }
 
     //Polymorphic one to one with BusinessRequest
@@ -56,10 +58,6 @@ class Advert extends Model implements Requestable //pseudo extends Models/Busine
     /**
     * Local Eloquent scopes
     */
-
-    public function scopeForScreening($query, $screening_id){
-        return $query->where('screening_id', $screening_id);
-    }
 
     public function scopeByUser($query, $user_id){
         return $query->whereHas('businessRequest', function($q) use ($user_id){

@@ -17,11 +17,18 @@ return [
     'confirmed' => ':attribute se ne podudara!',
     'email' => 'Polje mora biti validna email adresa',
     'current_password' => 'Netačna lozinka',
+    'url' => ':attribute mora biti validan URL',
     'min' => [
         'array' => ':attribute mora imati minimum :min elemenata.',
         'file' => ':attribute mora biti minimum :min kilobita.',
         'numeric' => ':attribute mora biti minimum :min.',
         'string' => ':attribute mora biti minimum :min karaktera',
+    ],
+    'max' => [
+        'array' => ':attribute ne sme imati više od :max elemenata.',
+        'file' => ':attribute ne sme biti veći od :max kilobita.',
+        'numeric' => ':attribute ne sme biti veći od :max.',
+        'string' => ':attribute ne sme biti veći od :max karaktera.',
     ],
 
     /*
@@ -67,18 +74,14 @@ return [
         'user_id' => 'Korisnik',
         'business_request_id' => 'Zahtev',
         'hall_name' => 'Naziv hale',
-        'hall_address' => 'Adresa hale',
         'hall_description' => 'Opis hale',
         'hall_image' => 'Slika hale',
         'hall_price' => 'Cena hale',
         'hall_capacity' => 'Kapacitet hale',
-        'hall_type' => 'Tip hale',
-        'hall_opening_time' => 'Vreme otvaranja hale',
-        'hall_closing_time' => 'Vreme zatvaranja hale',
-        'hall_city' => 'Grad hale',
-        'hall_country' => 'Država hale',
-        'hall_zip_code' => 'Poštanski broj hale',
-        'hall_phone_number' => 'Broj telefona hale',
+        'advert_url' => 'URL oglasa',
+        'company' => 'Delatnost',
+        'title' => 'Naslov',
+        'quantity' => 'Količina',
 
     ],
 

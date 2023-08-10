@@ -10,7 +10,16 @@
 
 <!-- Advert-->
 <div class="flex flex-col justify-center w-full h-full z-20">
+    @if(session()->has('success'))
+    <!-- Thank you -->
+    <div class="flex flex-col justify-center text-center gap-6 mx-12 md:mx-44 my-12 md:my-32 z-10">
+        <h1 class="font-extrabold text-3xl md:text-5xl text-center">Hvala vam na ukazanom poverenju!</h1>
+        <p class="text-sm md:text-base font-bold">Vaša vera u nas znači nam mnogo i posvećeni smo pružanju najbolje usluge.</p>
+        <p class="text-sm"><strong>*Napomena: </strong>Zbog ograničenog prostora za reklamiranje, možda nećemo moći uvek da garantujemo dostupnost. Međutim, odmah nakon vašeg upita, naši menadžeri će vas kontaktirati u najkraćem mogućem roku kako bi razgovarali o dostupnim opcijama i zajedno pronašli najbolje rešenje koje će odgovarati vašim potrebama.</p>
+    </div>
+    <!-- End thank you -->
 
+    @else
     <!-- Header -->
     <div class="flex flex-col justify-center text-center gap-6 mx-12 md:mx-44 my-12 md:my-32 z-10">
         <h1 class="font-extrabold text-3xl md:text-5xl text-center">Zakup reklame</h1>
@@ -29,7 +38,7 @@
                 <!-- Start time -->
                 <div class="flex flex-col gap-1 md:w-1/2 relative md:pr-4">
                     <label for="title" class="font-bold">Naslov reklame</label>
-                    <input type="text" name="title" id="title" class="p-2 border border-white  @error('title') border-red-500 @else border-white @enderror bg-neutral-950 bg-opacity-80 border-opacity-70 text-white rounded-xl" value="">
+                    <input type="text" name="title" id="title" class="p-2 border @error('title') border-red-500 @else border-white @enderror bg-neutral-950 bg-opacity-80 border-opacity-70 text-white rounded-xl" value="">
                     @error('title')
                     <span class="text-red-500 text-sm ">{{$message}}</span>
                     @enderror
@@ -37,7 +46,7 @@
                 <!-- End time -->
                 <div class="flex flex-col gap-1 md:w-1/2 relative md:pl-4">
                     <label for="company" class="font-bold">Naziv delatnosti</label>
-                    <input type="text" name="company" id="company" class="p-2 border border-white  @error('company') border-red-500 @else border-white @enderror  bg-neutral-950 bg-opacity-80 border-opacity-70 text-white rounded-xl" value="">
+                    <input type="text" name="company" id="company" class="p-2 border @error('company') border-red-500 @else border-white @enderror  bg-neutral-950 bg-opacity-80 border-opacity-70 text-white rounded-xl" value="">
                     @error('company')
                     <span class="text-red-500 text-sm ">{{$message}}</span>
                     @enderror
@@ -51,7 +60,7 @@
                 <!-- Per hour -->
                 <div class="flex flex-col gap-1 w-full">
                     <label for="advert_url" class="font-bold">URL vaše reklame</label>
-                    <input type="text" name="advert_url" id="advert_url" class="p-2 w-full border border-white @error('advert_url') border-red-500 @else border-white @enderror bg-neutral-950 bg-opacity-80 border-opacity-70 text-white rounded-xl" placeholder="https://dropbox.com/reklama ili slično">
+                    <input type="text" name="advert_url" id="advert_url" class="p-2 w-full border @error('advert_url') border-red-500 @else border-white @enderror bg-neutral-950 bg-opacity-80 border-opacity-70 text-white rounded-xl" placeholder="https://dropbox.com/reklama ili slično">
                     @error('advert_url')
                     <span class="text-red-500 text-sm ">{{$message}}</span>
                     @enderror
@@ -103,6 +112,7 @@
         </form>
     </div>
     <!-- End form -->
+    @endif
 
 </div>
 <!-- End advert -->

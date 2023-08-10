@@ -82,7 +82,7 @@ class Screening extends Model
     }
 
     public function adverts(){
-        return $this->hasMany(Advert::class);
+        return $this->belongsToMany(Advert::class)->as('adverts');
     }
 
     /**

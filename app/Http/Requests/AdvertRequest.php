@@ -11,7 +11,7 @@ class AdvertRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class AdvertRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'text' => 'required|string|max:1000',
+            'title' => 'required|string|max:255',
+            'company' => 'required|string|max:255',
+            'advert_url' => 'required|url|max:1000',
         ];
     }
 }
