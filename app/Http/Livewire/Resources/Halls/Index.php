@@ -20,7 +20,7 @@ class Index extends Component
 
     public function render()
     {
-        setlocale(LC_TIME, 'sr_Latn_RS.UTF-8');
+        if(app()->environment('production')) setlocale(LC_TIME, 'sr_RS.UTF-8@latin'); else  setlocale(LC_TIME, 'sr_Latn_RS.UTF-8');
         return view('livewire.resources.halls.index');
     }
 

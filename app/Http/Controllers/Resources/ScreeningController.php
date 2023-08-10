@@ -19,7 +19,8 @@ class ScreeningController extends Controller
      */
     public function index(Movie $movie, ScreeningService $screeningService)
     {
-        setlocale(LC_TIME, 'sr_Latn_RS.UTF-8');
+        if(app()->environment('production')) setlocale(LC_TIME, 'sr_RS.UTF-8@latin'); else  setlocale(LC_TIME, 'sr_Latn_RS.UTF-8');
+
         return view('resources.screenings.index', [
             'movie' => $movie,
             'screenings_map' => $screeningService->getScreeningsMapForMovie($movie, 5),
