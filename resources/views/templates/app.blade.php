@@ -48,7 +48,7 @@
 
     @role('BUSINESS_CLIENT')
     <!-- Business client active tickets -->
-    @livewire('users.business.requests.index-sidebar')
+    @livewire('users.business.requests.index-side-bar')
     <!-- End business client active tickets -->
     @endrole
 
