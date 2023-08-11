@@ -16,7 +16,7 @@
         <!-- End Detailed history button-->
 
         <!-- Sidebar content -->
-        <div class="flex flex-col gap-6 md:gap-12 justify-center mt-24 overflow-y-auto">
+        <div class="flex flex-col gap-6 md:gap-12 justify-center mt-24">
             @forelse($requestables as $request)
             <!-- Heading -->
             <p class="font-extrabold text-2xl text-center">Obrađeni zahtevi</p>
