@@ -40,11 +40,17 @@
 
     <!-- Sidebars-->
 
-        @role('CLIENT')
-        <!-- User active tickets -->
-        @livewire('users.tickets.index-side-bar')
-        <!-- End user active tickets -->
-        @endrole
+    @role('CLIENT')
+    <!-- User active tickets -->
+    @livewire('users.tickets.index-side-bar')
+    <!-- End user active tickets -->
+    @endrole
+
+    @role('BUSINESS_CLIENT')
+    <!-- Business client active tickets -->
+    @livewire('users.business.requests.index-sidebar')
+    <!-- End business client active tickets -->
+    @endrole
 
     <!-- End Sidebars -->
 
@@ -54,7 +60,9 @@
 
     <!-- END MODALS -->
     @endauth
-
+    @role('BUSINESS_CLIENT')
+    @livewireChartsScripts
+    @endrole
     @livewireScripts
     @yield('scripts')
 </body>

@@ -36,7 +36,3 @@
     </form>
 </div>
 @endsection
-
-@section('scripts')
-@livewireChartsScripts
-@endsection
