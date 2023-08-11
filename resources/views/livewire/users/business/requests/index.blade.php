@@ -5,13 +5,13 @@
     </div>
     <!-- End loading -->
     <!-- Requests -->
-    <div class="flex flex-1 flex-col justify-center w-full">
+    <div class="flex flex-1 flex-col justify-center w-full h-full">
         @forelse($requests as $request)
         <!-- Request border-->
         <div class="border-b-2 mb-3 md:mb-0 md:border-b-0 border-white relative p-4 pr-3 flex-1 min-w-0 md:min-w-[26rem]">
             <!-- Request info -->
             <div class="flex flex-col justify-between h-full min-w-full px-2 md:px-4">
-                <div class="flex flex-col gap-3 ">
+                <div class="flex flex-col gap-3">
                     <p class="font-bold text-xl">
                         Zahtev:
                         @if($request->requestable instanceof \App\Models\Advert)
@@ -37,23 +37,25 @@
                     <div class="absolute top-0 right-2 flex justify-between">
                         @if($request->status == 'PENDING')
                         <button wire:click="cancelRequest({{$request->id}})" class="text-white hover:text-red-700 font-bold py-2 px-4">
-                            Otkaži <i class="fa-solid fa-trash"></i>
+                            <span class="hidden md:inline-flex">Otkaži </span> <i class="fa-solid fa-trash"></i>
                         </button>
                         @elseif(!$request->reclamation)
                         <button wire:click="disputeRequest({{$request->id}})" class="text-white hover:text-red-700 font-bold py-2 px-4">
-                            Reklamiraj <i class="fa-solid fa-triangle-exclamation"></i>
+                            <span class="hidden md:inline-flex">Reklamiraj </span> <i class="fa-solid fa-triangle-exclamation"></i>
                         </button>
                         @endif
                     </div>
                     <p class="font-bold text-xl">Detalji:</p>
+                    <div class="">
+                        <!-- Request details -->
+                        @if($request->requestable instanceof \App\Models\Advert)
+                        @include('livewire.users.business.requests.advert')
+                        @else
+                        @include('livewire.users.business.requests.booking')
+                        @endif
+                        <!-- End request details -->
+                    </div>
 
-                    <!-- Request details -->
-                    @if($request->requestable instanceof \App\Models\Advert)
-                    @include('livewire.users.business.requests.advert')
-                    @else
-                    @include('livewire.users.business.requests.booking')
-                    @endif
-                    <!-- End request details -->
                     <!-- Request footer -->
                     <div class="flex flex-col  border-t border-white">
                         <!-- Footer info -->
@@ -63,18 +65,18 @@
                         </div>
                         <!-- End footer info-->
                     </div>
-                    <!-- End Ticket footer -->
+                    <!-- End Request footer -->
                 </div>
-                <!-- End Ticket info-->
+                <!-- End Request info-->
             </div>
-            <!-- End Ticket border-->
+            <!-- End Request border-->
             @empty
             <div class="flex flex-col w-full h-full justify-center">
                 <p class="text-4xl font-extrabold text-center">Nemate zahteva.</p>
             </div>
             @endforelse
         </div>
-        <!-- End Tickets-->
+        <!-- End Requests-->
 
         <!-- Paginator -->
         <div class="flex w-full justify-center">

@@ -9,4 +9,5 @@ return [
     'max_guests' => 100,
     'min_guests' => 10,
     'advert_duration' => 30,
+    'days_before_booking' => 2,
 ];

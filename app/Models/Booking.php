@@ -43,15 +43,6 @@ class Booking extends Model implements Requestable //pseudo extends Models/Busin
     ];
 
 
-
-    /*
-    * Accessors
-    */
-
-    public function getEndTimeAttribute(){
-        return $this->start_time->addHours($this->duration);
-    }
-
     /**
     * Eloquent relationships
     */
