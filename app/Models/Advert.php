@@ -54,7 +54,7 @@ class Advert extends Model implements Requestable //pseudo extends Models/Busine
     * Eloquent relationships
     */
     public function screenings(){
-        return $this->belongsToMany(Screening::class)->as('screenings');
+        return $this->belongsToMany(Screening::class);
     }
 
     //Polymorphic one to one with BusinessRequest
@@ -75,6 +75,12 @@ class Advert extends Model implements Requestable //pseudo extends Models/Busine
     public function scopeStatus($query, $status){
         return $query->whereHas('businessRequest', function($q) use ($status){
             $q->where('status', $status);
+        });
+    }
+
+    public function scopeScheduled($query){
+        return $query->whereHas('screenings', function ($q) {
+            $q->where('start_time', '>', now());
         });
     }
 }

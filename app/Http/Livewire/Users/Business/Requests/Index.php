@@ -2,13 +2,11 @@
 
 namespace App\Http\Livewire\Users\Business\Requests;
 
+use App\Services\AdvertService;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Services\RequestableService;
-use Asantibanez\LivewireCharts\Models\PieChartModel;
-use Asantibanez\LivewireCharts\Models\LineChartModel;
-use Asantibanez\LivewireCharts\Facades\LivewireCharts;
-use Asantibanez\LivewireCharts\Models\ColumnChartModel;
+use App\Models\Advert;
 
 class Index extends Component
 {
@@ -16,17 +14,7 @@ class Index extends Component
 
     public $status_filter = "all";
     public $type_filter = 0;
-
-    private $colors = [
-        'green' => '#10B981',
-        'red' => '#EF4444',
-        'blue' => '#3B82F6',
-        'yellow' => '#F59E0B',
-        'purple' => '#8B5CF6',
-        'pink' => '#EC4899',
-        'indigo' => '#6366F1',
-        'gray' => '#6B7280',
-    ];
+    public $key_force = 1;
 
     public $listeners = [
         'setRequestFilters' => 'setRequestFilters',
@@ -34,8 +22,7 @@ class Index extends Component
         'RequestCancelled' => 'refresh'
     ];
 
-    public function refresh()
-    {
+    public function refresh(){
     }
 
     public function paginationView()
@@ -43,37 +30,18 @@ class Index extends Component
         return 'pagination.custom';
     }
 
-    public function render(RequestableService $requestableService)
+    public function render(RequestableService $requestableService, AdvertService $advertService)
     {
-        $lineChartModel =LivewireCharts::lineChartModel()
-        ->setTitle('Pregledi po danima')
-        ->setAnimated(true)
-        ->setSmoothCurve()
-        ->withGrid()
-        ->multiLine()
-        ->addSeriesPoint("Eho Gneva", 1, 10, ['color' => $this->colors['green']])
-        ->addSeriesPoint("Eho Gneva", 4, 40, ['color' => $this->colors['green']])
-        ->addSeriesPoint("Dusko", 2, 20, ['color' => $this->colors['red']])
-        ->addSeriesPoint("Dusko", 3, 30, ['color' => $this->colors['red']])
-        ->setColors($this->colors);
-        ;
+        $requests = $requestableService->getFilteredRequestsPaginated($this->status_filter,$this->type_filter);
 
-        $pieChartModel = LivewireCharts::pieChartModel()
-        ->setTitle('Procenat pregledanih')
-        ->setAnimated(true)
-        ->setType('pie')
-        ->withOnSliceClickEvent('onSliceClick')
-        ->legendPositionBottom()
-        ->legendHorizontallyAlignedCenter()
-        ->addSlice('Pregledano', 60, $this->colors['green'])
-        ->addSlice('Zakazano', 30, $this->colors['indigo'])
-        ->addSlice('Nepregledano', 40, $this->colors['red']);
+        if($requests[0]->requestable instanceof Advert){  // Workaround for Livewire not being able to refresh chart reactive keys
+            $this->emit('refreshChart', $requests[0]->requestable);
+        }
 
+        $this->key_force = rand();
         return view('livewire.users.business.requests.index', [
-            'requests' => $requestableService->getFilteredRequestsPaginated($this->status_filter,$this->type_filter),
+            'requests' => $requests,
             'user' => auth()->user(),
-            'lineChartModel' => $lineChartModel,
-            'pieChartModel' => $pieChartModel,
         ]);
     }
 
@@ -86,6 +54,14 @@ class Index extends Component
         $this->status_filter = $status;
         $this->type_filter = $type;
         $this->resetPage();
+    }
+
+    /*
+    Cancelles Request
+    */
+    public function cancelRequest($request_id, RequestableService $requestableService): void
+    {
+        $this->emit('showModal', $request_id);
     }
 
 }

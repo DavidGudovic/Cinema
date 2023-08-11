@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\Status;
 use App\Interfaces\Requestable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,6 +14,8 @@ class BusinessRequest extends Model implements Requestable //pseudo superclass f
 
     protected static function booted(){
         static::deleted(function ($request) {
+            $request->status = Status::CANCELLED;
+            $request->save();
             $request->requestable()->delete();
         });
     }
@@ -62,7 +65,7 @@ class BusinessRequest extends Model implements Requestable //pseudo superclass f
 
     // Polymorphic one to one with Advert and Booking
     public function requestable(){
-        return $this->morphTo();
+        return $this->morphTo()->withTrashed();
     }
 
     /**

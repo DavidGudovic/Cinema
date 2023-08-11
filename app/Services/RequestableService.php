@@ -24,4 +24,19 @@ class RequestableService{
         ->orderBy('created_at', 'desc')
         ->paginate($quantity);
     }
+
+    /*
+    * Cancel request
+    */
+    public function cancelRequest(BusinessRequest $request) : void
+    {
+        $request->delete();
+    }
+
+    public function getRequest(int $id) : BusinessRequest
+    {
+        return BusinessRequest::with('requestable')
+        ->withTrashed()
+        ->findOrFail($id);
+    }
 }

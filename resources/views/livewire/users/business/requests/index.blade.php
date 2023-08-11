@@ -28,7 +28,7 @@
                         <span class="text-green-500 ml-2">Odobren</span>
                         @elseif($request->status == 'REJECTED')
                         <span class="text-red-500 ml-2">Odbijen</span>
-                        @else
+                        @elseif($request->status == 'CANCELLED')
                         <span class="text-red-500 ml-2">Otkazan</span>
                         @endif
                     </p>
@@ -39,17 +39,44 @@
                         <button wire:click="cancelRequest({{$request->id}})" class="text-white hover:text-red-700 font-bold py-2 px-4">
                             <span class="hidden md:inline-flex">Otkaži </span> <i class="fa-solid fa-trash"></i>
                         </button>
-                        @elseif(!$request->reclamation)
-                        <button wire:click="disputeRequest({{$request->id}})" class="text-white hover:text-red-700 font-bold py-2 px-4">
+                        @elseif(!$request->reclamation  && $request->status != 'CANCELLED')
+                        <button wire:click="disputeRequest(){{$request->id}})" class="text-white hover:text-red-700 font-bold py-2 px-4">
                             <span class="hidden md:inline-flex">Reklamiraj </span> <i class="fa-solid fa-triangle-exclamation"></i>
                         </button>
                         @endif
                     </div>
                     <p class="font-bold text-xl">Detalji:</p>
-                    <div class="">
+                    <div>
                         <!-- Request details -->
                         @if($request->requestable instanceof \App\Models\Advert)
-                        @include('livewire.users.business.requests.advert')
+                        <div class="flex flex-col w-full flex-1 gap-4">
+
+                            <!-- Details -->
+                            <div class="flex flex-col md:flex-row md:justify-between border-b border-white ">
+                                <!-- Item -->
+                                <div class="flex flex-row gap-2 ">
+                                    <span>Naslov reklame:</span>
+                                    <span class="">{{$request->requestable->title}}</span>
+                                </div>
+                                <!-- End item -->
+                                <!-- Item -->
+                                <div class="flex flex-row gap-2">
+                                    <span>Delatnost:</span>
+                                    <span class="">{{$request->requestable->company}}</span>
+                                </div>
+                                <!-- End info-->
+                                <!-- End item -->
+                                <!-- Item -->
+                                <div class="flex flex-row gap-2">
+                                    <span>Ukupno reklama:</span>
+                                    <span class="">{{$request->requestable->quantity}}</span>
+                                </div>
+                            </div>
+                            <!-- End Details -->
+                            <!-- CHARTS -->
+                            @livewire('charts.advert', ['advert' => $request->requestable, 'request' => $request], $key = $request->requestable->id)
+                            <!-- END CHARTS -->
+                        </div>
                         @else
                         @include('livewire.users.business.requests.booking')
                         @endif
@@ -82,7 +109,7 @@
         <div class="flex w-full justify-center">
             <span class="text-center">{{$requests->links()}}</span>
         </div>
-        <!-- Modal -->
-
     </div>
+    <!-- Modal -->
+    <livewire:users.business.requests.delete-modal/>
 </div>

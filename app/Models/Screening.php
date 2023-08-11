@@ -98,6 +98,13 @@ class Screening extends Model
         return $query->where('start_time', '<', now());
     }
 
+    public function scopePastForDays($query, $quantity)
+{
+    return $query->where('start_time', '>=', now()->subDays($quantity))
+    ->where('start_time', '<', now());
+}
+
+
     public function scopeFromHall($query, $hallId)
     {
         return $query->where('hall_id', $hallId);
