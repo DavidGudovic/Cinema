@@ -18,7 +18,7 @@ class RequestableService{
     public function getFilteredRequestsPaginated(?string $status = 'all', ?string $type = 'all', ?int $quantity = 1) : LengthAwarePaginator
     {
         return BusinessRequest::with('requestable')
-        //->fromUser(auth()->user())
+        ->fromUser(auth()->user()->id)
         ->filterByStatus($status)
         ->filterByType($type)
         ->orderBy('created_at', 'desc')

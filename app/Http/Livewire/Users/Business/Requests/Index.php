@@ -14,7 +14,6 @@ class Index extends Component
 
     public $status_filter = "all";
     public $type_filter = 0;
-    public $key_force = 1;
 
     public $listeners = [
         'setRequestFilters' => 'setRequestFilters',
@@ -30,15 +29,14 @@ class Index extends Component
         return 'pagination.custom';
     }
 
-    public function render(RequestableService $requestableService, AdvertService $advertService)
+    public function render(RequestableService $requestableService)
     {
         $requests = $requestableService->getFilteredRequestsPaginated($this->status_filter,$this->type_filter);
 
-        if($requests[0]->requestable instanceof Advert){  // Workaround for Livewire not being able to refresh chart reactive keys
+        if($requests[0] && $requests[0]->requestable instanceof Advert){  // Workaround for Livewire not being able to refresh chart reactive keys
             $this->emit('refreshChart', $requests[0]->requestable);
         }
 
-        $this->key_force = rand();
         return view('livewire.users.business.requests.index', [
             'requests' => $requests,
             'user' => auth()->user(),
@@ -59,7 +57,7 @@ class Index extends Component
     /*
     Cancelles Request
     */
-    public function cancelRequest($request_id, RequestableService $requestableService): void
+    public function cancelRequest($request_id): void
     {
         $this->emit('showModal', $request_id);
     }
