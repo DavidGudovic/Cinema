@@ -5,15 +5,23 @@ namespace App\Models;
 use App\Interfaces\Requestable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class BusinessRequest extends Model implements Requestable //pseudo superclass for Models/ Booking and Advert
 {
-    use HasFactory;
-               /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+    use HasFactory, SoftDeletes;
+
+    protected static function booted(){
+        static::deleted(function ($request) {
+            $request->requestable()->delete();
+        });
+    }
+
+    /**
+    * The attributes that are mass assignable.
+    *
+    * @var array<int, string>
+    */
     protected $fillable = [
         'status',
         'text',
@@ -23,26 +31,26 @@ class BusinessRequest extends Model implements Requestable //pseudo superclass f
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
+    * The attributes that should be hidden for serialization.
+    *
+    * @var array<int, string>
+    */
     protected $hidden = [
 
     ];
 
     /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
+    * The attributes that should be cast.
+    *
+    * @var array<string, string>
+    */
     protected $casts = [
     ];
 
 
     /**
-     * Eloquent relationships
-     */
+    * Eloquent relationships
+    */
 
     public function user(){
         return $this->belongsTo(User::class);
@@ -58,11 +66,64 @@ class BusinessRequest extends Model implements Requestable //pseudo superclass f
     }
 
     /**
-     * Local Eloquent scopes
-     */
+    * Local Eloquent scopes
+    */
 
-    public function scopeStatus($query, $status){
-        return $query->where('status', $status);
+    #region Status scopes
+    public function scopeFilterByStatus($query, $status){
+        switch($status){
+            case 'pending':
+            return $query->pending();
+            case 'accepted':
+            return $query->accepted();
+            case 'rejected':
+            return $query->rejected();
+            case 'cancelled':
+            return $query->cancelled();
+            default:
+            return $query->withTrashed();
+        }
+    }
+
+    public function scopePending($query){
+        return $query->where('status', 'pending');
+    }
+
+    public function scopeAccepted($query){
+        return $query->where('status', 'accepted');
+    }
+
+    public function scopeRejected($query){
+        return $query->where('status', 'rejected');
+    }
+
+    public function scopeCancelled($query){
+        return $query->onlyTrashed();
+    }
+    #endregion
+
+    #region Type scopes
+    public function scopeFilterByType($query, $type){
+        switch($type){
+                case 'booking':
+                return $query->booking();
+                case 'advert':
+                return $query->advert();
+                default:
+                return $query;
+        }
+    }
+
+    public function scopeBooking($query){
+        return $query->where('requestable_type', Booking::class);
+    }
+
+    public function scopeAdvert($query){
+        return $query->where('requestable_type', Advert::class);
+    }
+    #endregion
+    public function scopeFromMonth($query, $month){
+        return $query->whereMonth('date', $month);
     }
 
     public function scopeFromYear($query, $year){
@@ -73,13 +134,6 @@ class BusinessRequest extends Model implements Requestable //pseudo superclass f
         return $query->where('user_id', $user);
     }
 
-    public function scopeIsAdvert($query){
-        return $query->where('requestable_type', Advert::class);
-    }
-
-    public function scopeIsBooking($query){
-        return $query->where('requestable_type', Booking::class);
-    }
 
     public function scopeHasReclamation($query){
         return $query->whereHas('reclamation');

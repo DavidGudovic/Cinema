@@ -25,7 +25,7 @@ class AdvertRequest extends FormRequest
             'text' => 'required|string|max:1000',
             'title' => 'required|string|max:255',
             'company' => 'required|string|max:255',
-            'advert_url' => 'required|url|max:1000',
+            'advert_url' => 'required|url_field|max:1000',
         ];
     }
 }

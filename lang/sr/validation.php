@@ -17,7 +17,7 @@ return [
     'confirmed' => ':attribute se ne podudara!',
     'email' => 'Polje mora biti validna email adresa',
     'current_password' => 'Netačna lozinka',
-    'url' => ':attribute mora biti validan URL',
+    'url_field' => ':attribute mora biti validan URL',
     'min' => [
         'array' => ':attribute mora imati minimum :min elemenata.',
         'file' => ':attribute mora biti minimum :min kilobita.',

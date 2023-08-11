@@ -54,7 +54,10 @@
             @role('CLIENT')
             <li class=""><a class="hover:underline" x-data="{}" x-on:click="window.livewire.emit('showSideBar')" >Rezervacije</a></li>
             @elserole('BUSINESS_CLIENT')
-            <li class=""><a href="'#'">Zahtevi</a></li>
+            <li class="relative">
+                <a href="'#'">Zahtevi</a>
+                <span class="animate-ping absolute top-0 -right-6 inline-flex h-2 w-2 rounded-full bg-red-700"></span>
+            </li>
             @endrole
         </div>
 

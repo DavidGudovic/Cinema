@@ -5,10 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Interfaces\Requestable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Advert extends Model implements Requestable //pseudo extends Models/BusinessRequest
 {
-    use HasFactory;
+    use HasFactory,SoftDeletes;
+
+    protected static function booted(){
+        static::creating(function ($advert) {
+            $advert->quantity_remaining = $advert->quantity;
+        });
+    }
 
     public $timestamps = false;
     /**
@@ -17,12 +24,12 @@ class Advert extends Model implements Requestable //pseudo extends Models/Busine
     * @var array<int, string>
     */
     protected $fillable = [
-        'screening_id',
         'business_request_id',
         'advert_url',
         'company',
         'title',
-        'quantity'
+        'quantity',
+        'quantity_remaining',
     ];
 
     /**
