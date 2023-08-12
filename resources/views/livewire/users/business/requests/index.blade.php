@@ -11,7 +11,7 @@
         <div class="border-b-2 mb-3 md:mb-0 md:border-b-0 border-white relative p-4 pr-3 flex-1 min-w-0 md:min-w-[26rem]">
             <!-- Request info -->
             <div class="flex flex-col justify-between h-full min-w-full px-2 md:px-4">
-                <div class="flex flex-col gap-3">
+                <div class="flex flex-col gap-3 ">
                     <p class="font-bold text-xl">
                         Zahtev:
                         @if($request->requestable instanceof \App\Models\Advert)
@@ -79,7 +79,13 @@
                             </div>
                             <!-- End Details -->
                             <!-- CHARTS -->
+                            @if($request->status == 'CANCELLED')
+                            <div class="flex flex-col h-full w-full justify-center my-28">
+                                <p class="text-2xl font-extrabold text-center">Reklama je otkazana</p>
+                            </div>
+                            @else
                             @livewire('charts.advert', ['advert' => $request->requestable, 'request' => $request], $key = $request->requestable->id)
+                            @endif
                             <!-- END CHARTS -->
                         </div>
                         @else
