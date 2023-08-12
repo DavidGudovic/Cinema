@@ -61,7 +61,9 @@
     <!-- END MODALS -->
     @endauth
     @role('BUSINESS_CLIENT')
+    @if(Route::currentRouteName() != 'business.requests.index') <!-- Prevents loading charts on index page due to N+1 and the same info is displayed -->
     @livewireChartsScripts
+    @endif
     @endrole
     @livewireScripts
     @yield('scripts')

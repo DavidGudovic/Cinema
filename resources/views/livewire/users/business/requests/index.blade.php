@@ -40,9 +40,14 @@
                             <span class="hidden md:inline-flex">Otkaži </span> <i class="fa-solid fa-trash"></i>
                         </button>
                         @elseif(!$request->reclamation  && $request->status != 'CANCELLED')
-                        <button wire:click="disputeRequest(){{$request->id}})" class="text-white hover:text-red-700 font-bold py-2 px-4">
+                        <button x-data="{}" x-on:click.prevent="window.livewire.emitTo('users.business.reclamations.create-modal', 'showModalSecond' , {{$request->id}})" class="text-white hover:text-red-700 font-bold py-2 px-4">
                             <span class="hidden md:inline-flex">Reklamiraj </span> <i class="fa-solid fa-triangle-exclamation"></i>
                         </button>
+                        @endif
+                        @if($request->reclamation)
+                        <div class="text-red-700 font-bold py-2 px-4">
+                            <span class="hidden md:inline-flex">Reklamiran </span> <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
                         @endif
                     </div>
                     <p class="font-bold text-xl">Detalji:</p>
@@ -110,6 +115,9 @@
             <span class="text-center">{{$requests->links()}}</span>
         </div>
     </div>
-    <!-- Modal -->
+    <!-- Modals -->
     <livewire:users.business.requests.delete-modal/>
+    <livewire:users.business.reclamations.create-modal/>
+
+
 </div>

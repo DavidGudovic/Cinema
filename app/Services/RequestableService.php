@@ -1,16 +1,12 @@
 <?php
 namespace App\Services;
 
-use App\Models\User;
 use App\Models\Advert;
-use App\Models\Booking;
 use App\Models\BusinessRequest;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Collection;
-use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class RequestableService{
-
 
     /*
     * Get all reqeusts for a user with optional filters, paginated
@@ -35,8 +31,13 @@ class RequestableService{
 
     public function getRequest(int $id) : BusinessRequest
     {
-        return BusinessRequest::with('requestable')
+        return BusinessRequest::with(['requestable' => function (MorphTo $query) {
+            $query->morphWith([
+                Advert::class => ['screenings.tickets'],
+            ]);
+        }])
         ->withTrashed()
         ->findOrFail($id);
     }
+
 }

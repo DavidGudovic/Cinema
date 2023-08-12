@@ -12,9 +12,9 @@ class ReclamationController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(User $user, Reclamation $reclamation)
+    public function index(User $user)
     {
-        //
+        return view('business.reclamation.index');
     }
 
     /**

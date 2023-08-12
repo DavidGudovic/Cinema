@@ -89,15 +89,15 @@ class BusinessRequest extends Model implements Requestable //pseudo superclass f
     }
 
     public function scopePending($query){
-        return $query->where('status', 'pending');
+        return $query->where('status', 'PENDING');
     }
 
     public function scopeAccepted($query){
-        return $query->where('status', 'accepted');
+        return $query->where('status', 'ACCEPTED');
     }
 
     public function scopeRejected($query){
-        return $query->where('status', 'rejected');
+        return $query->where('status', 'REJECTED');
     }
 
     public function scopeCancelled($query){

@@ -18,7 +18,8 @@ class Index extends Component
     public $listeners = [
         'setRequestFilters' => 'setRequestFilters',
         'cancelRequest' => 'cancelRequest',
-        'RequestCancelled' => 'refresh'
+        'RequestCancelled' => 'refresh',
+        'ReclamationCreated' => 'refresh'
     ];
 
     public function refresh(){
@@ -34,7 +35,9 @@ class Index extends Component
         $requests = $requestableService->getFilteredRequestsPaginated($this->status_filter,$this->type_filter);
 
         if($requests[0] && $requests[0]->requestable instanceof Advert){  // Workaround for Livewire not being able to refresh chart reactive keys
-            $this->emit('refreshChart', $requests[0]->requestable);
+            if($requests[0]['status'] != 'CANCELLED') { // Weird fix for an even weirder bug
+                $this->emit('refreshChart', $requests[0]->requestable);
+            }
         }
 
         return view('livewire.users.business.requests.index', [
@@ -55,11 +58,11 @@ class Index extends Component
     }
 
     /*
-    Cancelles Request
+    Shows the modal for cancelling Request
     */
     public function cancelRequest($request_id): void
     {
-        $this->emit('showModal', $request_id);
+        $this->emitTo('users.business.requests.delete-modal', 'showModal', $request_id);
     }
 
 }
