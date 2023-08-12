@@ -29,6 +29,9 @@ class RequestableService{
         $request->delete();
     }
 
+    /*
+     Returns a request with its requestable model
+    */
     public function getRequest(int $id) : BusinessRequest
     {
         return BusinessRequest::with(['requestable' => function (MorphTo $query) {

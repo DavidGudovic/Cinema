@@ -14,6 +14,8 @@ class Reclamation extends Model
      *
      * @var array<int, string>
      */
+    protected $with = ['businessRequest']; //eager load requestable model always needed
+
     protected $fillable = [
         'status',
         'text',
@@ -37,7 +39,6 @@ class Reclamation extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'status' => Status::class,
     ];
 
 
@@ -50,15 +51,50 @@ class Reclamation extends Model
     }
 
     public function businessRequest(){
-        return $this->belongsTo(BusinessRequest::class);
+        return $this->belongsTo(BusinessRequest::class)->withTrashed();
     }
 
     /**
      * Local Eloquent scopes
      */
 
-    public function scopeStatus($query, $status){
-        return $query->where('status', $status);
+    #region Status scopes
+    public function scopeFilterByStatus($query, $status){
+        switch($status){
+            case 'pending':
+            return $query->pending();
+            case 'accepted':
+            return $query->accepted();
+            case 'rejected':
+            return $query->rejected();
+            default:
+            return $query;
+        }
+    }
+
+    public function scopePending($query){
+        return $query->where('status', 'PENDING');
+    }
+
+    public function scopeAccepted($query){
+        return $query->where('status', 'ACCEPTED');
+    }
+
+    public function scopeRejected($query){
+        return $query->where('status', 'REJECTED');
+    }
+
+    #region Type scopes
+
+    public function scopeFilterByType($query, $type){
+        switch($type){
+            case 'advert':
+            return $query->forAdvert();
+            case 'booking':
+            return $query->forBooking();
+            default:
+            return $query;
+        }
     }
 
     public function scopeForAdvert($query){
@@ -74,6 +110,6 @@ class Reclamation extends Model
     }
 
     public function scopeFromUser($query, $user){
-        return $query->where('user_id', $user->id);
+        return $query->where('user_id', $user);
     }
 }

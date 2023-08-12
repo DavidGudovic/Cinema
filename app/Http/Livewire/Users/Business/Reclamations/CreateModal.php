@@ -29,6 +29,11 @@ class CreateModal extends ModalBase
     */
     public function store(ReclamationService $reclamationService)
     {
+        if($this->text == null){
+            session()->flash('message','Morate uneti tekst reklamacije');
+            return;
+        }
+
         $reclamationService->storeReclamation($this->request, $this->text);
         session()->flash('message','Uspešno ste poslali reklamaciju');
         $this->emit('ReclamationCreated');
