@@ -14,6 +14,12 @@ class Index extends Component
     protected function paginationView(){
         return 'pagination.custom';
     }
+
+    protected $listeners = [
+        'ReclamationDeleted' => '$refresh',
+        'setReclamationFilters' => 'setReclamationFilters',
+    ];
+
     public $status_filter = "all";
     public $type_filter = 0;
 

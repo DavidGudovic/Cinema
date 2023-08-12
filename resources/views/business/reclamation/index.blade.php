@@ -29,8 +29,8 @@
             <option value="rejected">Odbijena</option>
         </select>
         <div class="flex flex-row gap-6 mt-4">
-            <button x-on:click.prevent="window.livewire.emit('setRequestFilters', statusFilter, typeFilter)" type="submit" class="form-btn py-1">Primeni</button>
-            <button x-on:click="typeFilter = 0; statusFilter = 0; window.livewire.emit('setRequestFilters', typeFilter, statusFilter)" type="reset" class="form-btn bg-gray-500 py-1">Resetuj</button>
+            <button x-on:click.prevent="window.livewire.emit('setReclamationFilters', statusFilter, typeFilter)" type="submit" class="form-btn py-1">Primeni</button>
+            <button x-on:click="typeFilter = 0; statusFilter = 0; window.livewire.emit('setReclamationFilters', typeFilter, statusFilter)" type="reset" class="form-btn bg-gray-500 py-1">Resetuj</button>
         </div>
     </form>
 </div>
