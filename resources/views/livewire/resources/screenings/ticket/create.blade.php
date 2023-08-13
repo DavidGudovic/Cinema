@@ -106,11 +106,11 @@
                 </div>
                 <!-- End footer info-->
                 <!-- Action -->
-                <div class="flex justify-between">
-                    <a wire:click.prevent="store()" class="text-center bg-transparent border rounded-xl border-white text-white p-2 w-48">
+                <div class="flex justify-between gap-2">
+                    <a wire:click.prevent="store()" class="text-center bg-transparent border rounded-xl border-white text-white p-2 md:w-48">
                         <i class="fa-solid fa-ticket"></i> Rezerviši Kartu
                     </a>
-                    <a wire:click.prevent="resetSelectedSeats()" class="text-center bg-transparent border rounded-xl border-white text-white p-2 w-48">
+                    <a wire:click.prevent="resetSelectedSeats()" class="text-center bg-transparent border rounded-xl border-white text-white p-2 md:w-48">
                         <i class="fa-solid fa-x"></i> Otkaži rezervisanje
                     </a>
                 </div>
