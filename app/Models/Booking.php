@@ -81,6 +81,12 @@ class Booking extends Model implements Requestable //pseudo extends Models/Busin
         });
     }
 
+    public function scopePendingOrAccepted($query){
+        return $query->whereHas('businessRequest', function ($query){
+           return $query->where('status', 'PENDING')->orWhere('status', 'ACCEPTED');
+        });
+    }
+
     public function scopeUser($query, $user){
         return $query->whereHas('businessRequest', function($query) use ($user){
             $query->where('user_id', $user);

@@ -38,15 +38,19 @@ class HallService {
     */
     private function getAvailableDatesForHallMap($relationship, $start_time, $end_time, $for_days) : array {
         $map = [];
-        $startDate = clone $start_time;
+        $startDate = clone $start_time;  // clone to avoid modifying the original object
         $endDate = clone $end_time;
 
-        for ($i = 0; $i < $for_days; $i++) {
+        for ($i = 0; $i < $for_days; $i++) {    // from start_time to start_time + $for_days
             $formattedDate = $startDate->format('Y-m-d');
-            $map[$formattedDate] = Hall::whereDoesntHave($relationship, function ($query) use ($formattedDate, $startDate, $endDate) {
+            $map[$formattedDate] =
+            Hall::whereDoesntHave($relationship, function ($query) use ($formattedDate, $startDate, $endDate, $relationship) {
                 $query->whereDate('start_time', $formattedDate)
-                ->overlapsWithTime($startDate, $endDate);
-            })->get();
+                ->overlapsWithTime($startDate, $endDate)
+                ->when($relationship == 'bookings', function ($query) {
+                    return $query->pendingOrAccepted(); // Cancelled and rejected requests shouldn't be counted as unavailable
+                });
+            }) ->get();
 
             $startDate->addDay();
             $endDate->addDay();
