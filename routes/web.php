@@ -14,18 +14,16 @@ use App\Http\Controllers\Clients\Business\ReclamationController;
 use App\Http\Controllers\Clients\Business\BookingController;
 use App\Http\Controllers\Clients\Business\RequestableController;
 use App\Http\Controllers\Clients\Business\AdvertController;
-use App\Jobs\ScheduleAdverts;
-use App\Models\BusinessRequest;
 
-/*
-* Public routes - Anyone can access these routes
-*/
+
+/* * Public routes - Anyone can access these routes */
+
 Route::get('/', [LandingPageController::class, 'index'])->name('home');
 Route::get('movies/{genre?}', [MovieController::class, 'index'])->name('movies.index');
 Route::resource('movie.screenings', ScreeningController::class)->only(['index']);
-/*
-* Authentication routes - Only guests can access these routes
-*/
+
+/* * Authentication routes - Only guests can access these routes */
+
 Route::middleware('guest')->group(function () {
     // Registration
     Route::resource('register', RegisterController::class, ['only' => ['create', 'store']]);
@@ -38,24 +36,16 @@ Route::middleware('guest')->group(function () {
         Route::get('/update/{id}/{email}', 'update')->name('update');
     });
 });
-/* TEST */
-Route::get('test', function(){
-    $test = new ScheduleAdverts();
-    $test->handle(new App\Services\AdvertService(), new App\Services\ScreeningService(), new App\Scheduling\AdvertPriorityQueue());
-    /* $businessRequest = BusinessRequest::find(13);
-    $businessRequest->status = 'ACCEPTED';
-    $businessRequest->save(); */
-})->name('test');
-/* END TEST */
-/*
-* Authenticated routes - Only authenticated users can access these routes
-*/
+
+
+/*  Authenticated routes - Only authenticated users can access these routes */
+
 Route::middleware('auth')->group(function () {
 
     /**************************************  Private routes ************************************************/
-    /*
-    * Sensitive data, prevent users from accessing other users data, tickets, bookings, advertising stats etc.
-    */
+
+    /* Sensitive data, prevent users from accessing other users data, tickets, bookings, advertising stats etc. */
+
     Route::middleware('private')->group(function () {
 
         Route::get('logout/{user}', [LoginController::class, 'destroy'])->name('logout');
@@ -84,9 +74,9 @@ Route::middleware('auth')->group(function () {
     /****************************************** End private routes ********************************************/
 
     /*************************************** Public authenticated routes **************************************/
-    /*
-    * All endpoints are public to every user with the correct role.
-    */
+
+    /* All endpoints are public to every user with the correct role. */
+
     Route::middleware('role:CLIENT')->group(function(){
         Route::resource('movie.screenings', ScreeningController::class)->only(['show'])->middleware(['screening']);
     });

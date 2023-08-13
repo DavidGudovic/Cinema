@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Interfaces\Requestable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Screening;
+use App\Models\BusinessRequest;
 
 class Advert extends Model implements Requestable //pseudo extends Models/BusinessRequest
 {
@@ -75,7 +77,7 @@ class Advert extends Model implements Requestable //pseudo extends Models/Busine
 
     public function scopeScheduled($query){
         return $query->whereHas('screenings', function ($q) {
-            $q->whereHas('start_time', '>', now());
+            $q->where('start_time', '>', now());
         });
     }
 

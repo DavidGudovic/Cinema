@@ -41,9 +41,11 @@ class AdvertService {
     public function getScheduledCount($advert) : int
     {
         return Advert::where('id', $advert->id)
-        ->with('screenings')
-        ->scheduled()
-        ->count();
+        ->withCount(['screenings' => function ($query) {
+            $query->where('start_time', '>', now());
+        }])
+        ->first()
+        ->screenings_count;
     }
 
 
