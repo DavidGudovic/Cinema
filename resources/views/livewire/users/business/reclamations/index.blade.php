@@ -30,18 +30,22 @@
                             <span class="text-red-500 ml-2">Odbijen</span>
                             @endif
                         </p>
-                            <!-- Reclamation details -->
-                            <div class="flex flex-col md:flex-row w-full h-full flex-1 gap-4">
-                                <div class="flex flex-col h-full w-full border-b md:border-b-0 md:border-r border-white border-opacity-60">
-                                    <p class="font-bold">Razlog reklamacije:</p>
-                                    <p class="text-sm">{{$reclamation->text}}</p>
-                                </div>
-                                <div class="flex flex-col h-full w-full">
-                                    <p class="font-bold">Odgovor:</p>
-                                    <p class="text-sm">{{$reclamation->comment ?? 'Ovde odgovor'}}</p>
-                                </div>
+                        <!-- Reclamation details -->
+                        <div class="flex flex-col md:flex-row w-full h-full flex-1 gap-4">
+                            <div class="flex flex-col h-full w-full">
+                                <p class="font-bold text-center text-lg">Razlog reklamacije:</p>
+                                <textarea class="p-2 w-full border  bg-neutral-950 bg-opacity-80 border-opacity-70 text-white rounded-xl resize-none @error('text') border-red-500 @else border-white @enderror" x-ref="counted" x-on:keyup="count = $refs.counted.value.length"
+                                name="text" maxlength="1000" rows="15" readonly>{{$reclamation->text}}</textarea>
+
                             </div>
-                            <!-- End reclamation details -->
+                            <div class="flex flex-col h-full w-full">
+                                <p class="font-bold text-center text-lg">Odgovor:</p>
+                                <textarea class="p-2 w-full border  bg-neutral-950 bg-opacity-80 border-opacity-70 text-white rounded-xl resize-none @error('text') border-red-500 @else border-white @enderror @if($reclamation->comment == null ? true : false) text-opacity-50 @endif" x-ref="counted" x-on:keyup="count = $refs.counted.value.length"
+                                name="text" maxlength="1000" rows="15" readonly>{{$reclamation->comment ?? 'Vaša reklamacija se još uvek obrađuje, odgovor naših menadžera moći ćete pročitati ovde u najkraćem mogućem roku'}}</textarea>
+
+                            </div>
+                        </div>
+                        <!-- End reclamation details -->
                     </div>
                     <!-- End reclamation info-->
                 </div>
