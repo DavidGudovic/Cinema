@@ -44,6 +44,6 @@ class ScreeningService
     */
     public function getScreeningsForAdvertScheduling()
     {
-        return Screening::upcoming()->withFreeAdSlots()->get();
+        return Screening::with('adverts')->upcoming()->withFreeAdSlots()->get();
     }
 }

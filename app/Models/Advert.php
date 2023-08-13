@@ -75,7 +75,7 @@ class Advert extends Model implements Requestable //pseudo extends Models/Busine
 
     public function scopeScheduled($query){
         return $query->whereHas('screenings', function ($q) {
-            $q->where('start_time', '>', now());
+            $q->whereHas('start_time', '>', now());
         });
     }
 

@@ -40,7 +40,10 @@ class AdvertService {
     */
     public function getScheduledCount($advert) : int
     {
-        return Advert::where('id', $advert->id)->with('screenings')->scheduled()->count();
+        return Advert::where('id', $advert->id)
+        ->with('screenings')
+        ->scheduled()
+        ->count();
     }
 
 
@@ -81,13 +84,24 @@ class AdvertService {
     }
 
     /*
+    * Gets quantity remaining map for passed advert ids
+    */
+    public function getAdvertQuantityMap($advertIDs) : Collection
+    {
+        return Advert::whereIn('id', $advertIDs)
+        ->get()
+        ->mapWithKeys(function ($advert) {
+            return [$advert->id => $advert->quantity_remaining];
+        });
+    }
+    /*
     * Get all accepted adverts that have quantity_remaining with their respective priorities
     * [Advert => Priority]
     */
-
     public function getAdvertSchedulingPriorityMap() : Collection
     {
         $adverts = Advert::status('ACCEPTED')->hasRemaining()->get();
+
         return $adverts->mapWithKeys(function ($advert) {
             return [$advert->id => $this->calculatePriority($advert)];
         });
@@ -100,14 +114,17 @@ class AdvertService {
     }
 
     /* Change the quantity_remaining */
-
-    public function updateAdvert($advertId)
+    public function massUpdateAdverts($advertIDs)
     {
-        $advert = Advert::find($advertId);
-        if ($advert) {
-            $advert->last_scheduled = now();
-            $advert->quantity_remaining -= 1;
-            $advert->save();
-        }
+        $quantities = array_count_values($advertIDs);
+
+        DB::transaction(function () use ($quantities) { // Make the update atomic
+            foreach ($quantities as $advertID => $quantity) {
+                Advert::where('id', $advertID)->decrement('quantity_remaining', $quantity);
+                Advert::where('id', $advertID)->update([
+                    'last_scheduled' => now()
+                ]);
+            }
+        });
     }
 }
