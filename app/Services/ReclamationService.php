@@ -33,4 +33,13 @@ class ReclamationService{
             'user_id' => auth()->user()->id,
         ]);
     }
+
+    /*
+    * Cancel reclamation
+    */
+    public function cancelReclamation(int $reclamation_id) : void
+    {
+        $reclamation = Reclamation::findOrFail($reclamation_id);
+        $reclamation->delete();
+    }
 }

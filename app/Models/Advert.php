@@ -11,12 +11,6 @@ class Advert extends Model implements Requestable //pseudo extends Models/Busine
 {
     use HasFactory,SoftDeletes;
 
-    protected static function booted(){
-        static::creating(function ($advert) {
-            $advert->quantity_remaining = $advert->quantity;
-        });
-    }
-
     public $timestamps = false;
     /**
     * The attributes that are mass assignable.
@@ -30,6 +24,7 @@ class Advert extends Model implements Requestable //pseudo extends Models/Busine
         'title',
         'quantity',
         'quantity_remaining',
+        'last_scheduled',
     ];
 
     /**
@@ -82,5 +77,9 @@ class Advert extends Model implements Requestable //pseudo extends Models/Busine
         return $query->whereHas('screenings', function ($q) {
             $q->where('start_time', '>', now());
         });
+    }
+
+    public function scopeHasRemaining($query){
+        return $query->where('quantity_remaining', '>', 0);
     }
 }

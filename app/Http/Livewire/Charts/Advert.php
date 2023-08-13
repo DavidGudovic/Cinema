@@ -57,9 +57,11 @@ class Advert extends Component
             $this->lineChartModel->addPoint($date, $count);
         }
 
+        $adverts_scheduled = $advertService->getScheduledCount($this->advert);
+        $adverts_shown = $this->advert->quantity - $this->advert->quantity_remaining - $adverts_scheduled;
         $this->pieChartModel
-        ->addSlice('Pregledano', $this->advert->quantity - $this->advert->quantity_remaining, $this->colors['green'])
-        ->addSlice('Zakazano', $advertService->getScheduledCount($this->advert), $this->colors['indigo'])
+        ->addSlice('Pregledano', $adverts_shown , $this->colors['green'])
+        ->addSlice('Zakazano', $adverts_scheduled , $this->colors['indigo'])
         ->addSlice('Nepregledano', $this->advert->quantity_remaining, $this->colors['red']);
     }
 

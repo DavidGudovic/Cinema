@@ -70,7 +70,7 @@
     <!-- END Tech showcase -->
 
     <h2 class="text-4xl text-white font-bold mb-6" aria-selected="none">Repertoar žanrova</h2>
-
+    <a href="{{route('test')}}" class="w-96 h-96 cursor-pointer bg-neutral-900">AAAAAAAAAAAAAAAAAAAAAAA</a>
     <!-- Genre Paralax MD only -->
     <div class="h-96 mb-4 hidden md:flex">
         <div id="image-track" data-mouse-down-at="0" data-prev-percentage="0" class="image-paralax-wrap">

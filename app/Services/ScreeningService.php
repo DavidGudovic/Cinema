@@ -38,4 +38,12 @@ class ScreeningService
     {
         return Screening::with('movie')->with('hall')->where('id', $screening)->first();
     }
+
+    /*
+    * Used in App\Scheduling\AdvertScheduling
+    */
+    public function getScreeningsForAdvertScheduling()
+    {
+        return Screening::upcoming()->withFreeAdSlots()->get();
+    }
 }

@@ -122,8 +122,6 @@
         </div>
     </div>
     <!-- Modals -->
-    <livewire:users.business.requests.delete-modal/>
-    <livewire:users.business.reclamations.create-modal/>
-
-
+    @livewire('users.business.requests.delete-modal')
+    @livewire('users.business.reclamations.create-modal')
 </div>

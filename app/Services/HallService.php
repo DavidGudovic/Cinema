@@ -23,8 +23,8 @@ class HallService {
     * [Date => [Hall, Hall, Hall..]..]
     */
     public function getAvailableHallsForDateMap($start_time, $end_time, $for_days) : Collection {
-        $screening_map = $this->getAvailableDatesForHallMap('screenings', $start_time, $end_time, $for_days);
-        $booking_map = $this->getAvailableDatesForHallMap('bookings', $start_time, $end_time, $for_days);
+        $screening_map = $this->getHallDatesMapForRelationship('screenings', $start_time, $end_time, $for_days);
+        $booking_map = $this->getHallDatesMapForRelationship('bookings', $start_time, $end_time, $for_days);
 
         return collect($screening_map)->intersectByKeys($booking_map)->map(function ($dates, $hall) use ($booking_map) {
             return $dates->intersect($booking_map[$hall]);
@@ -32,11 +32,9 @@ class HallService {
     }
 
     /*
-    * Gets an associative array of dates a hall doesn't have bookings/screenings ($relationship interchangeable) at $start_time for the next $for_days.
-    * [Hall => [Date, Date, Date..]..
-    * Used to get arrays for bookings and screenings that is merged on intersect and rekeyed in getAvailableDatesMap().
+    * Used to get arrays for bookings and screenings that is merged on intersect  in getAvailableDatesMap().
     */
-    private function getAvailableDatesForHallMap($relationship, $start_time, $end_time, $for_days) : array {
+    private function getHallDatesMapForRelationship($relationship, $start_time, $end_time, $for_days) : array {
         $map = [];
         $startDate = clone $start_time;  // clone to avoid modifying the original object
         $endDate = clone $end_time;

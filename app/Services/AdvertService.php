@@ -4,6 +4,7 @@ namespace App\Services;
 use App\Models\User;
 use App\Models\Advert;
 use App\Models\BusinessRequest;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Collection;
@@ -20,7 +21,7 @@ class AdvertService {
         ->with('tickets')
         ->get()
         ->groupBy(function ($screening) {
-            return $screening->start_time->format('d/m/Y'); // Group by formatted start time
+            return $screening->start_time->format('d/m/Y'); // Group by start time
         })
         ->map(function ($screeningsByDate) {
             return $screeningsByDate->flatMap(function ($screening) {
@@ -41,6 +42,8 @@ class AdvertService {
     {
         return Advert::where('id', $advert->id)->with('screenings')->scheduled()->count();
     }
+
+
     /*
     * Create a new advert as well as a new business request, associate the two and return the advert
     */
@@ -75,6 +78,36 @@ class AdvertService {
             throw $e;
         }
         return $advert;
+    }
 
+    /*
+    * Get all accepted adverts that have quantity_remaining with their respective priorities
+    * [Advert => Priority]
+    */
+
+    public function getAdvertSchedulingPriorityMap() : Collection
+    {
+        $adverts = Advert::status('ACCEPTED')->hasRemaining()->get();
+        return $adverts->mapWithKeys(function ($advert) {
+            return [$advert->id => $this->calculatePriority($advert)];
+        });
+    }
+
+    /* Calculates an adverts priority based on quantity remaining and when it is last seen, modified by weights from config */
+    private function calculatePriority(Advert $advert) : int
+    {
+        return $advert->quantity_remaining * config('advertising.weight_remaining') + Carbon::parse($advert->last_scheduled)->diffInDays(now()) * config('advertising.weight_last_scheduled');
+    }
+
+    /* Change the quantity_remaining */
+
+    public function updateAdvert($advertId)
+    {
+        $advert = Advert::find($advertId);
+        if ($advert) {
+            $advert->last_scheduled = now();
+            $advert->quantity_remaining -= 1;
+            $advert->save();
+        }
     }
 }

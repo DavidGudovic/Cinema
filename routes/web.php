@@ -14,6 +14,8 @@ use App\Http\Controllers\Clients\Business\ReclamationController;
 use App\Http\Controllers\Clients\Business\BookingController;
 use App\Http\Controllers\Clients\Business\RequestableController;
 use App\Http\Controllers\Clients\Business\AdvertController;
+use App\Jobs\ScheduleAdverts;
+use App\Models\BusinessRequest;
 
 /*
 * Public routes - Anyone can access these routes
@@ -36,6 +38,15 @@ Route::middleware('guest')->group(function () {
         Route::get('/update/{id}/{email}', 'update')->name('update');
     });
 });
+/* TEST */
+Route::get('test', function(){
+    $test = new ScheduleAdverts();
+    $test->handle(new App\Services\AdvertService(), new App\Services\ScreeningService(), new App\Scheduling\AdvertPriorityQueue());
+    /* $businessRequest = BusinessRequest::find(13);
+    $businessRequest->status = 'ACCEPTED';
+    $businessRequest->save(); */
+})->name('test');
+/* END TEST */
 /*
 * Authenticated routes - Only authenticated users can access these routes
 */

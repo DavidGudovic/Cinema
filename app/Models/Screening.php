@@ -9,14 +9,6 @@ class Screening extends Model
 {
     use HasFactory;
 
-    protected static function booted()
-    {
-        static::creating(function ($screening) {
-            $screening->end_time = $this->start_time->addMinutes(config('advertising.duration') * config('advertising.per_screening') + $screening->movie->duration);
-        });
-    }
-
-
     /**
     * The attributes that are mass assignable.
     *
@@ -99,10 +91,10 @@ class Screening extends Model
     }
 
     public function scopePastForDays($query, $quantity)
-{
-    return $query->where('start_time', '>=', now()->subDays($quantity))
-    ->where('start_time', '<', now());
-}
+    {
+        return $query->where('start_time', '>=', now()->subDays($quantity))
+        ->where('start_time', '<', now());
+    }
 
 
     public function scopeFromHall($query, $hallId)
@@ -136,7 +128,7 @@ class Screening extends Model
             $query->where('name', $tagName);
         });
     }
-    // TODO: Figure out is this supposed to be a scope here or something else.
+
     public function scopeWithOmmitedTag($query,string $filter)
     {
         return $query->with(['tags' => function ($q) use ($filter){
@@ -144,4 +136,10 @@ class Screening extends Model
             ->select('image_url');
         }]);
     }
+
+    public function scopeWithFreeAdSlots($query)
+    {
+        return $query->withCount('adverts')->having('adverts_count', '<', config('advertising.per_screening'));
+    }
+
 }

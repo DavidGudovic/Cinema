@@ -16,16 +16,19 @@ class Index extends Component
     }
 
     protected $listeners = [
-        'ReclamationDeleted' => '$refresh',
+        'ReclamationCancelled' => 'refresh',
         'setReclamationFilters' => 'setReclamationFilters',
     ];
 
     public $status_filter = "all";
     public $type_filter = 0;
 
+    public function refresh(){
+        $this->resetPage();
+    }
+
     public function render(ReclamationService $reclamationService)
     {
-
         return view('livewire.users.business.reclamations.index', [
             'reclamations' => $reclamationService->getFilteredReclamationsPaginated($this->status_filter,$this->type_filter),
         ]);
@@ -41,6 +44,14 @@ class Index extends Component
         $this->status_filter = $status;
         $this->type_filter = $type;
         $this->resetPage();
+    }
+
+        /*
+    Shows the modal for cancelling Request
+    */
+    public function cancelReclamation($reclamation_id): void
+    {
+        $this->emitTo('users.business.reclamations.delete-modal', 'showModal', $reclamation_id);
     }
 
 

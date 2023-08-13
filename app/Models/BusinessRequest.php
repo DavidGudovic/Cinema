@@ -12,14 +12,6 @@ class BusinessRequest extends Model implements Requestable //pseudo superclass f
 {
     use HasFactory, SoftDeletes;
 
-    protected static function booted(){
-        static::deleted(function ($request) {
-            $request->status = Status::CANCELLED;
-            $request->save();
-            $request->requestable()->delete();
-        });
-    }
-
     /**
     * The attributes that are mass assignable.
     *
