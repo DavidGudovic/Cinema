@@ -10,7 +10,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class VerifyEmail extends Mailable implements ShouldQueue
+class VerifyEmail extends Mailable
 {
     use Queueable, SerializesModels;
     private $link;
