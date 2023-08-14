@@ -26,7 +26,7 @@ class BookingController extends Controller
             $start_time = Carbon::parse(decrypt($request->query('start_time')));
             $end_time = Carbon::parse(decrypt($request->query('end_time')));
             $duration = $end_time->diffInHours($start_time);
-        } catch(DecryptException $e){   //URL is manually changed
+        } catch(DecryptException $e){   //URL is tampered with
             throw new AuthorizationException(403);
         }
 

@@ -6,6 +6,7 @@ use App\Models\Screening;
 
 class ScreeningObserver
 {
+    /* Calculate the screening end time*/
     public function creating(Screening $screening)
     {
              $screening->end_time =

@@ -10,6 +10,7 @@ use App\Models\BusinessRequest;
 
 class BusinessRequestObserver
 {
+    /* Change status of cancelled (soft deleted) requests and cascade soft delete*/
     public function deleted(BusinessRequest $request)
     {
         $request->status = Status::CANCELLED;
@@ -20,6 +21,7 @@ class BusinessRequestObserver
     public function saved(BusinessRequest $request)
     {
 
+        /* If its a newly accepted advert, run the scheduler*/
         if($request->requestable instanceof Advert && $request->isDirty('status') && $request->status == 'ACCEPTED'){
             dispatch(new ScheduleAdverts());
         }
