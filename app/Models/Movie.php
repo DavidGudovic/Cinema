@@ -74,16 +74,12 @@ class Movie extends Model
 
     public function scopeScreeningTime($query, string $screening_time)
     {
-        switch($screening_time){
-            case 'now':
-                return $query->screeningToday();
-            case 'tommorow':
-                return $query->screeningTommorow();
-            case 'week':
-                return $query->screeningThisWeek();
-            default:
-                return $query->hasScreenings();
-        }
+        return match ($screening_time) {
+            'now' => $query->screeningToday(),
+            'tommorow' => $query->screeningTommorow(),
+            'week' => $query->screeningThisWeek(),
+            default => $query->hasScreenings(),
+        };
     }
 
     public function scopeHasScreenings($query){

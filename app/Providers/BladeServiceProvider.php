@@ -33,7 +33,7 @@ class BladeServiceProvider extends ServiceProvider
         * @clientorguest
         */
         Blade::if('clientorguest', function () {
-            return auth()->user() ? auth()->user()->role == Roles::CLIENT : true;
+            return !auth()->user() || auth()->user()->role == Roles::CLIENT;
         });
     }
 }

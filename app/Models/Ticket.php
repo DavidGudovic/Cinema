@@ -106,16 +106,12 @@ class Ticket extends Model
     }
 
     public function scopeFilterByStatus($query, $status){
-        switch($status){
-            case 'active':
-            return $query->active();
-            case 'inactive':
-            return $query->inactive();
-            case 'cancelled':
-            return $query->onlyTrashed();
-            default:
-            return $query->withTrashed();
-        }
+        return match ($status) {
+            'active' => $query->active(),
+            'inactive' => $query->inactive(),
+            'cancelled' => $query->onlyTrashed(),
+            default => $query->withTrashed(),
+        };
     }
     #endregion
 

@@ -49,18 +49,13 @@ class BusinessRequest extends Model implements Requestable //pseudo superclass f
 
     #region Status scopes
     public function scopeFilterByStatus($query, $status){
-        switch($status){
-            case 'pending':
-            return $query->pending();
-            case 'accepted':
-            return $query->accepted();
-            case 'rejected':
-            return $query->rejected();
-            case 'cancelled':
-            return $query->cancelled();
-            default:
-            return $query->withTrashed();
-        }
+        return match ($status) {
+            'pending' => $query->pending(),
+            'accepted' => $query->accepted(),
+            'rejected' => $query->rejected(),
+            'cancelled' => $query->cancelled(),
+            default => $query->withTrashed(),
+        };
     }
 
     public function scopePending($query){
@@ -82,14 +77,11 @@ class BusinessRequest extends Model implements Requestable //pseudo superclass f
 
     #region Type scopes
     public function scopeFilterByType($query, $type){
-        switch($type){
-                case 'booking':
-                return $query->booking();
-                case 'advert':
-                return $query->advert();
-                default:
-                return $query;
-        }
+        return match ($type) {
+            'booking' => $query->booking(),
+            'advert' => $query->advert(),
+            default => $query,
+        };
     }
 
     public function scopeBooking($query){

@@ -25,14 +25,6 @@ class Seat extends Model
         'column'
     ];
 
-
-    /**
-    * The attributes that should be cast.
-    *
-    * @var array<string, string>
-    */
-
-
     /*
     Accessors
     */

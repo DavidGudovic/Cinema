@@ -2,9 +2,7 @@
 namespace App\Services;
 
 use App\Models\Hall;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
-use Nette\NotImplementedException;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
 /*

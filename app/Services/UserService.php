@@ -17,14 +17,13 @@ class UserService{
     * Create a new user instance after a valid registration.
     */
     public function create($validated) : User{
-        $user = User::create([
+        return User::create([
             'name' => $validated['name'],
             'username' => $validated['username'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
             'role' => $validated['role']
         ]);
-        return $user;
     }
 
     /*

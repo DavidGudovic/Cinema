@@ -23,13 +23,12 @@ class RoleNotAuthorizedException extends Exception
     protected $status;
 
     /**
-    * Create a new authorization exception instance.
-    *
-    * @param  string|null  $message
-    * @param  mixed  $code
-    * @param  \Throwable|null  $previous
-    * @return void
-    */
+     * Create a new authorization exception instance.
+     *
+     * @param null $message
+     * @param int $status
+     * @param \Throwable|null $previous
+     */
     public function __construct($message = null, $status = 418, Throwable $previous = null)
     {
         parent::__construct($message ?? 'Pogrešan tip profila', 418, $previous);

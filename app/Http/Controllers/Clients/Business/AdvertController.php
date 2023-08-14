@@ -25,7 +25,10 @@ class AdvertController extends Controller
      */
     public function store(AdvertRequest $request, AdvertService $advertService)
     {
-        $advertService->tryCreateAdvert($request['text'], $request['quantity'], $request['title'], $request['company'], $request['advert_url']);
+        try {
+            $advertService->tryCreateAdvert($request['text'], $request['quantity'], $request['title'], $request['company'], $request['advert_url']);
+        } catch (\Exception $e) {
+        }
         return redirect()->route('adverts.create')->with('success', 'Advert created successfully');
     }
 

@@ -49,7 +49,10 @@ class BookingController extends Controller
         $start_time = Carbon::createFromFormat('Y-m-d H:i', substr($request->date , 0, -8) . ' ' . $request->start_time);
         $end_time = Carbon::createFromFormat('Y-m-d H:i', substr($request->date , 0, -8) . ' ' . $request->end_time);
 
-        $bookingService->tryCreateBooking($hall->id, $request->text, $request->price, $start_time, $end_time);
+        try {
+            $bookingService->tryCreateBooking($hall->id, $request->text, $request->price, $start_time, $end_time);
+        } catch (\Exception $e) {
+        }
         return redirect()->route('halls.index')->with('success', 'Uspešno ste poslali zahtev za rezervaciju, Hvala na poverenju!');
     }
 

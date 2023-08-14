@@ -43,16 +43,12 @@ class Reclamation extends Model
 
     #region Status scopes
     public function scopeFilterByStatus($query, $status){
-        switch($status){
-            case 'pending':
-            return $query->pending();
-            case 'accepted':
-            return $query->accepted();
-            case 'rejected':
-            return $query->rejected();
-            default:
-            return $query;
-        }
+        return match ($status) {
+            'pending' => $query->pending(),
+            'accepted' => $query->accepted(),
+            'rejected' => $query->rejected(),
+            default => $query,
+        };
     }
 
     public function scopePending($query){
@@ -70,14 +66,11 @@ class Reclamation extends Model
     #region Type scopes
 
     public function scopeFilterByType($query, $type){
-        switch($type){
-            case 'advert':
-            return $query->forAdvert();
-            case 'booking':
-            return $query->forBooking();
-            default:
-            return $query;
-        }
+        return match ($type) {
+            'advert' => $query->forAdvert(),
+            'booking' => $query->forBooking(),
+            default => $query,
+        };
     }
 
     public function scopeForAdvert($query){

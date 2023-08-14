@@ -19,7 +19,7 @@ class LoginController extends Controller
         return view('authentication.login', [
             'id' => $id ?? 0,
             'email' => $email ?? '',
-        ]);;
+        ]);
     }
 
     /*
@@ -30,7 +30,7 @@ class LoginController extends Controller
         /*
         * Attempt to authenticate the request.
         */
-        if (!auth()->attempt($request->only('username', 'password'), $request->remember)) {
+        if (!auth()->attempt($request->only('username', 'password'), $request['remember'])) {
             return back()->with(['status' => 'error', 'status_msg' => 'Uneli ste pogrešne podatke']);
         }
 

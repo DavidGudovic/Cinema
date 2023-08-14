@@ -5,6 +5,7 @@ use App\Models\Hall;
 use App\Models\User;
 use App\Models\Booking;
 use App\Models\BusinessRequest;
+use Exception;
 use Illuminate\Support\Facades\DB;
 
 class BookingService {
@@ -12,7 +13,10 @@ class BookingService {
     /*
     * Create a new booking as well as a new business request, associate the two and return the booking
     */
-    public function tryCreateBooking( $hall, $text, $price, $start_time, $end_time) : Booking
+    /**
+     * @throws Exception
+     */
+    public function tryCreateBooking($hall, $text, $price, $start_time, $end_time) : Booking
     {
         try {
             DB::beginTransaction();  // Make the insert atomic
@@ -36,7 +40,7 @@ class BookingService {
 
             DB::commit();  // Commit the insert
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollback();
             throw $e;
         }

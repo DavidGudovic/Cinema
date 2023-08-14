@@ -1,12 +1,12 @@
 <?php
 namespace App\Services;
 
-use App\Models\User;
+
 use App\Models\Advert;
 use App\Models\BusinessRequest;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Collection;
 
 class AdvertService {
@@ -52,6 +52,9 @@ class AdvertService {
     /*
     * Create a new advert as well as a new business request, associate the two and return the advert
     */
+    /**
+     * @throws Exception
+     */
     public function tryCreateAdvert($text, $quantity, $title, $company, $advert_url) : Advert
     {
         try {
@@ -78,7 +81,7 @@ class AdvertService {
 
             DB::commit();  // Commit the insert
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollback();
             throw $e;
         }
@@ -116,7 +119,7 @@ class AdvertService {
     }
 
     /* Change the quantity_remaining */
-    public function massUpdateAdverts($advertIDs)
+    public function massUpdateAdverts($advertIDs) : void
     {
         $quantities = array_count_values($advertIDs);
 
