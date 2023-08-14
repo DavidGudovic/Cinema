@@ -35,23 +35,14 @@ class Ticket extends Model
     }
 
     protected $fillable = [
-    ];
-
-    /**
-    * The attributes that should be hidden for serialization.
-    *
-    * @var array<int, string>
-    */
-    protected $hidden = [
-
-    ];
-
-    /**
-    * The attributes that should be cast.
-    *
-    * @var array<string, string>
-    */
-protected $casts = [
+        'screening_id',
+        'user_id',
+        'technology_price_addon',
+        'long_movie_addon',
+        'subtotal',
+        'discount',
+        'total',
+        'seat_count',
     ];
 
     /*
