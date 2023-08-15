@@ -15,7 +15,9 @@ use App\Http\Controllers\Clients\Business\BookingController;
 use App\Http\Controllers\Clients\Business\RequestableController;
 use App\Http\Controllers\Clients\Business\AdvertController;
 
-
+Route::get('/test', function () {
+    (new \App\Jobs\ScheduleAdverts())->handle(new \App\Services\AdvertService(), new \App\Services\ScreeningService(), new \App\Scheduling\AdvertPriorityQueue());
+});
 /* * Public routes - Anyone can access these routes */
 
 Route::get('/', [LandingPageController::class, 'index'])->name('home');

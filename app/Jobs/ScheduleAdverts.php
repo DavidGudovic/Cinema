@@ -14,7 +14,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class ScheduleAdverts implements ShouldQueue
+class ScheduleAdverts
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -31,7 +31,7 @@ class ScheduleAdverts implements ShouldQueue
         $adverts_priority_map = $advertService->getAdvertSchedulingPriorityMap();  /* [Advert => priority] */
         $adverts_quantity_map = $advertService->getAdvertQuantityMap($adverts_priority_map->keys()); /* [Advert => quantity_left] */
         $screenings = $screeningService->getScreeningsForAdvertScheduling();
-        $scheduled_adverts = [];    /* Adverts that have been scheduled, non unique array */
+        $scheduled_adverts = [];    /* Adverts that have been scheduled, non-unique array */
 
         // Build the priority queue
         foreach ($adverts_priority_map as $advertID => $priority) {

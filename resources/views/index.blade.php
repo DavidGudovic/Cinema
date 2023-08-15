@@ -69,8 +69,12 @@
     </div>
     <!-- END Tech showcase -->
 
+
+    <a class="h-96 w-96 bg-red-700" href="route{{'test'}}">AAAAAAAAAAAAAAAAAAAAAAAA</a>
+
+
     <h2 class="text-4xl text-white font-bold mb-6" aria-selected="none">Repertoar žanrova</h2>
-    <!-- Genre Paralax MD only -->
+    <!-- Genre Parallax MD only -->
     <div class="h-96 mb-4 hidden md:flex">
         <div id="image-track" data-mouse-down-at="0" data-prev-percentage="0" class="image-paralax-wrap">
             @foreach ($genres as $genre)
