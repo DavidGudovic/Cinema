@@ -70,7 +70,7 @@
     <!-- END Tech showcase -->
 
 
-    <a class="h-96 w-96 bg-red-700" href="route{{'test'}}">AAAAAAAAAAAAAAAAAAAAAAAA</a>
+    <a class="h-96 w-96 bg-red-700" href="{{route('test')}}">AAAAAAAAAAAAAAAAAAAAAAAA</a>
 
 
     <h2 class="text-4xl text-white font-bold mb-6" aria-selected="none">Repertoar žanrova</h2>
