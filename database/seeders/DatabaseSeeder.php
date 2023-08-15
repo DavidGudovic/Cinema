@@ -2,21 +2,65 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Jobs\ScheduleAdverts;
+use Database\Seeders\NonRandom\GenreSeeder;
+use Database\Seeders\NonRandom\HallSeeder;
+use Database\Seeders\NonRandom\MovieSeeder;
+use Database\Seeders\NonRandom\TagSeeder;
+use Database\Seeders\NonRandom\UserNonRandomSeeder;
+use Database\Seeders\Random\BusinessRequestSeeder;
+use Database\Seeders\Random\ReclamationSeeder;
+use Database\Seeders\Random\ScreeningSeeder;
+use Database\Seeders\Random\TicketSeeder;
+use Database\Seeders\Random\UserSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
+    use WithoutModelEvents;
+
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+       echo("Seeding this application should only be done with a fresh database!\n");
+       echo("If the database isn't fresh run php artisan migrate:fresh --seed\n");
+        usleep(500000);
+       echo("Seeding non-random data..\n");
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        $this->callWithLogging(GenreSeeder::class, "Seeding genres...\n");
+        echo("Done!\n");
+        $this->callWithLogging(UserNonRandomSeeder::class, "Seeding users...\n");
+        echo("Done!\n");
+        $this->callWithLogging(HallSeeder::class, "Seeding halls...\n");
+        echo("Done!\n");
+        $this->callWithLogging(MovieSeeder::class, "Seeding movies...\n");
+        echo("Done!\n");
+        $this->callWithLogging(TagSeeder::class, "Seeding tags...\n");
+        echo("Done!");
+
+        echo("Seeding random data..\n");
+        $this->callWithLogging(UserSeeder::class, "Seeding users...\n");
+        echo("Done!\n");
+        $this->callWithLogging(ScreeningSeeder::class, "Seeding screenings...\n");
+        echo("Done!\n");
+        $this->callWithLogging(TicketSeeder::class, "Seeding tickets... this one might take a while\n");
+        echo("Done!\n");
+        $this->callWithLogging(BusinessRequestSeeder::class, "Seeding adverts and bookings...\n");
+        echo("Done!\n");
+        $this->callWithLogging(ReclamationSeeder::class, "Seeding reclamations...\n");
+        echo("Done!\n");
+
+        echo("Running Advert Scheduler - You should optimally have a queue worker running \n");
+        dispatch(new ScheduleAdverts());
+        echo("Job dispatched\n");
+        usleep(500000);
+        echo('Seeding complete!');
+
+    }
+
+    protected function callWithLogging($seederClass, $message) : void
+    {
+        echo($message);
+        $this->call($seederClass);
     }
 }
