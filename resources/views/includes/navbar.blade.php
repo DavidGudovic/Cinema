@@ -54,9 +54,9 @@
                     <ul class="absolute flex flex-col gap-4 rounded-lg bg-gray-950 bg-opacity-60 hover:bg-opacity-100 hover:border hover:border-white text-white  p-4 mt-4 "
                         x-cloak x-show="manager_open" x-transition.opacity>
                         <li><a class="hover:text-red-600 cursor-pointer hover:underline"
-                               href="{{route('halls.index')}}">Filmovi</a></li>
+                               href="{{route('movies.index')}}">Filmovi</a></li>
                         <li><a class="hover:text-red-600 cursor-pointer hover:underline"
-                               href="{{route('adverts.create')}}">Produkcije</a></li>
+                               href="{{route('screenings.index')}}">Produkcije</a></li>
                     </ul>
                     <!-- end hidden menu -->
                 </div>
@@ -99,26 +99,9 @@
                     @endif
                 </li>
                 @elserole('MANAGER')
-                <!-- Manager dropdown 2 -->
                 <div class="flex-1 flex justify-center items-center">
-                    <div x-data="{ manager_open_second: false }" x-on:click.outside="manager_open_second = false">
-                        <button x-on:click="manager_open_second = !manager_open_second"
-                                class="hover:text-red-500 cursor-pointer hover:underline">
-                            Upravljanje <i class="fa-solid fa-caret-down"
-                                           :class="{'rotate-180 inline-block': manager_open_second}"></i>
-                        </button>
-                        <!-- hidden menu -->
-                        <ul class="absolute flex flex-col gap-4 rounded-lg bg-gray-950 bg-opacity-60 hover:bg-opacity-100 hover:border hover:border-white text-white  p-4 mt-4 "
-                            x-cloak x-show="manager_open_second" x-transition.opacity>
-                            <li><a class="hover:text-red-600 cursor-pointer hover:underline"
-                                   href="{{route('user.show', auth()->user())}}">Zahtevima</a></li>
-                            <li><a class="hover:text-red-600 cursor-pointer hover:underline"
-                                   href="{{route('user.show', auth()->user())}}">Izveštajima</a></li>
-                        </ul>
-                        <!-- end hidden menu -->
-                    </div>
+                    <li class=""><a href="{{ route('movies.index') }}">Menadžment</a></li>
                 </div>
-                <!-- End Manager dropdown 2 -->
                 @endrole
             </div>
 

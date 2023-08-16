@@ -8,8 +8,8 @@ module.exports = {
                 "business-pattern": "url('/images/utility/biznis_showcase.webp')",
                 "authentication": "url('/images/utility/login_back.webp')",
                 'user-profile': "url('/images/utility/user_profile.webp')",
-                'error': "url('/images/errors/error_md.webp')",
-                'error-phone': "url('/images/errors/error_sm.webp')",
+                'error': "url('/images/errors/error_md.png')",
+                'error-phone': "url('/images/errors/error_sm.png')",
             }),
             keyframes: {
                 slideInFromLeft: {

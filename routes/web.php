@@ -13,11 +13,16 @@ use App\Http\Controllers\Clients\UserController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\Resources\MovieController;
 use App\Http\Controllers\Resources\ScreeningController;
+use App\Http\Controllers\Admin\MovieController as MovieAdminController;
+use App\Http\Controllers\Admin\ReportController as ReportAdminController;
+use App\Http\Controllers\Admin\RequestableController as RequestableAdminController;
+use App\Http\Controllers\Admin\ScreeningController as ScreeningAdminController;
+use App\Http\Controllers\Admin\UserController as UserAdminController;
+use App\Http\Controllers\Admin\ReclamationController as ReclamationAdminController;
 use Illuminate\Support\Facades\Route;
 
 /******************************************** Public routes ******************************************************/
 /* Anyone can access these routes */
-
 Route::get('/', [LandingPageController::class, 'index'])->name('home');
 Route::get('movies/{genre?}', [MovieController::class, 'index'])->name('movies.index');
 Route::resource('movie.screenings', ScreeningController::class)->only(['index']);
@@ -25,7 +30,6 @@ Route::resource('movie.screenings', ScreeningController::class)->only(['index'])
 
 /******************************************** Authentication routes **********************************************/
 /*Only guests can access these routes */
-
 Route::middleware('guest')->group(function () {
     Route::resource('register', RegisterController::class)->only(['create', 'store']);
     Route::resource('login', LoginController::class)->only(['only' => 'store']);
@@ -76,16 +80,16 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::middleware('role:MANAGER')->prefix('management')->group(function () {
-        Route::resource('screenings', ScreeningController::class)->only(['create', 'store', 'edit', 'update', 'destroy']);
-        Route::resource('movies', MovieController::class)->only(['create', 'store', 'edit', 'update', 'destroy']);
-        Route::resource('requests', RequestableController::class)->only(['index', 'show', 'update']);
-        Route::resource('reports', ReclamationController::class)->only(['index', 'create', 'store']);
+        Route::resource('screenings', ScreeningAdminController::class)->except('show');
+        Route::resource('movies', MovieAdminController::class)->except('show');
+        Route::resource('requests', RequestableAdminController::class)->only(['index', 'show', 'update']);
+        Route::resource('reports', ReportAdminController::class)->only(['create', 'store']);
     });
 
-    Route::middleware('role:ADMIN')->prefix('administration')->group(function () {
-        Route::resource('users', UserController::class)->only(['index', 'show', 'update', 'destroy']);
-        Route::resource('reports', ReclamationController::class)->only(['index', 'show', 'print']);
-        Route::resource('reclamations', ReclamationController::class)->only(['index', 'show', 'update']);
+    Route::middleware('role:ADMIN')->prefix('admin')->group(function () {
+        Route::resource('users', UserAdminController::class)->only(['index', 'show', 'update', 'destroy']);
+        Route::resource('reports', ReportAdminController::class)->only(['index', 'show', 'print']);
+        Route::resource('reclamations', ReclamationAdminController::class)->only(['index', 'show', 'update']);
     });
     /*************************************** End public authenticated routes ***************************************/
 });
