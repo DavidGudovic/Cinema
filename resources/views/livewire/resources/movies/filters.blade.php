@@ -5,8 +5,8 @@
 
     <!-- Closed search icons-->
     <button class="fixed top-20 right-6 pt-2 hover:text-red-700 text-white z-30" type="button" x-on:click="showSearchBar = true" x-show="!showSearchBar">
-        <i class="fa-solid fa-arrow-left fa-2xl"></i>
-        <i class="fa-solid fa-magnifying-glass fa-2xl"></i>
+        <i class="fa-solid fa-arrow-left fa-xl"></i>
+        <i class="fa-solid fa-magnifying-glass fa-xl"></i>
     </button>
     <!-- End closed search icons -->
 
@@ -30,7 +30,7 @@
 
     <!-- Open/Close filters -->
     <button class="fixed top-20 left-6 pt-2 z-10 hover:text-yellow text-white" type="button" x-on:click="showFilters = !showFilters" @click="$nextTick(() => showFilters ? window.scrollTo(0,0) : true)">
-        <i class="fa-solid fa-sliders fa-2xl" :class="{'rotate-90 inline-block': showFilters}"></i>
+        <i class="fa-solid fa-sliders fa-xl" :class="{'rotate-90 inline-block': showFilters}"></i>
         <p x-show="!showFilters" x-cloak class="text-opacity-70">Filteri</p>
     </button>
     <!-- End open/close filters-->
