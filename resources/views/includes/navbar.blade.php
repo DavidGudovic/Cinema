@@ -42,26 +42,8 @@
             </div>
             <!-- End Business dropdown -->
             @elserole('MANAGER')
-            <!-- Manager dropdown -->
-            <div class="flex-1 flex justify-center items-center">
-                <div x-data="{ manager_open: false }" x-on:click.outside="manager_open = false">
-                    <button x-on:click="manager_open = !manager_open"
-                            class="hover:text-red-500 cursor-pointer hover:underline">
-                        Repertoar <i class="fa-solid fa-caret-down"
-                                     :class="{'rotate-180 inline-block': manager_open}"></i>
-                    </button>
-                    <!-- hidden menu -->
-                    <ul class="absolute flex flex-col gap-4 rounded-lg bg-gray-950 bg-opacity-60 hover:bg-opacity-100 hover:border hover:border-white text-white  p-4 mt-4 "
-                        x-cloak x-show="manager_open" x-transition.opacity>
-                        <li><a class="hover:text-red-600 cursor-pointer hover:underline"
-                               href="{{route('movies.index')}}">Filmovi</a></li>
-                        <li><a class="hover:text-red-600 cursor-pointer hover:underline"
-                               href="{{route('screenings.index')}}">Produkcije</a></li>
-                    </ul>
-                    <!-- end hidden menu -->
-                </div>
-            </div>
-            <!-- End Manager dropdown -->
+                <li class=""><a class="hover:text-red-600 cursor-pointer hover:underline" href="{{route('movies.index')}}">Repertoar</a>
+                </li>
             @endrole
         </div>
 
@@ -100,7 +82,7 @@
                 </li>
                 @elserole('MANAGER')
                 <div class="flex-1 flex justify-center items-center">
-                    <li class=""><a href="{{ route('movies.index') }}">Menadžment</a></li>
+                    <li class=""><a href="{{ route('management.movies.index') }}">Menadžment</a></li>
                 </div>
                 @endrole
             </div>

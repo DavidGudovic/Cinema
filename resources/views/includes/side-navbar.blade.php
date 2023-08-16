@@ -24,8 +24,8 @@
 
         @elserole('MANAGER')
         <li>
-            <a href="{{route('movies.index')}}" class="flex items-center gap-4">
-                <i class="{{ Route::currentRouteName() === 'movies.index' ? 'fa-solid fa-play fa-2xs' : 'fa-solid fa-film' }}"></i>
+            <a href="{{route('management.movies.index')}}" class="flex items-center gap-4">
+                <i class="{{ Route::currentRouteName() === 'management.movies.index' ? 'fa-solid fa-play fa-2xs' : 'fa-solid fa-film' }}"></i>
                 <p>Filmovi</p>
             </a>
         </li>
