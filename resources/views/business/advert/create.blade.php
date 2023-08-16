@@ -2,7 +2,7 @@
 
 @section('content')
 <!-- background -->
-<img class="fixed inset-0 " src="{{URL('/images/utility/advert_background.png')}}"/>
+<img class="fixed inset-0 " src="{{URL('/images/utility/advert_background.webp')}}"/>
 <!-- overlays -->
 <div class="fixed inset-0 bg-gray-950 bg-opacity-80"></div>
 <!-- End overlays -->
