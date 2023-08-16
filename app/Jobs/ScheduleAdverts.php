@@ -45,12 +45,8 @@ class ScheduleAdverts implements ShouldQueue
                 $advertID = $queue_clone->extract();
 
 
-                // Skip this advert if the screening already has it
-                if ($screening->adverts->contains($advertID)) {
-                    continue;
-                }
-
-                if($adverts_quantity_map[$advertID] == 0) {
+                // Skip this advert if the screening already has it or if it has been scheduled the maximum number of times
+                if ($screening->adverts->contains($advertID) || $adverts_quantity_map[$advertID] == 0) {
                     continue;
                 }
 

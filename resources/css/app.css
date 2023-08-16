@@ -179,3 +179,18 @@ Paralax effect
     object-fit: cover;
     object-position: 100% center;
 }
+
+/* Alpine Breakpoints */
+:root { --breakpoint: 'unset';}
+@media screen and (min-width: 567px) {
+    :root { --breakpoint: 'sm'; }
+}
+@media screen and (min-width: 768px) {
+    :root { --breakpoint: 'md'; }
+}
+@media screen and (min-width: 1200px) {
+    :root { --breakpoint: 'lg'; }
+}
+@media screen and (min-width: 1600px) {
+    :root { --breakpoint: '2xl'; }
+}
