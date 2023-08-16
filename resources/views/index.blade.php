@@ -3,7 +3,7 @@
 @section('content')
 <div class="flex flex-col gap-12 items-center w-full h-full overflow-x-hidden">
     <!-- Movie showcase -->
-    <div class="relative w-full h-52 md:h-[38rem] overflow-hidden md:min-w-[70rem]" x-data="carousel()"x-init="startCarousel; setMovies({{$movies}})" x-on:unload.window="clearInterval(interval)">
+    <div class="relative w-full h-72 md:h-[38rem] overflow-hidden md:min-w-[70rem]" x-data="carousel()"x-init="startCarousel; setMovies({{$movies}})" x-on:unload.window="clearInterval(interval)">
 
         <template x-for="(movie, index) in movies" :key="index">
             <div x-show="current == index"
@@ -15,7 +15,7 @@
             x-transition:leave-end="opacity-0" class="absolute inset-0">
 
             <!-- Movie poster -->
-            <img :src="'{{URL('images/movies')}}' + '/' + movie.banner_url" alt="Movie Poster" class="w-full object-cover">
+            <img :src="'{{URL('images/movies')}}' + '/' + movie.banner_url" alt="Movie Poster" class="md:w-full h-full md:h-auto object-cover">
             <!-- End movie poster -->
 
             <!-- Movie info -->
