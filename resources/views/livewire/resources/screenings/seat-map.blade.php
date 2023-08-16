@@ -20,7 +20,7 @@
                 </div>
                 @else
                 <div  :class="{ 'bg-green-300': {{ $this->isSelected($row, $column) ? 'true' : 'false' }} }" wire:click="toggleSeat({{ $row }}, {{ $column }})" class="w-6 h-6 text-[0.7rem] pt-[0.3rem] border border-opacity-80 border-white rounded-t-xl cursor-pointer hover:bg-white">
-                    <span class=" w-full align-center justify-center flex "> {{ chr(64 + $column) }}{{ $row }}</span>
+                    <span class=" w-full align-center justify-center flex select-none"> {{ chr(64 + $column) }}{{ $row }}</span>
                 </div>
                 @endif
                 @endfor
