@@ -15,7 +15,7 @@ class AdvertService {
     * A view is each seat associated to a ticket associated to a screening associated to an advert x amount of adverts shown at screening (should be 1 in most cases)
     * [Date => Views]
     */
-    public function getViewsByWeekMap(Advert $advert, ?int $quantity = 10) : Collection
+    public function getViewsByWeekMap(Advert $advert, ?int $quantity = 5) : Collection
     {
         return $advert->screenings()->pastForDays($quantity)
         ->with('tickets')

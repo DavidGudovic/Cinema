@@ -1,8 +1,8 @@
 <nav x-data="{showNavbar: false}" x-breakpoint="if($isBreakpoint('md+')) showNavbar = true"
-     class="sticky w-full top-0 bg-gray-950 bg-opacity-60 hover:bg-opacity-100 hover:border-b hover:border-white text-white z-50 p-4">
+     class="sticky w-full top-0 bg-gray-950 bg-opacity-60 hover:bg-opacity-100 hover:border-b hover:border-white text-white z-50 p-4 min-h-[2rem] md:h-auto ">
     <!-- Hamburger -->
     <button class="md:hidden fixed -top-1 right-6 pt-2 z-50" type="button" x-on:click="showNavbar = !showNavbar">
-        <i class="fa-solid fa-bars" :class="{'rotate-90 inline-block': showNavbar}"></i>
+        <i class="fa-solid fa-bars fa-lg" :class="{'rotate-90 inline-block': showNavbar}"></i>
     </button>
     <!-- End Hamburger -->
     <ul x-show="showNavbar"
@@ -30,7 +30,7 @@
                                   :class="{'rotate-180 inline-block': business_open}"></i>
                     </button>
                     <!-- hidden menu -->
-                    <ul class="absolute flex flex-col gap-4 rounded-lg bg-gray-950 bg-opacity-60 hover:bg-opacity-100 hover:border hover:border-white text-white  p-4 mt-4 "
+                    <ul class="absolute flex flex-col gap-4 rounded-lg bg-gray-950 md:bg-opacity-60 hover:bg-opacity-100 hover:border hover:border-white text-white  p-4 mt-4 "
                         x-cloak x-show="business_open" x-transition.opacity>
                         <li><a class="hover:text-red-600 cursor-pointer hover:underline"
                                href="{{route('halls.index')}}">Rentiranje</a></li>
@@ -94,7 +94,7 @@
                         Profil <i class="fa-solid fa-caret-down" :class="{'rotate-180 inline-block': open}"></i>
                     </button>
                     <!-- hidden menu -->
-                    <ul class="absolute flex flex-col gap-4 rounded-lg bg-gray-950 bg-opacity-60 hover:bg-opacity-100 hover:border hover:border-white text-white  p-4 mt-4 "
+                    <ul class="absolute flex flex-col gap-4 rounded-lg bg-gray-950 md:bg-opacity-60 hover:bg-opacity-100 hover:border hover:border-white text-white  p-4 mt-4 "
                         x-cloak x-show="open" x-transition.opacity>
                         <li><a class="hover:text-red-600 cursor-pointer hover:underline"
                                href="{{route('user.show', auth()->user())}}">Informacije</a></li>
@@ -116,5 +116,6 @@
             <!-- End profile dropdown -->
         @endguest
     </ul>
+
 </nav>
 
