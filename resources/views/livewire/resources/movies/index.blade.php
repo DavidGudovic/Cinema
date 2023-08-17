@@ -61,7 +61,7 @@
             <!--End movie -->
 
         @empty
-            <img src="{{URL('images/utility/no_result.png')}}" alt="Nema rezultata pretrage"
+            <img src="{{URL('images/utility/no_result.webp')}}" alt="Nema rezultata pretrage"
                  class="h-[30rem] hidden md:block">
             <p class="text-center text-white font-bold text-2xl md:hidden">Nema rezultata pretrage</p>
         @endforelse
