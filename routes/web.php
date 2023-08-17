@@ -1,5 +1,13 @@
 <?php
 
+use App\Http\Controllers\Admin\{
+    MovieController as MovieAdminController,
+    ReclamationController as ReclamationAdminController,
+    ReportController as ReportAdminController,
+    RequestableController as RequestableAdminController,
+    ScreeningController as ScreeningAdminController,
+    UserController as UserAdminController
+};
 use App\Http\Controllers\Authentication\LoginController;
 use App\Http\Controllers\Authentication\RegisterController;
 use App\Http\Controllers\Authentication\VerificationController;
@@ -13,12 +21,6 @@ use App\Http\Controllers\Clients\UserController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\Resources\MovieController;
 use App\Http\Controllers\Resources\ScreeningController;
-use App\Http\Controllers\Admin\MovieController as MovieAdminController;
-use App\Http\Controllers\Admin\ReportController as ReportAdminController;
-use App\Http\Controllers\Admin\RequestableController as RequestableAdminController;
-use App\Http\Controllers\Admin\ScreeningController as ScreeningAdminController;
-use App\Http\Controllers\Admin\UserController as UserAdminController;
-use App\Http\Controllers\Admin\ReclamationController as ReclamationAdminController;
 use Illuminate\Support\Facades\Route;
 
 /******************************************** Public routes ******************************************************/
