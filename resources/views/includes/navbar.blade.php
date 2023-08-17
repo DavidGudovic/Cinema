@@ -35,15 +35,9 @@
                 </div>
             </div>
             <!-- End Business dropdown -->
-            @elserole('CLIENT')
-                <li class=""><a class="hover:text-red-600 cursor-pointer hover:underline" href="{{route('movies.index')}}">Repertoar</a>
+            @else
+		        <li class=""><a class="hover:text-red-600 cursor-pointer hover:underline" href="{{route('movies.index')}}">Repertoar</a>
                 </li>
-            @elserole('MANAGER')
-            <li class=""><a class="hover:text-red-600 cursor-pointer hover:underline" href="{{route('movies.index')}}">Repertoar</a>
-            </li>
-            @elserole('ADMIN')
-            <li class=""><a class="hover:text-red-600 cursor-pointer hover:underline" href="{{route('movies.index')}}">Repertoar</a>
-            </li>
             @endrole
         </div>
 
@@ -69,16 +63,16 @@
         @else
 
             <div x-data="{}" class="flex-1 flex justify-center items-center">
-                @role('CLIENT')
-                <li class=""><a class="hover:underline" x-data="{}" x-on:click="window.livewire.emit('showSideBar')">Rezervacije</a>
-                </li>
-                @elserole('BUSINESS_CLIENT')
+                @role('BUSINESS_CLIENT')
                 <li class="relative">
                     @if(Route::currentRouteName() === 'user.requests.index')
                         <a x-data="{}" x-on:click.prevent class="hover:text-white cursor-default opacity-70">Zahtevi</a>
                     @else
                         <a x-data="{}" x-on:click="window.livewire.emit('showSideBar')">Zahtevi</a>
                     @endif
+                </li>
+                @elserole('CLIENT')
+                <li class=""><a class="hover:underline" x-data="{}" x-on:click="window.livewire.emit('showSideBar')">Rezervacije</a>
                 </li>
                 @elserole('MANAGER')
                 <div class="flex-1 flex justify-center items-center">

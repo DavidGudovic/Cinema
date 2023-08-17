@@ -18,7 +18,7 @@ class Index extends Component
 
   public function mount(MovieService $movieService)
   {
-    $this->movie_tags = $movieService->getDestinctTagUrls();
+    $this->movie_tags = $movieService->getDistinctTagUrls();
     $this->movies_next_screening = $movieService->getNextScreenings();
   }
 

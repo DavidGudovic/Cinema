@@ -12,25 +12,29 @@
 	@vite('resources/js/app.js')
 	@livewireStyles
 </head>
-<body class="antialiased text-white">
+<body class="antialiased text-white bg-neutral-900">
 
 <div x-data="{showNav: false}" x-breakpoint="if($isBreakpoint('md+')) showNav = true" class="flex">
-	<aside class="h-screen fixed w-screen md:w-auto md:sticky top-0">
-		<button x-show="!showNav" x-on:click="showNav = true" class="fixed top-1 left-4 m-4 z-20">
+	<aside class="h-screen fixed w-screen md:w-auto md:sticky top-0 z-50">
+		<button x-transition:enter="transition ease-in duration-500"
+		        x-transition:enter-start="opacity-0"
+		        x-transition:enter-end="opacity-100"
+		        x-transition:leave="transition ease-in duration-60000"
+		        x-transition:leave-start="opacity-100"
+		        x-transition:leave-end="opacity-0"
+		        x-show="!showNav"
+		        x-on:click="showNav = true" class="fixed top-1 left-2 m-4 z-20">
 			<i class="fa-solid fa-bars"></i>
 		</button>
 		@include('includes.side-navbar')
 	</aside>
 
-	<main class="flex flex-col flex-1 bg-neutral-900">
+	<main class="flex flex-col flex-1 items-center bg-neutral-900 gap-12 px-11 py-6">
 		@yield('content')
 	</main>
 </div>
 
-
-
 {{--Scripts--}}
-@livewireChartsScripts
 @livewireScripts
 @yield('scripts')
 {{--End scripts--}}

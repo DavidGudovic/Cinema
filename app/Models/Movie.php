@@ -76,8 +76,9 @@ class Movie extends Model
     {
         return match ($screening_time) {
             'now' => $query->screeningToday(),
-            'tommorow' => $query->screeningTommorow(),
+            'tomorrow' => $query->screeningTomorrow(),
             'week' => $query->screeningThisWeek(),
+            'with past' => $query,
             default => $query->hasScreenings(),
         };
     }
@@ -95,7 +96,7 @@ class Movie extends Model
         });
     }
 
-    public function scopeScreeningTommorow($query){
+    public function scopeScreeningTomorrow($query){
         return $query->whereHas('screenings', function($q){
             $q->where('start_time', '>', now()->addDay()->startOfDay())
             ->where('start_time', '<', now()->addDay()->endOfDay());
@@ -111,6 +112,18 @@ class Movie extends Model
 
     #endregion
 
+    public function scopePaginateOptional($query, bool $paginate, int $quantity){
+        return $query->when($paginate, function ($query) use ($quantity) {
+            return $query->paginate($quantity);
+        }, function ($query) {
+            return $query->get();
+        });
+    }
+    public function scopeSortOptional($query,bool $do_sort, string $sort_by, string $sort_direction){
+        return $query->when($do_sort, function ($query) use ($sort_by, $sort_direction) {
+            return $query->orderBy($sort_by, $sort_direction);
+        });
+    }
     public function scopeSearch($query, $search_query){
         $search_query = join("%", explode(" ", $search_query));
         return  $query

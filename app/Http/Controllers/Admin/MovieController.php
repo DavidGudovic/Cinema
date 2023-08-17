@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Movie;
 use App\Services\MovieService;
 use Illuminate\Http\Request;
 
@@ -11,11 +12,9 @@ class MovieController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(MovieService $movieService)
+    public function index()
     {
-        return view('admin.movie.index', [
-            'movies' => $movieService->getMovies(),
-        ]);
+        return view('admin.movie.index');
     }
 
     /**

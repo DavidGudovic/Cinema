@@ -6,7 +6,7 @@
      x-transition:leave-end="-translate-x-full">
 
 	<!-- Close button -->
-	<a x-on:click="showNav = false" class=" md:hidden absolute top-6 right-4 ">
+	<a x-on:click="showNav = false" class="absolute top-6 right-4 ">
 		<i class="fa-solid fa-xmark fa-lg"></i>
 	</a>
 	<!-- End close button -->
@@ -19,7 +19,7 @@
 	</div>
 	<!-- End logo -->
 	<!-- Navigation -->
-	<ul class="flex flex-col gap-8 text-white text-lg font-bold">
+	<ul class="flex flex-col gap-10 text-white text-lg font-bold">
 		@role('ADMIN')
 		<li>
 			<a href="{{route('users.index')}}" class="flex items-center gap-4">

@@ -65,7 +65,7 @@
             <select wire:model="screening_time" name="screening_time" class="text-black  bg-gray-200 cursor-pointer">
                 <option value="any">Bilo kada</option>
                 <option value="now">Danas</option>
-                <option value="tommorow">Sutra</option>
+                <option value="tomorrow">Sutra</option>
                 <option value="week">Ove sedmice</option>
             </select>
         </div>
