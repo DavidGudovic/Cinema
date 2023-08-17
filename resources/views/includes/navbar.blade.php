@@ -5,7 +5,7 @@
         <i class="fa-solid fa-bars fa-lg" :class="{'rotate-90 inline-block': showNavbar}"></i>
     </button>
     <!-- End Hamburger -->
-    <ul x-show="showNavbar"
+    <ul x-cloak x-show="showNavbar"
         class="flex flex-col justify-center gap-6 text-lg md:text-base md:gap-0 md:flex-row md:justify-around items-center">
 
         <div class="flex-1 flex justify-center items-center">
