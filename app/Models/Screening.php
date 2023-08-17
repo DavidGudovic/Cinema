@@ -35,7 +35,7 @@ class Screening extends Model
     */
 
 
-    public function getHumanDateAttribute()
+    public function getHumanDateAttribute(): string
     {
         return $this->start_time->format('d/m');
     }

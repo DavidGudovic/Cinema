@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
 class MovieService
 {
+    public function getMovies() : EloquentCollection
+    {
+        return Movie::all();
+    }
     /**
     * Get all movies that have upcoming screenings now, tommorow or in the next week, filtered by genre when genre != NULL.
     */

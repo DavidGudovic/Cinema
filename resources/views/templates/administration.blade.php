@@ -12,17 +12,17 @@
 	@vite('resources/js/app.js')
 	@livewireStyles
 </head>
-<body class="antialiased bg-gray-950 text-white">
+<body class="antialiased text-white">
 
-<div x-data="{showNav: false}" x-breakpoint="if($isBreakpoint('md+')) showNav = true" class="flex gap-12">
-	<aside class="h-screen fixed w-full md:w-auto md:sticky top-0">
+<div x-data="{showNav: false}" x-breakpoint="if($isBreakpoint('md+')) showNav = true" class="flex">
+	<aside class="h-screen fixed w-screen md:w-auto md:sticky top-0">
 		<button x-show="!showNav" x-on:click="showNav = true" class="fixed top-1 left-4 m-4 z-20">
 			<i class="fa-solid fa-bars"></i>
 		</button>
 		@include('includes.side-navbar')
 	</aside>
 
-	<main>
+	<main class="flex flex-col flex-1 bg-neutral-900">
 		@yield('content')
 	</main>
 </div>

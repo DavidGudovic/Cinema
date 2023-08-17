@@ -13,14 +13,8 @@
         </div>
 
         <div class="flex-1 flex justify-center items-center">
-            @guest
-                <li class=""><a class="hover:text-red-600 cursor-pointer hover:underline"
-                                href="{{route('movies.index')}}">Repertoar</a></li>
-            @endguest
-            @role('CLIENT')
-            <li class=""><a class="hover:text-red-600 cursor-pointer hover:underline" href="{{route('movies.index')}}">Repertoar</a>
-            </li>
-            @elserole('BUSINESS_CLIENT')
+
+            @role('BUSINESS_CLIENT')
             <!-- Business dropdown -->
             <div class="flex-1 flex justify-center items-center">
                 <div x-data="{ business_open: false }" x-on:click.outside="business_open = false">
@@ -41,9 +35,15 @@
                 </div>
             </div>
             <!-- End Business dropdown -->
-            @elserole('MANAGER')
+            @elserole('CLIENT')
                 <li class=""><a class="hover:text-red-600 cursor-pointer hover:underline" href="{{route('movies.index')}}">Repertoar</a>
                 </li>
+            @elserole('MANAGER')
+            <li class=""><a class="hover:text-red-600 cursor-pointer hover:underline" href="{{route('movies.index')}}">Repertoar</a>
+            </li>
+            @elserole('ADMIN')
+            <li class=""><a class="hover:text-red-600 cursor-pointer hover:underline" href="{{route('movies.index')}}">Repertoar</a>
+            </li>
             @endrole
         </div>
 
@@ -83,6 +83,10 @@
                 @elserole('MANAGER')
                 <div class="flex-1 flex justify-center items-center">
                     <li class=""><a href="{{ route('management.movies.index') }}">Menadžment</a></li>
+                </div>
+                @elserole('ADMIN')
+                <div class="flex-1 flex justify-center items-center">
+                    <li class=""><a href="{{ route('users.index') }}">Administracija</a></li>
                 </div>
                 @endrole
             </div>

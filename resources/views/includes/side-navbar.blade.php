@@ -1,5 +1,5 @@
 <nav x-show="showNav"
-     class="flex flex-col h-full justify-around bg-slate-900 h-vh md:w-72 items-center z-50"
+     class="flex flex-col h-full justify-around bg-neutral-950 md:border-r border-white h-vh md:w-72 items-center z-50"
      x-transition:enter="transition ease-in-out duration-500 transform"
      x-transition:enter-start="-translate-x-full" x-transition:enter-end="translate-x-0"
      x-transition:leave="transition ease-in-out duration-1000 transform" x-transition:leave-start="translate-x-0"
@@ -21,7 +21,33 @@
 	<!-- Navigation -->
 	<ul class="flex flex-col gap-8 text-white text-lg font-bold">
 		@role('ADMIN')
+		<li>
+			<a href="{{route('users.index')}}" class="flex items-center gap-4">
+				<i class="{{ Route::currentRouteName() === 'users.index' ? 'fa-solid fa-play fa-2xs' : 'fa-solid fa-users' }}"></i>
+				<p>Korisnici</p>
+			</a>
+		</li>
 
+		<li>
+			<a href="{{route('reclamations.index')}}" class="flex items-center gap-4">
+				<i class="{{ Route::currentRouteName() === 'reclamations.index' ? 'fa-solid fa-play fa-2xs' : 'fa-solid fa-triangle-exclamation' }}"></i>
+				<p>Reklamacije</p>
+			</a>
+		</li>
+
+		<li>
+			<a href="{{route('reports.index')}}" class="flex items-center gap-4">
+				<i class="{{ Route::currentRouteName() === 'reports.index' ? 'fa-solid fa-play fa-2xs' : 'fa-solid fa-chart-pie' }}"></i>
+				<p>Izveštaji</p>
+			</a>
+		</li>
+
+		<li>
+			<a href="{{route('reports.create')}}" class="flex items-center gap-4">
+				<i class="{{ Route::currentRouteName() === 'reports.create' ? 'fa-solid fa-play fa-2xs' : 'fa-solid fa-cogs' }}"></i>
+				<p>Konfiguracije</p>
+			</a>
+		</li>
 		@elserole('MANAGER')
 		<li>
 			<a href="{{route('management.movies.index')}}" class="flex items-center gap-4">
@@ -46,7 +72,7 @@
 
 		<li>
 			<a href="{{route('reports.create')}}" class="flex items-center gap-4">
-				<i class="{{ Route::currentRouteName() === 'reports.index' ? 'fa-solid fa-play fa-2xs' : 'fa-solid fa-chart-pie' }}"></i>
+				<i class="{{ Route::currentRouteName() === 'reports.create' ? 'fa-solid fa-play fa-2xs' : 'fa-solid fa-chart-pie' }}"></i>
 				<p>Izveštaji</p>
 			</a>
 		</li>
