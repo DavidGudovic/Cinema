@@ -60,7 +60,7 @@
 		<!-- End filters -->
 
 		<!-- Load indicator MD -->
-		<div wire:loading class="mt-4 absolute top-36  md:bottom-0 md:relative">
+		<div wire:loading class="mt-4 absolute top-36  md:top-0 md:relative">
 			<i class="fa-solid fa-gear fa-lg animate-spin"></i>
 		</div>
 		<!-- End load indicator -->
