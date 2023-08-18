@@ -1,6 +1,6 @@
 <div class="flex flex-col justify-center items-center gap-4 h-full w-full mb-6">
 	<!-- Actions -->
-	<div class="flex flex-col md:flex-row justify-between items-center h-24 w-full mb-12 md:mb-0">
+	<div class="flex flex-col md:flex-row justify-between items-center w-full mb-12 md:mb-0 text-sm md:text-base">
 
 		<!-- Filters -->
 		<div class="flex gap-4">
@@ -8,7 +8,8 @@
 			<!-- Filter for Genre -->
 			<div class="flex flex-col gap-1">
 				<label class="opacity-40 text-sm" for="genres">Žanrovi</label>
-				<select wire:change="refresh" id="genres" class="border rounded cursor-pointer p-2 bg-neutral-700 bg-opacity-70" wire:model="genre">
+				<select wire:change="refresh" id="genres"
+				        class="border rounded cursor-pointer p-2 bg-neutral-700 bg-opacity-70" wire:model="genre">
 					<option class="cursor-pointer" value=''>Svi žanrovi</option>
 					@foreach($genres as $genre)
 						<option class="cursor-pointer" value="{{$genre->id}}">{{$genre->name}}</option>
@@ -19,7 +20,9 @@
 			<!-- Filter for Next Screening -->
 			<div class="flex flex-col gap-1">
 				<label class="opacity-40 text-sm" for="screening">Prikazuje se</label>
-				<select wire:change="refresh" id="screening" class="border rounded cursor-pointer p-2 bg-neutral-700 bg-opacity-70" wire:model="screening_time">
+				<select wire:change="refresh" id="screening"
+				        class="border rounded cursor-pointer p-2 bg-neutral-700 bg-opacity-70"
+				        wire:model="screening_time">
 					<option class="cursor-pointer" value="all">Ignoriši</option>
 					<option class="cursor-pointer" value="week">Ove nedelje</option>
 					<option class="cursor-pointer" value="now">Danas</option>
@@ -31,16 +34,18 @@
 			<!-- Sort all or shown-->
 			<div class="flex flex-col gap-1">
 				<label class="opacity-40 text-sm" for="sort">Sortiraj</label>
-				<select id="sort" class="border rounded cursor-pointer p-2 bg-neutral-700 bg-opacity-70" wire:model="global_sort">
+				<select id="sort" class="border rounded cursor-pointer p-2 bg-neutral-700 bg-opacity-70"
+				        wire:model="global_sort">
 					<option class="cursor-pointer" value='false'>Prikazano</option>
 					<option class="cursor-pointer" value='true'>Sve podatke</option>
 				</select>
 			</div>
 
 			<!-- Paginate quantity-->
-			<div class="flex flex-col gap-1">
+			<div class="hidden md:flex flex-col gap-1">
 				<label class="opacity-40 text-sm" for="sort">Prikaži</label>
-				<select wire:change="refresh" id="sort" class="border rounded cursor-pointer p-2 bg-neutral-700 bg-opacity-70" wire:model="quantity">
+				<select wire:change="refresh" id="sort"
+				        class="border rounded cursor-pointer p-2 bg-neutral-700 bg-opacity-70" wire:model="quantity">
 					<option class="cursor-pointer" value="5">5</option>
 					<option class="cursor-pointer" value="10">10</option>
 					<option class="cursor-pointer" value="15">15</option>
@@ -54,45 +59,58 @@
 		</div>
 		<!-- End filters -->
 
-		<!-- Load indicator -->
-		<div wire:loading class="mt-4">
+		<!-- Load indicator MD -->
+		<div wire:loading class="mt-4 absolute top-36  md:bottom-0 md:relative">
 			<i class="fa-solid fa-gear fa-lg animate-spin"></i>
 		</div>
 		<!-- End load indicator -->
 
 		<!-- Buttons and Search -->
-		<div class="flex gap-4">
-
+		<div x-data="{showExcelDropdown: false}" class="flex gap-4">
 			<!-- Search Bar -->
 			<div class="relative flex flex-col gap-1">
 				<label class="opacity-40 text-sm" for="search">Pretraži po</label>
-				<input id="search" type="text" wire:model.debounce.300ms="search_query" placeholder="Naziv, Žanr, Režiser..." class="border rounded p-2 pl-8 bg-neutral-700 bg-opacity-70">
+				<input id="search" type="text" wire:model.debounce.300ms="search_query"
+				       placeholder="Naziv, Žanr, Režiser..."
+				       class="border rounded p-2 pl-8 bg-neutral-700 bg-opacity-70">
 				<i class="fa-solid fa-search absolute left-2 bottom-1 transform -translate-y-2/4"></i>
 			</div>
+			<!-- End Search Bar -->
 
-			<!-- Button to Add -->
-			<a href="{{route('movies.create')}}" class="border rounded p-2 flex gap-2 mt-6 items-center bg-neutral-700 bg-opacity-70">
+			<!-- Add -->
+			<a href="{{route('movies.create')}}"
+			   class="border rounded p-2 flex gap-2 mt-6 items-center bg-neutral-700 bg-opacity-70">
 				<span>Dodaj </span>
 				<i class="fa-solid fa-plus"></i>
 			</a>
+			<!-- End Add -->
 
-			<!-- Button to Export to CSV -->
-			<a wire:click="exportToCSV" class="border rounded p-2 flex gap-2 mt-6 items-center bg-neutral-700 bg-opacity-70">
-				<span>Excel</span>
-				<i class="fa-solid fa-file-export"></i>
-			</a>
-
+			<!-- CSV -->
+			<div x-on:click="showExcelDropdown = !showExcelDropdown" x-on:click.outside="showExcelDropdown = false" wire:loading.class.remove="cursor-pointer hover:text-red-700"  wire:loading.class="opacity-50"
+			   class=" flex items-center cursor-pointer group relative border rounded p-2 gap-2 mt-6 bg-neutral-700 bg-opacity-70">
+				<span class="group-hover:text-red-700">Excel</span>
+				<i class="group-hover:text-red-700 fa-solid fa-file-csv"></i>
+				<i class="group-hover:text-red-700 fa-solid fa-angle-down fa-xs pt-1"></i>
+				<!-- Dropdown -->
+				<div x-cloak x-show="showExcelDropdown"
+				     class="absolute z-10 top-10 left-0 flex flex-col justify-center p-2 bg-neutral-500 rounded-lg">
+					<a href="#" wire:click.prevent="export('global')" class="text-center w-full">Sve</a>
+					<a href="#" wire:click.prevent="export('displayed')" class="text-center w-full">Prikazano</a>
+				</div>
+				<!-- End Dropdown -->
+			</div>
+			<!-- End CSV -->
 		</div>
-		<!-- End search export -->
+		<!-- End buttons search -->
 
 	</div>
 	<!-- End actions -->
 
 
 	<!-- Table -->
-	<div class="flex flex-1 w-full text-white overflow-x-auto">
-		<div class="w-screen md:w-auto min-w-full overflow-x-auto">
-			<table x-data="{ sortBy: @entangle('sort_by') }" class="min-w-full table-fixed overflow-x-auto">
+	<div class="flex flex-1 w-full text-white">
+		<div class="w-screen md:w-auto min-w-full md:overflow-x-hidden overflow-y-hidden overflow-x-scroll">
+			<table x-data="{ sortBy: @entangle('sort_by') }" class="w-max md:w-full table-fixed md:overflow-x-hidden overflow-y-hidden overflow-x-auto">
 				<thead class="">
 				<tr>
 					<th x-bind:class="{ 'bg-neutral-700 bg-opacity-30': sortBy === 'title' }"
@@ -127,25 +145,42 @@
 								class="fa-solid fa-sort opacity-40 fa-xs"></i>
 						Istaknuto
 					</th>
+					<th class="cursor-pointer p-2">
+						Akcije
+					</th>
 				</tr>
 				</thead>
 				<tbody>
 				@foreach($movies as $movie)
-					<tr class="odd:bg-neutral-950 odd:bg-opacity-30 text-center">
+					<tr x-data="{showToolTip{{$movie->id}}: false}"
+					    class="odd:bg-neutral-950 odd:bg-opacity-30 text-center relative ">
 						<td x-bind:class="{ 'bg-neutral-700 bg-opacity-30': sortBy === 'title' }"
 						    class="p-2">{{ $movie->title }}</td>
-						<td class="m-2 line-clamp-2">{{ implode(' ',explode(' ', $movie->description, 3))}}</td>
+						<td x-on:mouseenter="showToolTip{{$movie->id}} = true"
+						    x-on:mouseleave="showToolTip{{$movie->id}} = false"
+						    class="group m-2 line-clamp-2">{{ implode(' ',explode(' ', $movie->description, 3))}}
+							<span x-cloak x-show="showToolTip{{$movie->id}}"
+							      class=" transition-opacity bg-gray-800 text-gray-100 p-2 text-sm rounded-md  absolute left-40 top-0 z-20 w-96 h-auto">{{$movie->description}}</span>
+						</td>
 						<td class="p-2">{{ $movie->image_url }}</td>
 						<td x-bind:class="{ 'bg-neutral-700 bg-opacity-30': sortBy === 'release_date' }"
 						    class="p-2">{{ $movie->release_year }}</td>
 						<td x-bind:class="{ 'bg-neutral-700 bg-opacity-30': sortBy === 'duration' }"
 						    class="p-2">{{ $movie->duration }}</td>
 						<td x-bind:class="{ 'bg-neutral-700 bg-opacity-30': sortBy === 'genre_id' }"
-						    class="p-2">{{ $movie->genre_id }}</td>
+						    class="p-2">{{ $genres[$movie->genre_id - 1]->name }}</td>
 						<td x-bind:class="{ 'bg-neutral-700 bg-opacity-30': sortBy === 'director' }"
 						    class="p-2">{{ $movie->director }}</td>
 						<td x-bind:class="{ 'bg-neutral-700 bg-opacity-30': sortBy === 'is_showcased' }"
 						    class="p-2">{{ $movie->is_showcased ? 'Da' : 'Ne' }}</td>
+						<td class="p-2">
+							<a href="#" class="inline mr-3 hover:text-gray-300">
+								<i class="fa-solid fa-pen"></i>
+							</a>
+							<a href="#" class="inline ml-3 text-red-700 hover:text-gray-300">
+								<i class="fa-solid fa-trash"></i>
+							</a>
+						</td>
 					</tr>
 				@endforeach
 				</tbody>
