@@ -25,8 +25,8 @@ class MovieService implements CanExport
     }
 
     /**
-    * Get all movies by title/director/genre query, can sort/paginate optionally
-    */
+     * Get all movies by title/director/genre query, can sort/paginate optionally
+     */
     public function getBySearch(string $search_query, bool $only_screening = true, bool $paginate = false, int $quantity = 10, bool $do_sort = false, string $sort_by = 'title', string $sort_direction = 'ASC'): EloquentCollection|LengthAwarePaginator
     {
         return Movie::with('genre')
@@ -37,8 +37,8 @@ class MovieService implements CanExport
     }
 
     /**
-    * Get distinct tag image urls for each movie that has screenings [MovieID => [tag1, tag2, ...]]
-    */
+     * Get distinct tag image urls for each movie that has screenings [MovieID => [tag1, tag2, ...]]
+     */
     public function getDistinctTagUrls(): array
     {
         return Movie::with('screenings.tags')
@@ -56,8 +56,8 @@ class MovieService implements CanExport
 
 
     /**
-    * Returns assoc array of next screening times for all movies with screenings  [MovieID => Next_Screening_Time]
-    */
+     * Returns assoc array of next screening times for all movies with screenings  [MovieID => Next_Screening_Time]
+     */
     public function getNextScreenings(): array
     {
         return Movie::with('screenings')
@@ -77,20 +77,37 @@ class MovieService implements CanExport
     }
 
     /**
-    * Eager load all relevant direct/nested relationships for a movie
-    */
+     * Eager load all relevant direct/nested relationships for a movie
+     */
     public function eagerLoadMovie(int $id): Movie
     {
         return Movie::with('genre', 'screenings.tags')
             ->findOrFail($id);
     }
 
-
+    /**
+     * Checks wether a movie has any upcoming screenings
+     */
+    public function isMovieScreening(int $movie_id): bool
+    {
+        return Movie::whereId($movie_id)
+            ->whereHas('screenings', function ($query) {
+                $query->upcoming();
+            })->exists();
+    }
 
     /**
-    * Prepares a movie array|Collection for export, adds BOM, flattens the passed array and puts the proper headers
-    * Implementation of CanExport interface
-    */
+     * Soft deletes movie
+     */
+    public function deleteMovie(int $movie_id): void
+    {
+        Movie::whereId($movie_id)->delete();
+    }
+
+    /**
+     * Prepares a movie array|Collection for export, adds BOM, flattens the passed array and puts the proper headers
+     * Implementation of CanExport interface
+     */
     public function sanitizeForExport(array|Collection $data): array
     {
         $bom = "\xEF\xBB\xBF";

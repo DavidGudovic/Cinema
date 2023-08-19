@@ -83,7 +83,7 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware('role:MANAGER')->prefix('management')->group(function () {
         Route::resource('screenings', ScreeningAdminController::class)->except('show');
-        Route::resource('movies', MovieAdminController::class)->except('show')->name('index', 'management.movies.index');
+        Route::resource('movies', MovieAdminController::class)->except('show', 'destroy')->name('index', 'management.movies.index');
         Route::resource('requests', RequestableAdminController::class)->only(['index', 'show', 'update']);
         Route::resource('reports', ReportAdminController::class)->only(['create', 'store']);
     });

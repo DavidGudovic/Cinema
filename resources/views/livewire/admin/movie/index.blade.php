@@ -23,7 +23,7 @@
 				<select wire:change="refresh" id="screening"
 				        class="border rounded cursor-pointer p-2 bg-neutral-700 bg-opacity-70"
 				        wire:model="screening_time">
-					<option class="cursor-pointer" value="all">Ignoriši</option>
+					<option class="cursor-pointer" value="with past">Ignoriši</option>
 					<option class="cursor-pointer" value="week">Ove nedelje</option>
 					<option class="cursor-pointer" value="now">Danas</option>
 					<option class="cursor-pointer" value="tomorrow">Sutra</option>
@@ -177,7 +177,7 @@
 							<a href="{{route('movies.edit', $movie)}}" class="inline mr-3 hover:text-gray-300">
 								<i class="fa-solid fa-pen"></i>
 							</a>
-							<a href="#" wire:click.prevent="delete({{$movie}})" class="inline ml-3 text-red-700 hover:text-gray-300">
+							<a href="#" wire:click.prevent="openDeleteModal({{$movie->id}})" class="inline ml-3 text-red-700 hover:text-gray-300">
 								<i class="fa-solid fa-trash"></i>
 							</a>
 						</td>
@@ -189,5 +189,7 @@
 	</div>
 	<!-- End table-->
 	<p>{{$movies->links()}}</p>
+    <!-- Delete modal-->
+    @livewire('admin.movie.delete-modal')
 </div>
 

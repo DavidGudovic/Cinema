@@ -25,6 +25,10 @@ class Index extends Component
     public $global_sort = 'true'; //sort all movies or just the ones on the current page - String because of livewire
     public $quantity = 10; //pagination quantity
 
+    protected $listeners = [
+        'MovieDeleted' => 'refresh',
+    ];
+
     public function refresh(): void
     {
     }
@@ -123,6 +127,13 @@ class Index extends Component
         }, 'filmovi' . now()->format('-d:m:Y') . '.csv');
     }
 
+    /**
+     * Emits event to open the delete modal
+     */
+    public function openDeleteModal(int $movie_id): void
+    {
+        $this->emitTo('admin.movie.delete-modal', 'showModal', $movie_id);
+    }
 }
 
 
