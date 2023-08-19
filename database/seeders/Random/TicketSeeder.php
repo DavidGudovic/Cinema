@@ -10,7 +10,7 @@ use App\Models\User;
 use App\Services\SeatService;
 use Illuminate\Database\Seeder;
 
-/* time complexity O(n^n^n), million separate calls to the database, only ran once so is fineish TODO try fix*/
+/* !!! Extremely inefficient + more then 3000 database queries (needlessly)  !!!, only ran once, works,  so is fine TODO fix*/
 class TicketSeeder extends Seeder
 {
     public function run(SeatService $seatService): void
@@ -19,14 +19,14 @@ class TicketSeeder extends Seeder
         $tickets = Ticket::factory()->count(1000)->make();
         $screenings = Screening::all();
 
-        $tickets->each(function ($ticket) use ($screenings) {
+        $tickets->each(function ($ticket) use ($screenings) { // 1000 database queries..... TODO fix
             $ticket->user_id = User::where('role', Roles::CLIENT)->inRandomOrder()->first()->id;
         });
 
         //Attach screenings
         $screenings->each(function ($screening) use ($tickets, $seatService) {  // n
             //Attach 10- 16 tickets to each screening
-            $screening->tickets()->saveMany($tickets->splice(0, fake()->numberBetween(10, 16)));
+            $screening->tickets()->saveMany($tickets->splice(0, fake()->numberBetween(10, 16))); // 300 - 500 database queries
 
             //Attach seats to each ticket
             $screening->tickets()->each(function ($ticket) use ($screening, $seatService) {  //n ^ n
@@ -44,16 +44,16 @@ class TicketSeeder extends Seeder
                     $takenSeats[] = [$seat->row, $seat->column];
                 });
 
-                $ticket->seats()->saveMany($seats);
-                // Calculate ticket prices
+                $ticket->seats()->saveMany($seats); // 10-16 * 300-500 database queries
 
+                // Calculate ticket prices
                 $ticket->technology_price_addon = $ticket->calc_technology_price_addon;
                 $ticket->long_movie_addon = $ticket->calc_long_movie_addon;
                 $ticket->subtotal = $ticket->calc_subtotal;
                 $ticket->discount = $ticket->calc_discount;
                 $ticket->total = $ticket->calc_total;
                 $ticket->seat_count = $ticket->seats->count();
-                $ticket->save();
+                $ticket->save();  // 10-16 * 300-500 database queries
 
             });
         });
