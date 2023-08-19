@@ -21,7 +21,7 @@ class DeleteModal extends ModalBase
     /*
     * Cancels Reclamation, flashes message to the modal and emits event to the parent component
     */
-    public function cancelReclamation(ReclamationService $reclamationService)
+    public function cancelReclamation(ReclamationService $reclamationService) : void
     {
         $reclamationService->cancelReclamation($this->reclamation_for_deletion);
         session()->flash('success','Uspešno ste otkazali reklamaciju');

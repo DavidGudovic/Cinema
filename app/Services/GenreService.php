@@ -11,7 +11,7 @@ use Nette\NotImplementedException;
 
 class GenreService
 {
-    /*
+    /**
     * Get all genres.
     */
     public function getGenres() : EloquentCollection
@@ -21,7 +21,7 @@ class GenreService
 
 
 
-    /*
+    /**
     * Get Filters for Livewire/Resources/Movies/Filters [GenreID => bool(selected)]
     */
     public function getFiltersForGenres($selected_genre) : array

@@ -10,6 +10,32 @@ use Illuminate\Support\Collection;
 
 class MovieService implements CanExport
 {
+    /**
+     * Create a new movie
+     */
+    public function createMovie($request) : Movie
+    {
+        $bannerFile = $request->file('banner');
+        $bannerPath = $bannerFile->getClientOriginalName();
+        $bannerFile->move(public_path('images/movies'), $bannerFile->getClientOriginalName());
+
+        $posterFile = $request->file('poster');
+        $posterPath = $posterFile->getClientOriginalName();
+        $posterFile->move(public_path('images/movies'), $posterFile->getClientOriginalName());
+
+        return Movie::create([
+            'title' => $request->title,
+            'director' => $request->director,
+            'description' => $request->description,
+            'banner_url' => $bannerPath,
+            'image_url' => $posterPath,
+            'trailer_url' => $request->trailer_url,
+            'release_date' => $request->release_date,
+            'duration' => $request->duration,
+            'is_showcased' => true,
+            'genre_id' => $request->genre
+        ]);
+    }
 
     /**
      * Get all movies that have upcoming screenings now, tomorrow or in the next week, filtered by genre when genre != NULL.

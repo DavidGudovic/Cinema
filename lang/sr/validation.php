@@ -18,6 +18,11 @@ return [
     'email' => 'Polje mora biti validna email adresa',
     'current_password' => 'Netačna lozinka',
     'url_field' => ':attribute mora biti validan URL',
+    'date' => ':attribute mora biti validan datum',
+    'integer' => ':attribute mora biti ceo broj',
+    'image' => ':attribute mora biti slika',
+    'url' => ':attribute mora biti validan URL',
+    'mimes' => ':attribute mora biti png, jpeg ili webp formata',
     'min' => [
         'array' => ':attribute mora imati minimum :min elemenata.',
         'file' => ':attribute mora biti minimum :min kilobita.',
@@ -82,7 +87,16 @@ return [
         'company' => 'Delatnost',
         'title' => 'Naslov',
         'quantity' => 'Količina',
-
+        'director' => 'Režiser',
+        'description' => 'Opis',
+        'banner' => 'Baner',
+        'poster' => 'Poster',
+        'trailer_url' => 'URL trejlera',
+        'release_date' => 'Datum izlaska',
+        'duration' => 'Trajanje',
+        'genre_id' => 'Žanr',
+        'image_url' => 'URL slike',
+        'is_showcased' => 'Istaknut',
     ],
 
 ];

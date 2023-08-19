@@ -1,6 +1,6 @@
 <div class="flex flex-col justify-center items-center gap-4 h-full w-full mb-6">
 	<!-- Actions -->
-	<div class="flex flex-col md:flex-row justify-between items-center w-full mb-12 md:mb-0 text-sm md:text-base">
+	<div class="flex flex-col md:flex-row justify-between items-center w-full mb-12 md:mb-4 text-sm md:text-base">
 
 		<!-- Filters -->
 		<div class="flex gap-4">
