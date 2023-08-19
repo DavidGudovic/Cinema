@@ -22,7 +22,7 @@ class MovieController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.movie.create');
     }
 
     /**
@@ -36,15 +36,17 @@ class MovieController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Movie $movie)
     {
-        //
+        return view('admin.movie.edit', [
+            'movie' => $movie,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, int $id)
     {
         //
     }
@@ -52,7 +54,7 @@ class MovieController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(int $id)
     {
         //
     }

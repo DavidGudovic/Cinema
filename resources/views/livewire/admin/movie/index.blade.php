@@ -174,10 +174,10 @@
 						<td x-bind:class="{ 'bg-neutral-700 bg-opacity-30': sortBy === 'is_showcased' }"
 						    class="p-2">{{ $movie->is_showcased ? 'Da' : 'Ne' }}</td>
 						<td class="p-2">
-							<a href="#" class="inline mr-3 hover:text-gray-300">
+							<a href="{{route('movies.edit', $movie)}}" class="inline mr-3 hover:text-gray-300">
 								<i class="fa-solid fa-pen"></i>
 							</a>
-							<a href="#" class="inline ml-3 text-red-700 hover:text-gray-300">
+							<a href="#" wire:click.prevent="delete({{$movie}})" class="inline ml-3 text-red-700 hover:text-gray-300">
 								<i class="fa-solid fa-trash"></i>
 							</a>
 						</td>
