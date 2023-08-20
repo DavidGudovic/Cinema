@@ -27,7 +27,6 @@ class ScheduleAdverts implements ShouldQueue
     */
     public function handle(AdvertService $advertService, ScreeningService $screeningService, AdvertPriorityQueue $advertPriorityQueue): void
     {
-        $queue = $advertPriorityQueue;
         $adverts_priority_map = $advertService->getAdvertSchedulingPriorityMap();  /* [Advert => priority] */
         $adverts_quantity_map = $advertService->getAdvertQuantityMap($adverts_priority_map->keys()); /* [Advert => quantity_left] */
         $screenings = $screeningService->getScreeningsForAdvertScheduling();
@@ -35,12 +34,12 @@ class ScheduleAdverts implements ShouldQueue
 
         // Build the priority queue
         foreach ($adverts_priority_map as $advertID => $priority) {
-            $queue->insert($advertID, $priority);
+            $advertPriorityQueue->insert($advertID, $priority);
         }
 
         // Schedule adverts, update their last scheduled time (updated_at), and save them
         foreach ($screenings as $screening) {
-            $queue_clone = clone $queue;
+            $queue_clone = clone $advertPriorityQueue;
             while ($queue_clone->count() > 0 && $screening->adverts->count() < config('advertising.per_screening')) {
                 $advertID = $queue_clone->extract();
 
@@ -55,6 +54,7 @@ class ScheduleAdverts implements ShouldQueue
                 $screening->adverts()->attach($advertID);
             }
         }
+        // Update the adverts that have been scheduled, atomic update
         $advertService->massUpdateAdverts($scheduled_adverts);
     }
 }

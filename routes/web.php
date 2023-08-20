@@ -63,7 +63,6 @@ Route::middleware('auth')->group(function () {
 
         Route::middleware('role:BUSINESS_CLIENT')->group(function () {
             Route::resource('user.requests', RequestableController::class)->only(['index', 'show', 'destroy']);
-            Route::resource('user.adverts', AdvertController::class)->only(['destroy']);
             Route::resource('user.reclamations', ReclamationController::class)->only(['index', 'show', 'update']);
         });
     });

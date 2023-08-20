@@ -31,13 +31,4 @@ class AdvertController extends Controller
         }
         return redirect()->route('adverts.create')->with('success', 'Advert created successfully');
     }
-
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Advert $advert)
-    {
-        //
-    }
 }

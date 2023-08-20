@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Movie\StoreRequest;
+use App\Http\Requests\Movie\UpdateRequest;
 use App\Models\Movie;
 use App\Services\GenreService;
 use App\Services\MovieService;
+use App\Services\UploadService;
 use Illuminate\Http\Request;
 
 class MovieController extends Controller
@@ -32,9 +34,9 @@ class MovieController extends Controller
     /**
      * Store a newly created movie in storage.
      */
-    public function store(StoreRequest $request, MovieService $movieService)
+    public function store(StoreRequest $request, MovieService $movieService, UploadService $uploadService)
     {
-        $movieService->createMovie($request);
+        $movieService->createMovie($request, $uploadService);
         return redirect()->route('management.movies.index');
     }
 
@@ -52,9 +54,10 @@ class MovieController extends Controller
     /**
      * Update the specified movie in storage.
      */
-    public function update(Request $request, int $id)
+    public function update(UpdateRequest $request, Movie $movie, MovieService $movieService, UploadService $uploadService)
     {
-        //
+        $movieService->updateMovie($request, $movie, $uploadService);
+        return redirect()->route('management.movies.index');
     }
 
 }

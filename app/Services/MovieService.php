@@ -13,22 +13,16 @@ class MovieService implements CanExport
     /**
      * Create a new movie
      */
-    public function createMovie($request) : Movie
+    public function createMovie($request, UploadService $uploadService): Movie
     {
-        $bannerFile = $request->file('banner');
-        $bannerPath = $bannerFile->getClientOriginalName();
-        $bannerFile->move(public_path('images/movies'), $bannerFile->getClientOriginalName());
-
-        $posterFile = $request->file('poster');
-        $posterPath = $posterFile->getClientOriginalName();
-        $posterFile->move(public_path('images/movies'), $posterFile->getClientOriginalName());
+        $paths = $this->uploadMovieImages($request->banner, $request->poster, $uploadService);
 
         return Movie::create([
             'title' => $request->title,
             'director' => $request->director,
             'description' => $request->description,
-            'banner_url' => $bannerPath,
-            'image_url' => $posterPath,
+            'banner_url' => $paths['banner_url'],
+            'image_url' => $paths['image_url'],
             'trailer_url' => $request->trailer_url,
             'release_date' => $request->release_date,
             'duration' => $request->duration,
@@ -36,6 +30,41 @@ class MovieService implements CanExport
             'genre_id' => $request->genre
         ]);
     }
+
+    /**
+     * Update an existing movie
+     */
+    public function updateMovie($request, $movie, UploadService $uploadService): Movie
+    {
+        $paths = $this->uploadMovieImages($request->banner, $request->poster, $uploadService);
+
+        $movie->update([
+            'title' => $request->title,
+            'director' => $request->director,
+            'description' => $request->description,
+            'banner_url' => $paths['banner_url'] ?? $movie->banner_url,
+            'image_url' => $paths['image_url'] ?? $movie->image_url,
+            'trailer_url' => $request->trailer_url,
+            'release_date' => $request->release_date,
+            'duration' => $request->duration,
+            'is_showcased' => true,
+            'genre_id' => $request->genre
+        ]);
+
+        return $movie;
+    }
+
+    /**
+     * Returns a key-value array of banner_url and/or image_url if either is passed
+     */
+    private function uploadMovieImages($banner, $poster, UploadService $uploadService): array
+    {
+        return [
+            'banner_url' => $banner ? $uploadService->uploadImage($banner, 'images/movies') : null,
+            'image_url' => $poster ? $uploadService->uploadImage($poster, 'images/movies') : null,
+        ];
+    }
+
 
     /**
      * Get all movies that have upcoming screenings now, tomorrow or in the next week, filtered by genre when genre != NULL.
