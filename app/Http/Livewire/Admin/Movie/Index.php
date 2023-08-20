@@ -8,7 +8,6 @@ use App\Services\GenreService;
 use App\Services\MovieService;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
-
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class Index extends TableBase

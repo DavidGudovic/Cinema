@@ -2,18 +2,27 @@
 
 namespace App\Http\Livewire\Admin\Advert;
 
+use App\Enums\Status;
 use App\Http\Livewire\Admin\TableBase;
 use App\Models\Advert;
 use App\Services\AdvertService;
 use App\Services\ExportService;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
-use Livewire\Component;
-use Livewire\WithPagination;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class Index extends TableBase
 {
+    //Advert specific filter criteria
+    public string $status = 'all';
+    public int|string $user_id = 0; // bugfix - |string is needed because input number is a string when empty
+    public string $quantity_left = 'any'; //'any', 'done', 'in_progress', 'never_shown'
+    public $status_translations = [
+        'CANCELLED' => 'OTKAZANA',
+        'PENDING' => 'NA ČEKANJU',
+        'ACCEPTED' => 'ODOBRENA',
+        'REJECTED' => 'ODBIJENA',
+    ];
     protected $listeners = [
         'AdvertStatusChanged' => 'refresh',
     ];
@@ -23,7 +32,7 @@ class Index extends TableBase
         $adverts = $this->getAdvertList($advertService);
 
         if ($this->global_sort == 'false') {
-            $this->sortDisplayedAdvertList($adverts);
+            $this->sortDisplayedAdvertList($adverts, $advertService);
         }
 
         return view('livewire.admin.advert.index', [
@@ -36,21 +45,36 @@ class Index extends TableBase
      */
     public function getAdvertList(AdvertService $advertService): LengthAwarePaginator|Collection
     {
-        return new Collection();
+        return $advertService->getFilteredAdvertsPaginated(
+            status: $this->status,
+            user_id: $this->user_id == '' ? 0 : $this->user_id,
+            quantity_left: $this->quantity_left,
+            search_query: $this->search_query,
+            do_sort: $this->global_sort == 'true',
+            sort_by: $this->sort_by,
+            sort_direction: $this->sort_direction,
+            quantity: $this->quantity,
+            );
     }
 
     /**
      * Sorts the movie list by $this->sort_by and $this->sort_direction
      * Only sorts the collection on the current page, doesn't change the LengthAwarePaginator $adverts
+     * If $this->sort_by is a relationship, the relationship is used to sort the collection
      */
-    public function sortDisplayedAdvertList(&$adverts): void
+    public function sortDisplayedAdvertList(&$adverts, AdvertService $advertService): void
     {
-        $sorted = $adverts->getCollection()->sortBy(function ($movie, $key) {
-            return $movie->{$this->sort_by};
+        $sortParams = $advertService->resolveSortByParameter($this->sort_by);
+        $sorted = $adverts->getCollection()->sortBy(function ($advert) use ($sortParams) {
+            return $sortParams['type'] === 'relation'
+                ? $advert->businessRequest->{$sortParams['column']}
+                : $advert->{$sortParams['column']};
         }, SORT_REGULAR, $this->sort_direction == 'DESC');
 
         $adverts->setCollection($sorted);
     }
+
+
 
     /**
      * Exports the advert list to a CSV file
@@ -59,10 +83,15 @@ class Index extends TableBase
      */
     public function export(ExportService $exportService, AdvertService $advertService, string $scope = 'displayed'): StreamedResponse
     {
-        $csv = 'aa';
+        $data = ($scope == 'displayed')
+        ? $this->getAdvertList($advertService)->values()->toArray()
+        : $advertService->getFilteredAdvertsPaginated(quantity: 0)->toArray();
+
+        $csv = $exportService->generateCSV($data, $advertService);
+
         return response()->streamDownload(function () use ($csv) {
             echo $csv;
-        }, 'filmovi' . now()->format('-d:m:Y') . '.csv');
+        }, 'reklame' . now()->format('-d:m:Y') . '.csv');
     }
 
 }

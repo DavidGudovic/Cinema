@@ -4,8 +4,13 @@ namespace App\Http\Livewire\Admin;
 
 use Livewire\Component;
 use Livewire\WithPagination;
-
-class TableBase extends Component
+/**
+ * Base class for all admin tables
+ * Contains the search bar, pagination, sorting and quantity
+ * Setting the LengthAwarePaginator and Collection is almost the same for all tables
+ * Should be extracted into a trait/here somehow
+ */
+abstract class TableBase extends Component
 {
     use WithPagination;
 
@@ -17,6 +22,11 @@ class TableBase extends Component
 
     public function refresh(): void
     {
+    }
+
+    public function refreshPage(): void
+    {
+        $this->resetPage();
     }
 
     public function paginationView(): string

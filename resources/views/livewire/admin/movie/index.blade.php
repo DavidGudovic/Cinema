@@ -40,7 +40,7 @@
     <!-- Paginate quantity-->
     <div class="hidden md:flex flex-col gap-1">
         <label class="opacity-40 text-sm" for="sort">Prikaži</label>
-        <select wire:change="refresh" id="sort"
+        <select wire:change="refreshPage" id="sort"
                 class="border rounded cursor-pointer p-2 bg-neutral-700 bg-opacity-70" wire:model="quantity">
             <option class="cursor-pointer" value="5">5</option>
             <option class="cursor-pointer" value="10">10</option>
