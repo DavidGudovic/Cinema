@@ -32,7 +32,7 @@ class MovieController extends Controller
     /**
      * Store a newly created movie in storage.
      */
-    public function store(Request $request, MovieService $movieService)
+    public function store(StoreRequest $request, MovieService $movieService)
     {
         $movieService->createMovie($request);
         return redirect()->route('management.movies.index');
