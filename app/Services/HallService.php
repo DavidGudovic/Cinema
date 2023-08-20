@@ -9,14 +9,14 @@ use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 * Services for App/Models/Halls.php
 */
 class HallService {
-    /*
+    /**
     * Get all halls.
     */
     public function getHalls() : EloquentCollection {
         return Hall::all();
     }
 
-    /*
+    /**
     * Get an associative array of halls available at $start_time for the next $for_days.
     * [Date => [Hall, Hall, Hall..]..]
     */
@@ -29,7 +29,7 @@ class HallService {
         });
     }
 
-    /*
+    /**
     * Used to get arrays for bookings and screenings that is merged on intersect  in getAvailableDatesMap().
     */
     private function getHallDatesMapForRelationship($relationship, $start_time, $end_time, $for_days) : array {

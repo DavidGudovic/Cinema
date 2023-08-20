@@ -2,36 +2,25 @@
 
 namespace App\Http\Livewire\Admin\Movie;
 
+use App\Http\Livewire\Admin\TableBase;
 use App\Services\ExportService;
 use App\Services\GenreService;
 use App\Services\MovieService;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
-use Livewire\Component;
-use Livewire\WithPagination;
+
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
-class Index extends Component
+class Index extends TableBase
 {
-    use WithPagination;
 
     public $genres; //mounted
-    public $search_query = ""; //search criteria
-    //filter criteria
     public $genre = NULL;
-    public $sort_by = 'title';
-    public $sort_direction = 'ASC';
     public $screening_time = "with past"; // 'any' 'now' 'tomorrow' 'week' 'with past'
-    public $global_sort = 'true'; //sort all movies or just the ones on the current page - String because of livewire
-    public $quantity = 10; //pagination quantity
 
     protected $listeners = [
         'MovieDeleted' => 'refresh',
     ];
-
-    public function refresh(): void
-    {
-    }
 
     public function mount(GenreService $genreService): void
     {
@@ -49,11 +38,6 @@ class Index extends Component
         return view('livewire.admin.movie.index', [
             'movies' => $movies,
         ]);
-    }
-
-    public function paginationView(): string
-    {
-        return 'pagination.custom';
     }
 
     /**
@@ -81,19 +65,6 @@ class Index extends Component
                 $this->sort_by,
                 $this->sort_direction
             );
-    }
-
-    /**
-     * Sets $this->sort_by, if it's already sorting by that column, reverses order
-     */
-    public function setSort(string $sort_by): void
-    {
-        if ($this->sort_by == $sort_by) {
-            $this->sort_direction = ($this->sort_direction == 'ASC') ? 'DESC' : 'ASC';
-        } else {
-            $this->sort_by = $sort_by;
-            $this->sort_direction = 'ASC';
-        }
     }
 
     /**

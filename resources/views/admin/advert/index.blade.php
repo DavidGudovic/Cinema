@@ -1,5 +1,6 @@
 @extends('templates.administration')
 
 @section('content')
-    @livewire('admin.requestable.index')
+    @livewire('admin.advert.index')
 @endsection
+

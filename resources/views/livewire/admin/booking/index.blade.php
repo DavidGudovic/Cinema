@@ -7,9 +7,6 @@
         <select wire:change="refresh" id="genres"
                 class="border rounded cursor-pointer p-2 bg-neutral-700 bg-opacity-70" wire:model="genre">
             <option class="cursor-pointer" value=''>Svi žanrovi</option>
-            @foreach($genres as $genre)
-                <option class="cursor-pointer" value="{{$genre->id}}">{{$genre->name}}</option>
-            @endforeach
         </select>
     </div>
 
@@ -36,7 +33,9 @@
             <option class="cursor-pointer" value='true'>Sve podatke</option>
         </select>
     </div>
+@endsection
 
+@section('right_filters')
     <!-- Paginate quantity-->
     <div class="hidden md:flex flex-col gap-1">
         <label class="opacity-40 text-sm" for="sort">Prikaži</label>
@@ -51,10 +50,8 @@
             <option class="cursor-pointer" value="100">100</option>
         </select>
     </div>
-@endsection
+    <!-- End Paginate quantity-->
 
-
-@section('right_filters')
     <!-- Search Bar -->
     <div class="relative flex flex-col gap-1">
         <label class="opacity-40 text-sm" for="search">Pretraži po</label>
@@ -64,14 +61,6 @@
         <i class="fa-solid fa-search absolute left-2 bottom-1 transform -translate-y-2/4"></i>
     </div>
     <!-- End Search Bar -->
-
-    <!-- Add -->
-    <a href="{{route('movies.create')}}"
-       class="border rounded p-2 flex gap-2 mt-6 items-center bg-neutral-700 bg-opacity-70">
-        <span>Dodaj </span>
-        <i class="fa-solid fa-plus"></i>
-    </a>
-    <!-- End Add -->
 
     <!-- CSV -->
     <div x-on:click="showExcelDropdown = !showExcelDropdown" x-on:click.outside="showExcelDropdown = false"
@@ -130,52 +119,12 @@
 @endsection
 
 @section('table_body')
-    @foreach($movies as $movie)
-        <tr x-data="{showToolTip{{$movie->id}}: false}"
-            class="odd:bg-neutral-950 odd:bg-opacity-30 text-center relative ">
-            <td x-bind:class="{ 'bg-neutral-700 bg-opacity-30': sortBy === 'title' }"
-                class="p-2">{{ $movie->title }}</td>
-            <td x-on:mouseenter="showToolTip{{$movie->id}} = true"
-                x-on:mouseleave="showToolTip{{$movie->id}} = false"
-                class="group m-2 line-clamp-2">{{ implode(' ',explode(' ', $movie->description, 3))}}
-                <span x-cloak x-show="showToolTip{{$movie->id}}"
-                      class=" transition-opacity bg-gray-800 text-gray-100 p-2 text-sm rounded-md  absolute left-40 top-0 z-20 w-96 h-auto">{{$movie->description}}</span>
-            </td>
-            <td class="p-2">{{ $movie->image_url }}</td>
-            <td x-bind:class="{ 'bg-neutral-700 bg-opacity-30': sortBy === 'release_date' }"
-                class="p-2">{{ $movie->release_year }}</td>
-            <td x-bind:class="{ 'bg-neutral-700 bg-opacity-30': sortBy === 'duration' }"
-                class="p-2">{{ $movie->duration }}</td>
-            <td x-bind:class="{ 'bg-neutral-700 bg-opacity-30': sortBy === 'genre_id' }"
-                class="p-2">{{ $genres[$movie->genre_id - 1]->name }}</td>
-            <td x-bind:class="{ 'bg-neutral-700 bg-opacity-30': sortBy === 'director' }"
-                class="p-2">{{ $movie->director }}</td>
-            <td x-bind:class="{ 'bg-neutral-700 bg-opacity-30': sortBy === 'is_showcased' }"
-                class="p-2">{{ $movie->is_showcased ? 'Da' : 'Ne' }}</td>
-            <td class="p-2">
-                <div class="flex gap-5 justify-center items-center h-full">
-                    <a href="{{route('screenings.create', ['movie' => $movie])}}">
-                        <i class="fa-solid fa-clapperboard"></i>
-                    </a>
-                    <a href="{{route('movies.edit', $movie)}}" class="hover:text-gray-300">
-                        <i class="fa-solid fa-pen"></i>
-                    </a>
-                    <a href="#" wire:click.prevent="openDeleteModal({{$movie->id}})"
-                       class="text-red-700 hover:text-gray-300">
-                        <i class="fa-solid fa-trash"></i>
-                    </a>
-                </div>
-            </td>
-        </tr>
-    @endforeach
 @endsection
 
 @section('pagination')
-    {{$movies->links()}}
 @endsection
 
 @section('modals')
-    @livewire('admin.movie.delete-modal')
 @endsection
 
 

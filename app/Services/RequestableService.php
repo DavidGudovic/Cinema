@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 class RequestableService{
 
     /*
-    * Get all reqeusts for a user with optional filters, paginated
+    * Get all requests for a user with optional filters, paginated
     */
     public function getFilteredRequestsPaginated(?string $status = 'all', ?string $type = 'all', ?int $quantity = 1) : LengthAwarePaginator
     {

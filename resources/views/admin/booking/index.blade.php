@@ -1,5 +1,6 @@
 @extends('templates.administration')
 
 @section('content')
-    @livewire('admin.screening.index')
+    @livewire('admin.booking.index')
 @endsection
+

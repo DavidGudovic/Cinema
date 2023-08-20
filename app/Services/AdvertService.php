@@ -2,6 +2,7 @@
 namespace App\Services;
 
 
+use App\Interfaces\CanExport;
 use App\Models\Advert;
 use App\Models\BusinessRequest;
 use Carbon\Carbon;
@@ -9,7 +10,7 @@ use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 
-class AdvertService {
+class AdvertService implements CanExport {
     /*
     * Returns an associative map of views per day for $quantity days in the past
     * A view is each seat associated to a ticket associated to a screening associated to an advert x amount of adverts shown at screening (should be 1 in most cases)
@@ -131,5 +132,13 @@ class AdvertService {
                 ]);
             }
         });
+    }
+
+    /**
+     * Implementation of CanExport interface
+     */
+    public function sanitizeForExport(array|Collection $data): array
+    {
+        // TODO: Implement sanitizeForExport() method.
     }
 }

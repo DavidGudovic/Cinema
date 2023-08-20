@@ -64,11 +64,18 @@
 		</li>
 
 		<li>
-			<a href="{{route('requests.index')}}" class="flex items-center gap-4">
-				<i class="{{ Route::currentRouteName() === 'requests.index' ? 'fa-solid fa-play fa-2xs' : 'fa-solid fa-briefcase' }}"></i>
-				<p>Zahtevi</p>
+			<a href="{{route('adverts.index')}}" class="flex items-center gap-4">
+				<i class="{{ Route::currentRouteName() === 'adverts.index' ? 'fa-solid fa-play fa-2xs' : 'fa-solid fa-rectangle-ad' }}"></i>
+				<p>Oglašavanja</p>
 			</a>
 		</li>
+
+        <li>
+            <a href="{{route('bookings.index')}}" class="flex items-center gap-4">
+                <i class="{{ Route::currentRouteName() === 'bookings.index' ? 'fa-solid fa-play fa-2xs' : 'fa-solid fa-people-roof' }}"></i>
+                <p>Rentiranja</p>
+            </a>
+        </li>
 
 		<li>
 			<a href="{{route('reports.create')}}" class="flex items-center gap-4">

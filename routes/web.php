@@ -4,9 +4,10 @@ use App\Http\Controllers\Admin\{
     MovieController as MovieAdminController,
     ReclamationController as ReclamationAdminController,
     ReportController as ReportAdminController,
-    RequestableController as RequestableAdminController,
     ScreeningController as ScreeningAdminController,
-    UserController as UserAdminController
+    UserController as UserAdminController,
+    AdvertController as AdvertAdminController,
+    BookingController as BookingAdminController
 };
 use App\Http\Controllers\Authentication\LoginController;
 use App\Http\Controllers\Authentication\RegisterController;
@@ -22,6 +23,7 @@ use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\Resources\MovieController;
 use App\Http\Controllers\Resources\ScreeningController;
 use Illuminate\Support\Facades\Route;
+
 
 /******************************************** Public routes ******************************************************/
 /* Anyone can access these routes */
@@ -83,7 +85,8 @@ Route::middleware('auth')->group(function () {
     Route::middleware('role:MANAGER')->prefix('management')->group(function () {
         Route::resource('screenings', ScreeningAdminController::class)->except('show');
         Route::resource('movies', MovieAdminController::class)->except('show', 'destroy')->name('index', 'management.movies.index');
-        Route::resource('requests', RequestableAdminController::class)->only(['index', 'show', 'update']);
+        Route::resource('adverts', AdvertAdminController::class)->only('index', 'edit', 'update');
+        Route::resource('bookings', BookingAdminController::class)->only(['index','edit', 'update']);
         Route::resource('reports', ReportAdminController::class)->only(['create', 'store']);
     });
 

@@ -1,14 +1,16 @@
 <?php
 namespace App\Services;
 
+use App\Interfaces\CanExport;
 use App\Models\Hall;
 use App\Models\User;
 use App\Models\Booking;
 use App\Models\BusinessRequest;
 use Exception;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
-class BookingService {
+class BookingService implements CanExport {
 
     /*
     * Create a new booking as well as a new business request, associate the two and return the booking
@@ -46,5 +48,11 @@ class BookingService {
         }
         return $booking;
     }
-
+    /**
+     * Implementation of the CanExport interface
+     */
+    public function sanitizeForExport(array|Collection $data): array
+    {
+        // TODO: Implement sanitizeForExport() method.
+    }
 }
