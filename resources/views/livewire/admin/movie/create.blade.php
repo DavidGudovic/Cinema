@@ -11,7 +11,7 @@
                 <img src="{{$banner->temporaryUrl()}}" alt="new movie banner preview"
                      class="w-full md:h-[30rem] object-cover">
                 <div
-                    class="absolute w-full h-full flex bg-neutral-900 bg-opacity-60 items-center justify-center cursor-pointer">
+                    class="absolute w-full h-full flex bg-gray-950 bg-opacity-60 items-center justify-center cursor-pointer">
                 </div>
             @else
                 <img src="{{URL('images/utility/new_movie_banner.webp')}}" alt="new movie banner image"
@@ -153,7 +153,7 @@
             @if ($poster)
                 <img src="{{$poster->temporaryUrl()}}" alt="new movie poster preview" class="h-full">
                 <div
-                    class="absolute w-full h-full flex bg-neutral-900 bg-opacity-60 items-center justify-center cursor-pointer">
+                    class="absolute w-full h-full flex bg-gray-950 bg-opacity-60 items-center justify-center cursor-pointer">
                 </div>
             @else
                 <img src="{{URL('images/utility/new_movie.webp')}}" alt="new movie image" class="h-full">

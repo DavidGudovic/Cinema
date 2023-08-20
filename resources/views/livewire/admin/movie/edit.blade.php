@@ -16,7 +16,7 @@
                      class="w-full h-[30rem] object-cover">
             @endif
             <div
-                class="absolute w-full h-full flex bg-neutral-900 bg-opacity-60 items-center justify-center cursor-pointer">
+                class="absolute w-full h-full flex bg-gray-950 bg-opacity-60 items-center justify-center cursor-pointer">
                 <p class=" text-center">Izmeni banner</p>
             </div>
         </div>
@@ -166,7 +166,7 @@
                 <img src="{{URL('images/movies/' . $movie->image_url)}}" alt="new movie image" class="h-full">
             @endif
             <div
-                class="absolute w-full h-full flex bg-neutral-900 bg-opacity-60 items-center justify-center cursor-pointer">
+                class="absolute w-full h-full flex bg-gray-950 bg-opacity-60 items-center justify-center cursor-pointer">
                 <p class=" text-center">Izmeni poster</p>
             </div>
             @error('poster')
