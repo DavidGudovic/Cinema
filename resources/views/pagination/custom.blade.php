@@ -96,5 +96,7 @@
       <!-- End page links -->
     </div>
   </nav>
+  @else
+      <span>Svi rezultati prikazani</span>
 @endif
 </div>
