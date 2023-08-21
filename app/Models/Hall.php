@@ -8,11 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Hall extends Model
 {
     use HasFactory;
+
     /**
-    * The attributes that are mass assignable.
-    *
-    * @var array<int, string>
-    */
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
     protected $fillable = [
         'name',
         'description',
@@ -24,53 +25,65 @@ class Hall extends Model
     ];
 
     /**
-    * Eloquent relationships
-    */
+     * Eloquent relationships
+     */
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function bookings(){
+    public function bookings()
+    {
         return $this->hasMany(Booking::class);
     }
 
-    public function screenings(){
+    public function screenings()
+    {
         return $this->hasMany(Screening::class);
     }
 
     /**
-    * Local Eloquent scopes
-    */
+     * Local Eloquent scopes
+     */
 
-    public function scopePriceLargerThan($query, $price){
+    public function scopePriceLargerThan($query, $price)
+    {
         return $query->where('price_per_hour', '>', $price);
     }
 
-    public function scopePriceSmallerThan($query, $price){
+    public function scopePriceSmallerThan($query, $price)
+    {
         return $query->where('price_per_hour', '<', $price);
     }
 
-    public function scopeHasUpcomingScreenings($query){
-        return $query->whereHas('screenings', function($q){
+    public function scopeHasUpcomingScreenings($query)
+    {
+        return $query->whereHas('screenings', function ($q) {
             $q->where('start_time', '>', now());
         });
     }
 
-    public function scopeHasBookings($query){
+    public function scopeHasBookings($query)
+    {
         return $query->whereHas('bookings');
     }
 
-    public function scopeManagedBy($query, $user){
-        return $query->where('user_id', $user->id);
+    public function scopeManagedBy($query, $user_id)
+    {
+        return $query->when($user_id != 0, function ($query) use ($user_id) {
+            return $query->where('user_id', $user_id);
+        });
     }
 
+
     //TO BE HEAVILY MODIFIED
-    public function scopeAvailableAtTime($query, $start_time, $end_time){
-        return $query->whereDoesntHave('bookings', function($q) use ($start_time, $end_time){
+    public function scopeAvailableAtTime($query, $start_time, $end_time)
+    {
+        return $query->whereDoesntHave('bookings', function ($q) use ($start_time, $end_time) {
             $q->where('start_time', '<=', $end_time)
                 ->where('start_time' + 'duration', '>=', $start_time);
-        })->whereDoesntHave('screenings', function($q) use ($start_time, $end_time){
+        })->whereDoesntHave('screenings', function ($q) use ($start_time, $end_time) {
             $q->where('start_time', '<=', $end_time)
                 ->where('start_time' + 'duration', '>=', $start_time);
         });

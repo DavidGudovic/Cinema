@@ -19,6 +19,12 @@ abstract class TableBase extends Component
     public $sort_direction = 'ASC';
     public $global_sort = 'true'; //sort all resources or just the ones on the current page - String because of livewire
     public $quantity = 10; //pagination quantity
+    public $status_translations = [
+        'CANCELLED' => 'OTKAZANA',
+        'PENDING' => 'NA ČEKANJU',
+        'ACCEPTED' => 'ODOBRENA',
+        'REJECTED' => 'ODBIJENA',
+    ];
 
     public function refresh(): void
     {

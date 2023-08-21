@@ -12,15 +12,12 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class Index extends TableBase
 {
+    public Collection $halls;
     //Booking specific filter criteria
+    public int $hall_id = 0;
     public string $status = 'all';
     public int|string $user_id = 0; // bugfix - |string is needed because input number is a string when empty
-    public $status_translations = [
-        'CANCELLED' => 'OTKAZANO',
-        'PENDING' => 'NA ČEKANJU',
-        'ACCEPTED' => 'ODOBRENO',
-        'REJECTED' => 'ODBIJENO',
-    ];
+
     protected $listeners = [
         'BusinessStatusChanged' => 'refresh',
     ];
@@ -33,7 +30,7 @@ class Index extends TableBase
 
     public function render(BookingService $bookingService, RequestableService $requestableService)
     {
-        $bookings = $this->getBookingList($bookingService);
+        $bookings = $this->getBookingList($bookingService, $requestableService);
 
         if ($this->global_sort == 'false') {
             $this->sortDisplayedBookingList($bookings, $requestableService);
@@ -47,9 +44,19 @@ class Index extends TableBase
     /**
      * Returns a paginated, filtered list of adverts or a searched through list of adverts if $this->search_query is set
      */
-    public function getBookingList(BookingService $bookingService): LengthAwarePaginator|Collection
+    public function getBookingList(BookingService $bookingService, RequestableService $requestableService): LengthAwarePaginator|Collection
     {
-        return $bookingService->getFilteredBookingsPaginated();
+        return $bookingService->getFilteredBookingsPaginated(
+            requestableService: $requestableService,
+            status: $this->status,
+            search_query: $this->search_query,
+            do_sort: $this->global_sort == 'true',
+            sort_by: $this->sort_by,
+            sort_direction: $this->sort_direction,
+            halls: $this->hall_id == 0 ? $this->halls->pluck('id')->toArray() : [$this->hall_id],
+            user_id: $this->user_id == '' ? 0 : $this->user_id,
+            quantity: $this->quantity,
+        );
     }
 
     /**
@@ -63,7 +70,7 @@ class Index extends TableBase
 
         $sorted = $bookings->getCollection()->sortBy(function ($advert) use ($sortParams) {
             return $sortParams['type'] === 'relation'
-                ? $advert->businessRequest->{$sortParams['column']}
+                ? $advert->{$sortParams['relation'] == 'halls' ? 'hall' : 'businessRequest'}->{$sortParams['column']} //ugly, works
                 : $advert->{$sortParams['column']};
         }, SORT_REGULAR, $this->sort_direction == 'DESC');
 
@@ -80,8 +87,8 @@ class Index extends TableBase
     public function export(ExportService $exportService, BookingService $bookingService, RequestableService $requestableService, string $scope = 'displayed'): StreamedResponse
     {
         $data = ($scope == 'displayed')
-            ? $this->getBookingList($bookingService)->values()->toArray()
-            : $bookingService->getFilteredBookingsPaginated()->toArray();
+            ? $this->getBookingList($bookingService, $requestableService)->values()->toArray()
+            : $bookingService->getFilteredBookingsPaginated(requestableService: $requestableService)->toArray();
 
         $csv = $exportService->generateCSV($data, $bookingService);
 

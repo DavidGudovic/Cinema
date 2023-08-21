@@ -18,12 +18,7 @@ class Index extends TableBase
     public string $status = 'all';
     public int|string $user_id = 0; // bugfix - |string is needed because input number is a string when empty
     public string $quantity_left = 'any'; //'any', 'done', 'in_progress', 'never_shown'
-    public $status_translations = [
-        'CANCELLED' => 'OTKAZANA',
-        'PENDING' => 'NA ČEKANJU',
-        'ACCEPTED' => 'ODOBRENA',
-        'REJECTED' => 'ODBIJENA',
-    ];
+
     protected $listeners = [
         'AdvertStatusChanged' => 'refresh',
     ];

@@ -123,18 +123,18 @@ class Advert extends Model implements Requestable //pseudo extends Models/Busine
                 ->orWhere('company', 'LIKE', "%$search_query%");
     }
 
-    public function scopeSortPolymorphic($query, bool $do_sort, string $type, string $sort_by, string $sort_direction)
+    public function scopeSortPolymorphic($query, bool $do_sort, string $type, string $sort_relation, string $sort_by, string $sort_direction)
     {
         return $do_sort
             ? $query
                 ->when($type === 'direct', function ($q) use ($sort_by, $sort_direction) {
                     return $q->orderBy($sort_by, $sort_direction);
                 })
-                ->when($type === 'relation', function ($q) use ($sort_by, $sort_direction) { // <2 ms on 100 adverts
+                ->when($type === 'relation', function ($q) use ($sort_relation, $sort_by, $sort_direction) {
                     return $q->orderBy(
                         Advert::select($sort_by)
-                            ->from('business_requests')
-                            ->whereColumn('adverts.business_request_id', 'business_requests.id')
+                            ->from($sort_relation)  // rtrim('business_requests') = 'business_request'
+                            ->whereColumn('adverts.' . rtrim($sort_relation, 's') . '_id', $sort_relation . '.id')
                             ->limit(1),
                         $sort_direction
                     );

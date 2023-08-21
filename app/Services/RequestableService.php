@@ -21,19 +21,20 @@ class RequestableService
      */
     public function resolveSortByParameter(string $sort_by): array
     {
-        return match ($sort_by) {
+        return match ($sort_by) { //Could've been done with exploding a string on '.' but this is more readable imo
             'businessRequest.price' => ['type' => 'relation', 'relation' => 'business_requests',  'column' => 'price'],
             'businessRequest.status' => ['type' => 'relation', 'relation' => 'business_requests',  'column' => 'status'],
             'businessRequest.user_id' => ['type' => 'relation', 'relation' => 'business_requests',  'column' => 'user_id'],
             'businessRequest.created_at' => ['type' => 'relation', 'relation' => 'business_requests',  'column' => 'created_at'],
-            'hall.name' => ['type' => 'relation', 'relation' => 'hall',  'column' => 'name'],
+            'hall.name' => ['type' => 'relation', 'relation' => 'halls',  'column' => 'name'],
             default => ['type' => 'direct','relation' => 'none', 'column' => $sort_by],
         };
     }
 
-    /*
-    * Get all requests for a user with optional filters, paginated
-    */
+    /**
+     * Returns a paginated, filtered list of requests
+     * All parameters are optional, if none are set, all requests are returned, paginated by $quantity, default 1
+     */
     public function getFilteredRequestsPaginated(?string $status = 'all', ?string $type = 'all', ?int $quantity = 1): LengthAwarePaginator
     {
         return BusinessRequest::with('requestable')

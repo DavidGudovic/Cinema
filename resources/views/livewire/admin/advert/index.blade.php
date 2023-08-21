@@ -1,7 +1,7 @@
 @extends('templates.components.table')
 
 @section('left_filters')
-    <!-- Filter for Genre -->
+    <!-- Filter for Quantity -->
     <div class="flex flex-col gap-1">
         <label class="opacity-40 text-sm" for="genres">Količina</label>
         <select wire:change="refresh" id="genres"
@@ -13,7 +13,7 @@
         </select>
     </div>
 
-    <!-- Filter for Next Screening -->
+    <!-- Filter for Status -->
     <div class="flex flex-col gap-1">
         <label class="opacity-40 text-sm" for="status">Status</label>
         <select wire:change="refresh" id="status"
