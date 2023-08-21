@@ -17,10 +17,10 @@ class HallSeeder extends Seeder
         ];
 
         $halls = [
-            ['name' => 'Scorsese', 'description' => $descriptions[0], 'rows' => 10, 'columns' => 12, 'image_url' => 'sala_1.png', 'price_per_hour' => 11000, 'user_id' => 1],
-            ['name' => 'Kubrick', 'description' => $descriptions[1], 'rows' => 8 , 'columns' => 10, 'image_url' => 'sala_2.png', 'price_per_hour' => 11000, 'user_id' => 1],
-            ['name' => 'Nolan', 'description' => $descriptions[2], 'rows' => 8 , 'columns' => 8 , 'image_url' => 'sala_3.png', 'price_per_hour' => 11000, 'user_id' => 1],
-            ['name' => 'Tarantino', 'description' => $descriptions[3], 'rows' => 8 , 'columns' => 10, 'image_url' => 'sala_4.png', 'price_per_hour' => 11000, 'user_id' => 1],
+            ['name' => 'Scorsese', 'description' => $descriptions[0], 'rows' => 10, 'columns' => 12, 'image_url' => 'sala_1.webp', 'price_per_hour' => 11000, 'user_id' => 1],
+            ['name' => 'Kubrick', 'description' => $descriptions[1], 'rows' => 8 , 'columns' => 10, 'image_url' => 'sala_2.webp', 'price_per_hour' => 11000, 'user_id' => 1],
+            ['name' => 'Nolan', 'description' => $descriptions[2], 'rows' => 8 , 'columns' => 8 , 'image_url' => 'sala_3.webp', 'price_per_hour' => 11000, 'user_id' => 1],
+            ['name' => 'Tarantino', 'description' => $descriptions[3], 'rows' => 8 , 'columns' => 10, 'image_url' => 'sala_4.webp', 'price_per_hour' => 11000, 'user_id' => 1],
         ];
 
         Hall::insert($halls);

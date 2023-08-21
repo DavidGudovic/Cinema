@@ -11,14 +11,14 @@ class GenreSeeder extends Seeder
     {
         $genres =
             [
-                ['name' => 'Akcija', 'image_url' => 'action.png'],
-                ['name' => 'Komedija', 'image_url' => 'comedy.png'],
-                ['name' => 'Drama', 'image_url' => 'drama.png'],
-                ['name' => 'Triler', 'image_url' => 'triler.png'],
-                ['name' => 'Dokumentarac', 'image_url' => 'documentary.png'],
-                ['name' => 'Sci Fi', 'image_url' => 'sci_fi.png'],
-                ['name' => 'Avantura', 'image_url' => 'adventure.png'],
-                ['name' => 'Horor', 'image_url' => 'horror.png'],
+                ['name' => 'Akcija', 'image_url' => 'action.webp'],
+                ['name' => 'Komedija', 'image_url' => 'comedy.webp'],
+                ['name' => 'Drama', 'image_url' => 'drama.webp'],
+                ['name' => 'Triler', 'image_url' => 'triler.webp'],
+                ['name' => 'Dokumentarac', 'image_url' => 'documentary.webp'],
+                ['name' => 'Sci Fi', 'image_url' => 'sci_fi.webp'],
+                ['name' => 'Avantura', 'image_url' => 'adventure.webp'],
+                ['name' => 'Horor', 'image_url' => 'horror.webp'],
             ];
 
         Genre::insert($genres);
