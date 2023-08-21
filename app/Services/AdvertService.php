@@ -35,15 +35,16 @@ class AdvertService implements CanExport
      * Maps the sort_by parameter to a column and a type (direct or relation)
      * [type => direct|relation, column => column_name]
      * Eloquent doesn't support sorting polymorphic relationships out of the box
+     * Used for sortPolymorphic scope
      */
     public function resolveSortByParameter(string $sort_by): array
     {
         return match ($sort_by) {
-            'title', 'company', 'quantity', 'quantity_remaining', 'last_scheduled' => ['type' => 'direct', 'column' => $sort_by],
             'businessRequest.price' => ['type' => 'relation', 'column' => 'price'],
             'businessRequest.status' => ['type' => 'relation', 'column' => 'status'],
             'businessRequest.user_id' => ['type' => 'relation', 'column' => 'user_id'],
-            default => ['type' => 'direct', 'column' => 'title'],
+            'businessRequest.created_at' => ['type' => 'relation', 'column' => 'created_at'],
+            default => ['type' => 'direct', 'column' => $sort_by],
         };
     }
 
@@ -138,7 +139,7 @@ class AdvertService implements CanExport
      */
     public function getAdvertSchedulingPriorityMap(): Collection
     {
-        $adverts = Advert::status('ACCEPTED')->hasRemaining()->get();
+        $adverts = Advert::status('accepted')->hasRemaining()->get();
 
         return $adverts->mapWithKeys(function ($advert) {
             return [$advert->id => $this->calculatePriority($advert)];
@@ -159,7 +160,6 @@ class AdvertService implements CanExport
     public function massUpdateAdverts($advertIDs): void
     {
         $quantities = array_count_values($advertIDs);
-
         DB::transaction(function () use ($quantities) { // Make the update atomic
             foreach ($quantities as $advertID => $quantity) {
                 Advert::where('id', $advertID)->decrement('quantity_remaining', $quantity);

@@ -27,6 +27,12 @@ class Index extends TableBase
         'AdvertStatusChanged' => 'refresh',
     ];
 
+    public function mount()
+    {
+        $this->sort_by = 'businessRequest.created_at';
+        $this->sort_direction = 'DESC';
+    }
+
     public function render(AdvertService $advertService)
     {
         $adverts = $this->getAdvertList($advertService);

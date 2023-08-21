@@ -1,6 +1,7 @@
 <?php
 namespace App\Services;
 
+use App\Mail\TicketEmail;
 use App\Models\Seat;
 use App\Models\User;
 use App\Models\Ticket;
@@ -9,10 +10,12 @@ use Barryvdh\DomPDF\PDF as DomPDF;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use Illuminate\Support\Facades\Mail;
 
 class TicketService{
 
-    /*
+
+    /**
     * Get a PDF of a ticket
     */
     public function getTicketPDF(User $user, Ticket $ticket) : DomPDF
@@ -80,7 +83,7 @@ class TicketService{
         ->paginate($quantity);
     }
 
-    /*
+    /**
     *  Gets passed an in-memory instance of a ticket model and creates a ticket with seats in the database
     */
     public function createTicket(Ticket $ticket) : Ticket
@@ -97,6 +100,14 @@ class TicketService{
             ]);
         }
         return $ticket;
+    }
+    /**
+     * Sends an Email to the user with the ticket
+     */
+    public function sendTicketEmail(User $user, Ticket $ticket) : void
+    {
+        $mailable = new TicketEmail($user->username, $ticket->screening->movie->title, $user, $ticket);
+        Mail::to($user->email)->send($mailable);
     }
 
 }

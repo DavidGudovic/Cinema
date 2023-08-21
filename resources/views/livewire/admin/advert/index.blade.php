@@ -8,8 +8,8 @@
                 class="border rounded cursor-pointer p-2 bg-neutral-700 bg-opacity-70" wire:model="quantity_left">
             <option class="cursor-pointer" value=''>Sve</option>
             <option class="cursor-pointer" value='done'>Ispunjena</option>
-            <option class="cursor-pointer" value='in_progress'>Nije ispunjena</option>
-            <option class="cursor-pointer" value='never_shown'>Nijednom prikazana</option>
+            <option class="cursor-pointer" value='in_progress'>Započeta</option>
+            <option class="cursor-pointer" value='never_shown'>Nezapočeta</option>
         </select>
     </div>
 
@@ -28,7 +28,7 @@
     </div>
 
     <!-- Filter for User -->
-    <div class="flex flex-col gap-1">
+    <div class="hidden md:flex flex-col gap-1">
         <label class="opacity-40 text-sm" for="user_id">Korisnik ID</label>
         <input type="number" id="user_id" min="0"
                class="border rounded cursor-pointer p-2 bg-neutral-700 bg-opacity-70 w-24"
@@ -63,6 +63,14 @@
     </div>
     <!-- End Paginate quantity-->
 
+    <!-- Filter for User -->
+    <div class="flex md:hidden flex-col gap-1">
+        <label class="opacity-40 text-sm" for="user_id">Korisnik ID</label>
+        <input type="number" id="user_id" min="0"
+               class="border rounded cursor-pointer p-2 bg-neutral-700 bg-opacity-70 w-16"
+               wire:model="user_id"/>
+    </div>
+
     <!-- Search Bar -->
     <div class="relative flex flex-col gap-1">
         <label class="opacity-40 text-sm" for="search">Pretraži po</label>
@@ -92,8 +100,14 @@
 @endsection
 
 @section('table_header')
+    <th x-bind:class="{ 'bg-neutral-700 bg-opacity-30': sortBy === 'businessRequest.created_at' }"
+        wire:click="setSort('businessRequest.created_at')" class="cursor-pointer p-2"><i
+            class="fa-solid fa-sort opacity-40 fa-xs"></i>
+        Kreiran
+    </th>
+
     <th x-bind:class="{ 'bg-neutral-700 bg-opacity-30': sortBy === 'title' }"
-        wire:click="setSort('title')" class="cursor-pointer p-2 w-40"><i
+        wire:click="setSort('title')" class="cursor-pointer p-2"><i
             class="fa-solid fa-sort opacity-40 fa-xs"></i>
         Naslov
     </th>
@@ -141,7 +155,10 @@
 @section('table_body')
     @foreach($adverts as $advert)
         <tr x-data="{showToolTip{{$advert->id}}: false}"
-            class="odd:bg-neutral-950 odd:bg-opacity-30 text-center relative ">
+            class="odd:bg-neutral-950 odd:bg-opacity-30 text-center relative">
+            <td x-bind:class="{ 'bg-neutral-700 bg-opacity-30': sortBy === 'businessRequest.created_at' }"
+                class="p-2 text-sm">{{ $advert->businessRequest->created_at->format('H:i d/m') }}</td>
+
             <td x-bind:class="{ 'bg-neutral-700 bg-opacity-30': sortBy === 'title' }"
                 class="p-2">{{ $advert->title }}</td>
 
@@ -149,7 +166,7 @@
                 x-on:mouseleave="showToolTip{{$advert->id}} = false"
                 class="group m-2 line-clamp-2">{{ implode(' ',explode(' ', $advert->businessRequest->text, 3))}}
                 <span x-cloak x-show="showToolTip{{$advert->id}}"
-                      class=" transition-opacity bg-gray-800 text-gray-100 p-2 text-sm rounded-md  absolute left-40 top-0 z-20 w-96 h-auto">
+                      class=" transition-opacity bg-gray-800 text-gray-100 p-2 text-sm rounded-md  absolute left-52 top-0 z-20 w-96 h-auto">
                     {{$advert->businessRequest->text}}
                 </span>
             </td>
@@ -170,10 +187,23 @@
             </td>
             <td class="p-2">
                 <div class="flex gap-5 justify-center items-center h-full">
-                    <a href="#"
-                       class="text-red-700 hover:text-gray-300">
-                        <i class="fa-solid fa-trash"></i>
-                    </a>
+                   @if($advert->businessRequest->status == 'PENDING')
+                        <a href="{{route('adverts.edit', ['advert' => $advert, 'action' => 'ACCEPT'])}}">
+                            <i class="fa-solid fa-check"></i>
+                        </a>
+                        <a href="{{route('adverts.edit', ['advert' => $advert, 'action' => 'REJECT'])}}" class="text-red-700 hover:text-white">
+                            <i class="fa-solid fa-x"></i>
+                        </a>
+
+                       @else
+                        <a href="#" aria-disabled="true" class="hover:text-white opacity-30 cursor-default">
+                            <i class="fa-solid fa-check"></i>
+                        </a>
+                        <a href="#" aria-disabled="true" class="opacity-30 cursor-default text-red-700" >
+                            <i class="fa-solid fa-x"></i>
+                        </a>
+
+                    @endif
                 </div>
             </td>
         </tr>

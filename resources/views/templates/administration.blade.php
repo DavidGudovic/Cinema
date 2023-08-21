@@ -29,7 +29,7 @@
 		@include('includes.side-navbar')
 	</aside>
 
-	<main class="flex flex-col flex-1 items-center w-full bg-neutral-900 gap-12 md:px-11 py-6">
+	<main class="flex flex-col flex-1 items-center w-full bg-neutral-900 gap-12 md:px-8 py-6">
 		@yield('content')
 	</main>
 </div>

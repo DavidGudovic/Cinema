@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers\Clients\Business;
 
-use Carbon\Carbon;
-use App\Models\Hall;
-use App\Models\User;
-use App\Models\Booking;
-use Illuminate\Http\Request;
-use App\Services\BookingService;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\BookingRequest;
+use App\Http\Requests\Booking\CreateRequest;
+use App\Models\Hall;
+use App\Services\BookingService;
+use Carbon\Carbon;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Encryption\DecryptException;
+use Illuminate\Http\Request;
 
 class BookingController extends Controller
 {
@@ -43,7 +41,7 @@ class BookingController extends Controller
     /**
     * Store a newly created resource in storage.
     */
-    public function store(BookingRequest $request, Hall $hall, BookingService $bookingService)
+    public function store(CreateRequest $request, Hall $hall, BookingService $bookingService)
     {
         // Date repacking
         $start_time = Carbon::createFromFormat('Y-m-d H:i', substr($request->date , 0, -8) . ' ' . $request->start_time);

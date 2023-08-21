@@ -97,6 +97,7 @@ return [
         'genre_id' => 'Žanr',
         'image_url' => 'URL slike',
         'is_showcased' => 'Istaknut',
+        'response' => 'Odgovor',
     ],
 
 ];

@@ -4,7 +4,7 @@
 
         <!-- Filters -->
         <div class="flex gap-4">
-          @yield('left_filters')
+            @yield('left_filters')
         </div>
         <!-- End filters -->
 
@@ -16,7 +16,7 @@
 
         <!-- Buttons and Search -->
         <div x-data="{showExcelDropdown: false}" class="flex gap-4">
-           @yield('right_filters')
+            @yield('right_filters')
         </div>
         <!-- End buttons search -->
 

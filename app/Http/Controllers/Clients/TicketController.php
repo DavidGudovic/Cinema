@@ -31,8 +31,7 @@ class TicketController extends Controller
     */
     public function show(User $user, Ticket $ticket, TicketService $ticketService)
     {
-        $mailable = new TicketEmail($user->username, $ticket->screening->movie->title, $user, $ticket);
-        Mail::to($user->email)->send($mailable);
+        $ticketService->sendTicketEmail($user, $ticket);
 
         return view('users.tickets.show', [
             'ticket' => $ticket,

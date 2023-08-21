@@ -91,7 +91,7 @@ class Advert extends Model implements Requestable //pseudo extends Models/Busine
     {
         return match($quantity) {
             'done' => $query->done(),
-            'in_progress' => $query->hasRemaining(),
+            'in_progress' => $query->inProgress(),
             'never_shown' => $query->neverScheduled(),
             default => $query,
         };
@@ -104,10 +104,13 @@ class Advert extends Model implements Requestable //pseudo extends Models/Busine
     {
         return $query->where('quantity_remaining', '=', 0);
     }
-    public function scopeHasRemaining($query)
-    {
+    public function scopeInProgress($query){
         return $query->where('quantity_remaining', '>', 0)
             ->where('quantity_remaining', '<', 'quantity');
+    }
+    public function scopeHasRemaining($query)
+    {
+        return $query->where('quantity_remaining', '>', 0);
     }
     #endregion
 

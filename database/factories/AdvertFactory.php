@@ -15,8 +15,8 @@ class AdvertFactory extends Factory
         $quantity = $this->faker->numberBetween(1,30);
         return [
             'advert_url' => $this->faker->url(),
-            'title' => $this->faker->word(),
-            'company' => $this->faker->company(),
+            'title' => ucfirst($this->faker->word()),
+            'company' => ucfirst($this->faker->text(8)),
             'quantity' => $quantity,
             'quantity_remaining' => $quantity,
         ];
