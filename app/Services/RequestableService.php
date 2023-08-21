@@ -13,6 +13,22 @@ use Illuminate\Support\Facades\Mail;
 
 class RequestableService
 {
+    /**
+     * Maps the sort_by parameter to a column and a type (direct or relation)
+     * [type => direct|relation, column => column_name]
+     * Eloquent doesn't support sorting polymorphic relationships out of the box
+     * Used for sortPolymorphic scope
+     */
+    public function resolveSortByParameter(string $sort_by): array
+    {
+        return match ($sort_by) {
+            'businessRequest.price' => ['type' => 'relation', 'column' => 'price'],
+            'businessRequest.status' => ['type' => 'relation', 'column' => 'status'],
+            'businessRequest.user_id' => ['type' => 'relation', 'column' => 'user_id'],
+            'businessRequest.created_at' => ['type' => 'relation', 'column' => 'created_at'],
+            default => ['type' => 'direct', 'column' => $sort_by],
+        };
+    }
 
     /*
     * Get all requests for a user with optional filters, paginated

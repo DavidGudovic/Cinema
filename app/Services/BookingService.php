@@ -7,17 +7,23 @@ use App\Models\User;
 use App\Models\Booking;
 use App\Models\BusinessRequest;
 use Exception;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class BookingService implements CanExport {
 
-    /*
+    /**
+     * Returns a paginated, filtered list of bookings or a searched through list of bookings
+     * All parameters are optional, if none are set, all bookings are returned, paginated by $quantity, default 10
+     */
+    public function getFilteredBookingsPaginated(): LengthAwarePaginator|Collection
+    {
+        return Booking::with('businessRequest')->paginate(10);
+    }
+    /**
     * Create a new booking as well as a new business request, associate the two and return the booking
     */
-    /**
-     * @throws Exception
-     */
     public function tryCreateBooking($hall, $text, $price, $start_time, $end_time) : Booking
     {
         try {

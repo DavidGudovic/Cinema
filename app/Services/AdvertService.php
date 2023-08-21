@@ -19,9 +19,10 @@ class AdvertService implements CanExport
      * Returns a paginated, filtered list of adverts or a searched through list of adverts
      * All parameters are optional, if none are set, all adverts are returned, paginated by $quantity, default 10
      */
-    public function getFilteredAdvertsPaginated(string $status = 'all', int $user_id = 0, string $quantity_left = 'any', string $search_query = '',bool $do_sort = false, string $sort_by = 'title', string $sort_direction = 'ASC', int $quantity = 10): LengthAwarePaginator|Collection
+    public function getFilteredAdvertsPaginated(RequestableService $requestableService, string $status = 'all', int $user_id = 0, string $quantity_left = 'any', string $search_query = '',bool $do_sort = false, string $sort_by = 'title', string $sort_direction = 'ASC', int $quantity = 10): LengthAwarePaginator|Collection
     {
-        $sortParams = $this->resolveSortByParameter($sort_by);
+        $sortParams = $requestableService->resolveSortByParameter($sort_by);
+
         return Advert::with('businessRequest')
             ->byUser($user_id)
             ->status($status)
@@ -29,23 +30,6 @@ class AdvertService implements CanExport
             ->search($search_query)
             ->sortPolymorphic($do_sort, $sortParams['type'], $sortParams['column'], $sort_direction)
             ->paginateOptionally($quantity);
-    }
-
-    /**
-     * Maps the sort_by parameter to a column and a type (direct or relation)
-     * [type => direct|relation, column => column_name]
-     * Eloquent doesn't support sorting polymorphic relationships out of the box
-     * Used for sortPolymorphic scope
-     */
-    public function resolveSortByParameter(string $sort_by): array
-    {
-        return match ($sort_by) {
-            'businessRequest.price' => ['type' => 'relation', 'column' => 'price'],
-            'businessRequest.status' => ['type' => 'relation', 'column' => 'status'],
-            'businessRequest.user_id' => ['type' => 'relation', 'column' => 'user_id'],
-            'businessRequest.created_at' => ['type' => 'relation', 'column' => 'created_at'],
-            default => ['type' => 'direct', 'column' => $sort_by],
-        };
     }
 
 
