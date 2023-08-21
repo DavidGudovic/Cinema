@@ -28,7 +28,7 @@ class AdvertService implements CanExport
             ->status($status)
             ->quantityRemaining($quantity_left)
             ->search($search_query)
-            ->sortPolymorphic($do_sort, $sortParams['type'], $sortParams['column'], $sort_direction)
+            ->sortPolymorphic($do_sort, $sortParams['type'],$sortParams['relation'], $sortParams['column'], $sort_direction)
             ->paginateOptionally($quantity);
     }
 

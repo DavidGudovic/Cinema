@@ -22,11 +22,12 @@ class RequestableService
     public function resolveSortByParameter(string $sort_by): array
     {
         return match ($sort_by) {
-            'businessRequest.price' => ['type' => 'relation', 'column' => 'price'],
-            'businessRequest.status' => ['type' => 'relation', 'column' => 'status'],
-            'businessRequest.user_id' => ['type' => 'relation', 'column' => 'user_id'],
-            'businessRequest.created_at' => ['type' => 'relation', 'column' => 'created_at'],
-            default => ['type' => 'direct', 'column' => $sort_by],
+            'businessRequest.price' => ['type' => 'relation', 'relation' => 'business_requests',  'column' => 'price'],
+            'businessRequest.status' => ['type' => 'relation', 'relation' => 'business_requests',  'column' => 'status'],
+            'businessRequest.user_id' => ['type' => 'relation', 'relation' => 'business_requests',  'column' => 'user_id'],
+            'businessRequest.created_at' => ['type' => 'relation', 'relation' => 'business_requests',  'column' => 'created_at'],
+            'hall.name' => ['type' => 'relation', 'relation' => 'hall',  'column' => 'name'],
+            default => ['type' => 'direct','relation' => 'none', 'column' => $sort_by],
         };
     }
 

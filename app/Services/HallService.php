@@ -12,8 +12,8 @@ class HallService {
     /**
     * Get all halls.
     */
-    public function getHalls() : EloquentCollection {
-        return Hall::all();
+    public function getHalls(int $manager_id = 0) : EloquentCollection {
+        return Hall::managedBy($manager_id)->get();
     }
 
     /**

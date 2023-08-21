@@ -19,7 +19,8 @@ class BookingService implements CanExport {
      */
     public function getFilteredBookingsPaginated(): LengthAwarePaginator|Collection
     {
-        return Booking::with('businessRequest')->paginate(10);
+        return Booking::with('businessRequest')->with('hall')
+            ->paginate(10);
     }
     /**
     * Create a new booking as well as a new business request, associate the two and return the booking
