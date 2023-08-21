@@ -4,13 +4,13 @@
 
     Nažalost, moramo vas obavestiti da je vaš zahtev odbijen.
 
-    @if($businessRequest->requestable() instanceof \App\Models\Advert)
+    @if($is_advert)
         Tip zahteva: Reklamiranje
         Naslov: {{ $businessRequest->requestable->title }}
         Delatnost: {{ $businessRequest->requestable->company }}
         URL: {{ $businessRequest->requestable->url }}
         Količina: {{ $businessRequest->requestable->quantity }}
-    @elseif($businessRequest->requestable() instanceof \App\Models\Booking)
+    @else
         Tip zahteva: Rezervacija
         Sala: {{ $businessRequest->requestable->hall_id }}
         Trajanje: {{ $businessRequest->requestable->duration }}

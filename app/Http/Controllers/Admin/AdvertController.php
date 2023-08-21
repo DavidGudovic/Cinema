@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\Status;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Advert\UpdateRequest;
+use App\Http\Requests\Requestable\UpdateRequest;
 use App\Models\Advert;
 use App\Services\AdvertService;
 use App\Services\RequestableService;
