@@ -26,7 +26,7 @@ class AdvertController extends Controller
             ]);
     }
 
-    public function update(Advert $advert, UpdateRequest $request, RequestableService $requestableService, AdvertService $advertService)
+    public function update(Advert $advert, UpdateRequest $request, RequestableService $requestableService)
     {
         $requestableService->changeRequestStatus(
             $advert->businessRequest,
