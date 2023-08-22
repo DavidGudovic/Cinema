@@ -76,7 +76,7 @@ class Ticket extends Model
     */
 
     public function screening(){
-        return $this->belongsTo(Screening::class);
+        return $this->belongsTo(Screening::class)->withTrashed();
     }
 
     public function user(){

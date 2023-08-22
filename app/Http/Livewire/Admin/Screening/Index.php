@@ -20,7 +20,7 @@ class Index extends TableBase
     public string $movie = 'all';
 
     protected $listeners = [
-        'AdvertStatusChanged' => 'refresh',
+        'ScreeningDeleted' => 'refresh',
     ];
 
     public function mount()

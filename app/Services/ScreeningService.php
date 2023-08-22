@@ -71,6 +71,15 @@ class ScreeningService implements CanExport
     }
 
     /**
+     * Cancels a screening, unscheduling adverts and notifying users is done by the ScreeningObserver by dispatching jobs
+     */
+    public function cancelScreening(int $screening_id): void
+    {
+        $screening = Screening::find($screening_id);
+        $screening->delete();
+    }
+
+    /**
      * Implementation of CanExport interface
      */
     public function sanitizeForExport(array|Collection $data): array

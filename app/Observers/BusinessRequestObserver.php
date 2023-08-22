@@ -20,9 +20,7 @@ class BusinessRequestObserver
 
     public function saved(BusinessRequest $request): void
     {
-        if($request->requestable instanceof Advert){
-            dispatch(new ScheduleAdverts());
-        }
+
     }
 
     public function updated(BusinessRequest $request): void

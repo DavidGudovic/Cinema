@@ -181,7 +181,7 @@
             <td class="p-2">
                 <div class="flex gap-5 justify-center items-center h-full">
                     @if($screening->start_time > now())
-                        <a href="{{route('screenings.destroy', $screening)}}" class="text-red-700 hover:text-white">
+                        <a wire:click.prevent="$emit('showModal', {{$screening}})" class="text-red-700 hover:text-white">
                             <i class="fa-solid fa-x"></i>
                         </a>
                     @else
@@ -202,6 +202,7 @@
 @endsection
 
 @section('modals')
+    @livewire('admin.screening.delete-modal')
 @endsection
 
 
