@@ -28,7 +28,7 @@ use Illuminate\Support\Facades\Route;
 /******************************************** Public routes ******************************************************/
 /* Anyone can access these routes */
 Route::get('/', [LandingPageController::class, 'index'])->name('home');
-Route::get('movies/{genre?}', [MovieController::class, 'index'])->name('movies.index');
+Route::resource('movies', MovieController::class)->only('index');
 Route::resource('movie.screenings', ScreeningController::class)->only(['index']);
 /******************************************** End public routes **************************************************/
 
