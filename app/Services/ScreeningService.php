@@ -24,7 +24,7 @@ class ScreeningService implements CanExport
     {
         return Screening::with('movie')->with('hall')->withCount('tickets')->withCount('adverts')
             ->time($time)
-            ->fromHall($hall_id)
+            ->fromHallOrManagedHalls($hall_id)
             ->screeningMovie($movie_id)
             ->search($search_query)
             ->withOmmitedTag('Dolby Atmos')

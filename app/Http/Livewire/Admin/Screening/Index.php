@@ -3,14 +3,10 @@
 namespace App\Http\Livewire\Admin\Screening;
 
 use App\Http\Livewire\Admin\TableBase;
-use App\Jobs\ScheduleAdverts;
-use App\Services\AdvertService;
 use App\Services\ScreeningService;
 use App\Services\ExportService;
-use App\Services\RequestableService;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
-use Livewire\Component;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class Index extends TableBase

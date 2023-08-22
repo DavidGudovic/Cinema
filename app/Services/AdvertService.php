@@ -135,7 +135,8 @@ class AdvertService implements CanExport
      */
     private function calculatePriority(Advert $advert): int
     {
-        return $advert->quantity_remaining * config('advertising.weight_remaining') + Carbon::parse($advert->last_scheduled)->diffInDays(now()) * config('advertising.weight_last_scheduled');
+        return $advert->quantity_remaining * config('advertising.weight_remaining')
+            + Carbon::parse($advert->last_scheduled)->diffInDays(now()) * config('advertising.weight_last_scheduled');
     }
 
     /**

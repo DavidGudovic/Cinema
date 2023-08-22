@@ -26,41 +26,30 @@ class DatabaseSeeder extends Seeder
        echo("If the database isn't fresh run php artisan migrate:fresh --seed\n");
         usleep(500000);
        echo("Seeding non-random data..\n");
-
         $this->callWithLogging(GenreSeeder::class, "Seeding genres...\n");
-        echo("Done!\n");
         $this->callWithLogging(UserNonRandomSeeder::class, "Seeding users...\n");
-        echo("Done!\n");
         $this->callWithLogging(HallSeeder::class, "Seeding halls...\n");
-        echo("Done!\n");
         $this->callWithLogging(MovieSeeder::class, "Seeding movies...\n");
-        echo("Done!\n");
         $this->callWithLogging(TagSeeder::class, "Seeding tags...\n");
-        echo("Done!");
 
         echo("Seeding random data..\n");
         $this->callWithLogging(UserSeeder::class, "Seeding users...\n");
-        echo("Done!\n");
         $this->callWithLogging(ScreeningSeeder::class, "Seeding screenings...\n");
-        echo("Done!\n");
         $this->callWithLogging(TicketSeeder::class, "Seeding tickets... this one might take a while\n");
-        echo("Done!\n");
         $this->callWithLogging(BusinessRequestSeeder::class, "Seeding adverts and bookings...\n");
-        echo("Done!\n");
         $this->callWithLogging(ReclamationSeeder::class, "Seeding reclamations...\n");
-        echo("Done!\n");
 
         echo("Running Advert Scheduler - You should optimally have a queue worker running \n");
         dispatch(new ScheduleAdverts());
         echo("Job dispatched\n");
         usleep(500000);
         echo('Seeding complete!');
-
     }
 
     protected function callWithLogging($seederClass, $message) : void
     {
         echo($message);
         $this->call($seederClass);
+        echo("Done!\n");
     }
 }

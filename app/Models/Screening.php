@@ -96,9 +96,17 @@ class Screening extends Model
 
     public function scopeFromHall($query, $hallId)
     {
-        return $query->when($hallId != 0, function ($query) use ($hallId) {
-            return $query->where('hall_id', $hallId);
-        });
+        return $query->where('hall_id', $hallId);
+    }
+
+    public function scopeFromHallOrManagedHalls($query, $hallId)
+    {
+        return match ($hallId) {
+            0 => $query->whereHas('hall', function ($query) {
+                $query->managedBy(auth()->user()->id);
+            }),
+            default => $query->fromHall($hallId)
+        };
     }
 
     #region Screening time scopes
