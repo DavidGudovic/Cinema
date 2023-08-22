@@ -73,7 +73,7 @@ class TicketService{
     * Get all tickets for a user with optional filters, paginated
     *
     */
-    public function getFilteredTicketsPaginated(string $status = 'all', int $movie, ?int $quantity = 2) : LengthAwarePaginator
+    public function getFilteredTicketsPaginated( int $movie, string $status = 'all', ?int $quantity = 2) : LengthAwarePaginator
     {
         return Ticket::with('screening.movie')->with('seats')
         ->forUser(auth()->user())

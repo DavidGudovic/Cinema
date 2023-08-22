@@ -23,7 +23,7 @@ class IndexSideBar extends SidebarBase
     {
 
         return view('livewire.users.tickets.index-side-bar', [
-            'tickets' => $ticketService->getFilteredTicketsPaginated('active', 0, 1),
+            'tickets' => $ticketService->getFilteredTicketsPaginated(0, 'active', 1),
             'user' => auth()->user()
         ]);
     }

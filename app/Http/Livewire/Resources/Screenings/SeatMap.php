@@ -15,6 +15,7 @@ class SeatMap extends Component
     protected $listeners =
     [
         'resetSelectedSeats' => 'resetSelectedSeats',
+        'conflict' => 'conflict',
     ];
 
     public function mount(SeatService $seatService)
@@ -25,6 +26,21 @@ class SeatMap extends Component
     public function render()
     {
         return view('livewire.resources.screenings.seat-map');
+    }
+
+    public function conflict($conflicts, SeatService $seatService): void
+    {
+        $this->selectedSeats = array_filter($this->selectedSeats, function ($selectedSeat) use ($conflicts) {
+            return !in_array($selectedSeat, array_map(fn($seat) => [$seat['row'], $seat['column']], $conflicts), true);
+        });
+
+        $this->takenSeats = $seatService->getTakenSeatsMap($this->screening);
+
+        $this->emit('syncSeats', collect($this->selectedSeats)->map(function ($seat) {
+            return ['row' => $seat[0], 'column' => $seat[1]];
+        }));
+
+        session()->flash('conflicts', $conflicts);
     }
 
     public function resetSelectedSeats() : void

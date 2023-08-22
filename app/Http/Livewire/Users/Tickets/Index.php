@@ -34,7 +34,7 @@ class Index extends Component
     public function render(TicketService $ticketService)
     {
         return view('livewire.users.tickets.index', [
-            'tickets' => $ticketService->getFilteredTicketsPaginated($this->status_filter,$this->movie_filter),
+            'tickets' => $ticketService->getFilteredTicketsPaginated($this->movie_filter,$this->status_filter),
             'user' => auth()->user()
         ]);
     }

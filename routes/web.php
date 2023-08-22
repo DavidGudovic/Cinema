@@ -53,7 +53,6 @@ Route::middleware('auth')->group(function () {
     /***************************************  Private routes *****************************************************/
     /* Sensitive data, prevent users from accessing other users data, tickets, bookings, advertising stats etc. */
     Route::middleware('private')->group(function () {
-
         Route::get('logout/{user}', [LoginController::class, 'destroy'])->name('logout');
         Route::get('user/delete/{user}', [UserController::class, 'delete'])->name('user.delete');
         Route::resource('user', UserController::class)->only(['show', 'update', 'destroy']);
