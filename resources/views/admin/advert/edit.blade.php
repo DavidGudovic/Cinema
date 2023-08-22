@@ -29,7 +29,7 @@
             <div class="flex flex-col justify-between h-full min-w-full px-2 md:px-4">
                 <div class="flex flex-col gap-3 ">
                     <p class="font-bold text-xl">
-                        Zahtev: Rentiranje sale
+                        Zahtev: Oglašavanje
                     </p>
                     <p class="">Zahtev
                         kreiran: {{Carbon\Carbon::parse($advert->businessRequest->created_at)->format('H:i m/d/Y')}} </p>

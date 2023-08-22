@@ -20,10 +20,10 @@ abstract class TableBase extends Component
     public $global_sort = 'true'; //sort all resources or just the ones on the current page - String because of livewire
     public $quantity = 10; //pagination quantity
     public $status_translations = [
-        'CANCELLED' => 'OTKAZANA',
+        'CANCELLED' => 'OTKAZAN',
         'PENDING' => 'NA ČEKANJU',
-        'ACCEPTED' => 'ODOBRENA',
-        'REJECTED' => 'ODBIJENA',
+        'ACCEPTED' => 'ODOBREN',
+        'REJECTED' => 'ODBIJEN',
     ];
 
     public function refresh(): void
