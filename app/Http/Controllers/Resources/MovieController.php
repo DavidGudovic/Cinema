@@ -19,7 +19,7 @@ class MovieController extends Controller
     public function index(Request $request, MovieService $movieService, GenreService $genreService)
     {
         return view('resources.movies.index', [
-            'movies' => $movieService->getMoviesByGenreScreeningTimes($request['genre'] ? [$request['genre']] : null),
+            'movies' => $movieService->getFilteredMoviesPaginated($request['genre'] ? [$request['genre']] : null),
             'filters' => $genreService->getFiltersForGenres($request['genre']),
         ]);
     }

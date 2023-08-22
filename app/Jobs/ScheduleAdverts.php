@@ -40,20 +40,19 @@ class ScheduleAdverts implements ShouldQueue
         // Schedule adverts, update their last scheduled time (updated_at), and save them
         foreach ($screenings as $screening) {
             $queue_clone = clone $advertPriorityQueue;
-            while ($queue_clone->count() > 0 && $screening->adverts->count() < config('advertising.per_screening')) {
+            $advert_count = $screening->adverts->count();
+
+            while ($queue_clone->count() > 0 && $advert_count < config('advertising.per_screening')) {
                 $advertID = $queue_clone->extract();
-
-
-                // Skip this advert if the screening already has it or if it has been scheduled the maximum number of times
-                if ($screening->adverts->contains($advertID) || $adverts_quantity_map[$advertID] == 0) {
-                    continue;
-                }
+                if ($screening->adverts->contains($advertID) || $adverts_quantity_map[$advertID] == 0) continue;
 
                 $scheduled_adverts[] = $advertID;
                 $adverts_quantity_map[$advertID] -= 1;
+                $advert_count++;
                 $screening->adverts()->attach($advertID);
             }
         }
+
         // Update the adverts that have been scheduled, atomic update
         $advertService->massUpdateAdverts($scheduled_adverts);
     }

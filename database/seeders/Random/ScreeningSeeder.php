@@ -31,7 +31,7 @@ class ScreeningSeeder extends Seeder
             if (!$overlap) {
                 // Add tags
                 $screening->save();
-                $screening->tags()->saveMany([$tags[1], $tags[fake()->randomElement([0, 2, 3])]]);
+                $screening->tags()->saveMany([$tags[2], $tags[fake()->randomElement([0, 1, 3])]]);
             }
         }
     }

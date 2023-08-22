@@ -4,7 +4,7 @@
     <!-- Filter for Hall-->
     <div class="flex flex-col gap-1">
         <label class="opacity-40 text-sm" for="genres">Sala</label>
-        <select wire:change="refresh" id="genres"
+        <select wire:change="resetPage" id="genres"
                 class="border rounded cursor-pointer p-2 bg-neutral-700 bg-opacity-70" wire:model="hall_id">
             @foreach($halls as $hall)
                 <option class="cursor-pointer" value="{{$hall->id}}">{{$hall->name}}</option>
@@ -15,7 +15,7 @@
     <!-- Filter for Status -->
     <div class="flex flex-col gap-1">
         <label class="opacity-40 text-sm" for="status">Status</label>
-        <select wire:change="refresh" id="status"
+        <select wire:change="resetPage" id="status"
                 class="border rounded cursor-pointer p-2 bg-neutral-700 bg-opacity-70"
                 wire:model="status">
             <option class="cursor-pointer" value="all">Sve</option>
@@ -31,7 +31,7 @@
         <label class="opacity-40 text-sm" for="user_id">Korisnik ID</label>
         <input type="number" id="user_id" min="0"
                class="border rounded cursor-pointer p-2 bg-neutral-700 bg-opacity-70 w-24"
-               wire:model="user_id"/>
+               wire:model="user_id" wire:change="resetPage"/>
     </div>
 
     <!-- Sort all or shown-->
@@ -67,13 +67,13 @@
         <label class="opacity-40 text-sm" for="user_id">Korisnik ID</label>
         <input type="number" id="user_id" min="0"
                class="border rounded cursor-pointer p-2 bg-neutral-700 bg-opacity-70 w-16"
-               wire:model="user_id"/>
+               wire:model="user_id" wire:change="resetPage"/>
     </div>
 
     <!-- Search Bar -->
     <div class="relative flex flex-col gap-1">
         <label class="opacity-40 text-sm" for="search">Pretraži po</label>
-        <input id="search" type="text" wire:model.debounce.300ms="search_query"
+        <input id="search" type="text" wire:model.debounce.300ms="search_query" wire:change.debounce="refreshPage"
                placeholder="Sali..."
                class="border rounded p-2 pl-8 bg-neutral-700 bg-opacity-70 w-44 md:w-auto">
         <i class="fa-solid fa-search absolute left-2 bottom-1 transform -translate-y-2/4"></i>
@@ -165,9 +165,9 @@
             </td>
 
             <td x-bind:class="{ 'bg-neutral-700 bg-opacity-30': sortBy === 'start_time' }"
-                class="m-2">{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $booking->start_time)->format('m/d H:i') }}</td>
+                class="p-2 text-sm">{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $booking->start_time)->format('m/d H:i') }}</td>
             <td x-bind:class="{ 'bg-neutral-700 bg-opacity-30': sortBy === 'end_time' }"
-                class="p-2">{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $booking->end_time)->format('H:i')  }}</td>
+                class="p-2 text-sm">{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $booking->end_time)->format('H:i')  }}</td>
             <td x-bind:class="{ 'bg-neutral-700 bg-opacity-30': sortBy === 'businessRequest.status' }"
                 class="p-2 text-sm">{{ $status_translations[$booking->businessRequest->status] }}</td>
             <td x-bind:class="{ 'bg-neutral-700 bg-opacity-30': sortBy === 'businessRequest.user_id' }"

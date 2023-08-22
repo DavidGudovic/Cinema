@@ -46,23 +46,23 @@ class Index extends TableBase
     {
         $genre = ($this->genre == NULL) ? NULL : [$this->genre];
         return ($this->search_query == '') ?
-            $movieService->getMoviesByGenreScreeningTimes(
-                $genre,
-                $this->screening_time,
-                true,
-                $this->quantity,
-                ($this->global_sort == 'true'),
-                $this->sort_by,
-                $this->sort_direction
+            $movieService->getFilteredMoviesPaginated(
+                genres: $genre,
+                screening_time: $this->screening_time,
+                paginate: true,
+                quantity: $this->quantity,
+                do_sort: ($this->global_sort == 'true'),
+                sort_by: $this->sort_by,
+                sort_direction: $this->sort_direction
             ) :
             $movieService->getBySearch(
-                $this->search_query,
-                false,
-                true,
-                $this->quantity,
-                ($this->global_sort == 'true'),
-                $this->sort_by,
-                $this->sort_direction
+                search_query: $this->search_query,
+                only_screening: false,
+                paginate: true,
+                quantity: $this->quantity,
+                do_sort: ($this->global_sort == 'true'),
+                sort_by: $this->sort_by,
+                sort_direction: $this->sort_direction
             );
     }
 
@@ -88,7 +88,7 @@ class Index extends TableBase
     {
         $data = ($scope == 'displayed')
             ? $this->getMovieList($movieService)->values()->toArray()
-            : $movieService->getMoviesByGenreScreeningTimes(screening_time: 'with_past');
+            : $movieService->getFilteredMoviesPaginated(screening_time: 'with_past');
 
         $csv = $exportService->generateCSV($data, $movieService);
 

@@ -11,20 +11,20 @@ class Screening extends Model
 
     public $timestamps = false;
     /**
-    * The attributes that are mass assignable.
-    *
-    * @var array<int, string>
-    */
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
     protected $fillable = [
         'start_time',
         'end_time',
     ];
 
     /**
-    * The attributes that should be cast.
-    *
-    * @var array<string, string>
-    */
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
     protected $casts = [
         'start_time' => 'datetime',
         'end_time' => 'datetime'
@@ -46,32 +46,37 @@ class Screening extends Model
     }
 
     /**
-    * Eloquent relationships
-    */
+     * Eloquent relationships
+     */
 
-    public function movie(){
+    public function movie()
+    {
         return $this->belongsTo(Movie::class)->withTrashed();
     }
 
-    public function hall(){
+    public function hall()
+    {
         return $this->belongsTo(Hall::class);
     }
 
-    public function tags(){
+    public function tags()
+    {
         return $this->belongsToMany(Tag::class)->as('tags');
     }
 
-    public function tickets(){
+    public function tickets()
+    {
         return $this->hasMany(Ticket::class);
     }
 
-    public function adverts(){
+    public function adverts()
+    {
         return $this->belongsToMany(Advert::class)->as('adverts');
     }
 
     /**
-    * Local Eloquent scopes
-    */
+     * Local Eloquent scopes
+     */
     public function scopeUpcoming($query)
     {
         return $query->where('start_time', '>', now());
@@ -85,19 +90,54 @@ class Screening extends Model
     public function scopePastForDays($query, $quantity)
     {
         return $query->where('start_time', '>=', now()->subDays($quantity))
-        ->where('start_time', '<', now());
+            ->where('start_time', '<', now());
     }
 
 
     public function scopeFromHall($query, $hallId)
     {
-        return $query->where('hall_id', $hallId);
+        return $query->when($hallId != 0, function ($query) use ($hallId) {
+            return $query->where('hall_id', $hallId);
+        });
     }
+
+    #region Screening time scopes
+
+    public function scopeTime($query, string $screening_time)
+    {
+        return match ($screening_time) {
+            'any' => $query->upcoming(),
+            'now' => $query->Today(),
+            'tomorrow' => $query->Tomorrow(),
+            'week' => $query->ThisWeek(),
+            default => $query,
+        };
+    }
+
+    public function scopeToday($query)
+    {
+        return $query->where('start_time', '>', now())
+            ->where('start_time', '<', now()->endOfDay());
+    }
+
+    public function scopeTomorrow($query)
+    {
+        return $query->where('start_time', '>', now()->addDay()->startOfDay())
+            ->where('start_time', '<', now()->addDay()->endOfDay());
+    }
+
+    public function scopeThisWeek($query)
+    {
+        return $query->where('start_time', '>', now())
+            ->where('start_time', '<', now()->addWeek()->endOfDay());
+    }
+
+    #endregion
 
     public function scopeOverlapsWithTime($query, $start_time, $end_time)
     {
         return $query->where('start_time', '<=', $end_time)
-        ->where('end_time', '>', $start_time);
+            ->where('end_time', '>', $start_time);
     }
 
     public function scopeScreeningGenre($query, $genreId)
@@ -111,7 +151,9 @@ class Screening extends Model
 
     public function scopeScreeningMovie($query, $movieId)
     {
-        return $query->where('movie_id', $movieId);
+        return $query->when($movieId != 0, function ($query) use ($movieId) {
+            return $query->where('movie_id', $movieId);
+        });
     }
 
     public function scopeWithTag($query, $tagName)
@@ -121,11 +163,11 @@ class Screening extends Model
         });
     }
 
-    public function scopeWithOmmitedTag($query,string $filter)
+    public function scopeWithOmmitedTag($query, string $filter)
     {
-        return $query->with(['tags' => function ($q) use ($filter){
+        return $query->with(['tags' => function ($q) use ($filter) {
             $q->where('name', 'not like', $filter)
-            ->select('image_url');
+                ->select('name', 'image_url');
         }]);
     }
 
@@ -134,4 +176,39 @@ class Screening extends Model
         return $query->withCount('adverts')->having('adverts_count', '<', config('advertising.per_screening'));
     }
 
+    public function scopeSearch($query, string $search_query)
+    {
+        return $query->when($search_query, function ($query) use ($search_query) {
+            return $query->where(function ($query) use ($search_query) {
+                $query->whereHas('hall', function ($query) use ($search_query) {
+                    $query->where('name', 'like', '%' . $search_query . '%');
+                })->orWhereHas('movie', function ($query) use ($search_query) {
+                    $query->where('title', 'like', '%' . $search_query . '%')
+                        ->orWhere('director', 'like', '%' . $search_query . '%')
+                        ->orWhereHas('genre', function ($query) use ($search_query) {
+                            $query->where('name', 'like', '%' . $search_query . '%');
+                        });
+                })->orWhereHas('tags', function ($query) use ($search_query) {
+                    $query->where('name', 'like', '%' . $search_query . '%');
+                });
+            });
+        });
+    }
+
+
+    public function scopeSortOptional($query, bool $do_sort, string $sort_by, string $sort_direction)
+    {
+        if ($do_sort) {
+            return $query->orderBy($sort_by, $sort_direction);
+        }
+        return $query;
+    }
+
+    public function scopePaginateOptional($query, int $quantity)
+    {
+        if ($quantity == 0) {
+            return $query->get();
+        }
+        return $query->paginate($quantity);
+    }
 }

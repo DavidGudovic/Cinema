@@ -4,7 +4,7 @@
     <!-- Filter for Quantity -->
     <div class="flex flex-col gap-1">
         <label class="opacity-40 text-sm" for="genres">Količina</label>
-        <select wire:change="refresh" id="genres"
+        <select wire:change="resetPage" id="genres"
                 class="border rounded cursor-pointer p-2 bg-neutral-700 bg-opacity-70" wire:model="quantity_left">
             <option class="cursor-pointer" value=''>Sve</option>
             <option class="cursor-pointer" value='done'>Ispunjena</option>
@@ -16,7 +16,7 @@
     <!-- Filter for Status -->
     <div class="flex flex-col gap-1">
         <label class="opacity-40 text-sm" for="status">Status</label>
-        <select wire:change="refresh" id="status"
+        <select wire:change="resetPage" id="status"
                 class="border rounded cursor-pointer p-2 bg-neutral-700 bg-opacity-70"
                 wire:model="status">
             <option class="cursor-pointer" value="all">Sve</option>
@@ -32,7 +32,7 @@
         <label class="opacity-40 text-sm" for="user_id">Korisnik ID</label>
         <input type="number" id="user_id" min="0"
                class="border rounded cursor-pointer p-2 bg-neutral-700 bg-opacity-70 w-24"
-               wire:model="user_id"/>
+               wire:model="user_id" wire:change="resetPage"/>
     </div>
 
     <!-- Sort all or shown-->
@@ -68,13 +68,13 @@
         <label class="opacity-40 text-sm" for="user_id">Korisnik ID</label>
         <input type="number" id="user_id" min="0"
                class="border rounded cursor-pointer p-2 bg-neutral-700 bg-opacity-70 w-16"
-               wire:model="user_id"/>
+               wire:model="user_id" wire:change="resetPage"/>
     </div>
 
     <!-- Search Bar -->
     <div class="relative flex flex-col gap-1">
         <label class="opacity-40 text-sm" for="search">Pretraži po</label>
-        <input id="search" type="text" wire:model.debounce.300ms="search_query"
+        <input id="search" type="text" wire:model.debounce.300ms="search_query" wire:change.debounce="refreshPage"
                placeholder="Naziv, Delatnost..."
                class="border rounded p-2 pl-8 bg-neutral-700 bg-opacity-70 w-44 md:w-auto">
         <i class="fa-solid fa-search absolute left-2 bottom-1 transform -translate-y-2/4"></i>

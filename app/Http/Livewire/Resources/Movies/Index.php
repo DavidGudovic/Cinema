@@ -33,7 +33,7 @@ class Index extends Component
   */
   public function filter(MovieService $movieService, $genre_list = [], $sort_by='title', $sort_direction='ASC', $screening_time='any') : void
   {
-    $this->movie_list = $movieService->getMoviesByGenreScreeningTimes(array_keys($genre_list, true), $screening_time);
+    $this->movie_list = $movieService->getFilteredMoviesPaginated(array_keys($genre_list, true), $screening_time);
     $this->sort($sort_by, $sort_direction);
   }
 

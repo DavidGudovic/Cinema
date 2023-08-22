@@ -70,7 +70,7 @@ class MovieService implements CanExport
      * Get all movies that have upcoming screenings now, tomorrow or in the next week, filtered by genre when genre != NULL.
      * Can sort/paginate optionally
      */
-    public function getMoviesByGenreScreeningTimes(?array $genres = NULL, ?string $screening_time = 'any', bool $paginate = false, int $quantity = 0, bool $do_sort = false, string $sort_by = 'title', string $sort_direction = 'ASC'): EloquentCollection|LengthAwarePaginator
+    public function getFilteredMoviesPaginated(?array $genres = NULL, ?string $screening_time = 'any', bool $paginate = false, int $quantity = 0, bool $do_sort = false, string $sort_by = 'title', string $sort_direction = 'ASC'): EloquentCollection|LengthAwarePaginator
     {
         return Movie::with('genre')
             ->fromGenres($genres)
