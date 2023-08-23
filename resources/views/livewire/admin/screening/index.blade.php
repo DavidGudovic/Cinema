@@ -134,7 +134,7 @@
         <div x-cloak x-show="showAddDropdown"
              class="absolute z-10 top-10 left-0 flex flex-col justify-center p-2 bg-neutral-500 rounded-lg">
             @foreach($movies as $movie)
-                <a href="{{route('screenings.create', $movie)}}" class="text-center w-full">{{$movie->title}}</a>
+                <a href="{{route('screenings.create', ['movie' => $movie])}}" class="text-center w-full">{{$movie->title}}</a>
             @endforeach
         </div>
         <!-- End Dropdown -->

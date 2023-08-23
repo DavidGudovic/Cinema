@@ -15,7 +15,7 @@ class Create extends Component
     public Movie $movie;
     public Collection $halls;
     public Collection $tags;
-    public int $step = 3;
+    public int $step = 1;
 
     public ?Hall $picked_hall;
     public ?Tag $picked_tag;
