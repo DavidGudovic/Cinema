@@ -1,4 +1,5 @@
-<div x-data="{step: @entangle('step'), totalSteps: 3}" class="relative flex justify-center items-center gap-6 w-full h-screen overflow-hidden">
+<div x-data="{step: @entangle('step'), totalSteps: 3}"
+     class="relative flex justify-center items-center gap-6 w-full h-screen overflow-hidden">
     <!-- Heading -->
     <div class="absolute top-6 md:top-20 flex flex-col justify-center items-center">
         <p x-transition:enter="transition ease-out-in duration-700 transform"
@@ -22,7 +23,8 @@
             <x-slot:step>1</x-slot:step>
             <div class="grid grid-cols-1 md:grid-cols-2 justify-center mt-6 md:mt-12 gap-6">
                 @foreach($halls as $hall)
-                    <div wire:click="setHall({{$hall}})" class="relative flex flex-col justify-center items-center gap-2 cursor-pointer hover:text-red-700">
+                    <div wire:click="setHall({{$hall}})"
+                         class="relative flex flex-col justify-center items-center gap-2 cursor-pointer hover:text-red-700">
                         <img src="{{URL('images/halls/' . $hall->image_url)}}"
                              class=" w-48 md:w-96" alt="hall {{$hall->name}}">
                         <div class="absolute inset-0 w-full h-full bg-gray-950 opacity-60"></div>
@@ -54,11 +56,7 @@
         <!-- Date -->
         <x-step>
             <x-slot:step>3</x-slot:step>
-            <div>
-                <div class="flex flex-col justify-center items-center gap-2">
-                    <p x-on:click="step++" class="cursor pointer text-center">Select date</p>
-                </div>
-            </div>
+            @livewire('admin.screening.date-picker')
         </x-step>
         <!-- End date-->
 
@@ -74,7 +72,7 @@
     <!-- End steps -->
 
     <!-- Breadcrumbs -->
-    <x-breadcrumbs class="absolute right-6 md:right-12"/>
+    <x-breadcrumbs class="absolute right-4 md:right-12"/>
     <!-- End breadcrumbs -->
 
 </div>

@@ -5,6 +5,8 @@ namespace App\Http\Livewire\Admin\Screening;
 use App\Models\Hall;
 use App\Models\Movie;
 use App\Models\Tag;
+use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Illuminate\Support\Collection;
 use Livewire\Component;
 
@@ -13,7 +15,7 @@ class Create extends Component
     public Movie $movie;
     public Collection $halls;
     public Collection $tags;
-    public int $step = 1;
+    public int $step = 3;
 
     public ?Hall $picked_hall;
     public ?Tag $picked_tag;
@@ -44,7 +46,7 @@ class Create extends Component
     public function backtrack(int $step)
     {
         $actions = [
-            3 => function() { $this->picked_dates = []; $this->picked_times = []; },
+            3 => function() { $this->picked_dates = []; $this->picked_times = []; $this->emit('clearDates'); },
             2 => function() { $this->picked_tag = null; },
             1 => function() { $this->picked_hall = null; },
         ];
