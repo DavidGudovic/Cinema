@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Services\HallService;
 use App\Services\MovieService;
+use App\Services\TagService;
 use Illuminate\Http\Request;
 
 class ScreeningController extends Controller
@@ -23,9 +24,13 @@ class ScreeningController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request, MovieService $movieService, TagService $tagService)
     {
-        //
+        return view('admin.screening.create', [
+            'movie' => $movieService->getMovie($request['movie']),
+            'halls' => auth()->user()->halls,
+            'tags' => $tagService->getTags(),
+        ]);
     }
 
     /**

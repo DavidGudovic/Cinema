@@ -141,6 +141,13 @@ class MovieService implements CanExport
     }
 
     /**
+     * Get a movie by id
+     */
+    public function getMovie(int $id): Movie
+    {
+        return Movie::find($id);
+    }
+    /**
      * Checks wether a movie has any upcoming screenings
      */
     public function isMovieScreening(int $movie_id): bool
