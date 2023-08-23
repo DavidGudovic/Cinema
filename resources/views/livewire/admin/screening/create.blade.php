@@ -20,11 +20,11 @@
         <!-- Halls -->
         <x-step>
             <x-slot:step>1</x-slot:step>
-            <div class="grid grid-cols-1 md:grid-cols-2 justify-center mt-44 md:mt-12 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 justify-center mt-6 md:mt-12 gap-6">
                 @foreach($halls as $hall)
                     <div wire:click="setHall({{$hall}})" class="relative flex flex-col justify-center items-center gap-2 cursor-pointer hover:text-red-700">
                         <img src="{{URL('images/halls/' . $hall->image_url)}}"
-                             class=" w-40 md:w-96" alt="hall {{$hall->name}}">
+                             class=" w-48 md:w-96" alt="hall {{$hall->name}}">
                         <div class="absolute inset-0 w-full h-full bg-gray-950 opacity-60"></div>
                         <p class="absolute m-auto text-xl font-bold text-center">{{$hall->name}}</p>
                     </div>
