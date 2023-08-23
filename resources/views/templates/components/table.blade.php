@@ -9,17 +9,22 @@
         <!-- End filters -->
 
         <!-- Load indicator MD -->
-        <div wire:loading class="mt-4 absolute top-36  md:top-0 md:relative">
+        <div wire:loading class="mt-4 absolute top-40  md:top-0 md:relative">
             <i class="fa-solid fa-gear fa-lg animate-spin"></i>
         </div>
         <!-- End load indicator -->
 
         <!-- Buttons and Search -->
-        <div x-data="{showExcelDropdown: false}" class="flex gap-4">
+        <div x-data="{showExcelDropdown: false, showAddDropdown: false}" class="flex gap-4">
             @yield('right_filters')
         </div>
         <!-- End buttons search -->
 
+        <!-- Responsive third row -->
+        <div x-data="{showAddDropdown: false}" class="flex justify-between w-full md:hidden px-2">
+            @yield('responsive_filters')
+        </div>
+        <!-- End responsive thrid row -->
     </div>
     <!-- End actions -->
 

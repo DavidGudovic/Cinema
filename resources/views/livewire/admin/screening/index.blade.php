@@ -63,6 +63,7 @@
             <option class="cursor-pointer" value='true'>Sve podatke</option>
         </select>
     </div>
+    <!-- End sort all or shown -->
 
     <!-- Paginate quantity-->
     <div class="hidden md:flex flex-col gap-1">
@@ -90,6 +91,22 @@
     </div>
     <!-- End Search Bar -->
 
+    <!-- Add Screening -->
+    <div x-on:click="showAddDropdown = !showAddDropdown" x-on:click.outside="showAddDropdown = false"
+         class="relative hidden md:flex gap-2 mt-6 items-center  border rounded p-2 bg-neutral-700 bg-opacity-70">
+        <span>Dodaj </span>
+        <i class="fa-solid fa-plus"></i>
+        <!-- Dropdown -->
+        <div x-cloak x-show="showAddDropdown"
+             class="absolute z-10 top-10 left-0 flex flex-col w-max justify-center p-2 bg-neutral-500 rounded-lg">
+            @foreach($movies as $movie)
+                <a href="{{route('screenings.create', [ 'movie' => $movie])}}" class="text-center w-full">{{$movie->title}}</a>
+            @endforeach
+        </div>
+        <!-- End Dropdown -->
+    </div>
+    <!-- End Add Screening -->
+
     <!-- CSV -->
     <div x-on:click="showExcelDropdown = !showExcelDropdown" x-on:click.outside="showExcelDropdown = false"
          wire:loading.class.remove="cursor-pointer hover:text-red-700" wire:loading.class="opacity-50"
@@ -99,13 +116,45 @@
         <i class="group-hover:text-red-700 fa-solid fa-angle-down fa-xs pt-1"></i>
         <!-- Dropdown -->
         <div x-cloak x-show="showExcelDropdown"
-             class="absolute z-10 top-10 left-0 flex flex-col justify-center p-2 bg-neutral-500 rounded-lg">
+             class="absolute z-10 top-10 left-0 flex flex-col w-max justify-center p-2 bg-neutral-500 rounded-lg">
             <a href="#" wire:click.prevent="export('global')" class="text-center w-full">Sve</a>
             <a href="#" wire:click.prevent="export('displayed')" class="text-center w-full">Prikazano</a>
         </div>
         <!-- End Dropdown -->
     </div>
     <!-- End CSV -->
+@endsection
+
+@section('responsive_filters')
+    <div x-on:click="showAddDropdown = !showAddDropdown" x-on:click.outside="showAddDropdown = false"
+       class="relative border rounded p-2 flex gap-2 mt-6 items-center bg-neutral-700 bg-opacity-70">
+        <span>Dodaj </span>
+        <i class="fa-solid fa-plus"></i>
+        <!-- Dropdown -->
+        <div x-cloak x-show="showAddDropdown"
+             class="absolute z-10 top-10 left-0 flex flex-col justify-center p-2 bg-neutral-500 rounded-lg">
+            @foreach($movies as $movie)
+                <a href="{{route('screenings.create', $movie)}}" class="text-center w-full">{{$movie->title}}</a>
+            @endforeach
+        </div>
+        <!-- End Dropdown -->
+    </div>
+
+    <!-- Paginate quantity-->
+    <div class="md:hidden flex flex-col gap-1">
+        <label class="opacity-40 text-sm" for="sort">Prikaži</label>
+        <select wire:change="resetPage" id="sort"
+                class="border rounded cursor-pointer p-2 bg-neutral-700 bg-opacity-70" wire:model="quantity">
+            <option class="cursor-pointer" value="5">5</option>
+            <option class="cursor-pointer" value="10">10</option>
+            <option class="cursor-pointer" value="15">15</option>
+            <option class="cursor-pointer" value="20">20</option>
+            <option class="cursor-pointer" value="25">25</option>
+            <option class="cursor-pointer" value="50">50</option>
+            <option class="cursor-pointer" value="100">100</option>
+        </select>
+    </div>
+    <!-- End Paginate quantity-->
 @endsection
 
 @section('table_header')
