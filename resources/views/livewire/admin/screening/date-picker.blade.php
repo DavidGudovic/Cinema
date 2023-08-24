@@ -45,7 +45,7 @@
                 Slobodni termini
             </p>
             <p class="text-center mb-4">Trajanje: {{intdiv($movie_duration, 60)}}h {{$movie_duration % 60}}min</p>
-            <div class="flex flex-row md:flex-col w-72 md:w-auto md:h-[19rem] gap-2 px-6 overflow-x-scroll md:overflow-x-hidden  md:overflow-y-scroll">
+            <div class="flex flex-row md:flex-col w-72 md:w-40 md:h-[19rem] gap-2 px-6 pb-6 md:pb-0 overflow-x-auto md:overflow-x-hidden  md:overflow-y-auto">
                     @foreach($times as $time)
                             <p wire:click="toggleTime('{{$time}}')" class="border border-white rounded-2xl py-2 px-8 cursor-pointer {{ $this->isSelected($time) ? 'bg-blue-950' : 'hover:bg-gray-600 cursor-pointer' }}">{{$time}}</p>
                     @endforeach

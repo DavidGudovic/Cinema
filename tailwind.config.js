@@ -3,6 +3,9 @@ module.exports = {
     content: ["./resources/**/*.blade.php"],
     theme: {
         extend: {
+            colors: {
+                'dark-blue' : '#0D1220',
+            },
             //background image
             backgroundImage: (theme) => ({
                 "business-pattern": "url('/images/utility/biznis_showcase.webp')",

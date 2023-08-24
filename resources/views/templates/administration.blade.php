@@ -12,7 +12,7 @@
 	@vite('resources/js/app.js')
 	@livewireStyles
 </head>
-<body class="antialiased text-white bg-neutral-900">
+<body class="antialiased text-white bg-gray-950">
 
 <div x-data="{showNav: false}" x-breakpoint="if($isBreakpoint('md+')) showNav = true" class="flex">
 	<button x-transition:enter="transition ease-in duration-500"
@@ -29,7 +29,7 @@
 		@include('includes.side-navbar')
 	</aside>
 
-	<main class="flex flex-col flex-1 items-center w-full bg-neutral-900 gap-12 md:px-8 py-6">
+	<main class="flex flex-col flex-1 items-center w-full bg-gray-950 gap-12 md:px-8 py-6">
 		@yield('content')
 	</main>
 </div>

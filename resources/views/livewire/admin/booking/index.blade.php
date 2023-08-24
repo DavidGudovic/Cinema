@@ -5,7 +5,7 @@
     <div class="flex flex-col gap-1">
         <label class="opacity-40 text-sm" for="genres">Sala</label>
         <select wire:change="resetPage" id="genres"
-                class="border rounded cursor-pointer p-2 bg-neutral-700 bg-opacity-70" wire:model="hall_id">
+                class="border rounded cursor-pointer p-2 bg-gray-700 bg-opacity-70" wire:model="hall_id">
             @foreach($halls as $hall)
                 <option class="cursor-pointer" value="{{$hall->id}}">{{$hall->name}}</option>
             @endforeach
@@ -16,7 +16,7 @@
     <div class="flex flex-col gap-1">
         <label class="opacity-40 text-sm" for="status">Status</label>
         <select wire:change="resetPage" id="status"
-                class="border rounded cursor-pointer p-2 bg-neutral-700 bg-opacity-70"
+                class="border rounded cursor-pointer p-2 bg-gray-700 bg-opacity-70"
                 wire:model="status">
             <option class="cursor-pointer" value="all">Sve</option>
             <option class="cursor-pointer" value="pending">Na čekanju</option>
@@ -30,14 +30,14 @@
     <div class="hidden md:flex flex-col gap-1">
         <label class="opacity-40 text-sm" for="user_id">Korisnik ID</label>
         <input type="number" id="user_id" min="0"
-               class="border rounded cursor-pointer p-2 bg-neutral-700 bg-opacity-70 w-24"
+               class="border rounded cursor-pointer p-2 bg-gray-700 bg-opacity-70 w-24"
                wire:model="user_id" wire:change="resetPage"/>
     </div>
 
     <!-- Sort all or shown-->
     <div class="flex flex-col gap-1">
         <label class="opacity-40 text-sm" for="sort">Sortiraj</label>
-        <select id="sort" class="border rounded cursor-pointer p-2 bg-neutral-700 bg-opacity-70"
+        <select id="sort" class="border rounded cursor-pointer p-2 bg-gray-700 bg-opacity-70"
                 wire:model="global_sort">
             <option class="cursor-pointer" value='false'>Prikazano</option>
             <option class="cursor-pointer" value='true'>Sve podatke</option>
@@ -50,7 +50,7 @@
     <div class="hidden md:flex flex-col gap-1">
         <label class="opacity-40 text-sm" for="sort">Prikaži</label>
         <select wire:change="resetPage" id="sort"
-                class="border rounded cursor-pointer p-2 bg-neutral-700 bg-opacity-70" wire:model="quantity">
+                class="border rounded cursor-pointer p-2 bg-gray-700 bg-opacity-70" wire:model="quantity">
             <option class="cursor-pointer" value="5">5</option>
             <option class="cursor-pointer" value="10">10</option>
             <option class="cursor-pointer" value="15">15</option>
@@ -66,7 +66,7 @@
     <div class="flex md:hidden flex-col gap-1">
         <label class="opacity-40 text-sm" for="user_id">Korisnik ID</label>
         <input type="number" id="user_id" min="0"
-               class="border rounded cursor-pointer p-2 bg-neutral-700 bg-opacity-70 w-16"
+               class="border rounded cursor-pointer p-2 bg-gray-700 bg-opacity-70 w-16"
                wire:model="user_id" wire:change="resetPage"/>
     </div>
 
@@ -75,7 +75,7 @@
         <label class="opacity-40 text-sm" for="search">Pretraži po</label>
         <input id="search" type="text" wire:model.debounce.300ms="search_query" wire:change.debounce="refreshPage"
                placeholder="Sali..."
-               class="border rounded p-2 pl-8 bg-neutral-700 bg-opacity-70 w-44 md:w-auto">
+               class="border rounded p-2 pl-8 bg-gray-700 bg-opacity-70 w-44 md:w-auto">
         <i class="fa-solid fa-search absolute left-2 bottom-1 transform -translate-y-2/4"></i>
     </div>
     <!-- End Search Bar -->
@@ -83,7 +83,7 @@
     <!-- CSV -->
     <div x-on:click="showExcelDropdown = !showExcelDropdown" x-on:click.outside="showExcelDropdown = false"
          wire:loading.class.remove="cursor-pointer hover:text-red-700" wire:loading.class="opacity-50"
-         class=" flex items-center cursor-pointer group relative border rounded p-2 gap-2 mt-6 bg-neutral-700 bg-opacity-70">
+         class=" flex items-center cursor-pointer group relative border rounded p-2 gap-2 mt-6 bg-gray-700 bg-opacity-70">
         <span class="group-hover:text-red-700">Excel</span>
         <i class="group-hover:text-red-700 fa-solid fa-file-csv"></i>
         <i class="group-hover:text-red-700 fa-solid fa-angle-down fa-xs pt-1"></i>
@@ -99,13 +99,13 @@
 @endsection
 
 @section('table_header')
-    <th x-bind:class="{ 'bg-neutral-700 bg-opacity-30': sortBy === 'businessRequest.created_at' }"
+    <th x-bind:class="{ 'bg-gray-700 bg-opacity-30': sortBy === 'businessRequest.created_at' }"
         wire:click="setSort('businessRequest.created_at')" class="cursor-pointer p-2"><i
             class="fa-solid fa-sort opacity-40 fa-xs"></i>
         Kreiran
     </th>
 
-    <th x-bind:class="{ 'bg-neutral-700 bg-opacity-30': sortBy === 'hall.name' }"
+    <th x-bind:class="{ 'bg-gray-700 bg-opacity-30': sortBy === 'hall.name' }"
         wire:click="setSort('hall.name')" class="cursor-pointer p-2"><i
             class="fa-solid fa-sort opacity-40 fa-xs"></i>
         Sala
@@ -113,29 +113,29 @@
 
     <th class="p-2 w-32">Tekst</th>
 
-    <th x-bind:class="{ 'bg-neutral-700 bg-opacity-30': sortBy === 'start_time' }"
+    <th x-bind:class="{ 'bg-gray-700 bg-opacity-30': sortBy === 'start_time' }"
         wire:click="setSort('start_time')" class="cursor-pointer p-2"><i
             class="fa-solid fa-sort opacity-40 fa-xs"></i>
         Početak
     </th>
 
-    <th x-bind:class="{ 'bg-neutral-700 bg-opacity-30': sortBy === 'end_time' }"
+    <th x-bind:class="{ 'bg-gray-700 bg-opacity-30': sortBy === 'end_time' }"
         wire:click="setSort('end_time')" class="cursor-pointer p-2"><i
             class="fa-solid fa-sort opacity-40 fa-xs"></i>
         Kraj
     </th>
 
-    <th x-bind:class="{ 'bg-neutral-700 bg-opacity-30': sortBy === 'businessRequest.status' }"
+    <th x-bind:class="{ 'bg-gray-700 bg-opacity-30': sortBy === 'businessRequest.status' }"
         wire:click="setSort('businessRequest.status')" class="cursor-pointer p-2"><i
             class="fa-solid fa-sort opacity-40 fa-xs"></i>
         Status
     </th>
-    <th x-bind:class="{ 'bg-neutral-700 bg-opacity-30': sortBy === 'businessRequest.user_id' }"
+    <th x-bind:class="{ 'bg-gray-700 bg-opacity-30': sortBy === 'businessRequest.user_id' }"
         wire:click="setSort('businessRequest.user_id')" class="cursor-pointer p-2"><i
             class="fa-solid fa-sort opacity-40 fa-xs"></i>
         Korisnik
     </th>
-    <th x-bind:class="{ 'bg-neutral-700 bg-opacity-30': sortBy === 'businessRequest.price' }"
+    <th x-bind:class="{ 'bg-gray-700 bg-opacity-30': sortBy === 'businessRequest.price' }"
         wire:click="setSort('businessRequest.price')" class="cursor-pointer p-2"><i
             class="fa-solid fa-sort opacity-40 fa-xs"></i>
         Cena
@@ -148,11 +148,11 @@
 @section('table_body')
     @foreach($bookings as $booking)
         <tr x-data="{showToolTip{{$booking->id}}: false}"
-            class="odd:bg-neutral-950 odd:bg-opacity-30 text-center relative">
-            <td x-bind:class="{ 'bg-neutral-700 bg-opacity-30': sortBy === 'businessRequest.created_at' }"
+            class="odd:bg-dark-blue text-center relative">
+            <td x-bind:class="{ 'bg-gray-700 bg-opacity-30': sortBy === 'businessRequest.created_at' }"
                 class="p-2 text-sm">{{ $booking->businessRequest->created_at->format('H:i d/m') }}</td>
 
-            <td x-bind:class="{ 'bg-neutral-700 bg-opacity-30': sortBy === 'hall.name' }"
+            <td x-bind:class="{ 'bg-gray-700 bg-opacity-30': sortBy === 'hall.name' }"
                 class="p-2">{{ $booking->hall->name }}</td>
 
             <td x-on:mouseenter="showToolTip{{$booking->id}} = true"
@@ -164,15 +164,15 @@
                 </span>
             </td>
 
-            <td x-bind:class="{ 'bg-neutral-700 bg-opacity-30': sortBy === 'start_time' }"
+            <td x-bind:class="{ 'bg-gray-700 bg-opacity-30': sortBy === 'start_time' }"
                 class="p-2 text-sm">{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $booking->start_time)->format('m/d H:i') }}</td>
-            <td x-bind:class="{ 'bg-neutral-700 bg-opacity-30': sortBy === 'end_time' }"
+            <td x-bind:class="{ 'bg-gray-700 bg-opacity-30': sortBy === 'end_time' }"
                 class="p-2 text-sm">{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $booking->end_time)->format('H:i')  }}</td>
-            <td x-bind:class="{ 'bg-neutral-700 bg-opacity-30': sortBy === 'businessRequest.status' }"
+            <td x-bind:class="{ 'bg-gray-700 bg-opacity-30': sortBy === 'businessRequest.status' }"
                 class="p-2 text-sm">{{ $status_translations[$booking->businessRequest->status] }}</td>
-            <td x-bind:class="{ 'bg-neutral-700 bg-opacity-30': sortBy === 'businessRequest.user_id' }"
+            <td x-bind:class="{ 'bg-gray-700 bg-opacity-30': sortBy === 'businessRequest.user_id' }"
                 class="p-2">{{ $booking->businessRequest->user_id }}</td>
-            <td x-bind:class="{ 'bg-neutral-700 bg-opacity-30': sortBy === 'businessRequest.price' }"
+            <td x-bind:class="{ 'bg-gray-700 bg-opacity-30': sortBy === 'businessRequest.price' }"
                 class="p-2">{{ $booking->businessRequest->price}}
             </td>
             <td class="p-2">

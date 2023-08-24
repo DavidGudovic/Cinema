@@ -5,7 +5,7 @@
     <div class="flex flex-col gap-1">
         <label class="opacity-40 text-sm" for="movie">Film</label>
         <select wire:change="resetPage" id="movie"
-                class="border rounded cursor-pointer p-2 bg-neutral-700 bg-opacity-70 w-36 md:w-auto" wire:model="movie">
+                class="border rounded cursor-pointer p-2 bg-gray-700 bg-opacity-70 w-36 md:w-auto" wire:model="movie">
             <option class="cursor-pointer" value='all'>Sve</option>
             @foreach($movies as $movie)
                 <option class="cursor-pointer" value='{{$movie->id}}'>{{$movie->title}}</option>
@@ -17,7 +17,7 @@
     <div class="flex flex-col gap-1">
         <label class="opacity-40 text-sm" for="hall">Sala</label>
         <select wire:change="resetPage" id="hall"
-                class="border rounded cursor-pointer p-2 bg-neutral-700 bg-opacity-70"
+                class="border rounded cursor-pointer p-2 bg-gray-700 bg-opacity-70"
                 wire:model="hall">
             <option class="cursor-pointer" value="all">Sve</option>
             @foreach($halls as $hall)
@@ -30,7 +30,7 @@
     <div class="flex flex-col gap-1">
         <label class="opacity-40 text-sm" for="screening_time">Vreme</label>
         <select wire:change="resetPage" id="screening_time"
-                class="border rounded cursor-pointer p-2 bg-neutral-700 bg-opacity-70"
+                class="border rounded cursor-pointer p-2 bg-gray-700 bg-opacity-70"
                 wire:model="screening_time">
             <option class="cursor-pointer" value="any">Bilo kada</option>
             <option class="cursor-pointer" value="now">Danas</option>
@@ -44,7 +44,7 @@
     <!-- Sort all or shown MD-->
     <div class="hidden md:flex flex-col gap-1">
         <label class="opacity-40 text-sm" for="sort">Sortiraj</label>
-        <select id="sort" class="border rounded cursor-pointer p-2 bg-neutral-700 bg-opacity-70"
+        <select id="sort" class="border rounded cursor-pointer p-2 bg-gray-700 bg-opacity-70"
                 wire:model="global_sort">
             <option class="cursor-pointer" value='false'>Prikazano</option>
             <option class="cursor-pointer" value='true'>Sve podatke</option>
@@ -57,7 +57,7 @@
     <!-- Sort all or shown SM-->
     <div class="md:hidden flex flex-col gap-1">
         <label class="opacity-40 text-sm" for="sort">Sortiraj</label>
-        <select id="sort" class="border rounded cursor-pointer p-2 bg-neutral-700 bg-opacity-70"
+        <select id="sort" class="border rounded cursor-pointer p-2 bg-gray-700 bg-opacity-70"
                 wire:model="global_sort">
             <option class="cursor-pointer" value='false'>Prikazano</option>
             <option class="cursor-pointer" value='true'>Sve podatke</option>
@@ -69,7 +69,7 @@
     <div class="hidden md:flex flex-col gap-1">
         <label class="opacity-40 text-sm" for="sort">Prikaži</label>
         <select wire:change="resetPage" id="sort"
-                class="border rounded cursor-pointer p-2 bg-neutral-700 bg-opacity-70" wire:model="quantity">
+                class="border rounded cursor-pointer p-2 bg-gray-700 bg-opacity-70" wire:model="quantity">
             <option class="cursor-pointer" value="5">5</option>
             <option class="cursor-pointer" value="10">10</option>
             <option class="cursor-pointer" value="15">15</option>
@@ -86,14 +86,14 @@
         <label class="opacity-40 text-sm" for="search">Pretraži po</label>
         <input id="search" type="text" wire:model.debounce.300ms="search_query" wire:change.debounce="refreshPage"
                placeholder="Tagu, zanru, reziseru..."
-               class="border rounded p-2 pl-8 bg-neutral-700 bg-opacity-70 w-36 md:w-auto">
+               class="border rounded p-2 pl-8 bg-gray-700 bg-opacity-70 w-36 md:w-auto">
         <i class="fa-solid fa-search absolute left-2 bottom-1 transform -translate-y-2/4"></i>
     </div>
     <!-- End Search Bar -->
 
     <!-- Add Screening -->
     <div x-on:click="showAddDropdown = !showAddDropdown" x-on:click.outside="showAddDropdown = false"
-         class="relative hidden md:flex gap-2 mt-6 items-center  border rounded p-2 bg-neutral-700 bg-opacity-70">
+         class="relative hidden md:flex gap-2 mt-6 items-center  border rounded p-2 bg-gray-700 bg-opacity-70">
         <span>Dodaj </span>
         <i class="fa-solid fa-plus"></i>
         <!-- Dropdown -->
@@ -110,7 +110,7 @@
     <!-- CSV -->
     <div x-on:click="showExcelDropdown = !showExcelDropdown" x-on:click.outside="showExcelDropdown = false"
          wire:loading.class.remove="cursor-pointer hover:text-red-700" wire:loading.class="opacity-50"
-         class=" flex items-center cursor-pointer group relative border rounded p-2 gap-2 mt-6 bg-neutral-700 bg-opacity-70">
+         class=" flex items-center cursor-pointer group relative border rounded p-2 gap-2 mt-6 bg-gray-700 bg-opacity-70">
         <span class="group-hover:text-red-700">Excel</span>
         <i class="group-hover:text-red-700 fa-solid fa-file-csv"></i>
         <i class="group-hover:text-red-700 fa-solid fa-angle-down fa-xs pt-1"></i>
@@ -127,7 +127,7 @@
 
 @section('responsive_filters')
     <div x-on:click="showAddDropdown = !showAddDropdown" x-on:click.outside="showAddDropdown = false"
-       class="relative border rounded p-2 flex gap-2 mt-6 items-center bg-neutral-700 bg-opacity-70">
+       class="relative border rounded p-2 flex gap-2 mt-6 items-center bg-gray-700 bg-opacity-70">
         <span>Dodaj </span>
         <i class="fa-solid fa-plus"></i>
         <!-- Dropdown -->
@@ -144,7 +144,7 @@
     <div class="md:hidden flex flex-col gap-1">
         <label class="opacity-40 text-sm" for="sort">Prikaži</label>
         <select wire:change="resetPage" id="sort"
-                class="border rounded cursor-pointer p-2 bg-neutral-700 bg-opacity-70" wire:model="quantity">
+                class="border rounded cursor-pointer p-2 bg-gray-700 bg-opacity-70" wire:model="quantity">
             <option class="cursor-pointer" value="5">5</option>
             <option class="cursor-pointer" value="10">10</option>
             <option class="cursor-pointer" value="15">15</option>
@@ -158,25 +158,25 @@
 @endsection
 
 @section('table_header')
-    <th x-bind:class="{ 'bg-neutral-700 bg-opacity-30': sortBy === 'movie_id' }"
+    <th x-bind:class="{ 'bg-gray-700 bg-opacity-30': sortBy === 'movie_id' }"
         wire:click="setSort('movie_id')" class="cursor-pointer p-2 w-48"><i
             class="fa-solid fa-sort opacity-40 fa-xs"></i>
         Film
     </th>
 
-    <th x-bind:class="{ 'bg-neutral-700 bg-opacity-30': sortBy === 'hall_id' }"
+    <th x-bind:class="{ 'bg-gray-700 bg-opacity-30': sortBy === 'hall_id' }"
         wire:click="setSort('hall_id')" class="cursor-pointer p-2"><i
             class="fa-solid fa-sort opacity-40 fa-xs"></i>
         Sala
     </th>
 
-    <th x-bind:class="{ 'bg-neutral-700 bg-opacity-30': sortBy === 'start_time' }"
+    <th x-bind:class="{ 'bg-gray-700 bg-opacity-30': sortBy === 'start_time' }"
         wire:click="setSort('start_time')" class="cursor-pointer p-2"><i
             class="fa-solid fa-sort opacity-40 fa-xs"></i>
         Početak
     </th>
 
-    <th x-bind:class="{ 'bg-neutral-700 bg-opacity-30': sortBy === 'end_time' }"
+    <th x-bind:class="{ 'bg-gray-700 bg-opacity-30': sortBy === 'end_time' }"
         wire:click="setSort('end_time')" class="cursor-pointer p-2"><i
             class="fa-solid fa-sort opacity-40 fa-xs"></i>
         Kraj
@@ -184,12 +184,12 @@
     <th class="p-2">
         Tag
     </th>
-    <th x-bind:class="{ 'bg-neutral-700 bg-opacity-30': sortBy === 'tickets_count' }"
+    <th x-bind:class="{ 'bg-gray-700 bg-opacity-30': sortBy === 'tickets_count' }"
         wire:click="setSort('tickets_count')" class="cursor-pointer p-2"><i
             class="fa-solid fa-sort opacity-40 fa-xs"></i>
         Rezervacije
     </th>
-    <th x-bind:class="{ 'bg-neutral-700 bg-opacity-30': sortBy === 'adverts_count' }"
+    <th x-bind:class="{ 'bg-gray-700 bg-opacity-30': sortBy === 'adverts_count' }"
         wire:click="setSort('adverts_count')" class="cursor-pointer p-2"><i
             class="fa-solid fa-sort opacity-40 fa-xs"></i>
        Reklame
@@ -201,15 +201,15 @@
 
 @section('table_body')
     @foreach($screenings as $screening)
-        <tr class="odd:bg-neutral-950 odd:bg-opacity-30 text-center relative">
+        <tr class="odd:bg-dark-blue text-center relative">
 
-            <td x-bind:class="{ 'bg-neutral-700 bg-opacity-30': sortBy === 'movie_id' }"
+            <td x-bind:class="{ 'bg-gray-700 bg-opacity-30': sortBy === 'movie_id' }"
                 class="p-2 text-start">{{ $screening->movie->title }}</td>
-            <td x-bind:class="{ 'bg-neutral-700 bg-opacity-30': sortBy === 'hall_id' }"
+            <td x-bind:class="{ 'bg-gray-700 bg-opacity-30': sortBy === 'hall_id' }"
                 class="p-2">{{ $screening->hall->name }}</td>
-            <td x-bind:class="{ 'bg-neutral-700 bg-opacity-30': sortBy === 'start_time' }"
+            <td x-bind:class="{ 'bg-gray-700 bg-opacity-30': sortBy === 'start_time' }"
                 class="m-2">{{ Carbon\Carbon::parse($screening->start_time)->format('d/m H:i') }}</td>
-            <td x-bind:class="{ 'bg-neutral-700 bg-opacity-30': sortBy === 'end_time' }"
+            <td x-bind:class="{ 'bg-gray-700 bg-opacity-30': sortBy === 'end_time' }"
                 class="p-2">{{ Carbon\Carbon::parse($screening->end_time)->format('H:i') }}</td>
             <!-- Tags -->
             <td class="p-2 text-sm">
@@ -221,9 +221,9 @@
                 @endforeach
             </td>
             <!-- End tags -->
-            <td x-bind:class="{ 'bg-neutral-700 bg-opacity-30': sortBy === 'tickets_count' }"
+            <td x-bind:class="{ 'bg-gray-700 bg-opacity-30': sortBy === 'tickets_count' }"
                 class="p-2">{{ $screening->tickets_count }}</td>
-            <td x-bind:class="{ 'bg-neutral-700 bg-opacity-30': sortBy === 'adverts_count' }"
+            <td x-bind:class="{ 'bg-gray-700 bg-opacity-30': sortBy === 'adverts_count' }"
                 class="p-2">{{ $screening->adverts_count }}</td>
 
             <!-- Cancel Screening -->

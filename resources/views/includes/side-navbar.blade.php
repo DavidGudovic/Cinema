@@ -1,5 +1,5 @@
 <nav x-show="showNav"
-     class="flex flex-col h-full justify-around bg-neutral-950 md:border-r border-white h-vh md:w-72 items-center z-50"
+     class="flex flex-col h-full justify-around bg-dark-blue md:border-r border-white h-vh md:w-72 items-center z-50"
      x-transition:enter="transition ease-in-out duration-500 transform"
      x-transition:enter-start="-translate-x-full" x-transition:enter-end="translate-x-0"
      x-transition:leave="transition ease-in-out duration-1000 transform" x-transition:leave-start="translate-x-0"

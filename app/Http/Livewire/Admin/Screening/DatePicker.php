@@ -40,6 +40,8 @@ class DatePicker extends Component
     {
         $this->selected_dates = [];
         $this->displayed_date = $this->current_date->copy()->startOfMonth();
+        $this->selected_times = [];
+        $this->times = [];
         $this->fetchDateMap();
     }
 
