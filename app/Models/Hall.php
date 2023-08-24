@@ -81,7 +81,8 @@ class Hall extends Model
     public function scopeAvailableAtTime($query, $start_time, $end_time)
     {
         return $query->whereDoesntHave('bookings', function ($q) use ($start_time, $end_time) {
-            $q->where('start_time', '<=', $end_time)
+            $q->pendingOrAccepted()
+                ->where('start_time', '<=', $end_time)
                 ->where('start_time' + 'duration', '>=', $start_time);
         })->whereDoesntHave('screenings', function ($q) use ($start_time, $end_time) {
             $q->where('start_time', '<=', $end_time)

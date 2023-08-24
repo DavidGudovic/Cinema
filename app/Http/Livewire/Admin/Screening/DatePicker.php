@@ -2,16 +2,20 @@
 
 namespace App\Http\Livewire\Admin\Screening;
 
+use App\Models\Movie;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Livewire\Component;
 
 class DatePicker extends Component
 {
+    public int $movie_duration;
     public $dates = [];
+    public $times = [];
     public $current_date;
     public $displayed_date;
     public $selected_dates = [];
+    public $selected_times = [];
 
     public $locale;
 
@@ -22,7 +26,6 @@ class DatePicker extends Component
 
     public function mount()
     {
-        $this->locale = app()->environment('production') ? 'sr_RS@latin' : 'sr_Latn_RS.UTF-8'; // 99% security flaw
         $this->current_date = Carbon::now();
         $this->displayed_date = $this->current_date->copy();
         $this->fetchDateMap();
@@ -40,11 +43,29 @@ class DatePicker extends Component
         $this->fetchDateMap();
     }
 
-    public function isSelected($fullDate): bool
+    /**
+     * Checks if the date or time (needle) is in the selected dates or times array (haystack)
+     */
+    public function isSelected($needle): bool
     {
-        return in_array($fullDate, $this->selected_dates);
+        return in_array($needle, array_merge($this->selected_dates, $this->selected_times));
     }
 
+    /**
+     * Toggles the time in the selected times array, re-fetches the time map
+     */
+    public function toggleTime(string $time): void
+    {
+        if (isset(array_flip($this->selected_times)[$time])) {
+            unset($this->selected_times[array_flip($this->selected_times)[$time]]);
+        } else {
+            $this->selected_times[] = $time;
+        }
+    }
+
+    /**
+     * Toggles the date in the selected dates array, re-fetches the time map
+     */
     public function toggleDate(string $day): void
     {
         $dateToToggle = $this->displayed_date->copy()->setDate(
@@ -58,8 +79,13 @@ class DatePicker extends Component
         } else {
             $this->selected_dates[] = $dateToToggle;
         }
+
+        $this->fetchTimeMap();
     }
 
+    /**
+     * Displays the previous or next month 'current' or 'next'
+     */
     public function displayMonth(string $option): void
     {
         match ($option) {
@@ -70,11 +96,32 @@ class DatePicker extends Component
         $this->fetchDateMap();
     }
 
+    /**
+     * Checks if the date is invalid
+     */
     private function isInvalidDate(Carbon $date): bool
     {
         return $date->month != $this->displayed_date->month || $date < $this->current_date;
     }
 
+    /**
+     * Fetches the time map for the selected dates
+     */
+    public function fetchTimeMap() : void
+    {
+        $this->times = [];
+        foreach ($this->selected_dates as $date) {
+            $start = Carbon::parse($date)->setTime(8, 0, 0);
+            $end = Carbon::parse($date)->setTime(23, 0, 0);
+            $times = CarbonPeriod::create($start, '30 minutes', $end);
+            foreach ($times as $time) {
+                $this->times[] = $time->format('H:i');
+            }
+        }
+    }
+    /**
+     * Fetches the date map for the current month includes the trailing and leading days (start, end of week of prev/next month)
+     */
     public function fetchDateMap(): void
     {
         $this->dates = [];

@@ -56,7 +56,7 @@
         <!-- Date -->
         <x-step>
             <x-slot:step>3</x-slot:step>
-            @livewire('admin.screening.date-picker')
+            @livewire('admin.screening.date-picker', ['movie_duration' => $movie->duration])
         </x-step>
         <!-- End date-->
 

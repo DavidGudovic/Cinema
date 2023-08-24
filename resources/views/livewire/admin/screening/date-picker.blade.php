@@ -1,6 +1,7 @@
-<div class="flex flex-col md:flex-row gap-2 justify-center items-center w-full h-full mr-4 md:mr-0">
+<div class="flex flex-col md:flex-row gap-6 justify-center items-center w-full h-full mr-4 md:mr-0">
     <!-- Calendar -->
-    <div class="flex flex-col w-[18rem] md:w-[25rem] h-[18rem] md:h-[23rem] rounded-xl bg-gray-950 bg-opacity-70 mt-32 md:mt-0">
+    <div
+        class="flex flex-col w-[18rem] md:w-[25rem] h-[18rem] md:h-[23rem] rounded-xl bg-gray-950 bg-opacity-70 mt-32 md:mt-0">
         <div class="flex justify-between items-center border-b border-white px-6 py-4">
             <i wire:click="displayMonth('current')"
                class="{{$displayed_date->month == $current_date->format('m') ? 'opacity-30' : 'cursor-pointer hover:text-red-700'}} fa-solid fa-xl fa-angle-left"></i>
@@ -26,7 +27,7 @@
                     @foreach($week as $date)
                         <td class="text-center">
                             <div wire:click="{{$date['isInvalid'] ? '' : 'toggleDate(\''.$date['day'].'\')' }}"
-                                 class="w-8 h-8 md:w-12 md:h-12 rounded-full inline-flex justify-center items-center {{ $date['isInvalid'] ? 'text-gray-400 opacity-40' : 'cursor-pointer hover:bg-gray-600' }} {{ $this->isSelected($date['fullDate']) ? 'bg-red-500' : '' }}">
+                                 class="w-8 h-8 md:w-12 md:h-12 rounded-full inline-flex justify-center items-center {{ $date['isInvalid'] ? 'text-gray-400 opacity-40' : 'cursor-pointer hover:bg-gray-600' }} {{ $this->isSelected($date['fullDate']) ? 'bg-blue-950' : '' }}">
                                 {{ $date['day'] }}
                             </div>
                         </td>
@@ -38,8 +39,21 @@
     </div>
     <!-- End Calendar -->
     <!-- Time pick -->
-    <div class="flex-1">
+    <div class="h-full flex flex-col justify-center items-center">
+        <div class="flex flex-col h-full justify-center">
+            <p class="font-bold text-lg text-center">
+                Slobodni termini
+            </p>
+            <p class="text-center mb-4">Trajanje: {{intdiv($movie_duration, 60)}}h {{$movie_duration % 60}}min</p>
+            <div class="flex flex-row md:flex-col w-72 md:w-auto md:h-[19rem] gap-2 px-6 overflow-x-scroll md:overflow-x-hidden  md:overflow-y-scroll">
+                    @foreach($times as $time)
+                            <p wire:click="toggleTime('{{$time}}')" class="border border-white rounded-2xl py-2 px-8 cursor-pointer {{ $this->isSelected($time) ? 'bg-blue-950' : 'hover:bg-gray-600 cursor-pointer' }}">{{$time}}</p>
+                    @endforeach
+            </div>
+        </div>
+        <div>
 
+        </div>
     </div>
     <!-- End time pick -->
 </div>
