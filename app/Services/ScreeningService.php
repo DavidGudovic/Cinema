@@ -144,9 +144,8 @@ class ScreeningService implements CanExport
      * @param RequestableService $requestableService
      * @return array
      * Creates screenings for the selected dates and times
-     * Calls BookingService massCancelOnIntersect() to cancel pending bookings that intersect with the newly created screenings
+     * Calls cancelAndGetIntersectedCount to cancel pending bookings that intersect with the newly created screenings
      * Returns an array of [amount_created, intersectedCount]
-     * Could use a refactor TODO
      */
     public function massCreateScreenings(Movie $movie, Hall $hall, Tag $tag, array $selected_dates, array $selected_times, BookingService $bookingService, RequestableService $requestableService): array
     {
@@ -168,14 +167,30 @@ class ScreeningService implements CanExport
             }
         });
 
+        $intersectedCount = $this->cancelAndGetIntersectedCount($screenings, $bookingService, $selected_dates, $hall, $requestableService);
+
+        return [$screenings->count(), $intersectedCount];
+    }
+
+    /**
+     * @param Collection $screenings
+     * @param BookingService $bookingService
+     * @param array $selected_dates
+     * @param Hall $hall
+     * @param RequestableService $requestableService
+     * @return int
+     * Cancels pending bookings that intersect with the newly created screenings
+     * Returns the amount of cancelled bookings
+     *
+     */
+    public function cancelAndGetIntersectedCount(Collection $screenings, BookingService $bookingService, array $selected_dates, Hall $hall, RequestableService $requestableService): int
+    {
         // Extract [start_time, end_time] pairs from the screenings
         $timeIntervals = $screenings->map(function ($screening) {
             return [$screening->start_time->format('H:i'), $screening->end_time->format('H:i')];
         })->unique()->toArray();
 
         // Cancel pending bookings that intersect with the newly created screenings
-        $intersectedCount = $bookingService->massCancelOnIntersect($selected_dates, $timeIntervals, $hall->id, $requestableService);
-
-        return [$screenings->count(), $intersectedCount];
+        return $bookingService->massCancelOnIntersect($selected_dates, $timeIntervals, $hall->id, $requestableService);
     }
 }
