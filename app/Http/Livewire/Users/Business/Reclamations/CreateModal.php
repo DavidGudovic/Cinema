@@ -13,10 +13,10 @@ class CreateModal extends ModalBase
     public int $request;
     public $text;
 
-    /*
+    /**
     * Extracts request from ...$params of ModalBase
     */
-    public function render(RequestableService $requestableService)
+    public function render()
     {
         if (isset($this->params[0])) {
             $this->request = $this->params[0];
@@ -24,10 +24,10 @@ class CreateModal extends ModalBase
         return view('livewire.users.business.reclamations.create-modal');
     }
 
-    /*
+    /**
     * Stores a reclamation for a request
     */
-    public function store(ReclamationService $reclamationService)
+    public function store(ReclamationService $reclamationService): void
     {
         if($this->text == null){
             session()->flash('message','Morate uneti tekst reklamacije');

@@ -32,9 +32,8 @@ class Advert extends Component
     public function mount(){
         $this->refreshChart(new AdvertService(), $this->advert);
     }
-    /*
-    *  Livewire refuses to rerender the charts unless i do this, something about reactiveKeys, documentation non existant
-    *  Note to self, dont touch
+    /**
+    *  Livewire refuses to rerender the charts without this method, something about reactiveKeys, no documentation
     */
     public function refreshChart(AdvertService $advertService,AdvertModel $advert)
     {

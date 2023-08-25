@@ -28,6 +28,13 @@ class SeatMap extends Component
         return view('livewire.resources.screenings.seat-map');
     }
 
+    /**
+     * @param $conflicts
+     * @param SeatService $seatService
+     * Removes the conflicting seats from the selected seats
+     * emits an event to sync the seats with the ticket
+     * flashes the conflicts to the session
+     */
     public function conflict($conflicts, SeatService $seatService): void
     {
         $this->selectedSeats = array_filter($this->selectedSeats, function ($selectedSeat) use ($conflicts) {
@@ -49,6 +56,12 @@ class SeatMap extends Component
         $this->render();
     }
 
+    /**
+     * @param $row
+     * @param $column
+     * Toggles a seat in the selected seats array
+     * emits an event to sync the seats with the ticket
+     */
     public function toggleSeat($row, $column) : void
     {
         $seat = [$row, $column];

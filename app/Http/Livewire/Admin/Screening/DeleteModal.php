@@ -21,6 +21,9 @@ class DeleteModal extends ModalBase
         return view('livewire.admin.screening.delete-modal');
     }
 
+    /**
+     * Cancels Screening, flashes message to the modal and emits event to the parent component
+     */
     public function deleteScreening(ScreeningService $screeningService): void
     {
         $screeningService->cancelScreening($this->screening['id']);

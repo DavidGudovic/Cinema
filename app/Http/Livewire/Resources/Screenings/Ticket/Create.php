@@ -44,19 +44,19 @@ class Create extends Component
         $this->seats = collect($seats);
     }
 
-    /*
-    *  Sets the relations for the ticket model
-    *  Livewire resets state on every hydrate, so the relations need to be reset on every request afaik
-    */
+    /**
+     *  Sets the relations for the ticket model
+     *  Livewire resets state on every hydrate, so the relations need to be reset on every request afaik
+     */
     public function setRelations(): void
     {
         $this->ticket->setRelation('seats', $this->seats);
         $this->ticket->setRelation('screening', $this->screening);
     }
 
-    /*
-    *  listens for event from livewire.resources.screenings.seat-map component
-    */
+    /**
+     *  listens for event from livewire.resources.screenings.seat-map component
+     */
     public function seatSelected($row, $column): void
     {
         $this->seats->push(new Seat(['row' => $row, 'column' => $column]));
@@ -64,9 +64,9 @@ class Create extends Component
     }
 
 
-    /*
-    *  listens for event from livewire.resources.screenings.seat-map component
-    */
+    /**
+     *  listens for event from livewire.resources.screenings.seat-map component
+     */
     public function seatDeselected($row, $column): void
     {
         $this->seats = $this->seats->reject(function ($seat) use ($row, $column) {
@@ -74,18 +74,18 @@ class Create extends Component
         })->values();
     }
 
-    /*
-     Emits to SeatMap component to reset the selected seats
-    */
+    /**
+     * Emits to SeatMap component to reset the selected seats
+     */
     public function resetSelectedSeats(): void
     {
         $this->seats = collect();
         $this->emit('resetSelectedSeats');
     }
 
-    /*
-    *  Handles the creation of a ticket and redirects to TicketController@show
-    */
+    /**
+     *  Handles the creation of a ticket and redirects to TicketController@show
+     */
     public function store(TicketService $ticketService, SeatService $seatService)
     {
         $this->setRelations();

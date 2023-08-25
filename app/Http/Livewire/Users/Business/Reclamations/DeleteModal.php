@@ -18,7 +18,7 @@ class DeleteModal extends ModalBase
         return view('livewire.users.business.reclamations.delete-modal');
     }
 
-    /*
+    /**
     * Cancels Reclamation, flashes message to the modal and emits event to the parent component
     */
     public function cancelReclamation(ReclamationService $reclamationService) : void

@@ -56,14 +56,14 @@ class Create extends Component
         $this->step++;
     }
 
-    public function setHall(Hall $picked_hall)
+    public function setHall(Hall $picked_hall): void
     {
         $this->picked_hall = $picked_hall;
         $this->step++;
         $this->emit('hallPicked', $picked_hall);
     }
 
-    public function setTag(Tag $picked_tag)
+    public function setTag(Tag $picked_tag): void
     {
         $this->picked_tag = $picked_tag;
         $this->step++;

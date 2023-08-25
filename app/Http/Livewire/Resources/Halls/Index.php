@@ -8,8 +8,7 @@ use Illuminate\Support\Carbon;
 
 class Index extends Component
 {
-    //[Date => [Hall, Hall]..]
-    public $halls_map = [];
+    public $halls_map = []; //[Date => [Hall, Hall]..]
     public $start_time;
     public $end_time;
 
@@ -20,11 +19,15 @@ class Index extends Component
 
     public function render()
     {
-        if(app()->environment('production')) setlocale(LC_TIME, 'sr_RS@latin'); else  setlocale(LC_TIME, 'sr_Latn_RS.UTF-8');
+        // Ubuntu server has no sr_RS@latin locale, setting this elsewhere has no effect, probably due to livewire re-rendering
+        app()->environment('production')
+        ? setlocale(LC_TIME, 'sr_RS@latin')
+        : setlocale(LC_TIME, 'sr_Latn_RS.UTF-8');
+
         return view('livewire.resources.halls.index');
     }
 
-    public function submit($from_date, $start_time, $duration, HallService $hallService)
+    public function submit($from_date, $start_time, $duration, HallService $hallService): void
     {
         $this->start_time = Carbon::createFromFormat('H', $start_time)->format('H:i');
         $this->end_time = Carbon::createFromFormat('H',$start_time + $duration)->format('H:i');

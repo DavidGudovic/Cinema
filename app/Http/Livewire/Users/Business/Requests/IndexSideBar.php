@@ -9,7 +9,7 @@ use App\Services\TicketService;
 use App\Http\Livewire\SidebarBase;
 use App\Services\RequestableService;
 
-/*
+/**
 * This component is used to display the global sidebar for active requests index
 */
 class IndexSideBar extends SidebarBase

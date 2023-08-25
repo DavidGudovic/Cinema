@@ -10,9 +10,7 @@ class DeleteModal extends ModalBase
 {
     public ?int $movie_id;
     public bool $screening;
-    /*
-    * Extracts movie from ...$params of ModalBase
-    */
+
     public function render(MovieService $movieService)
     {
         if(isset($this->params[0])){

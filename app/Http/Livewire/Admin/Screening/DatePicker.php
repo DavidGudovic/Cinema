@@ -46,7 +46,10 @@ class DatePicker extends Component
         return view('livewire.admin.screening.date-picker');
     }
 
-    public function pickDates()
+    /**
+     * Validates and emits the selected dates and times to the parent component
+     */
+    public function pickDates(): void
     {
         $this->validate([
             'selected_dates' => 'required|array|min:1',
