@@ -24,7 +24,7 @@ return [
     'url' => ':attribute mora biti validan URL',
     'mimes' => ':attribute mora biti png, jpeg ili webp formata',
     'min' => [
-        'array' => ':attribute mora imati minimum :min elemenata.',
+        'array' => ':attribute moraju imati minimum :min selekciju.',
         'file' => ':attribute mora biti minimum :min kilobita.',
         'numeric' => ':attribute mora biti minimum :min.',
         'string' => ':attribute mora biti minimum :min karaktera',
@@ -98,6 +98,8 @@ return [
         'image_url' => 'URL slike',
         'is_showcased' => 'Istaknut',
         'response' => 'Odgovor',
+        'selected_dates' => 'Datumi',
+        'selected_times' => 'Termini',
     ],
 
 ];

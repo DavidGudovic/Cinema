@@ -5,8 +5,7 @@ namespace App\Http\Livewire\Admin\Screening;
 use App\Models\Hall;
 use App\Models\Movie;
 use App\Models\Tag;
-use Carbon\Carbon;
-use Carbon\CarbonPeriod;
+use App\Services\ScreeningService;
 use Illuminate\Support\Collection;
 use Livewire\Component;
 
@@ -24,11 +23,20 @@ class Create extends Component
 
     protected $listeners = [
         'backtrack' => 'backtrack',
+        'datePicked' => 'submit',
     ];
 
     public function render()
     {
         return view('livewire.admin.screening.create');
+    }
+
+    public function submit(array $selected_dates, array $selected_times, ScreeningService $screeningService) : void
+    {
+        $this->picked_dates = $selected_dates;
+        $this->picked_times = $selected_times;
+        $screeningService->massCreateScreenings($this->movie, $this->picked_hall, $this->picked_tag, $this->picked_dates, $this->picked_times);
+        $this->step++;
     }
 
     public function setHall(Hall $picked_hall)

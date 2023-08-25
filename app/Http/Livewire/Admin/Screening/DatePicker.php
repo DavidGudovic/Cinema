@@ -8,6 +8,12 @@ use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Livewire\Component;
 
+/**
+ * Component for picking the dates and times of a screening
+ * Due to unexpected behavior/timezone conversions after Livewire serializes Carbon objects
+ * All date arrays are maintained as strings and passed to the view as such,
+ * and then converted back into Carbon/CarbonPeriod objects when processed here.
+ */
 class DatePicker extends Component
 {
     public Hall $hall;
@@ -40,6 +46,16 @@ class DatePicker extends Component
     public function render()
     {
         return view('livewire.admin.screening.date-picker');
+    }
+
+    public function pickDates()
+    {
+        $this->validate([
+            'selected_dates' => 'required|array|min:1',
+            'selected_times' => 'required|array|min:1',
+        ]);
+        
+        $this->emit('datePicked', $this->selected_dates, $this->selected_times);
     }
 
     public function setHall(Hall $hall): void
@@ -128,7 +144,7 @@ class DatePicker extends Component
 
     /**
      * Removes the time slots from $time that are intersected by the $selected_times
-     * - screening duration ---- selected time ---- screening duration +
+     * Free | screening duration ---- selected time ---- screening duration | Free
      */
     private function removeIntersectWithSelected(): void
     {
@@ -145,12 +161,12 @@ class DatePicker extends Component
 
     /**
      * Removes the time slots from $time that are intersected by the $unavailable_times
-     * Free |--- screening duration ---- start_time ---- end_time --- | Free
+     * Free | new screening duration ---- (start_time ---- end_time) | Free
      */
     private function removeIntersectWithUnavailable(): void
     {
-       $this->times = $this->filterTimes($this->times);
-       $this->selected_times = $this->filterTimes($this->selected_times);
+        $this->times = $this->filterTimes($this->times);
+        $this->selected_times = $this->filterTimes($this->selected_times);
     }
 
     /**
@@ -165,9 +181,10 @@ class DatePicker extends Component
             foreach ($this->unavailable_times as $unavailableSlot) {
                 list($start, $end) = $unavailableSlot;
                 $startCarbon = Carbon::createFromFormat('H:i', $start);
+                $intersectStartCarbon = $startCarbon->copy()->subMinutes($this->movie_duration); // A movie cannot be screened if it ends after the start of the unavailable time slot
                 $endCarbon = Carbon::createFromFormat('H:i', $end);
 
-                if ($timeSlotCarbon->lt($endCarbon) && $nextTimeSlotCarbon->gt($startCarbon)) {
+                if ($timeSlotCarbon->lt($endCarbon) && $nextTimeSlotCarbon->gt($intersectStartCarbon)) {
                     return false;
                 }
             }
@@ -175,7 +192,6 @@ class DatePicker extends Component
             return true;
         });
     }
-
 
 
     /**

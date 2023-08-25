@@ -18,6 +18,8 @@ class Screening extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'movie_id',
+        'hall_id',
         'start_time',
         'end_time',
     ];

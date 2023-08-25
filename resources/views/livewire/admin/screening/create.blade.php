@@ -1,7 +1,7 @@
 <div x-data="{step: @entangle('step'), totalSteps: 3}"
-     class="relative flex justify-center items-center gap-6 w-full h-screen overflow-hidden">
+     class="relative flex justify-center items-center gap-6 w-full h-full overflow-hidden">
     <!-- Heading -->
-    <div class="absolute top-6 md:top-20 flex flex-col justify-center items-center">
+    <div class="absolute top-6 flex flex-col justify-center items-center">
         <p x-transition:enter="transition ease-out-in duration-700 transform"
            x-transition:enter-start="-translate-y-[150%]"
            x-transition:enter-end="translate-y-0" x-cloak x-show="step == 1" class="h-full text-2xl font-bold">
@@ -74,12 +74,12 @@
         </x-step>
         <!-- End date-->
 
-
         <!-- Success message -->
         <x-step>
             <x-slot:step>4</x-slot:step>
-            <a href="{{route('screenings.create', ['movie' => $movie])}}"
-               class="text-center font-extrabold text-5xl cursor-pointer">Finish</a>
+            <div class="flex flex-col justify-center items-center gap-6">
+                <p class="text-2xl font-bold text-center">Uspešno ste kreirali projekciju</p>
+            </div>
         </x-step>
         <!-- End success message-->
     </div>

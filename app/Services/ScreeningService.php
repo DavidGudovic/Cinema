@@ -3,12 +3,15 @@
 namespace App\Services;
 
 use App\Interfaces\CanExport;
+use App\Models\Hall;
 use App\Models\Movie;
 use App\Models\Screening;
+use App\Models\Tag;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 /*
 * Service for App\Models\Screening
@@ -110,5 +113,26 @@ class ScreeningService implements CanExport
         }
         array_unshift($output, $headers);
         return $output;
+    }
+
+    /**
+     * Creates screenings for the selected dates and times
+     */
+    public function massCreateScreenings(Movie $movie, Hall $hall, Tag $tag, array $selected_dates, array $selected_times): void
+    {
+        DB::transaction(function () use ($movie, $hall, $tag, $selected_dates, $selected_times) {
+            foreach ($selected_dates as $date) {
+                foreach ($selected_times as $time) {
+                    $screening = Screening::create([
+                        'hall_id' => $hall->id,
+                        'movie_id' => $movie->id,
+                        'start_time' => Carbon::parse($date . ' ' . $time),
+                    ]);
+                    $screening->tags()->attach(Tag::where('name', 'Dolby Atmos')->first()->id);
+                    $screening->tags()->attach($tag->id);
+
+                }
+            }
+        });
     }
 }
