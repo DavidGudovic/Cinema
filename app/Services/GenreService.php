@@ -5,10 +5,9 @@ namespace App\Services;
 use App\Models\Genre;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
-/*
+/**
 * This service is responsible for handling genre requests.
 */
-
 class GenreService
 {
     /**
