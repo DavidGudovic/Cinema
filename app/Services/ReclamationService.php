@@ -1,31 +1,38 @@
 <?php
+
 namespace App\Services;
 
-use App\Models\Advert;
 use App\Models\BusinessRequest;
 use App\Models\Reclamation;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 
-class ReclamationService{
+class ReclamationService
+{
 
-    /*
-    * Get all reqeusts for a user with optional filters, paginated
-    */
-    public function getFilteredReclamationsPaginated(?string $status = 'all', ?string $type = 'all', ?int $quantity = 1) : LengthAwarePaginator
+    /**
+     * @param string $status
+     * @param string $type
+     * @param int $quantity
+     * @return LengthAwarePaginator
+     * Returns a paginated, optionally filtered/sorted list of requests
+     */
+    public function getFilteredReclamationsPaginated(string $status = 'all', string $type = 'all', int $quantity = 1): LengthAwarePaginator
     {
         return Reclamation::fromUser(auth()->user()->id)
-        ->filterByStatus($status)
-        ->filterByType($type)
-        ->orderBy('created_at', 'desc')
-        ->paginate($quantity);
+            ->filterByStatus($status)
+            ->filterByType($type)
+            ->orderBy('created_at', 'desc')
+            ->paginate($quantity);
     }
 
-    /*
-    * Stores a reclamation for a request
-    */
-    public function storeReclamation(int $request_id, $text) : void
+    /**
+     * @param int $request_id
+     * @param $text
+     * @return void
+     * Stores a reclamation
+     */
+    public function storeReclamation(int $request_id, $text): void
     {
         $request = BusinessRequest::findOrFail($request_id);
         $request->reclamation()->create([
@@ -34,10 +41,12 @@ class ReclamationService{
         ]);
     }
 
-    /*
-    * Cancel reclamation
-    */
-    public function cancelReclamation(int $reclamation_id) : void
+    /**
+     * @param int $reclamation_id
+     * @return void
+     * Soft deletes a reclamation
+     */
+    public function cancelReclamation(int $reclamation_id): void
     {
         $reclamation = Reclamation::findOrFail($reclamation_id);
         $reclamation->delete();

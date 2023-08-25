@@ -13,16 +13,24 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
-/*
-* Service for App\Models\Screening
-*/
-
+/**
+ * Service for App\Models\Screening
+ */
 class ScreeningService implements CanExport
 {
 
     /**
-     * Returns a paginated, filtered list of screenings or a searched through list of screenings if $this->search_query is set
-     * All parameters are optional, if none are passed, all screenings are returned
+     * @param string $time
+     * @param int $hall_id
+     * @param int $movie_id
+     * @param string $search_query
+     * @param bool $do_sort
+     * @param string $sort_by
+     * @param string $sort_direction
+     * @param int $quantity
+     * @return LengthAwarePaginator|Collection
+     *  Returns a paginated, filtered list of screenings or a searched through list of screenings if $this->search_query is set
+     *  All parameters are optional, if none are passed, all screenings are returned
      */
     public function getFilteredScreeningsPaginated(string $time = 'any', int $hall_id = 0, int $movie_id = 0, string $search_query = '', bool $do_sort = false, string $sort_by = 'title', string $sort_direction = 'ASC', int $quantity = 10): LengthAwarePaginator|Collection
     {
@@ -37,8 +45,11 @@ class ScreeningService implements CanExport
     }
 
     /**
-     * Returns an associative array of $quantity of screenings grouped by date for a movie
-     * [Date => [Screening, Screening, ...]]
+     * @param Movie $movie
+     * @param int $quantity
+     * @return EloquentCollection
+     *  Returns an associative array of $quantity of screenings grouped by date for a movie
+     *  [Date => [Screening, Screening, ...]]
      */
     public function getScreeningsMapForMovie(Movie $movie, int $quantity): EloquentCollection
     {
@@ -54,17 +65,21 @@ class ScreeningService implements CanExport
             ->take($quantity);
     }
 
-    /*
-    Eager loads screening
-    */
+    /**
+     * @param $screening
+     * @return Screening
+     * Eager loads a screening with movie and hall
+     */
     public function eagerLoadScreening($screening): Screening
     {
-        return Screening::with('movie')->with('hall')->where('id', $screening)->first();
+        return Screening::with('movie', 'hall')->where('id', $screening)->first();
     }
 
-    /*
-    * Used in App\Scheduling\AdvertScheduling
-    */
+    /**
+     * @return EloquentCollection
+     *  Returns an EloquentCollection of screenings that have free advert slots and are upcoming
+     *  Used for advert scheduling App/Jobs/ScheduleAdverts.php
+     */
     public function getScreeningsForAdvertScheduling(): EloquentCollection
     {
         return Screening::with('adverts')
@@ -75,7 +90,9 @@ class ScreeningService implements CanExport
     }
 
     /**
-     * Cancels a screening, unscheduling adverts and notifying users is done by the ScreeningObserver by dispatching jobs
+     * @param int $screening_id
+     * @return void
+     *  Cancels a screening, un-scheduling adverts and notifying users is done by the ScreeningObserver by dispatching jobs
      */
     public function cancelScreening(int $screening_id): void
     {
@@ -84,6 +101,8 @@ class ScreeningService implements CanExport
     }
 
     /**
+     * @param array|Collection $data
+     * @return array
      * Implementation of CanExport interface
      */
     public function sanitizeForExport(array|Collection $data): array
@@ -116,9 +135,18 @@ class ScreeningService implements CanExport
     }
 
     /**
+     * @param Movie $movie
+     * @param Hall $hall
+     * @param Tag $tag
+     * @param array $selected_dates
+     * @param array $selected_times
+     * @param BookingService $bookingService
+     * @param RequestableService $requestableService
+     * @return array
      * Creates screenings for the selected dates and times
      * Calls BookingService massCancelOnIntersect() to cancel pending bookings that intersect with the newly created screenings
      * Returns an array of [amount_created, intersectedCount]
+     * Could use a refactor TODO
      */
     public function massCreateScreenings(Movie $movie, Hall $hall, Tag $tag, array $selected_dates, array $selected_times, BookingService $bookingService, RequestableService $requestableService): array
     {

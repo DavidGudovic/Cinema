@@ -24,9 +24,7 @@ class DatePicker extends Component
     public $displayed_date;
     public $selected_dates = [];
     public $selected_times = [];
-
     public $unavailable_times = [];
-
     public $locale;
 
 
@@ -192,7 +190,6 @@ class DatePicker extends Component
             return true;
         });
     }
-
 
     /**
      * Sets $times to an array of 15 minute time slots between the opening and closing time

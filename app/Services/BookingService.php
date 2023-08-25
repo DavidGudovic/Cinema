@@ -14,8 +14,17 @@ use Illuminate\Support\Facades\DB;
 
 class BookingService implements CanExport
 {
-
     /**
+     * @param RequestableService $requestableService
+     * @param string $status
+     * @param string $search_query
+     * @param bool $do_sort
+     * @param string $sort_by
+     * @param string $sort_direction
+     * @param array $halls
+     * @param int $user_id
+     * @param int $quantity
+     * @return LengthAwarePaginator|Collection
      * Returns a paginated, filtered list of bookings or a searched through list of bookings
      * All parameters are optional, if none are set, all bookings are returned, paginated by $quantity, default 10
      */
@@ -33,9 +42,16 @@ class BookingService implements CanExport
     }
 
     /**
+     * @param int $hall_id
+     * @param string $text
+     * @param int $price
+     * @param string $start_time
+     * @param string $end_time
+     * @return Booking
      * Create a new booking as well as a new business request, associate the two and return the booking
+     * @throws Exception
      */
-    public function tryCreateBooking($hall, $text, $price, $start_time, $end_time): Booking
+    public function tryCreateBooking(int $hall_id, string $text, int $price, string $start_time, string $end_time): Booking
     {
         try {
             DB::beginTransaction();  // Make the insert atomic
@@ -46,7 +62,7 @@ class BookingService implements CanExport
                 'text' => $text,
             ]);
             $booking = Booking::create([
-                'hall_id' => $hall,
+                'hall_id' => $hall_id,
                 'start_time' => $start_time,
                 'end_time' => $end_time,
             ]);
@@ -67,7 +83,9 @@ class BookingService implements CanExport
     }
 
     /**
-     * Implementation of the CanExport interface
+     * @param array|Collection $data
+     * @return array
+     *  Implementation of the CanExport interface
      */
     public function sanitizeForExport(array|Collection $data): array
     {
@@ -101,6 +119,15 @@ class BookingService implements CanExport
         return $output;
     }
 
+    /**
+     * @param array $dates
+     * @param array $times
+     * @param int $hall_id
+     * @param RequestableService $requestableService
+     * @return int
+     *  Cancel all bookings that intersect with the given dates and times
+     *  Returns the number of cancelled bookings
+     */
     public function massCancelOnIntersect(array $dates, array $times, int $hall_id, RequestableService $requestableService): int
     {
         // get the pending booking on the given $dates

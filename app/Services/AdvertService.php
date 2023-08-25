@@ -9,17 +9,26 @@ use App\Models\BusinessRequest;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class AdvertService implements CanExport
 {
-
     /**
-     * Returns a paginated, filtered list of adverts or a searched through list of adverts
-     * All parameters are optional, if none are set, all adverts are returned, paginated by $quantity, default 10
+     * @param RequestableService $requestableService
+     * @param string $status
+     * @param int $user_id
+     * @param string $quantity_left
+     * @param string $search_query
+     * @param bool $do_sort
+     * @param string $sort_by
+     * @param string $sort_direction
+     * @param int $quantity
+     * @return LengthAwarePaginator|Collection
+     *  Returns a paginated, filtered list of adverts or a searched through list of adverts
+     *  All parameters are optional, if none are set, all adverts are returned, paginated by $quantity, default 10
      */
-    public function getFilteredAdvertsPaginated(RequestableService $requestableService, string $status = 'all', int $user_id = 0, string $quantity_left = 'any', string $search_query = '',bool $do_sort = false, string $sort_by = 'title', string $sort_direction = 'ASC', int $quantity = 10): LengthAwarePaginator|Collection
+    public function getFilteredAdvertsPaginated(RequestableService $requestableService, string $status = 'all', int $user_id = 0, string $quantity_left = 'any', string $search_query = '', bool $do_sort = false, string $sort_by = 'title', string $sort_direction = 'ASC', int $quantity = 10): LengthAwarePaginator|Collection
     {
         $sortParams = $requestableService->resolveSortByParameter($sort_by);
 
@@ -28,15 +37,17 @@ class AdvertService implements CanExport
             ->status($status)
             ->quantityRemaining($quantity_left)
             ->search($search_query)
-            ->sortPolymorphic($do_sort, $sortParams['type'],$sortParams['relation'], $sortParams['column'], $sort_direction)
+            ->sortPolymorphic($do_sort, $sortParams['type'], $sortParams['relation'], $sortParams['column'], $sort_direction)
             ->paginateOptionally($quantity);
     }
 
-
     /**
-     * Returns an associative map of views per day for $quantity days in the past
-     * A view is each seat associated to a ticket associated to a screening associated to an advert x amount of adverts shown at screening (should be 1 in most cases)
-     * [Date => Views]
+     * @param Advert $advert
+     * @param int|null $quantity
+     * @return Collection
+     *  Returns an associative map of views per day for $quantity days in the past
+     *  A view is each seat associated to a ticket associated to a screening associated to an advert x amount of adverts shown at screening (should be 1 in most cases)
+     *  [Date => Views]
      */
     public function getViewsByWeekMap(Advert $advert, ?int $quantity = 5): Collection
     {
@@ -57,7 +68,9 @@ class AdvertService implements CanExport
     }
 
     /**
-     * Returns the amount of scheduled screenings for the advert
+     * @param $advert
+     * @return int
+     *  Returns the amount of scheduled screenings for the advert
      */
     public function getScheduledCount($advert): int
     {
@@ -70,7 +83,14 @@ class AdvertService implements CanExport
     }
 
     /**
-     * Create a new advert as well as a new business request, associate the two and return the advert
+     * @param $text
+     * @param $quantity
+     * @param $title
+     * @param $company
+     * @param $advert_url
+     * @return Advert
+     * @throws Exception
+     *  Create a new advert as well as a new business request, associate the two and return the advert
      */
     public function tryCreateAdvert($text, $quantity, $title, $company, $advert_url): Advert
     {
@@ -106,7 +126,9 @@ class AdvertService implements CanExport
     }
 
     /**
-     * Gets quantity remaining map for passed advert ids
+     * @param $advertIDs
+     * @return Collection
+     *  Gets quantity remaining map for passed advert ids
      */
     public function getAdvertQuantityMap($advertIDs): Collection
     {
@@ -118,6 +140,7 @@ class AdvertService implements CanExport
     }
 
     /**
+     * @return Collection
      * Get all accepted adverts that have quantity_remaining with their respective priorities
      * [Advert => Priority]
      */
@@ -131,6 +154,8 @@ class AdvertService implements CanExport
     }
 
     /**
+     * @param Advert $advert
+     * @return int
      * Calculates an adverts priority based on quantity remaining and when it is last seen, modified by weights from config
      */
     private function calculatePriority(Advert $advert): int
@@ -140,7 +165,9 @@ class AdvertService implements CanExport
     }
 
     /**
-     * Change the quantity_remaining
+     * @param $advertIDs
+     * Decrements quantity_remaining for adverts with passed ids
+     * Updates last_scheduled for adverts with passed ids
      */
     public function massUpdateAdverts($advertIDs): void
     {
@@ -156,7 +183,9 @@ class AdvertService implements CanExport
     }
 
     /**
-     * Implementation of CanExport interface
+     * @param array|Collection $data
+     * @return array
+     *  Implementation of CanExport interface
      */
     public function sanitizeForExport(array|Collection $data): array
     {
