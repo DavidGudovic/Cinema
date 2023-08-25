@@ -14,6 +14,20 @@
            x-transition:enter-start="-translate-y-[150%]"
            x-transition:enter-end="translate-y-0" x-cloak x-show="step == 3" class="h-full text-2xl font-bold">
             Izaberite vreme</p>
+        <div class="flex flex-wrap gap-2">
+            <p><strong>Film:</strong> {{$movie->title}} </p>
+            <p>
+                @if($picked_hall)
+                    <strong>Sala:</strong> {{$picked_hall->name}}
+                @endif
+            </p>
+            <p>
+                @if($picked_tag)
+                    <strong>Tag:</strong> {{$picked_tag->name}}
+                @endif
+            </p>
+        </div>
+
     </div>
 
     <!-- Steps -->

@@ -37,7 +37,7 @@
                 <div class="flex flex-col gap-1 md:w-1/2 relative md:pr-4">
                     <label for="title" class="font-bold">Naslov</label>
                     <input type="text" name="title" id="title"
-                           class="p-2 border @error('title') border-red-500 @else border-white @enderror bg-neutral-900 bg-opacity-80 border-opacity-70 text-white rounded-xl"
+                           class="p-2 border @error('title') border-red-500 @else border-white @enderror bg-dark-blue border-opacity-70 text-white rounded-xl"
                            placeholder="Unesite naslov filma"
                            value='{{old('title')}}'>
                     @error('title')
@@ -49,7 +49,7 @@
                 <div class="flex flex-col gap-1 md:w-1/2 relative md:pl-4">
                     <label for="director" class="font-bold">Režiser</label>
                     <input type="text" name="director" id="director"
-                           class="p-2 border @error('director') border-red-500 @else border-white @enderror  bg-neutral-900 bg-opacity-80 border-opacity-70 text-white rounded-xl"
+                           class="p-2 border @error('director') border-red-500 @else border-white @enderror  bg-dark-blue border-opacity-70 text-white rounded-xl"
                            placeholder="Unesite ime režisera"
                            value='{{old('director')}}'>
                     @error('director')
@@ -66,7 +66,7 @@
                 <div class="flex flex-col gap-1 md:w-1/2 relative md:pr-4">
                     <label for="genre" class="font-bold">Žanr</label>
                     <select name="genre" id="genre"
-                            class="p-2 border @error('genre') border-red-500 @else border-white @enderror bg-neutral-900 bg-opacity-80 border-opacity-70 text-white rounded-xl">
+                            class="p-2 border @error('genre') border-red-500 @else border-white @enderror bg-dark-blue border-opacity-70 text-white rounded-xl">
                         @foreach($genres as $genre)
                             <option value="{{ $genre->id }}">{{ $genre->name }}</option>
                         @endforeach
@@ -82,7 +82,7 @@
                     <label for="duration" class="font-bold">Trajanje</label>
                     <input type="number" min="0" max="500" name="duration" id="duration"
                            placeholder="Trajanje u minutima"
-                           class="p-2 border @error('duration') border-red-500 @else border-white @enderror  bg-neutral-900 bg-opacity-80 border-opacity-70 text-white rounded-xl"
+                           class="p-2 border @error('duration') border-red-500 @else border-white @enderror  bg-dark-blue border-opacity-70 text-white rounded-xl"
                            value='{{old('number')}}'>
                     @error('duration')
                     <span class="text-red-500 text-sm ">{{$message}}</span>
@@ -98,7 +98,7 @@
                 <div class="flex flex-col gap-1 md:w-1/2 relative md:pr-4">
                     <label for="trailer_url" class="font-bold">URL Trejlera</label>
                     <input type="text" name="trailer_url" id="trailer_url"
-                           class="p-2 border @error('trailer_url') border-red-500 @else border-white @enderror bg-neutral-900 bg-opacity-80 border-opacity-70 text-white rounded-xl"
+                           class="p-2 border @error('trailer_url') border-red-500 @else border-white @enderror bg-dark-blue border-opacity-70 text-white rounded-xl"
                            placeholder="Unesite URL trejlera"
                            value='{{old('trailer_url')}}'>
                     @error('trailer_url')
@@ -111,7 +111,7 @@
                 <div class="flex flex-col gap-1 md:w-1/2 relative md:pl-4">
                     <label for="release_date" class="font-bold">Datum Izlaska</label>
                     <input type="date" name="release_date" id="release_date"
-                           class="p-2 border @error('release_date') border-red-500 @else border-white @enderror bg-neutral-900 bg-opacity-80 border-opacity-70  text-opacity-70 text-white rounded-xl"
+                           class="p-2 border @error('release_date') border-red-500 @else border-white @enderror bg-dark-blue border-opacity-70  text-opacity-70 text-white rounded-xl"
                            max="{{now()->format('Y-m-d')}}"
                            value='{{old('release_date')}}'>
                     @error('release_date')
@@ -127,7 +127,7 @@
             <div class="flex flex-col relative" x-data="{ count: 0}" x-init="count = $refs.counted.value.length">
                 <label for="description" class="font-bold mb-2">Opis filma</label>
                 <textarea
-                    class="p-2 w-full border bg-neutral-900 bg-opacity-80 border-opacity-70 text-white rounded-xl resize-none @error('description') border-red-500 @else border-white @enderror"
+                    class="p-2 w-full border bg-dark-blue border-opacity-70 text-white rounded-xl resize-none @error('description') border-red-500 @else border-white @enderror"
                     x-ref="counted" x-on:keyup="count = $refs.counted.value.length"
                     name="description" id="description" maxlength="1000" rows="10"
                     placeholder="Unesite sinopsis filma"></textarea>
@@ -170,9 +170,9 @@
     <!-- Buttons -->
     <div class="flex gap-4 justify-center w-full">
         <input type="submit" value="Sačuvaj"
-               class="text-center bg-neutral-900 border-opacity-70 border rounded-xl border-white text-white p-2 hover:bg-neutral-200 hover:text-red-700 cursor-pointer w-full"/>
+               class="text-center bg-dark-blue border rounded-xl border-white text-white p-2 hover:bg-neutral-200 hover:text-red-700 cursor-pointer w-full"/>
         <a href="{{route('management.movies.index')}}"
-           class="text-center bg-neutral-900 border-opacity-70 border rounded-xl border-white text-white p-2 hover:bg-neutral-200 hover:text-red-700 cursor-pointer w-full">
+           class="text-center bg-dark-blue border rounded-xl border-white text-white p-2 hover:bg-neutral-200 hover:text-red-700 cursor-pointer w-full">
             Odustani
         </a>
     </div>
