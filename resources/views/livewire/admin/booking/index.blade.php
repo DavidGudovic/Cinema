@@ -6,6 +6,7 @@
         <label class="opacity-40 text-sm" for="genres">Sala</label>
         <select wire:change="resetPage" id="genres"
                 class="border rounded cursor-pointer p-2 bg-gray-700 bg-opacity-70" wire:model="hall_id">
+            <option class="cursor-pointer" value="0">Sve</option>
             @foreach($halls as $hall)
                 <option class="cursor-pointer" value="{{$hall->id}}">{{$hall->name}}</option>
             @endforeach
@@ -181,7 +182,8 @@
                         <a href="{{route('bookings.edit', ['booking' => $booking, 'action' => 'ACCEPT'])}}">
                             <i class="fa-solid fa-check"></i>
                         </a>
-                        <a href="{{route('bookings.edit', ['booking' => $booking, 'action' => 'REJECT'])}}" class="text-red-700 hover:text-white">
+                        <a href="{{route('bookings.edit', ['booking' => $booking, 'action' => 'REJECT'])}}"
+                           class="text-red-700 hover:text-white">
                             <i class="fa-solid fa-x"></i>
                         </a>
 
@@ -189,7 +191,7 @@
                         <a href="#" aria-disabled="true" class="hover:text-white opacity-30 cursor-default">
                             <i class="fa-solid fa-check"></i>
                         </a>
-                        <a href="#" aria-disabled="true" class="opacity-30 cursor-default text-red-700" >
+                        <a href="#" aria-disabled="true" class="opacity-30 cursor-default text-red-700">
                             <i class="fa-solid fa-x"></i>
                         </a>
 

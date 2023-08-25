@@ -15,7 +15,7 @@ class Create extends Component
     public Movie $movie;
     public Collection $halls;
     public Collection $tags;
-    public int $step = 3;
+    public int $step = 1;
 
     public ?Hall $picked_hall;
     public ?Tag $picked_tag;
@@ -35,12 +35,14 @@ class Create extends Component
     {
         $this->picked_hall = $picked_hall;
         $this->step++;
+        $this->emit('hallPicked', $picked_hall);
     }
 
     public function setTag(Tag $picked_tag)
     {
         $this->picked_tag = $picked_tag;
         $this->step++;
+        $this->emit('tagPicked', $picked_tag);
     }
 
     public function clearDates() : void

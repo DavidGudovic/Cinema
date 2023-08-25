@@ -16,6 +16,7 @@ use Illuminate\Support\Collection;
 
 class ScreeningService implements CanExport
 {
+
     /**
      * Returns a paginated, filtered list of screenings or a searched through list of screenings if $this->search_query is set
      * All parameters are optional, if none are passed, all screenings are returned

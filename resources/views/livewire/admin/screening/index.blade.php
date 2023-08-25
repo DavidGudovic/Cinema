@@ -93,9 +93,9 @@
 
     <!-- Add Screening -->
     <div x-on:click="showAddDropdown = !showAddDropdown" x-on:click.outside="showAddDropdown = false"
-         class="relative hidden md:flex gap-2 mt-6 items-center  border rounded p-2 bg-gray-700 bg-opacity-70">
-        <span>Dodaj </span>
-        <i class="fa-solid fa-plus"></i>
+         class="group relative hidden md:flex gap-2 mt-6 items-center  border rounded p-2 bg-gray-700 bg-opacity-70 cursor-pointer">
+        <spa class="group-hover:text-red-700 ">Dodaj </spa>
+        <i class="group-hover:text-red-700 fa-solid fa-plus"></i>
         <!-- Dropdown -->
         <div x-cloak x-show="showAddDropdown"
              class="absolute z-10 top-10 left-0 flex flex-col w-max justify-center p-2 bg-neutral-500 rounded-lg">

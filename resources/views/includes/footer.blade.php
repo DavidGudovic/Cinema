@@ -31,8 +31,8 @@
         <!-- Developer -->
         <div class="flex flex-col gap-10 w-[215px]">
             <p class="border-b border-white">Radno vreme</p>
-            <p><i class="fa-regular fa-calendar"></i> Pon - Pet: 10:00 - 22:00</p>
-            <p><i class="fa-regular fa-calendar"></i> Vikendi: 10:00 - 00:00</p>
+            <p><i class="fa-regular fa-calendar"></i> Pon - Pet: {{config('restrictions.opening_time')}} - {{config('restrictions.closing_time')}}</p>
+            <p><i class="fa-regular fa-calendar"></i> Vikendi: {{config('restiictions.opening_time')}} - {{config('restrictions.closing_time')}}</p>
             <p><i class="fa-regular fa-copyright"></i> Cinemanija {{date('Y')}}</p>
         </div>
         <!-- End developer -->

@@ -6,6 +6,7 @@ use App\Interfaces\Requestable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 class Booking extends Model implements Requestable //pseudo extends Models/BusinessRequest
 {
@@ -70,6 +71,10 @@ class Booking extends Model implements Requestable //pseudo extends Models/Busin
             ->where('end_time', '>', $start_time);
     }
 
+    public function scopeFromDates($query, array $dates)
+    {
+        return $query->whereIn(DB::raw('start_time'), $dates);
+    }
 
     public function scopeStatus($query, $status)
     {
@@ -111,6 +116,11 @@ class Booking extends Model implements Requestable //pseudo extends Models/Busin
                 $q->where('name', 'LIKE', '%' . $search_query . '%');
             });
         });
+    }
+
+    public function scopeFromHall($query, $hallId)
+    {
+        return $query->where('hall_id', $hallId);
     }
 
     public function scopeFromHalls($query, array $halls)
