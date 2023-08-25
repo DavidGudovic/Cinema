@@ -33,6 +33,7 @@ class Booking extends Model implements Requestable //pseudo extends Models/Busin
      */
     protected $casts = [
         'start_time' => 'datetime',
+        'end_time' => 'datetime'
     ];
 
 
@@ -73,7 +74,7 @@ class Booking extends Model implements Requestable //pseudo extends Models/Busin
 
     public function scopeFromDates($query, array $dates)
     {
-        return $query->whereIn(DB::raw('start_time'), $dates);
+        return $query->whereIn(DB::raw('DATE(start_time)'), $dates);
     }
 
     public function scopeStatus($query, $status)

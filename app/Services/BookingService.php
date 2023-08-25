@@ -2,9 +2,11 @@
 
 namespace App\Services;
 
+use App\Enums\Status;
 use App\Interfaces\CanExport;
 use App\Models\Booking;
 use App\Models\BusinessRequest;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
@@ -98,4 +100,40 @@ class BookingService implements CanExport
         array_unshift($output, $headers);
         return $output;
     }
+
+    public function massCancelOnIntersect(array $dates, array $times, int $hall_id, RequestableService $requestableService): int
+    {
+        // get the pending booking on the given $dates
+        $bookings = Booking::with('businessRequest')
+            ->fromHall($hall_id)
+            ->status('pending')
+            ->fromDates($dates)
+            ->get();
+
+        // filter out only the intersecting ones
+        $bookings = $bookings->filter(function ($booking) use ($times) {
+            foreach ($times as $time) {
+                [$start_time, $end_time] = $time;
+                $start_time_carbon = Carbon::createFromFormat('H:i', $start_time);
+                $end_time_carbon = Carbon::createFromFormat('H:i', $end_time);
+
+                $booking_start_time = Carbon::createFromFormat('H:i', $booking->start_time->format('H:i'));
+                $booking_end_time = Carbon::createFromFormat('H:i', $booking->end_time->format('H:i'));
+
+                if ($booking_start_time->lte($end_time_carbon) && $booking_end_time->gt($start_time_carbon)) {
+                    return true;
+                }
+
+            }
+            return false; // No intersect found, filter out the booking
+        });
+        // cancel them
+        foreach ($bookings as $booking) {
+            $requestableService->changeRequestStatus($booking->businessRequest, Status::REJECTED, config('messages.request_cancelled_intersect'));
+            $requestableService->cancelRequest($booking->businessRequest);
+        }
+
+        return $bookings->count();
+    }
+
 }

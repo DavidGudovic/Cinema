@@ -67,7 +67,7 @@
     <!-- End datetime pick -->
     <!-- Submit -->
     <div class="relative w-full flex justify-center">
-        <div wire:click="pickDates" wire:loading.attr="disabled" wire:loading.class="text-gray-500 border-gray-500" class="text-center p-2 border border-white w-96 rounded-2xl hover:text-red-700 cursor-pointer">
+        <div wire:click="pickDates" wire:loading.attr="disabled" wire:loading.class="text-gray-500 border-gray-500" class="text-center p-2 border border-white w-full md:w-96 rounded-2xl hover:text-red-700 cursor-pointer">
             Napravi projekcije
         </div>
 

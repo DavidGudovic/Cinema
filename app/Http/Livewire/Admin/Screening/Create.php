@@ -5,6 +5,8 @@ namespace App\Http\Livewire\Admin\Screening;
 use App\Models\Hall;
 use App\Models\Movie;
 use App\Models\Tag;
+use App\Services\BookingService;
+use App\Services\RequestableService;
 use App\Services\ScreeningService;
 use Illuminate\Support\Collection;
 use Livewire\Component;
@@ -15,6 +17,8 @@ class Create extends Component
     public Collection $halls;
     public Collection $tags;
     public int $step = 1;
+    public int $amount_created = 0;
+    public int $bookings_cancelled_on_intersect = 0;
 
     public ?Hall $picked_hall;
     public ?Tag $picked_tag;
@@ -31,11 +35,24 @@ class Create extends Component
         return view('livewire.admin.screening.create');
     }
 
-    public function submit(array $selected_dates, array $selected_times, ScreeningService $screeningService) : void
+    /**
+     * Submits the selected dates and times to the ScreeningService for a massCreate, and increments the step
+     */
+    public function submit(array $selected_dates, array $selected_times, ScreeningService $screeningService, RequestableService $requestableService, BookingService $bookingService) : void
     {
         $this->picked_dates = $selected_dates;
         $this->picked_times = $selected_times;
-        $screeningService->massCreateScreenings($this->movie, $this->picked_hall, $this->picked_tag, $this->picked_dates, $this->picked_times);
+
+        [$this->amount_created, $this->bookings_cancelled_on_intersect] = $screeningService->massCreateScreenings(
+            movie: $this->movie,
+            hall: $this->picked_hall,
+            tag: $this->picked_tag,
+            selected_dates: $this->picked_dates,
+            selected_times: $this->picked_times,
+            bookingService: $bookingService,
+            requestableService: $requestableService,
+        );
+
         $this->step++;
     }
 
@@ -60,7 +77,11 @@ class Create extends Component
         $this->emit('clearDates');
     }
 
-    public function backtrack(int $step)
+    /**
+     * Backtracks to the specified step, called by clicking on a step in the x-breadcrumbs component
+     * Forgets the appropriate data based on the step
+     */
+    public function backtrack(int $step) : void
     {
         $actions = [
             3 => function() { $this->clearDates(); },

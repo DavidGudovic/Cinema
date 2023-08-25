@@ -26,7 +26,7 @@ class ScreeningService implements CanExport
      */
     public function getFilteredScreeningsPaginated(string $time = 'any', int $hall_id = 0, int $movie_id = 0, string $search_query = '', bool $do_sort = false, string $sort_by = 'title', string $sort_direction = 'ASC', int $quantity = 10): LengthAwarePaginator|Collection
     {
-        return Screening::with('movie')->with('hall')->withCount('tickets')->withCount('adverts')
+        return Screening::with('movie', 'hall')->withCount('tickets')->withCount('adverts')
             ->time($time)
             ->fromHallOrManagedHalls($hall_id)
             ->screeningMovie($movie_id)
@@ -117,10 +117,15 @@ class ScreeningService implements CanExport
 
     /**
      * Creates screenings for the selected dates and times
+     * Calls BookingService massCancelOnIntersect() to cancel pending bookings that intersect with the newly created screenings
+     * Returns an array of [amount_created, intersectedCount]
      */
-    public function massCreateScreenings(Movie $movie, Hall $hall, Tag $tag, array $selected_dates, array $selected_times): void
+    public function massCreateScreenings(Movie $movie, Hall $hall, Tag $tag, array $selected_dates, array $selected_times, BookingService $bookingService, RequestableService $requestableService): array
     {
-        DB::transaction(function () use ($movie, $hall, $tag, $selected_dates, $selected_times) {
+        $screenings = collect();
+
+        // Insert the screenings
+        DB::transaction(function () use ($movie, $hall, $tag, $selected_dates, $selected_times, &$screenings) {
             foreach ($selected_dates as $date) {
                 foreach ($selected_times as $time) {
                     $screening = Screening::create([
@@ -130,9 +135,19 @@ class ScreeningService implements CanExport
                     ]);
                     $screening->tags()->attach(Tag::where('name', 'Dolby Atmos')->first()->id);
                     $screening->tags()->attach($tag->id);
-
+                    $screenings->push($screening);
                 }
             }
         });
+
+        // Extract [start_time, end_time] pairs from the screenings
+        $timeIntervals = $screenings->map(function ($screening) {
+            return [$screening->start_time->format('H:i'), $screening->end_time->format('H:i')];
+        })->unique()->toArray();
+
+        // Cancel pending bookings that intersect with the newly created screenings
+        $intersectedCount = $bookingService->massCancelOnIntersect($selected_dates, $timeIntervals, $hall->id, $requestableService);
+
+        return [$screenings->count(), $intersectedCount];
     }
 }

@@ -35,7 +35,7 @@
         <!-- Halls -->
         <x-step>
             <x-slot:step>1</x-slot:step>
-            <div class="grid grid-cols-1 md:grid-cols-2 justify-center mt-6 md:mt-12 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 justify-center mt-12 gap-6">
                 @foreach($halls as $hall)
                     <div wire:click="setHall({{$hall}})"
                          class="relative flex flex-col justify-center items-center gap-2 cursor-pointer hover:text-red-700">
@@ -77,8 +77,15 @@
         <!-- Success message -->
         <x-step>
             <x-slot:step>4</x-slot:step>
-            <div class="flex flex-col justify-center items-center gap-6">
-                <p class="text-2xl font-bold text-center">Uspešno ste kreirali projekciju</p>
+            <div class="flex flex-col justify-center items-center gap-10">
+                <p class="text-xl md:text-2xl font-bold text-center">{{$amount_created}} projekcija uspešno kreirano</p>
+                <p class="text-red-700 font-bold text-center">{{$bookings_cancelled_on_intersect}} rentiranja na čekanju odbijeno</p>
+                <!-- Actions -->
+                <div class="flex flex-col md:flex-row justify-center mt-5 gap-6">
+                    <button wire:click="backtrack(1)" class="w-full md:w-72 p-2 border border-white rounded-xl text-center cursor-pointer hover:text-red-700">Kreiraj još za film</button>
+                    <a href="{{route('screenings.index')}}" class="w-full md:w-72 p-2 border border-white rounded-xl text-center cursor-pointer hover:text-red-700">Pregledaj projekcije</a>
+                </div>
+                <!-- End actions -->
             </div>
         </x-step>
         <!-- End success message-->

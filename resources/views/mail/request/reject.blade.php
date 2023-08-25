@@ -11,10 +11,9 @@ Delatnost: {{ $businessRequest->requestable->company }}
 URL: {{ $businessRequest->requestable->url }}
 Količina: {{ $businessRequest->requestable->quantity }}
 @else
-Tip zahteva: Rezervacija
+Tip zahteva: Rentiranje
 Sala: {{ $businessRequest->requestable->hall_id }}
-Trajanje: {{ $businessRequest->requestable->duration }}
-Datum početka: {{ $businessRequest->requestable->start_date }}
+Datum: {{ $businessRequest->requestable->start_time->format('Y/m/d') }}
 @endif
 
 Komentar menadžera: {{ $businessRequest->comment }}

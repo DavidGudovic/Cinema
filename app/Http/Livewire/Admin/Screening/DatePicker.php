@@ -54,7 +54,7 @@ class DatePicker extends Component
             'selected_dates' => 'required|array|min:1',
             'selected_times' => 'required|array|min:1',
         ]);
-        
+
         $this->emit('datePicked', $this->selected_dates, $this->selected_times);
     }
 
@@ -235,7 +235,6 @@ class DatePicker extends Component
     public function fetchUnavailableTimesMap(HallService $hallService): void
     {
         $this->unavailable_times = [];
-
         $unavailableTimes = $hallService->getUnavailableTimeSlotsForDaysMap($this->selected_dates, $this->hall);
 
         $this->unavailable_times = array_map(function ($timeSlot) {
