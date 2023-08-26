@@ -98,7 +98,7 @@ class AdvertService implements CanExport
             DB::beginTransaction();  // Make the insert atomic
 
             $businessRequest = BusinessRequest::make([
-                'price' => $quantity * config('advertising.price'),
+                'price' => $quantity * config('settings.advertising.price'),
                 'user_id' => auth()->user()->id,
                 'text' => $text,
             ]);
@@ -160,8 +160,8 @@ class AdvertService implements CanExport
      */
     private function calculatePriority(Advert $advert): int
     {
-        return $advert->quantity_remaining * config('advertising.weight_remaining')
-            + Carbon::parse($advert->last_scheduled)->diffInDays(now()) * config('advertising.weight_last_scheduled');
+        return $advert->quantity_remaining * config('settings.advertising.weight_remaining')
+            + Carbon::parse($advert->last_scheduled)->diffInDays(now()) * config('settings.advertising.weight_last_scheduled');
     }
 
     /**

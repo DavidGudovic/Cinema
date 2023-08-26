@@ -19,7 +19,7 @@ class ScreeningSeeder extends Seeder
         foreach ($screenings as $screening) {
             $screening->end_time = $screening->start_time
                 ->addMinutes($screening->movie->duration)
-                ->addMinutes(config('advertising.per_screening') * config('advertising.duration'));
+                ->addMinutes(config('settings.advertising.per_screening') * config('settings.advertising.duration'));
         }
         //Ensure it doesn't overlap and add to database
         foreach ($screenings as $screening) {

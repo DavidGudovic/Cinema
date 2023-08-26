@@ -27,7 +27,7 @@
                         </div>
                         <!-- Right info-->
                         <div class="flex flex-row justify-between md:w-16">
-                            <span class="text-sm">{{config('pricing.base_price')}}</span>
+                            <span class="text-sm">{{config('settings.pricing.base_price')}}</span>
                             <span class="text-sm">RSD</span>
                         </div>
                         <!-- End info-->
@@ -119,7 +119,7 @@
                 <!-- Discount -->
                 <p class="text-sm">
                     <span class="font-bold">*Napomena:</span>
-                    Ako rezervišete {{config('pricing.seat_discount_threshold')}} ili više sedišta na jednoj ulaznici, dobijate popust od {{config('pricing.seat_discount') * 100}}%. Ova posebna ponuda je naš način da Vam se zahvalimo što dolazite u naš bioskop sa porodicom ili prijateljima. Uživajte u filmu i uštedite kupovinom više karata odjednom!
+                    Ako rezervišete {{config('settings.pricing.seat_discount_threshold')}} ili više sedišta na jednoj ulaznici, dobijate popust od {{config('settings.pricing.seat_discount') * 100}}%. Ova posebna ponuda je naš način da Vam se zahvalimo što dolazite u naš bioskop sa porodicom ili prijateljima. Uživajte u filmu i uštedite kupovinom više karata odjednom!
                 </p>
                 <!--End Discount-->
             </div>

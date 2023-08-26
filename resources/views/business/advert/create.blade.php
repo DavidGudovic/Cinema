@@ -94,14 +94,14 @@
                 <label for="text" class="font-bold">Broj slotova <i x-on:mouseenter="showDetailsSlots = true" x-on:mouseleave="showDetailsSlots = false" class="fa-regular fa-circle-question"></i></label>
                 <!-- Details tooltip -->
                 <div x-show="showDetailsSlots" class="absolute top-6 left-30 border border-white bg-neutral-950 bg-opacity-80 border-opacity-70 text-white p-2 rounded-xl shadow-lg text-justify">
-                    <p class="text-sm">Reklame u našem bioskopu prikazuju se u formatu od {{config('advertising.duration')}} minuta, po {{config('advertising.per_screening')}} pred svako prikazivanje filma.Hvala Vam na saradnji!</p>
+                    <p class="text-sm">Reklame u našem bioskopu prikazuju se u formatu od {{config('settings.advertising.duration')}} minuta, po {{config('settings.advertising.per_screening')}} pred svako prikazivanje filma.Hvala Vam na saradnji!</p>
                 </div>
                 <!-- End details tooltip -->
                 <input type="text" name="quantity" x-model="quantity" readonly id="advert_url" class="text-center p-2 w-full border border-white bg-neutral-950 bg-opacity-80 border-opacity-70 text-white rounded-xl">
                 <i x-on:click="quantity == 1 ? false : quantity--" class="absolute bottom-7 left-1 fa-solid fa-2xl h-5 cursor-pointer text-white opacity-70 hover:text-red-700 fa-chevron-left"></i>
                 <i x-on:click="quantity++" class="absolute bottom-7 right-1 fa-solid fa-2xl h-5 cursor-pointer text-white opacity-70 hover:text-red-700 fa-chevron-right"></i>
                 <!-- price -->
-                <p class="text-center font-bold text-sm md:text-base">Ukupno minuta: <span x-text="quantity * {{config('advertising.duration')}}"></span> Cena: <span x-text="quantity * {{config('advertising.price')}}"></span> RSD</p>
+                <p class="text-center font-bold text-sm md:text-base">Ukupno minuta: <span x-text="quantity * {{config('settings.advertising.duration')}}"></span> Cena: <span x-text="quantity * {{config('settings.advertising.price')}}"></span> RSD</p>
                 <!-- End price -->
             </div>
             <!-- End quanity -->

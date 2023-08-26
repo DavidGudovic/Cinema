@@ -56,7 +56,7 @@
                                 </div>
                                 <!-- Right info-->
                                 <div class="flex flex-row justify-between md:w-16">
-                                    <span class="text-sm">{{config('pricing.base_price')}}</span>
+                                    <span class="text-sm">{{config('settings.pricing.base_price')}}</span>
                                     <span class="text-sm">RSD</span>
                                 </div>
                                 <!-- End info-->

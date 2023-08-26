@@ -190,7 +190,7 @@ class Screening extends Model
 
     public function scopeWithFreeAdSlots($query)
     {
-        return $query->withCount('adverts')->having('adverts_count', '<', config('advertising.per_screening'));
+        return $query->withCount('adverts')->having('adverts_count', '<', config('settings.advertising.per_screening'));
     }
 
     public function scopeSearch($query, string $search_query)

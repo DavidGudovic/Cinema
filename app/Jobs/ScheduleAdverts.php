@@ -42,7 +42,7 @@ class ScheduleAdverts implements ShouldQueue
             $queue_clone = clone $advertPriorityQueue;
             $advert_count = $screening->adverts->count();
 
-            while ($queue_clone->count() > 0 && $advert_count < config('advertising.per_screening')) {
+            while ($queue_clone->count() > 0 && $advert_count < config('settings.advertising.per_screening')) {
                 $advertID = $queue_clone->extract();
                 if ($screening->adverts->contains($advertID) || $adverts_quantity_map[$advertID] == 0) continue;
 

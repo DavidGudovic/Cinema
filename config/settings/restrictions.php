@@ -10,4 +10,5 @@ return [
     'min_guests' => 10,
     'advert_duration' => 30,
     'days_before_booking' => 2,
+    'screening_blocks' => 15,
 ];

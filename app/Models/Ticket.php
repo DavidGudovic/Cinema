@@ -53,15 +53,15 @@ class Ticket extends Model
     }
 
     public function getCalcLongMovieAddonAttribute(){
-        return $this->screening->movie->duration > config('pricing.long_movie_duration') ? config('pricing.long_movie_addon') : 0;
+        return $this->screening->movie->duration > config('settings.pricing.long_movie_duration') ? config('settings.pricing.long_movie_addon') : 0;
     }
     public function getCalcSubtotalAttribute(){
-        return (config('pricing.base_price') + $this->calc_technology_price_addon + $this->calc_long_movie_addon)
+        return (config('settings.pricing.base_price') + $this->calc_technology_price_addon + $this->calc_long_movie_addon)
         * $this->seats->count();
     }
 
     public function getCalcDiscountAttribute(){
-        return $this->seats->count() >= config('pricing.seat_discount_threshold') ? $this->calc_subtotal * config('pricing.seat_discount') : 0;
+        return $this->seats->count() >= config('settings.pricing.seat_discount_threshold') ? $this->calc_subtotal * config('settings.pricing.seat_discount') : 0;
     }
 
     public function getIsDiscountedAttribute(){

@@ -10,7 +10,7 @@
         <!-- Ticket border-->
         <div class="@if(!$loop->last)border-b-2 mb-3 md:mb-0 md:border-b-0 md:border-r-2 border-white @endif relative p-4 pr-3 flex-1 min-w-0 md:min-w-[26rem]">
             <!-- delete button -->
-            @if($ticket->screening->start_time->subHours(config('restrictions.hours_before_reservation_is_locked'))->isAfter(now()) && !$ticket->deleted_at)
+            @if($ticket->screening->start_time->subHours(config('settings.restrictions.hours_before_reservation_is_locked'))->isAfter(now()) && !$ticket->deleted_at)
             <button  x-data='{}' x-on:click.prevent="window.livewire.emitTo('users.tickets.delete-modal', 'showModal' , {{$ticket->id}})" class="absolute top-3 right-3 hover:text-red-700 text-white">
                 <i class="fa-solid fa-trash"></i>
             </button>
@@ -48,7 +48,7 @@
                             </div>
                             <!-- Right info-->
                             <div class="flex flex-row justify-between md:w-16">
-                                <span class="text-sm">{{config('pricing.base_price')}}</span>
+                                <span class="text-sm">{{config('settings.pricing.base_price')}}</span>
                                 <span class="text-sm">RSD</span>
                             </div>
                             <!-- End info-->

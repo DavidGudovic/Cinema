@@ -14,8 +14,8 @@ class ScreeningObserver
     public function creating(Screening $screening)
     {
              $screening->end_time =
-             $screening->start_time->addMinutes(config('advertising.duration') *
-             config('advertising.per_screening') + $screening->movie->duration);
+             $screening->start_time->addMinutes(config('settings.advertising.duration') *
+             config('settings.advertising.per_screening') + $screening->movie->duration);
 
              dispatch(new ScheduleAdverts());
     }
@@ -23,8 +23,8 @@ class ScreeningObserver
     public function updating(Screening $screening)
     {
         $screening->end_time =
-        $screening->start_time->addMinutes(config('advertising.duration') *
-        config('advertising.per_screening') + $screening->movie->duration);
+        $screening->start_time->addMinutes(config('settings.advertising.duration') *
+        config('settings.advertising.per_screening') + $screening->movie->duration);
     }
 
     public function deleted(Screening $screening)

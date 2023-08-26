@@ -20,7 +20,7 @@ class BusinessRequestSeeder extends Seeder
             if($request->requestable_type == "App\Models\Advert") {
                 $advert = Advert::factory()->create();
                 $request->requestable_id = $advert->id;
-                $request->price = config('advertising.price') * $advert->quantity;
+                $request->price = config('settings.advertising.price') * $advert->quantity;
                 $request->save();
                 $advert->business_request_id = $request->id;
                 $advert->save();

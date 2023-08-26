@@ -25,8 +25,6 @@ class DatePicker extends Component
     public $selected_dates = [];
     public $selected_times = [];
     public $unavailable_times = [];
-    public $locale;
-
 
     protected $listeners = [
         'clearDates' => 'clearDates',
@@ -35,7 +33,7 @@ class DatePicker extends Component
 
     public function mount()
     {
-        $this->movie_duration += config('advertising.duration') * config('advertising.per_screening');
+        $this->movie_duration += config('settings.advertising.duration') * config('settings.advertising.per_screening');
         $this->current_date = Carbon::now();
         $this->displayed_date = $this->current_date->copy();
         $this->fetchDateMap();
@@ -200,9 +198,9 @@ class DatePicker extends Component
      */
     private function initializeTimeSlots(): void
     {
-        $start = Carbon::today()->setTime(config('restrictions.opening_time'), 0, 0);
-        $end = Carbon::today()->setTime(config('restrictions.closing_time') - ($this->movie_duration / 60), 0, 0);
-        $period = CarbonPeriod::create($start, '15 minutes', $end);
+        $start = Carbon::today()->setTime(config('settings.restrictions.opening_time'), 0, 0);
+        $end = Carbon::today()->setTime(config('settings.restrictions.closing_time') - ($this->movie_duration / 60), 0, 0);
+        $period = CarbonPeriod::create($start, config('settings.restrictions.screening_periods') . ' minutes', $end);
 
         $this->times = array_map(function ($time) {
             return $time->format('H:i');

@@ -7,13 +7,13 @@
     <h1 class="font-extrabold text-4xl text-center">Rentiranje sala</h1>
 
         <!-- Filter -->
-        <div x-data='{duration: 1, hour: 8, date: "{{ \Carbon\Carbon::now()->addDays(config('restrictions.days_before_booking'))->format('Y-m-d') }}" }' class="flex flex-col md:flex-row gap-6 rounded-xl bg-neutral-200 p-2 px-4">
+        <div x-data='{duration: 1, hour: 8, date: "{{ \Carbon\Carbon::now()->addDays(config('settings.restrictions.days_before_booking'))->format('Y-m-d') }}" }' class="flex flex-col md:flex-row gap-6 rounded-xl bg-neutral-200 p-2 px-4">
             <!-- Responsive wrap group 1-->
             <div class="flex gap-6">
                 <!-- Datum -->
                 <div class="flex flex-col gap-1">
                     <p class="font-bold text-neutral-700 opacity-50">Pretraži od datuma</p>
-                    <input type="date"  x-model="date" min="{{ \Carbon\Carbon::now()->addDays(config('restrictions.days_before_booking'))->format('Y-m-d') }}" max="{{ \Carbon\Carbon::now()->addMonths(1)->format('Y-m-d') }}"  x-on:keydown="false;" class="rounded-md border text-neutral-700 border-neutral-700 p-1">
+                    <input type="date"  x-model="date" min="{{ \Carbon\Carbon::now()->addDays(config('settings.restrictions.days_before_booking'))->format('Y-m-d') }}" max="{{ \Carbon\Carbon::now()->addMonths(1)->format('Y-m-d') }}"  x-on:keydown="false;" class="rounded-md border text-neutral-700 border-neutral-700 p-1">
                 </div>
                 <!-- end datum -->
                 <!-- StartTime -->
@@ -22,8 +22,8 @@
                     <div class="relative flex gap-2 items-center rounded-md border text-neutral-700 border-neutral-700 bg-white p-[0.3rem] mr-4">
                         <span class="text-center text-neutral-700" readonly x-text="hour + ':00'"></span><i class="fa-regular fa-clock text-center text-neutral-700 opacity-50"></i>
                         <div class="absolute -right-8 top-1 flex flex-col justify-between">
-                            <i x-on:click="hour == {{config('restrictions.closing_time') - 4}} ? false : hour++" class="fa-solid fa-xl h-5 cursor-pointer text-neutral-700 opacity-70 hover:text-red-700 fa-chevron-up"></i>
-                            <i x-on:click="hour == {{config('restrictions.opening_time')}} ? false : hour--" class="fa-solid fa-xl h-5 cursor-pointer text-neutral-700 opacity-70 hover:text-red-700 fa-chevron-down"></i>
+                            <i x-on:click="hour == {{config('settings.restrictions.closing_time') - 4}} ? false : hour++" class="fa-solid fa-xl h-5 cursor-pointer text-neutral-700 opacity-70 hover:text-red-700 fa-chevron-up"></i>
+                            <i x-on:click="hour == {{config('settings.restrictions.opening_time')}} ? false : hour--" class="fa-solid fa-xl h-5 cursor-pointer text-neutral-700 opacity-70 hover:text-red-700 fa-chevron-down"></i>
                         </div>
                     </div>
                 </div>
@@ -38,8 +38,8 @@
                     <div  class=" relative flex items-center gap-2 rounded-md border text-neutral-700 border-neutral-700 bg-white p-[0.3rem] mr-4 cursor-pointer">
                         <span class="text-center text-neutral-700" readonly x-text="duration"></span><i class="ml-2 fa-solid fa-hourglass-start opacity-50 text-neutral-700"></i>
                         <div class="absolute -right-8 top-1 flex flex-col justify-between">
-                            <i x-on:click="duration == {{config('restrictions.max_booking')}} ? false : duration++" class="fa-solid fa-xl h-5 hover:text-red-700 text-neutral-700 opacity-70 fa-chevron-up"></i>
-                            <i x-on:click="duration == {{config('restrictions.min_booking')}} ? false : duration--" class="fa-solid fa-xl h-5 hover:text-red-700 text-neutral-700 opacity-70 fa-chevron-down"></i>
+                            <i x-on:click="duration == {{config('settings.restrictions.max_booking')}} ? false : duration++" class="fa-solid fa-xl h-5 hover:text-red-700 text-neutral-700 opacity-70 fa-chevron-up"></i>
+                            <i x-on:click="duration == {{config('settings.restrictions.min_booking')}} ? false : duration--" class="fa-solid fa-xl h-5 hover:text-red-700 text-neutral-700 opacity-70 fa-chevron-down"></i>
                         </div>
                     </div>
                 </div>
