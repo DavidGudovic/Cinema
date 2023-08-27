@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\Periods;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -102,7 +103,6 @@ class Screening extends Model
         return $query->whereIn(DB::raw('DATE(start_time)'), $dates);
     }
 
-
     public function scopeFromHall($query, $hallId)
     {
         return $query->where('hall_id', $hallId);
@@ -151,6 +151,35 @@ class Screening extends Model
 
     #endregion
 
+    #region Period scopes
+    public function scopeFromPeriod($query, Periods $period)
+    {
+        return match ($period) {
+            Periods::YEARLY() => $query->fromLastYear(),
+            Periods::MONTHLY() => $query->fromLastMonth(),
+            Periods::WEEKLY() => $query->fromLastWeek(),
+        };
+    }
+
+    public function scopeFromLastYear($query)
+    {
+        return $query->where('start_time', '>', now()->subYear()->startOfYear())
+            ->where('start_time', '<', now()->subYear()->endOfYear());
+    }
+
+    public function scopeFromLastMonth($query)
+    {
+        return $query->where('start_time', '>', now()->subMonth()->startOfMonth())
+            ->where('start_time', '<', now()->subMonth()->endOfMonth());
+    }
+
+    public function scopeFromLastWeek($query)
+    {
+        return $query->where('start_time', '>', now()->subWeek()->startOfWeek())
+            ->where('start_time', '<', now()->subWeek()->endOfWeek());
+    }
+
+    #end region
     public function scopeOverlapsWithTime($query, $start_time, $end_time)
     {
         return $query->where('start_time', '<=', $end_time)

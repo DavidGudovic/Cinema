@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\Periods;
 use App\Interfaces\Requestable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -113,6 +114,7 @@ class Advert extends Model implements Requestable //pseudo extends Models/Busine
         return $query->where('quantity_remaining', '>', 0);
     }
     #endregion
+
 
     public function scopeSearch($query, string $search_query)
     {

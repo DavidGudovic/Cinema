@@ -3,13 +3,16 @@
 namespace App\Services;
 
 
+use App\Enums\Periods;
 use App\Interfaces\CanExport;
 use App\Models\Advert;
 use App\Models\BusinessRequest;
+use App\Models\Screening;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Facades\DB;
 
 class AdvertService implements CanExport
@@ -28,7 +31,7 @@ class AdvertService implements CanExport
      *  Returns a paginated, filtered list of adverts or a searched through list of adverts
      *  All parameters are optional, if none are set, all adverts are returned, paginated by $quantity, default 10
      */
-    public function getFilteredAdvertsPaginated(RequestableService $requestableService, string $status = 'all', int $user_id = 0, string $quantity_left = 'any', string $search_query = '', bool $do_sort = false, string $sort_by = 'title', string $sort_direction = 'ASC', int $quantity = 10): LengthAwarePaginator|Collection
+    public function getFilteredAdvertsPaginated(RequestableService $requestableService, string $status = 'all', int $user_id = 0, string $quantity_left = 'any', string $search_query = '', bool $do_sort = false, string $sort_by = 'title', string $sort_direction = 'ASC', int $quantity = 10): LengthAwarePaginator|EloquentCollection
     {
         $sortParams = $requestableService->resolveSortByParameter($sort_by);
 
@@ -49,7 +52,7 @@ class AdvertService implements CanExport
      *  A view is each seat associated to a ticket associated to a screening associated to an advert x amount of adverts shown at screening (should be 1 in most cases)
      *  [Date => Views]
      */
-    public function getViewsByWeekMap(Advert $advert, ?int $quantity = 5): Collection
+    public function getViewsByWeekMap(Advert $advert, ?int $quantity = 5): array
     {
         return $advert->screenings()->pastForDays($quantity)
             ->with('tickets')
@@ -64,7 +67,7 @@ class AdvertService implements CanExport
                     ->sum(function ($ticket) {
                         return $ticket->seat_count; // Sum the seat_count for the tickets
                     });
-            });
+            })->toArray();
     }
 
     /**
@@ -216,5 +219,13 @@ class AdvertService implements CanExport
         }
         array_unshift($output, $headers);
         return $output;
+    }
+
+    public function getAdvertsCountByPeriod(Periods $period, int $hall_id): EloquentCollection
+    {
+        return Screening::withCount('adverts')
+            ->fromPeriod($period)
+            ->fromHallOrManagedHalls($hall_id)
+            ->groupBy('start_time');
     }
 }

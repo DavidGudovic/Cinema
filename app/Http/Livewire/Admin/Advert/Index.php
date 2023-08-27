@@ -2,9 +2,7 @@
 
 namespace App\Http\Livewire\Admin\Advert;
 
-use App\Enums\Status;
 use App\Http\Livewire\Admin\TableBase;
-use App\Models\Advert;
 use App\Services\AdvertService;
 use App\Services\ExportService;
 use App\Services\RequestableService;
