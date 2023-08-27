@@ -101,10 +101,11 @@ trait ChartModelBuilder
      */
     private function setMultiData(LineChartModel $chartModel, array $data) : void
     {
-        foreach ($data as $series => $points) {
-            foreach($points as $key => $value) {
+        foreach ($data as $key => $seriesData) {
+            foreach($seriesData as $series => $value) {
                 $chartModel->addSeriesPoint($series, $key, $value);
             }
         }
     }
+
 }
