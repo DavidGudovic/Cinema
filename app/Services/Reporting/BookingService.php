@@ -5,10 +5,18 @@ namespace App\Services\Reporting;
 use App\Enums\Periods;
 use App\Interfaces\CanReport;
 use App\Models\Booking;
+use App\Traits\Reporting\DataFormatter;
+use App\Traits\Reporting\FillerDataAttributes;
+use Carbon\Carbon;
 
 class BookingService implements CanReport
 {
+    use FillerDataAttributes, DataFormatter;
+
     /**
+     * Returns an array of accepted bookings for a hall/s grouped by date
+     * [Date => count, Date => count, ...]
+     *
      * @param Periods $period
      * @param int $hall_id
      * @return array
@@ -30,21 +38,15 @@ class BookingService implements CanReport
 
     }
 
+    /**
+     * Builds an array with all possible periods as keys and 0 as values
+     *
+     * @param Periods|null $period
+     * @return array
+     */
     public function buildFillerData(?Periods $period = null): array
     {
         // TODO: Implement buildFillerData() method.
     }
 
-    /**
-     * @param Periods $period
-     * @return string
-     */
-    public function getReportDataFormat(Periods $period): string
-    {
-        return match ($period) {
-            Periods::WEEKLY => 'd/m',
-            Periods::MONTHLY => 'W',
-            Periods::YEARLY => 'M',
-        };
-    }
 }

@@ -46,5 +46,4 @@ class RequestableService implements CanReport
         }
         return $data;
     }
-
 }

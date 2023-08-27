@@ -5,15 +5,20 @@ namespace App\Services\Reporting;
 use App\Enums\Periods;
 use App\Interfaces\CanReport;
 use App\Models\Screening;
-use Carbon\Carbon;
+use App\Traits\Reporting\DataFormatter;
+use App\Traits\Reporting\FillerDataAttributes;
 
 class TicketService implements CanReport
 {
+    use FillerDataAttributes, DataFormatter;
+
     /**
+     * Returns an array of tickets count grouped by date and by status
+     * [ [Date => [Otkazane => int, Ostvarene => int]], [Date => [Otkazane => int, Ostvarene => int]], ... ]
+     *
      * @param Periods $period
      * @param int $hall_id
      * @return array
-     * [ [Date => [Otkazane => int, Ostvarene => int]], [Date => [Otkazane => int, Ostvarene => int]], ... ]
      */
     public function getReportableDataByPeriod(Periods $period, int $hall_id): array
     {
@@ -37,6 +42,8 @@ class TicketService implements CanReport
     }
 
     /**
+     * Builds an array with all possible periods and statuses as keys and 0 as values
+     *
      * @param Periods|null $period
      * @return array
      */
@@ -44,27 +51,10 @@ class TicketService implements CanReport
     {
         $filler_data = [];
 
-        // Assigns the correct values to the variables based on the period
-        [$start_date, $end_date, $incrementFunc, $format] = match ($period) {
-            Periods::WEEKLY => [
-                Carbon::today()->subWeek(),
-                Carbon::today(),
-                fn($date) => $date->addDay(),
-                $this->getReportDataFormat($period)
-            ],
-            Periods::MONTHLY => [
-                Carbon::today()->subMonth(),
-                Carbon::today(),
-                fn($date) => $date->addWeek(),
-                $this->getReportDataFormat($period)
-            ],
-            Periods::YEARLY => [
-                Carbon::today()->subYear(),
-                Carbon::today(),
-                fn($date) => $date->addMonth(),
-                $this->getReportDataFormat($period)
-            ],
-        };
+        list($start_date, $end_date, $incrementFunc, $format) =
+            $this->getFillerAttributes(function ($period) {
+                return $this->getReportDataFormat($period);
+            }, $period);
 
         for ($date = $start_date; $date->lte($end_date); $incrementFunc($date)) {
             $filler_data[$date->format($format)]['Otkazane'] = 0;
@@ -72,18 +62,5 @@ class TicketService implements CanReport
         }
 
         return $filler_data;
-    }
-
-    /**
-     * @param Periods $period
-     * @return string
-     */
-    public function getReportDataFormat(Periods $period): string
-    {
-        return match ($period) {
-            Periods::WEEKLY => 'd/m',
-            Periods::MONTHLY => 'W',
-            Periods::YEARLY => 'M',
-        };
     }
 }
