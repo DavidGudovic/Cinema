@@ -7,12 +7,12 @@ enum Periods : string
     case YEARLY = 'yearly';
     case WEEKLY = 'lifetime';
 
-    public static function toSrLatinString(Periods $period) : string
+    public function toSrLatinString() : string
     {
-        return match($period) {
-            Periods::MONTHLY => 'Mesečni',
-            Periods::YEARLY => 'Godišnji',
-            Periods::WEEKLY => 'Nedeljni',
-        };
+       return match($this) {
+           self::MONTHLY => 'Mesečni',
+           self::YEARLY => 'Godišnji',
+           self::WEEKLY => 'Nedeljni',
+       };
     }
 }
