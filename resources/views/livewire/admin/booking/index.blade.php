@@ -178,7 +178,7 @@
             </td>
             <td class="p-2">
                 <div class="flex gap-5 justify-center items-center h-full">
-                    @if($booking->businessRequest->status == 'PENDING')
+                    @if($booking->businessRequest->status == 'PENDING' && $booking->start_time > now())
                         <a href="{{route('bookings.edit', ['booking' => $booking, 'action' => 'ACCEPT'])}}">
                             <i class="fa-solid fa-check"></i>
                         </a>
@@ -188,10 +188,10 @@
                         </a>
 
                     @else
-                        <a href="#" aria-disabled="true" class="hover:text-white opacity-30 cursor-default">
+                        <a href="#" aria-disabled="true" class="hover:text-white opacity-10 cursor-default">
                             <i class="fa-solid fa-check"></i>
                         </a>
-                        <a href="#" aria-disabled="true" class="opacity-30 cursor-default text-red-700">
+                        <a href="#" aria-disabled="true" class="opacity-10 cursor-default text-red-700">
                             <i class="fa-solid fa-x"></i>
                         </a>
 
