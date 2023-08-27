@@ -3,8 +3,6 @@
 namespace App\Http\Livewire\Admin\Screening;
 
 use App\Http\Livewire\ModalBase;
-use App\Jobs\UnscheduleAdverts;
-use App\Models\Screening;
 use App\Services\ScreeningService;
 use Illuminate\Support\Collection;
 
