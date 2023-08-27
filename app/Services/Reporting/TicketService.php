@@ -6,11 +6,11 @@ use App\Enums\Periods;
 use App\Interfaces\CanReport;
 use App\Models\Screening;
 use App\Traits\Reporting\DataFormatter;
-use App\Traits\Reporting\FillerDataAttributes;
+use App\Traits\Reporting\FillerData;
 
 class TicketService implements CanReport
 {
-    use FillerDataAttributes, DataFormatter;
+    use FillerData, DataFormatter;
 
     /**
      * Returns an array of tickets count grouped by date and by status
@@ -38,29 +38,13 @@ class TicketService implements CanReport
             ->sortKeys()
             ->toArray();
 
-        return array_replace($this->buildFillerData($period), $data);
-    }
+        $filler_data = $this->buildFillerData(function ($period) {
+            return [
+                'Otkazane' => 0,
+                'Ostvarene' => 0,
+            ];
+        }, $period);
 
-    /**
-     * Builds an array with all possible periods and statuses as keys and 0 as values
-     *
-     * @param Periods|null $period
-     * @return array
-     */
-    public function buildFillerData(?Periods $period = null): array
-    {
-        $filler_data = [];
-
-        list($start_date, $end_date, $incrementFunc, $format) =
-            $this->getFillerAttributes(function ($period) {
-                return $this->getReportDataFormat($period);
-            }, $period);
-
-        for ($date = $start_date; $date->lte($end_date); $incrementFunc($date)) {
-            $filler_data[$date->format($format)]['Otkazane'] = 0;
-            $filler_data[$date->format($format)]['Ostvarene'] = 0;
-        }
-
-        return $filler_data;
+        return array_replace($filler_data, $data);
     }
 }

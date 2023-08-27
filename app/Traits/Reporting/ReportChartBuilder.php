@@ -11,6 +11,7 @@ use Asantibanez\LivewireCharts\Models\BaseChartModel;
 trait ReportChartBuilder
 {
     use ChartModelBuilder, ColorPalette;
+
     protected Periods $period = Periods::MONTHLY;
     protected int $hall_id = 0;
 

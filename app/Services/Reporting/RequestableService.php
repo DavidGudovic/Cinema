@@ -34,11 +34,11 @@ class RequestableService implements CanReport
 
     /**
      *  Builds an array with all possible statuses as keys and 0 as values
+     *  Does not conform to the FillerData trait
      *
-     * @param Periods|null $period
      * @return array
      */
-    public function buildFillerData(?Periods $period = null): array
+    public function buildFillerData(): array
     {
         $data = [];
         foreach (Status::cases() as $status) {

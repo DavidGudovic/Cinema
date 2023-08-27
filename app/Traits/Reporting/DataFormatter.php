@@ -10,7 +10,7 @@ trait DataFormatter
      * @param Periods $period
      * @return string
      */
-    public function getReportDataFormat(Periods $period): string
+    protected function getReportDataFormat(Periods $period): string
     {
         return match ($period) {
             Periods::WEEKLY => 'd/m',

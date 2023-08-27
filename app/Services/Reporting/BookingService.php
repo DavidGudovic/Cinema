@@ -6,12 +6,12 @@ use App\Enums\Periods;
 use App\Interfaces\CanReport;
 use App\Models\Booking;
 use App\Traits\Reporting\DataFormatter;
-use App\Traits\Reporting\FillerDataAttributes;
+use App\Traits\Reporting\FillerData;
 use Carbon\Carbon;
 
 class BookingService implements CanReport
 {
-    use FillerDataAttributes, DataFormatter;
+    use FillerData, DataFormatter;
 
     /**
      * Returns an array of accepted bookings for a hall/s grouped by date
@@ -23,7 +23,7 @@ class BookingService implements CanReport
      */
     public function getReportableDataByPeriod(Periods $period, int $hall_id): array
     {
-        return Booking::with('businessRequest')
+       $data = Booking::with('businessRequest')
             ->fromHallOrManagedHalls($hall_id)
             ->fromPeriod($period)
             ->status('accepted')
@@ -36,17 +36,10 @@ class BookingService implements CanReport
             })
             ->toArray();
 
-    }
+        $filler_data = $this->buildFillerData(function ($period) {
+            return 0;
+        }, $period);
 
-    /**
-     * Builds an array with all possible periods as keys and 0 as values
-     *
-     * @param Periods|null $period
-     * @return array
-     */
-    public function buildFillerData(?Periods $period = null): array
-    {
-        // TODO: Implement buildFillerData() method.
+        return array_replace($filler_data, $data);
     }
-
 }

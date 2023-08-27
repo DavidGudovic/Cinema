@@ -6,11 +6,12 @@ use App\Enums\Periods;
 use App\Interfaces\CanReport;
 use App\Models\Screening;
 use App\Traits\Reporting\DataFormatter;
-use App\Traits\Reporting\FillerDataAttributes;
+use App\Traits\Reporting\FillerData;
 
 class AdvertService implements CanReport
 {
-    use FillerDataAttributes, DataFormatter;
+    use FillerData, DataFormatter;
+
     /**
      * Returns an array of adverts screenings count grouped by date
      * [Date => count, Date => count, ...]
@@ -21,7 +22,7 @@ class AdvertService implements CanReport
      */
     public function getReportableDataByPeriod(Periods $period, int $hall_id): array
     {
-        return Screening::withCount('adverts')
+        $data = Screening::withCount('adverts')
             ->fromPeriod($period)
             ->fromHallOrManagedHalls($hall_id)->get()
             ->groupBy(function ($screening) use ($period) {
@@ -32,17 +33,11 @@ class AdvertService implements CanReport
             })
             ->sortKeys()
             ->toArray();
+
+        $filler_data = $this->buildFillerData(function ($period) {
+            return 0;
+        }, $period);
+
+        return array_replace($filler_data, $data);
     }
-
-    /**
-     * Builds an array with all possible periods as keys and 0 as values
-     *
-     * @param Periods|null $period
-     * @return array
-     */
-    public function buildFillerData(?Periods $period = null): array
-    {
-
-    }
-
 }
