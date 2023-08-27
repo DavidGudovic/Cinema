@@ -2,12 +2,8 @@
 
 namespace App\Http\Livewire\Admin\Charts;
 
-use App\Enums\Periods;
-use App\Services\Resources\AdvertService;
-use App\Traits\ChartModelBuilder;
-use App\Traits\ColorPalette;
+use App\Services\Reporting\AdvertService;
 use App\Traits\ReportChartBuilder;
-use Asantibanez\LivewireCharts\Models\BaseChartModel;
 use Livewire\Component;
 
 class AdvertsChart extends Component
@@ -25,9 +21,8 @@ class AdvertsChart extends Component
             'chartModel' => $this->buildReportChart(
                 title: 'Oglašavanje',
                 service: $advertService,
-                colors: null,
                 chart_type: 'area',
-                animated: true
+                animated: true,
             )
         ]);
     }

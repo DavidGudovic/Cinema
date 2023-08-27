@@ -2,33 +2,27 @@
 
 namespace App\Http\Livewire\Admin\Charts;
 
-use App\Traits\ChartModelBuilder;
-use App\Traits\ColorPalette;
+use App\Services\Reporting\BookingService;
+use App\Traits\ReportChartBuilder;
 use Livewire\Component;
 
 class BookingsChart extends Component
 {
-    use ChartModelBuilder, ColorPalette;
+    use ReportChartBuilder;
 
-    public function render()
+    protected $listeners = [
+        'setPeriod' => 'setPeriod',
+        'setHall' => 'setHall',
+    ];
+    public function render(BookingService $bookingService)
     {
         return view('livewire.admin.charts.bookings-chart', [
-            'chartModel' => $this->buildChartModel(
+            'chartModel' => $this->buildReportChart(
                 title: 'Rentiranja',
-                data: [
-                    'Disabled' => 230,
-                    'Enabled' => 430,
-                    'Pending' => 210,
-                    'Canceled' => 120,
-                ],
-                colors: [
-                    '#10B981',
-                    '#EF4444',
-                    '#F59E0B',
-                    '#3B82F6',
-                ],
+                service: $bookingService,
                 chart_type: 'area',
-                animated: true),
+                animated: true,
+            )
         ]);
     }
 

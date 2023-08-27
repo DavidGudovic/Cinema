@@ -2,28 +2,23 @@
 
 namespace App\Http\Livewire\Admin\Charts;
 
-use App\Traits\ChartModelBuilder;
-use App\Traits\ColorPalette;
+use App\Services\Reporting\RequestableService;
+use App\Traits\ReportChartBuilder;
 use Livewire\Component;
 
 class RequestsChart extends Component
 {
-    use ChartModelBuilder, ColorPalette;
+    use ReportChartBuilder;
 
-    public function render()
+    public function render(RequestableService $requestableService)
     {
         return view('livewire.admin.charts.requests-chart', [
-            'chartModel' => $this->buildChartModel(
+            'chartModel' => $this->buildReportChart(
                 title: 'Requests',
-                data: [
-                    'Prihvacen' => 10,
-                    'Odbijen' => 20,
-                    'Na cekanju' => 30,
-                    'Otkazan' => 40,
-                    ],
-                colors: ['Otkazan' => '#f44336', 'Na cekanju' => '#E91E63', 'Odbijen' => '#9C27B0', 'Prihvacen' => '#673AB7'],
+                service: $requestableService,
                 chart_type: 'pie',
                 animated: true,
+                colors: ['Otkazan' => '#f44336', 'Na čekanju' => '#E91E63', 'Odbijen' => '#9C27B0', 'Prihvaćen' => '#673AB7'],
             ),
         ]);
     }
