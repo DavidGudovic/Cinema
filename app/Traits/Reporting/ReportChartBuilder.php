@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Traits;
+namespace App\Traits\Reporting;
 
 use App\Enums\Periods;
 use App\Interfaces\CanReport;
+use App\Traits\ChartModelBuilder;
+use App\Traits\ColorPalette;
 use Asantibanez\LivewireCharts\Models\BaseChartModel;
 
 trait ReportChartBuilder
