@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\Periods;
 use App\Enums\Status;
 use App\Interfaces\Requestable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -104,8 +105,50 @@ class BusinessRequest extends Model implements Requestable //pseudo superclass f
         return $query->where('user_id', $user);
     }
 
-
     public function scopeHasReclamation($query){
         return $query->whereHas('reclamation');
+    }
+
+  #region Period scopes
+    public function scopeFromPeriod($query, Periods $period)
+    {
+        return match ($period) {
+            Periods::YEARLY => $query->fromLastYear(),
+            Periods::MONTHLY => $query->fromLastMonth(),
+            Periods::WEEKLY => $query->fromLastWeek(),
+        };
+    }
+
+    public function scopeFromLastYear($query)
+    {
+        return $query->where('created_at', '>', now()->subYear()->startOfYear())
+            ->where('created_at', '<', now()->subYear()->endOfYear());
+    }
+
+    public function scopeFromLastMonth($query)
+    {
+        return $query->where('created_at', '>', now()->subMonth()->startOfMonth())
+            ->where('created_at', '<', now()->subMonth()->endOfMonth());
+    }
+
+    public function scopeFromLastWeek($query)
+    {
+        return $query->where('created_at', '>', now()->subWeek()->startOfWeek())
+            ->where('created_at', '<', now()->subWeek()->endOfWeek());
+    }
+    #end region
+
+    public function scopeFromHallOrManagedHalls($query, $hallId)
+    {
+        return match ($hallId) {
+            0 => $query->whereHasMorph('requestable', [Booking::class], function ($query) {
+                $query->whereHas('hall', function ($query) {
+                    $query->managedBy(auth()->user()->id);
+                });
+            }),
+            default => $query->whereHasMorph('requestable', [Booking::class], function ($query) use ($hallId) {
+                $query->where('hall_id', $hallId);
+            })
+        };
     }
 }

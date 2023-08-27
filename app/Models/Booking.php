@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Enums\Periods;
 use App\Interfaces\Requestable;
+use App\Traits\PeriodScopes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -10,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 
 class Booking extends Model implements Requestable //pseudo extends Models/BusinessRequest
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, PeriodScopes;
 
     public $timestamps = false;
 
@@ -118,7 +120,15 @@ class Booking extends Model implements Requestable //pseudo extends Models/Busin
             });
         });
     }
-
+    public function scopeFromHallOrManagedHalls($query, $hallId)
+    {
+        return match ($hallId) {
+            0 => $query->whereHas('hall', function ($query) {
+                $query->managedBy(auth()->user()->id);
+            }),
+            default => $query->fromHall($hallId)
+        };
+    }
     public function scopeFromHall($query, $hallId)
     {
         return $query->where('hall_id', $hallId);
