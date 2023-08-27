@@ -2,25 +2,28 @@
 
 namespace App\Traits\Reporting;
 
-use App\Enums\Periods;
+use App\Enums\Period;
 use App\Interfaces\CanReport;
 use App\Traits\ChartModelBuilder;
 use App\Traits\ColorPalette;
 use Asantibanez\LivewireCharts\Models\BaseChartModel;
 
+/**
+ * Extension of the ChartModelBuilder trait, attempts implementing a strategy pattern to build the data for a chart model
+ */
 trait ReportChartBuilder
 {
     use ChartModelBuilder, ColorPalette;
 
-    protected Periods $period = Periods::MONTHLY;
+    protected Period $period = Period::WEEKLY;
     protected int $hall_id = 0;
 
-    protected function setPeriod(Periods $period): void
+    public function setPeriod(string $period): void
     {
-        $this->period = $period;
+        $this->period = Period::from($period);
     }
 
-    protected function setHall(int $hall_id): void
+    public function setHall(int $hall_id): void
     {
         $this->hall_id = $hall_id;
     }
@@ -43,18 +46,5 @@ trait ReportChartBuilder
             chart_type: $chart_type,
             animated: $animated,
         );
-    }
-
-    /**
-     * @param Periods $period
-     * @return string
-     */
-    protected function getDataFormat(Periods $period): string
-    {
-        return match ($period) {
-            Periods::WEEKLY => 'd/m',
-            Periods::MONTHLY => 'd/M',
-            Periods::YEARLY => 'M',
-        };
     }
 }

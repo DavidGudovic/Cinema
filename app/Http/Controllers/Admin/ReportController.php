@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Services\Resources\HallService;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
@@ -18,9 +19,11 @@ class ReportController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(HallService $hallService)
     {
-        return view('admin.report.create');
+        return view('admin.report.create',[
+            'halls' => $hallService->getHalls(auth()->user()->id),
+            ]);
     }
 
     /**

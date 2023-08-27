@@ -2,9 +2,9 @@
 
 namespace App\Interfaces;
 
-use App\Enums\Periods;
+use App\Enums\Period;
 
 interface CanReport
 {
-    public function getReportableDataByPeriod(Periods $period, int $hall_id): array;
+    public function getReportableDataByPeriod(Period $period, int $hall_id): array;
 }

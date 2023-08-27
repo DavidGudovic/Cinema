@@ -2,7 +2,7 @@
 
 namespace App\Services\Reporting;
 
-use App\Enums\Periods;
+use App\Enums\Period;
 use App\Interfaces\CanReport;
 use App\Models\Booking;
 use App\Traits\Reporting\DataFormatter;
@@ -17,11 +17,11 @@ class BookingService implements CanReport
      * Returns an array of accepted bookings for a hall/s grouped by date
      * [Date => count, Date => count, ...]
      *
-     * @param Periods $period
+     * @param Period $period
      * @param int $hall_id
      * @return array
      */
-    public function getReportableDataByPeriod(Periods $period, int $hall_id): array
+    public function getReportableDataByPeriod(Period $period, int $hall_id): array
     {
        $data = Booking::with('businessRequest')
             ->fromHallOrManagedHalls($hall_id)

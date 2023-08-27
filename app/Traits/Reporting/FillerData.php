@@ -2,7 +2,7 @@
 
 namespace App\Traits\Reporting;
 
-use App\Enums\Periods;
+use App\Enums\Period;
 use Carbon\Carbon;
 
 trait FillerData
@@ -11,10 +11,10 @@ trait FillerData
      * Builds an array with all possible periods and statuses as keys and 0 as values
      *
      * @param callable $customLogic
-     * @param Periods|null $period
+     * @param Period|null $period
      * @return array
      */
-    public function buildFillerData(callable $customLogic, ?Periods $period = null): array
+    public function buildFillerData(callable $customLogic, ?Period $period = null): array
     {
         $filler_data = [];
 
@@ -33,25 +33,25 @@ trait FillerData
 
     /**
      * @param callable $dataFormatter
-     * @param Periods|null $period
+     * @param Period|null $period
      * @return array
      */
-    protected function getFillerAttributes(callable $dataFormatter, ?Periods $period = null): array
+    protected function getFillerAttributes(callable $dataFormatter, ?Period $period = null): array
     {
         return [$start_date, $end_date, $incrementFunc, $format] = match ($period) {
-            Periods::WEEKLY => [
+            Period::WEEKLY => [
                 Carbon::today()->subWeek(),
                 Carbon::today(),
                 fn($date) => $date->addDay(),
                 $dataFormatter($period)
             ],
-            Periods::MONTHLY => [
+            Period::MONTHLY => [
                 Carbon::today()->subMonth(),
                 Carbon::today(),
                 fn($date) => $date->addWeek(),
                 $dataFormatter($period)
             ],
-            Periods::YEARLY => [
+            Period::YEARLY => [
                 Carbon::today()->subYear(),
                 Carbon::today(),
                 fn($date) => $date->addMonth(),

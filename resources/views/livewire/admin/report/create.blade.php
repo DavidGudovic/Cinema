@@ -18,11 +18,12 @@
                     <i class="fa-solid fa-hourglass opacity-50"></i>
                     <div class="flex flex-col gap-1">
                         <label for="type" class="opacity-50">Tip izveštaja</label>
-                        <select class="rounded-xl p-3 w-full bg-gray-950 bg-opacity-10 border border-white cursor-pointer" name="a" id="type">
-                            <option value="">Mesecni</option>
-                            <option value="">Mesecni</option>
-                            <option value="">Mesecni</option>
-                            <option value="">Mesecni</option>
+                        <select wire:model="selected_period" wire:change="syncState"
+                            class="rounded-xl p-3 w-full bg-gray-950 bg-opacity-10 border border-white cursor-pointer"
+                            name="a" id="type">
+                            @foreach($periods as $period)
+                                <option value="{{$period}}">{{$period->toSrLatinString()}}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
@@ -32,21 +33,17 @@
                     <i class="fa-solid fa-people-roof opacity-50"></i>
                     <div class="flex flex-col gap-1">
                         <label for="hall" class="opacity-50">Sala</label>
-                        <select class="rounded-xl p-3 w-full bg-gray-950 bg-opacity-10 border border-white cursor-pointer" name="a" id="hall">
-                            <option value="">Mesecni</option>
-                            <option value="">Mesecni</option>
-                            <option value="">Mesecni</option>
-                            <option value="">Mesecni</option>
+                        <select wire:model="selected_hall" wire:change="syncState"
+                            class="rounded-xl p-3 w-full bg-gray-950 bg-opacity-10 border border-white cursor-pointer"
+                            name="a" id="hall">
+                            <option value="0">Sve sale</option>
+                            @foreach($halls as $hall)
+                                <option value="{{$hall->id}}">{{$hall->name}}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
                 <!-- End Hall -->
-
-                <!-- Submit -->
-                <button type="submit"
-                        class="text-center h-full w-full bg-gray-950 bg-opacity-10 border rounded-xl border-white text-white cursor-pointer hover:text-red-700 hover:border-red-700">Prikazi izvestaj
-                </button>
-                <!-- End Submit -->
             </div>
             <!-- End options -->
             <!-- Inputs -->
@@ -73,7 +70,8 @@
                 <!-- End text -->
                 <!-- Submit -->
                 <button type="submit"
-                        class="text-center w-full bg-gray-950 opacity-80 border rounded-2xl border-white text-white p-2 mt-4 hover:text-red-700 hover:border-red-700">Generiši
+                        class="text-center w-full bg-gray-950 opacity-80 border rounded-2xl border-white text-white p-2 mt-4 hover:text-red-700 hover:border-red-700">
+                    Generiši
                     izveštaj
                 </button>
 
@@ -85,7 +83,7 @@
     <!-- End left side -->
 
     <!-- Request charts -->
-    <div class="flex flex-col gap-6 w-full h-full bg-dark-blue rounded-2xl p-4">
+    <div wire:ignore class="flex flex-col gap-6 w-full h-full bg-dark-blue rounded-2xl p-4">
         <div class="w-full h-full border border-white">
             @livewire('admin.charts.requests-chart')
         </div>

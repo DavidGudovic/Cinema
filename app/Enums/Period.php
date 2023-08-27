@@ -1,11 +1,11 @@
 <?php
 namespace App\Enums;
 
-enum Periods : string
+enum Period : string
 {
-    case MONTHLY = 'monthly';
-    case YEARLY = 'yearly';
-    case WEEKLY = 'lifetime';
+    case MONTHLY = 'MONTHLY';
+    case YEARLY = 'YEARLY';
+    case WEEKLY = 'WEEKLY';
 
     public function toSrLatinString() : string
     {

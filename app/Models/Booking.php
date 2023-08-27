@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Enums\Periods;
+use App\Enums\Period;
 use App\Interfaces\Requestable;
 use App\Traits\PeriodScopes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Enums\Periods;
+use App\Enums\Period;
 use App\Enums\Status;
 use App\Interfaces\Requestable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -110,12 +110,12 @@ class BusinessRequest extends Model implements Requestable //pseudo superclass f
     }
 
   #region Period scopes
-    public function scopeFromPeriod($query, Periods $period)
+    public function scopeFromPeriod($query, Period $period)
     {
         return match ($period) {
-            Periods::YEARLY => $query->fromLastYear(),
-            Periods::MONTHLY => $query->fromLastMonth(),
-            Periods::WEEKLY => $query->fromLastWeek(),
+            Period::YEARLY => $query->fromLastYear(),
+            Period::MONTHLY => $query->fromLastMonth(),
+            Period::WEEKLY => $query->fromLastWeek(),
         };
     }
 

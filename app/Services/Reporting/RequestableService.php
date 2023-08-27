@@ -2,31 +2,32 @@
 
 namespace App\Services\Reporting;
 
-use App\Enums\Periods;
+use App\Enums\Period;
 use App\Enums\Status;
 use App\Interfaces\CanReport;
 use App\Models\BusinessRequest;
 
 class RequestableService implements CanReport
 {
-
     /**
      * [status => count, status => count, ...]
      *
-     * @param Periods $period
+     * @param Period $period
      * @param int $hall_id
      *
      * @return array
      */
-    public function getReportableDataByPeriod(Periods $period, int $hall_id): array
+    public function getReportableDataByPeriod(Period $period, int $hall_id): array
     {
         $data = BusinessRequest::fromPeriod($period)
             ->fromHallOrManagedHalls($hall_id)
             ->get()
             ->groupBy(function ($requests) {
                 return $requests->status;
-            })->map(function ($requests) {
-                return $requests->count();
+            })->mapWithKeys(function ($requests_collection, $status_key) { // mapWithKeys is used to convert the Status enum to a string
+                return [
+                    Status::from($status_key)->toSrLatinString() => $requests_collection->count()
+                ];
             })->toArray();
 
         return array_replace($this->buildFillerData(), $data);

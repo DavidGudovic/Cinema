@@ -2,7 +2,7 @@
 
 namespace App\Services\Reporting;
 
-use App\Enums\Periods;
+use App\Enums\Period;
 use App\Interfaces\CanReport;
 use App\Models\Screening;
 use App\Traits\Reporting\DataFormatter;
@@ -16,11 +16,11 @@ class TicketService implements CanReport
      * Returns an array of tickets count grouped by date and by status
      * [ [Date => [Otkazane => int, Ostvarene => int]], [Date => [Otkazane => int, Ostvarene => int]], ... ]
      *
-     * @param Periods $period
+     * @param Period $period
      * @param int $hall_id
      * @return array
      */
-    public function getReportableDataByPeriod(Periods $period, int $hall_id): array
+    public function getReportableDataByPeriod(Period $period, int $hall_id): array
     {
         $data = Screening::with('tickets')
             ->fromPeriod($period)

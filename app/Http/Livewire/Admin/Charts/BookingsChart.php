@@ -3,7 +3,7 @@
 namespace App\Http\Livewire\Admin\Charts;
 
 use App\Services\Reporting\BookingService;
-use App\Traits\ReportChartBuilder;
+use App\Traits\Reporting\ReportChartBuilder;
 use Livewire\Component;
 
 class BookingsChart extends Component

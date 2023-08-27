@@ -2,20 +2,20 @@
 
 namespace App\Traits\Reporting;
 
-use App\Enums\Periods;
+use App\Enums\Period;
 
 trait DataFormatter
 {
     /**
-     * @param Periods $period
+     * @param Period $period
      * @return string
      */
-    protected function getReportDataFormat(Periods $period): string
+    protected function getReportDataFormat(Period $period): string
     {
         return match ($period) {
-            Periods::WEEKLY => 'd/m',
-            Periods::MONTHLY => 'W',
-            Periods::YEARLY => 'M',
+            Period::WEEKLY => 'd/m',
+            Period::MONTHLY => 'W',
+            Period::YEARLY => 'M',
         };
     }
 }

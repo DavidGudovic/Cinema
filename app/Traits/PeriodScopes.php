@@ -2,16 +2,16 @@
 
 namespace App\Traits;
 
-use App\Enums\Periods;
+use App\Enums\Period;
 
 trait PeriodScopes
 {
-    public function scopeFromPeriod($query, Periods $period)
+    public function scopeFromPeriod($query, Period $period)
     {
         return match ($period) {
-            Periods::YEARLY => $query->fromLastYear(),
-            Periods::MONTHLY => $query->fromLastMonth(),
-            Periods::WEEKLY => $query->fromLastWeek(),
+            Period::YEARLY => $query->fromLastYear(),
+            Period::MONTHLY => $query->fromLastMonth(),
+            Period::WEEKLY => $query->fromLastWeek(),
         };
     }
 

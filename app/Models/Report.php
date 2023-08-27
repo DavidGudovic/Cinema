@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Enums\Periods;
+use App\Enums\Period;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -35,7 +35,7 @@ class Report extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'duration' => Periods::class,
+        'duration' => Period::class,
     ];
 
 
