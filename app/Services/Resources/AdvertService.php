@@ -2,13 +2,9 @@
 
 namespace App\Services\Resources;
 
-
-use App\Enums\Periods;
 use App\Interfaces\CanExport;
-use App\Interfaces\CanReport;
 use App\Models\Advert;
 use App\Models\BusinessRequest;
-use App\Models\Screening;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
@@ -16,7 +12,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
-class AdvertService implements CanExport, CanReport
+class AdvertService implements CanExport
 {
     /**
      * @param RequestableService $requestableService
@@ -220,41 +216,4 @@ class AdvertService implements CanExport, CanReport
         array_unshift($output, $headers);
         return $output;
     }
-
-    #region CanReport implementation
-
-    /**
-     * @param Periods $period
-     * @param int $hall_id
-     * @return array
-     */
-    public function getReportableDataByPeriod(Periods $period, int $hall_id): array
-    {
-        return Screening::withCount('adverts')
-            ->fromPeriod($period)
-            ->fromHallOrManagedHalls($hall_id)->get()
-            ->groupBy(function ($screening) use ($period) {
-                return $screening->start_time->format($this->getReportDataFormat($period));
-            })
-            ->map(function ($screenings) {
-                return $screenings->sum('adverts_count');
-            })
-            ->sortKeys()
-            ->toArray();
-    }
-
-    /**
-     * @param Periods $period
-     * @return string
-     */
-    public function getReportDataFormat(Periods $period): string
-    {
-        return match ($period) {
-            Periods::WEEKLY => 'd/m',
-            Periods::MONTHLY => 'd/M',
-            Periods::YEARLY => 'M',
-        };
-    }
-    #endregion
-
 }
