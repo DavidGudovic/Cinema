@@ -3,7 +3,7 @@
 namespace App\Http\Livewire\Admin\Screening;
 
 use App\Models\Hall;
-use App\Services\HallService;
+use App\Services\Resources\HallService;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Livewire\Component;

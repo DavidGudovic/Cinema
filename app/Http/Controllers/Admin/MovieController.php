@@ -6,10 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Movie\StoreRequest;
 use App\Http\Requests\Movie\UpdateRequest;
 use App\Models\Movie;
-use App\Services\GenreService;
-use App\Services\MovieService;
+use App\Services\Resources\GenreService;
+use App\Services\Resources\MovieService;
 use App\Services\UploadService;
-use Illuminate\Http\Request;
 
 class MovieController extends Controller
 {

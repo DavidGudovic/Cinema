@@ -3,9 +3,9 @@
 namespace App\Http\Livewire\Admin\Booking;
 
 use App\Http\Livewire\Admin\TableBase;
-use App\Services\BookingService;
 use App\Services\ExportService;
-use App\Services\RequestableService;
+use App\Services\Resources\BookingService;
+use App\Services\Resources\RequestableService;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Symfony\Component\HttpFoundation\StreamedResponse;

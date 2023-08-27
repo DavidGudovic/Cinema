@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Authentication;
 
-use App\Services\UserService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterRequest;
+use App\Services\Resources\UserService;
 
 class RegisterController extends Controller
 {

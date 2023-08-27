@@ -5,9 +5,9 @@ namespace App\Http\Livewire\Admin\Screening;
 use App\Models\Hall;
 use App\Models\Movie;
 use App\Models\Tag;
-use App\Services\BookingService;
-use App\Services\RequestableService;
-use App\Services\ScreeningService;
+use App\Services\Resources\BookingService;
+use App\Services\Resources\RequestableService;
+use App\Services\Resources\ScreeningService;
 use Illuminate\Support\Collection;
 use Livewire\Component;
 

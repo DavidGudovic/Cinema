@@ -3,9 +3,9 @@
 namespace App\Http\Livewire\Users\Tickets;
 
 use App\Models\Ticket;
+use App\Services\Resources\TicketService;
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Services\TicketService;
 
 /*
 * This component is used to display the tickets index

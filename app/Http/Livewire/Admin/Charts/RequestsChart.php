@@ -3,11 +3,12 @@
 namespace App\Http\Livewire\Admin\Charts;
 
 use App\Traits\ChartModelBuilder;
+use App\Traits\ColorPalette;
 use Livewire\Component;
 
 class RequestsChart extends Component
 {
-    use ChartModelBuilder;
+    use ChartModelBuilder, ColorPalette;
 
     public function render()
     {

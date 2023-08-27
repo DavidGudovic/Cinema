@@ -7,7 +7,7 @@ use App\Models\Screening;
 use App\Models\Seat;
 use App\Models\Ticket;
 use App\Models\User;
-use App\Services\SeatService;
+use App\Services\Resources\SeatService;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;

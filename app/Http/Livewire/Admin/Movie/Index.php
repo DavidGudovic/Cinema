@@ -4,8 +4,8 @@ namespace App\Http\Livewire\Admin\Movie;
 
 use App\Http\Livewire\Admin\TableBase;
 use App\Services\ExportService;
-use App\Services\GenreService;
-use App\Services\MovieService;
+use App\Services\Resources\GenreService;
+use App\Services\Resources\MovieService;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Symfony\Component\HttpFoundation\StreamedResponse;

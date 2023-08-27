@@ -2,9 +2,9 @@
 
 namespace App\Http\Livewire\Resources\Screenings;
 
-use Livewire\Component;
 use App\Models\Screening;
-use App\Services\SeatService;
+use App\Services\Resources\SeatService;
+use Livewire\Component;
 
 class SeatMap extends Component
 {

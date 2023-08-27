@@ -3,13 +3,10 @@
 namespace App\Jobs;
 
 use App\Scheduling\AdvertPriorityQueue;
-use App\Services\AdvertService;
-use App\Services\ScreeningService;
+use App\Services\Resources\AdvertService;
+use App\Services\Resources\ScreeningService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
-use Illuminate\Database\Eloquent\Collection as EloquentCollection;
-use Illuminate\Support\Collection;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;

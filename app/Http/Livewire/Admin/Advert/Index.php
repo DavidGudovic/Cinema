@@ -3,9 +3,9 @@
 namespace App\Http\Livewire\Admin\Advert;
 
 use App\Http\Livewire\Admin\TableBase;
-use App\Services\AdvertService;
 use App\Services\ExportService;
-use App\Services\RequestableService;
+use App\Services\Resources\AdvertService;
+use App\Services\Resources\RequestableService;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Symfony\Component\HttpFoundation\StreamedResponse;

@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Clients;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdateRequest;
+use App\Models\User;
+use App\Services\Resources\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-
-use App\Http\Controllers\Controller;
-use App\Models\User;
-use App\Services\UserService;
-use App\Http\Requests\UpdateRequest;
 
 /*
 * Controller for App\Models\User related operations

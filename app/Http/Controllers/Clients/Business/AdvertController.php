@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Clients\Business;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Advert\CreateRequest;
-use App\Services\AdvertService;
+use App\Services\Resources\AdvertService;
 
 class AdvertController extends Controller
 {

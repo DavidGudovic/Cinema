@@ -2,12 +2,10 @@
 
 namespace App\Http\Livewire\Users\Business\Requests;
 
-use App\Models\Advert;
-use Livewire\Component;
-use Livewire\WithPagination;
-use App\Services\TicketService;
 use App\Http\Livewire\SidebarBase;
-use App\Services\RequestableService;
+use App\Models\Advert;
+use App\Services\Resources\RequestableService;
+use Livewire\WithPagination;
 
 /**
 * This component is used to display the global sidebar for active requests index

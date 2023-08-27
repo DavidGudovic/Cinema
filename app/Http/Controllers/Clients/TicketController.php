@@ -2,14 +2,10 @@
 
 namespace App\Http\Controllers\Clients;
 
-use App\Models\User;
-use App\Models\Ticket;
-use Illuminate\Http\Request;
-use App\Services\TicketService;
-use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\TicketEmail;
+use App\Models\Ticket;
+use App\Models\User;
+use App\Services\Resources\TicketService;
 
 
 class TicketController extends Controller

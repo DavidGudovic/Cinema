@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Resources;
 
 use App\Interfaces\CanExport;
 use App\Models\Movie;
+use App\Services\UploadService;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;

@@ -2,11 +2,10 @@
 
 namespace App\Http\Livewire\Users\Business\Requests;
 
-use Livewire\Component;
-use App\Services\TicketService;
 use App\Http\Livewire\ModalBase;
-use App\Services\RequestableService;
 use App\Models\BusinessRequest;
+use App\Services\Resources\RequestableService;
+
 /**
 * This component is used to display the delete modal for tickets
 */

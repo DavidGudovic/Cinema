@@ -5,9 +5,9 @@ namespace App\Http\Livewire\Resources\Screenings\Ticket;
 use App\Models\Screening;
 use App\Models\Seat;
 use App\Models\Ticket;
-use App\Services\ScreeningService;
-use App\Services\SeatService;
-use App\Services\TicketService;
+use App\Services\Resources\ScreeningService;
+use App\Services\Resources\SeatService;
+use App\Services\Resources\TicketService;
 use Livewire\Component;
 
 class Create extends Component

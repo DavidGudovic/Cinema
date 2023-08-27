@@ -3,7 +3,7 @@
 namespace App\Http\Livewire\Users\Business\Requests;
 
 use App\Models\Advert;
-use App\Services\RequestableService;
+use App\Services\Resources\RequestableService;
 use Livewire\Component;
 use Livewire\WithPagination;
 

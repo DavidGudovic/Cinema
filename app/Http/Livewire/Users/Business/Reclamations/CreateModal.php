@@ -2,11 +2,8 @@
 
 namespace App\Http\Livewire\Users\Business\Reclamations;
 
-use Livewire\Component;
-use App\Models\BusinessRequest;
 use App\Http\Livewire\ModalBase;
-use App\Services\ReclamationService;
-use App\Services\RequestableService;
+use App\Services\Resources\ReclamationService;
 
 class CreateModal extends ModalBase
 {

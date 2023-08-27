@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Clients\Business;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Booking\CreateRequest;
 use App\Models\Hall;
-use App\Services\BookingService;
+use App\Services\Resources\BookingService;
 use Carbon\Carbon;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Encryption\DecryptException;

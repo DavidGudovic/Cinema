@@ -3,7 +3,7 @@
 namespace App\Http\Livewire\Admin\Screening;
 
 use App\Http\Livewire\ModalBase;
-use App\Services\ScreeningService;
+use App\Services\Resources\ScreeningService;
 use Illuminate\Support\Collection;
 
 class DeleteModal extends ModalBase

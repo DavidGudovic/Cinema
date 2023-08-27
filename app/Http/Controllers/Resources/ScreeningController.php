@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Resources;
 
+use App\Http\Controllers\Controller;
 use App\Models\Movie;
 use App\Models\Screening;
-use Illuminate\Http\Request;
-use App\Services\ScreeningService;
-use App\Http\Controllers\Controller;
+use App\Services\Resources\ScreeningService;
 
 /*
 * Resource controller for App\Models\Screening

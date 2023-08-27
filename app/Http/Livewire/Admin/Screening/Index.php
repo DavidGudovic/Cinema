@@ -4,7 +4,7 @@ namespace App\Http\Livewire\Admin\Screening;
 
 use App\Http\Livewire\Admin\TableBase;
 use App\Services\ExportService;
-use App\Services\ScreeningService;
+use App\Services\Resources\ScreeningService;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Symfony\Component\HttpFoundation\StreamedResponse;

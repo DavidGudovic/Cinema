@@ -6,8 +6,8 @@ use App\Enums\Status;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Requestable\UpdateRequest;
 use App\Models\Booking;
-use App\Services\HallService;
-use App\Services\RequestableService;
+use App\Services\Resources\HallService;
+use App\Services\Resources\RequestableService;
 use Illuminate\Http\Request;
 
 class BookingController extends Controller

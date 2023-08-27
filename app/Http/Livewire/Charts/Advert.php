@@ -2,30 +2,20 @@
 
 namespace App\Http\Livewire\Charts;
 
-use App\Traits\ChartModelBuilder;
-use Livewire\Component;
-use App\Services\AdvertService;
 use App\Models\Advert as AdvertModel;
+use App\Services\Resources\AdvertService;
+use App\Traits\ChartModelBuilder;
+use App\Traits\ColorPalette;
+use Livewire\Component;
 
 class Advert extends Component
 {
-    use ChartModelBuilder;
+    use ChartModelBuilder, ColorPalette;
 
     public $advert;
     public $request;
     protected $lineChartModel;
     protected $pieChartModel;
-
-    private $colors = [
-        'green' => '#10B981',
-        'red' => '#EF4444',
-        'blue' => '#3B82F6',
-        'yellow' => '#F59E0B',
-        'purple' => '#8B5CF6',
-        'pink' => '#EC4899',
-        'indigo' => '#6366F1',
-        'gray' => '#6B7280',
-    ];
 
     protected $listeners = [
         'refreshChart' => 'refreshChart',

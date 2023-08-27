@@ -2,9 +2,8 @@
 
 namespace App\Http\Livewire\Users\Business\Reclamations;
 
-use Livewire\Component;
 use App\Http\Livewire\ModalBase;
-use App\Services\ReclamationService;
+use App\Services\Resources\ReclamationService;
 
 class DeleteModal extends ModalBase
 {

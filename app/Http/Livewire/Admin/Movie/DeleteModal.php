@@ -3,7 +3,7 @@
 namespace App\Http\Livewire\Admin\Movie;
 
 use App\Http\Livewire\ModalBase;
-use App\Services\MovieService;
+use App\Services\Resources\MovieService;
 
 class DeleteModal extends ModalBase
 {

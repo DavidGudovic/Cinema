@@ -3,7 +3,7 @@
 namespace App\Http\Livewire\Admin\Movie;
 
 use App\Models\Movie;
-use App\Services\MovieService;
+use App\Services\Resources\MovieService;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Component;
 use Livewire\WithFileUploads;

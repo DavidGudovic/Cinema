@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers\Authentication;
 
-use App\Models\User;
-use Illuminate\Http\Request;
-use App\Services\UserService;
 use App\Http\Controllers\Controller;
-use Illuminate\Auth\Events\Verified;
-use Illuminate\Auth\Access\AuthorizationException;
+use App\Services\Resources\UserService;
+use Illuminate\Http\Request;
 
 class VerificationController extends Controller
 {

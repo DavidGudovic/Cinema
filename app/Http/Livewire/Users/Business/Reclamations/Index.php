@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Users\Business\Reclamations;
 
-use App\Services\ReclamationService;
+use App\Services\Resources\ReclamationService;
 use Livewire\Component;
 use Livewire\WithPagination;
 

@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Services\HallService;
-use App\Services\MovieService;
-use App\Services\TagService;
+use App\Services\Resources\HallService;
+use App\Services\Resources\MovieService;
+use App\Services\Resources\TagService;
 use Illuminate\Http\Request;
 
 class ScreeningController extends Controller

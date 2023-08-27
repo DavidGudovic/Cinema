@@ -4,9 +4,11 @@ namespace App\Models;
 
 use App\Enums\Periods;
 use App\Interfaces\Requestable;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class Advert extends Model implements Requestable //pseudo extends Models/BusinessRequest
 {
@@ -144,7 +146,7 @@ class Advert extends Model implements Requestable //pseudo extends Models/Busine
             : $query;
     }
 
-    public function scopePaginateOptionally($query, int $quantity)
+    public function scopePaginateOptionally($query, int $quantity) : LengthAwarePaginator|Collection
     {
         return $quantity == 0
             ? $query->get()

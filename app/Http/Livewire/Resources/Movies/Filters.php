@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Resources\Movies;
 
-use App\Services\GenreService;
+use App\Services\Resources\GenreService;
 use Livewire\Component;
 
 class Filters extends Component

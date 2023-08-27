@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Resources;
 
 use App\Models\BusinessRequest;
 use App\Models\Reclamation;

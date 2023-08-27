@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Resources\Movies;
 
-use App\Services\MovieService;
+use App\Services\Resources\MovieService;
 use Livewire\Component;
 
 class Index extends Component

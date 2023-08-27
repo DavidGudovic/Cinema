@@ -155,9 +155,9 @@ class Screening extends Model
     public function scopeFromPeriod($query, Periods $period)
     {
         return match ($period) {
-            Periods::YEARLY() => $query->fromLastYear(),
-            Periods::MONTHLY() => $query->fromLastMonth(),
-            Periods::WEEKLY() => $query->fromLastWeek(),
+            Periods::YEARLY => $query->fromLastYear(),
+            Periods::MONTHLY => $query->fromLastMonth(),
+            Periods::WEEKLY => $query->fromLastWeek(),
         };
     }
 

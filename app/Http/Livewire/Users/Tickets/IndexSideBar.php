@@ -2,9 +2,8 @@
 
 namespace App\Http\Livewire\Users\Tickets;
 
-use Livewire\Component;
-use App\Services\TicketService;
 use App\Http\Livewire\SidebarBase;
+use App\Services\Resources\TicketService;
 use Livewire\WithPagination;
 
 /*

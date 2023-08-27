@@ -4,7 +4,7 @@ namespace App\Http\Livewire\Users\Tickets;
 
 use App\Http\Livewire\ModalBase;
 use App\Models\Ticket;
-use App\Services\TicketService;
+use App\Services\Resources\TicketService;
 
 /*
 * This component is used to display the delete modal for tickets

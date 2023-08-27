@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Movie;
-use App\Services\TagService;
-use Illuminate\Http\Request;
-use App\Services\GenreService;
+use App\Services\Resources\GenreService;
+use App\Services\Resources\TagService;
 
 class LandingPageController extends Controller
 {

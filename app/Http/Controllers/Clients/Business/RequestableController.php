@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\Clients\Business;
 
-use App\Models\User;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Services\RequestableService;
+use App\Models\User;
+use App\Services\Resources\RequestableService;
 
 class RequestableController extends Controller
 {

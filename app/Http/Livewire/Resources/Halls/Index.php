@@ -2,9 +2,9 @@
 
 namespace App\Http\Livewire\Resources\Halls;
 
-use Livewire\Component;
-use App\Services\HallService;
+use App\Services\Resources\HallService;
 use Illuminate\Support\Carbon;
+use Livewire\Component;
 
 class Index extends Component
 {

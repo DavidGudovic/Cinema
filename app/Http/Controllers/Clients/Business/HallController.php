@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers\Clients\Business;
 
-use App\Models\User;
-use Illuminate\Http\Request;
-use App\Services\HallService;
 use App\Http\Controllers\Controller;
+use App\Services\Resources\HallService;
 
 class HallController extends Controller
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Resources;
 
 use App\Models\Genre;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
