@@ -34,7 +34,7 @@ class AdvertService implements CanReport
             ->sortKeys()
             ->toArray();
 
-        $filler_data = $this->buildFillerData(function ($period) {
+        $filler_data = $this->buildFillerData(function () {
             return 0;
         }, $period);
 

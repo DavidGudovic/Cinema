@@ -38,7 +38,7 @@ class TicketService implements CanReport
             ->sortKeys()
             ->toArray();
 
-        $filler_data = $this->buildFillerData(function ($period) {
+        $filler_data = $this->buildFillerData(function () {
             return [
                 'Otkazane' => 0,
                 'Ostvarene' => 0,

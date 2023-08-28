@@ -25,7 +25,7 @@ trait FillerData
 
         for ($date = $start_date; $date->lte($end_date); $incrementFunc($date)) {
             $formattedDate = $date->format($format);
-            $filler_data[$formattedDate] = $customLogic($formattedDate);
+            $filler_data[$formattedDate] = $customLogic();
         }
 
         return $filler_data;

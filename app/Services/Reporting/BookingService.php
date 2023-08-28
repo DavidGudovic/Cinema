@@ -36,7 +36,7 @@ class BookingService implements CanReport
             })
             ->toArray();
 
-        $filler_data = $this->buildFillerData(function ($period) {
+        $filler_data = $this->buildFillerData(function () {
             return 0;
         }, $period);
 
