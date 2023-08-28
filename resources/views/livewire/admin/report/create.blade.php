@@ -47,7 +47,13 @@
             <!-- End options -->
             <!-- Inputs -->
             <form wire:submit.prevent="submit"
-                  class="flex flex-col justify-center gap-4 w-full h-full bg-dark-blue rounded-2xl p-4">
+                  class="relative flex flex-col justify-center gap-4 w-full h-full bg-dark-blue rounded-2xl p-4">
+                <!-- Loading -->
+                <div wire:loading class="absolute top-5 right-5 ">
+                    <i class="fa-solid fa-gear animate-spin"></i>
+                </div>
+                <!-- End loading-->
+
                 <h2 class="font-extrabold text-xl text-center w-full">Izveštaj</h2>
                 <!-- Text -->
                 @if($already_exists)
@@ -81,7 +87,7 @@
                     </div>
                     <!-- End text -->
                     <!-- Submit -->
-                    <button type="submit"
+                    <button type="submit" wire:loading.attr="disabled" wire:loading.class="bg-opacity-30 hover:text-white hover:border-white cursor-wait"
                             class="text-center w-full bg-gray-950 opacity-80 border rounded-2xl border-white text-white p-2 mt-4 hover:text-red-700 hover:border-red-700">
                         Generiši
                         izveštaj
