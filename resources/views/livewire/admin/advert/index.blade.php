@@ -157,7 +157,7 @@
         <tr x-data="{showToolTip{{$advert->id}}: false}"
             class="odd:bg-dark-blue text-center relative">
             <td x-bind:class="{ 'bg-gray-700 bg-opacity-30': sortBy === 'businessRequest.created_at' }"
-                class="p-2 text-sm">{{ $advert->businessRequest->created_at->format('H:i d/m') }}</td>
+                class="p-2 text-sm">{{ $advert->businessRequest->created_at->format('H:i d/m/y') }}</td>
 
             <td x-bind:class="{ 'bg-gray-700 bg-opacity-30': sortBy === 'title' }"
                 class="p-2">{{ $advert->title }}</td>

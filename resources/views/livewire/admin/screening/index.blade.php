@@ -208,7 +208,7 @@
             <td x-bind:class="{ 'bg-gray-700 bg-opacity-30': sortBy === 'hall_id' }"
                 class="p-2">{{ $screening->hall->name }}</td>
             <td x-bind:class="{ 'bg-gray-700 bg-opacity-30': sortBy === 'start_time' }"
-                class="m-2">{{ Carbon\Carbon::parse($screening->start_time)->format('d/m H:i') }}</td>
+                class="m-2">{{ Carbon\Carbon::parse($screening->start_time)->format('d/m/y H:i') }}</td>
             <td x-bind:class="{ 'bg-gray-700 bg-opacity-30': sortBy === 'end_time' }"
                 class="p-2">{{ Carbon\Carbon::parse($screening->end_time)->format('H:i') }}</td>
             <!-- Tags -->

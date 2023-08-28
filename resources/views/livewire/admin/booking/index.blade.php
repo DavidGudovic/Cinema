@@ -151,7 +151,7 @@
         <tr x-data="{showToolTip{{$booking->id}}: false}"
             class="odd:bg-dark-blue text-center relative">
             <td x-bind:class="{ 'bg-gray-700 bg-opacity-30': sortBy === 'businessRequest.created_at' }"
-                class="p-2 text-sm">{{ $booking->businessRequest->created_at->format('H:i d/m') }}</td>
+                class="p-2 text-sm">{{ $booking->businessRequest->created_at->format('H:i d/m/y') }}</td>
 
             <td x-bind:class="{ 'bg-gray-700 bg-opacity-30': sortBy === 'hall.name' }"
                 class="p-2">{{ $booking->hall->name }}</td>
@@ -166,7 +166,7 @@
             </td>
 
             <td x-bind:class="{ 'bg-gray-700 bg-opacity-30': sortBy === 'start_time' }"
-                class="p-2 text-sm">{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $booking->start_time)->format('m/d H:i') }}</td>
+                class="p-2 text-sm">{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $booking->start_time)->format('m/d/y H:i') }}</td>
             <td x-bind:class="{ 'bg-gray-700 bg-opacity-30': sortBy === 'end_time' }"
                 class="p-2 text-sm">{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $booking->end_time)->format('H:i')  }}</td>
             <td x-bind:class="{ 'bg-gray-700 bg-opacity-30': sortBy === 'businessRequest.status' }"
