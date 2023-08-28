@@ -4,8 +4,10 @@ namespace App\Http\Livewire\Admin\Report;
 
 use App\Enums\Period;
 use App\Services\Resources\ReportService;
+use App\Services\UploadService;
 use Illuminate\Support\Collection;
 use Livewire\Component;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class Create extends Component
 {
@@ -26,7 +28,7 @@ class Create extends Component
     {
         return view('livewire.admin.report.create', [
             'periods' => collect(Period::cases()),
-            'already_exists' => $reportService->checkIfReportExists($this->selected_period, $this->selected_hall)
+            'already_exists' => $reportService->checkIfReportExists(Period::from($this->selected_period), $this->selected_hall)
         ]);
     }
 
@@ -43,14 +45,22 @@ class Create extends Component
 
     /**
      *
-     * @return void
+     * @param ReportService $reportService
+     * @param UploadService $uploadService
+     * @return StreamedResponse
      */
-    public function submit(ReportService $reportService) : void
+    public function submit(ReportService $reportService, UploadService $uploadService) : StreamedResponse
     {
         $this->validate([
             'text' => 'required|string|min:10|max:1000',
         ]);
 
-        //$reportService->generateReport($this->selected_period, $this->selected_hall, $this->text);
+        $pdf = $reportService->generateReport(Period::from($this->selected_period), $this->selected_hall, $this->text, $uploadService);
+
+        session()->flash('success', 'Report generated successfully!');
+
+        return response()->streamDownload(function () use ($pdf) {
+            echo $pdf->stream();
+        }, 'report.pdf');
     }
 }

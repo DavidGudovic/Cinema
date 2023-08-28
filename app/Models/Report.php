@@ -53,6 +53,10 @@ class Report extends Model
     /**
      * Local Eloquent scopes
      */
+    public function scopeForDatePeriod($query, $date, $period)
+    {
+        return $query->where('date_from', $date)->where('period', $period);
+    }
     public function scopeForPeriod($query, $period)
     {
         return $query->where('period', $period);
@@ -63,8 +67,8 @@ class Report extends Model
         return $query->where('user_id', $user->id);
     }
 
-    public function scopeForHall($query, $hall)
+    public function scopeForHall($query, $hall_id)
     {
-        return $query->where('hall_id', $hall->id);
+        return $query->where('hall_id', $hall_id);
     }
 }

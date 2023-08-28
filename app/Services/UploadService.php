@@ -8,16 +8,18 @@ use Illuminate\Support\Facades\Storage;
 class UploadService
 {
     /**
+     *  Uploads an image to a path
+     *
      * @param $image
      * @param string $path
-     * @return string
-     * Uploads an image to a path
+     * @return string|bool
      */
-    public function uploadImage($image, string $path): string
+    public function uploadImage($image, string $path): string|bool
     {
         $imageName = $image->getClientOriginalName();
-        $image->move(public_path($path), $imageName);
-        return $imageName;
+        return $image->copy(public_path($path), $imageName)
+            ? $imageName
+            : false;
     }
 
     /**
@@ -25,11 +27,12 @@ class UploadService
      *
      * @param PDF $pdf
      * @param string $path
-     * @return string
+     * @return string|bool
      */
-    public function uploadPDF(PDF $pdf, string $path): string
+    public function uploadPDF(PDF $pdf, string $path): string|bool
     {
-        Storage::put($path, $pdf->output());
-        return $path . '.pdf';
+        return Storage::put($path, $pdf->output())
+            ? basename($path)
+            : false;
     }
 }

@@ -53,7 +53,11 @@
                 @if($already_exists)
                     <div class="flex flex-col gap-4 justify-center items-center w-full">
                         <div class="flex flex-col gap-1">
-                            <label for="type" class="opacity-50">Izveštaj za izabrani period već postoji</label>
+                            @if(session()->has('success'))
+                                <label for="type" class="opacity-50 text-green-500">Izveštaj uspešno kreiran</label>
+                            @else
+                                <label for="type" class="opacity-50">Izveštaj za izabrani period postoji</label>
+                            @endif
                         </div>
                     </div>
                 @else
