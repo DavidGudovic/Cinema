@@ -4,7 +4,7 @@ namespace App\Traits\Reporting;
 
 use App\Enums\Period;
 
-trait DataFormatter
+trait PeriodFormatter
 {
     /**
      * @param Period $period

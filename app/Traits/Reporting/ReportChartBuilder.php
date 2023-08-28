@@ -15,8 +15,14 @@ trait ReportChartBuilder
 {
     use ChartModelBuilder, ColorPalette;
 
-    protected Period $period = Period::WEEKLY;
-    protected int $hall_id = 0;
+    protected Period $period;
+    protected int $hall_id;
+
+    public function mount(string $period, int $hall_id) : void
+    {
+        $this->setPeriod($period);
+        $this->setHall($hall_id);
+    }
 
     public function setPeriod(string $period): void
     {

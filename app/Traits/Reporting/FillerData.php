@@ -36,7 +36,7 @@ trait FillerData
      * @param Period|null $period
      * @return array
      */
-    protected function getFillerAttributes(callable $dataFormatter, ?Period $period = null): array
+    private function getFillerAttributes(callable $dataFormatter, ?Period $period = null): array
     {
         return [$start_date, $end_date, $incrementFunc, $format] = match ($period) {
             Period::WEEKLY => [
