@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('hall_id')->constrained()->cascadeOnDelete();
             $table->timestamp('created_at');
             $table->date('date_from');
-            $table->string('text');
+            $table->string('text', 1000);
             $table->enum('period', ['WEEKLY', 'MONTHLY', 'YEARLY']);
             $table->string('PDF_path');
         });

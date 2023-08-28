@@ -12,10 +12,8 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 class Create extends Component
 {
     public Collection $halls;
-
     public string $selected_period = 'YEARLY';
     public int $selected_hall;
-
     public string $text = '';
 
     public function mount(Collection $halls)
@@ -44,18 +42,19 @@ class Create extends Component
     }
 
     /**
+     * Validates and generates a report
+     * flashes a message to session and calls streamDownload
      *
      * @param ReportService $reportService
-     * @param UploadService $uploadService
      * @return StreamedResponse
      */
-    public function submit(ReportService $reportService, UploadService $uploadService) : StreamedResponse
+    public function submit(ReportService $reportService) : StreamedResponse
     {
         $this->validate([
             'text' => 'required|string|min:10|max:1000',
         ]);
 
-        $pdf = $reportService->generateReport(Period::from($this->selected_period), $this->selected_hall, $this->text, $uploadService);
+        $pdf = $reportService->generateReport(Period::from($this->selected_period), $this->selected_hall, $this->text);
 
         session()->flash('success', 'Report generated successfully!');
 
