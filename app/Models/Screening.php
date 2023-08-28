@@ -228,4 +228,12 @@ class Screening extends Model
         }
         return $query->paginate($quantity);
     }
+
+    /**
+     * Bad fix for seeding, without this all the adverts are scheduled for 2021
+     */
+    public function scopeSeedingRandomOrder($query)
+    {
+        return $query->where('start_time' > now()->subYear())->inRandomOrder()->take(3000);
+    }
 }

@@ -15,7 +15,7 @@ class ScreeningFactory extends Factory
     public function definition(): array
     {
         return [
-            'start_time' => fake()->dateTimeBetween('-1 months', '+2 weeks', 'Europe/Berlin')->setTime(fake()->numberBetween(8, 20), fake()->randomElement([0, 15, 30, 45]), 0),
+            'start_time' => fake()->dateTimeBetween('-20 months', '+2 weeks', 'Europe/Berlin')->setTime(fake()->numberBetween(8, 20), fake()->randomElement([0, 15, 30, 45]), 0),
             'movie_id' => Movie::inRandomOrder()->first(),
             'hall_id' => Hall::inRandomOrder()->first(),
         ];

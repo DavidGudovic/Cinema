@@ -34,7 +34,7 @@ class TicketSeeder extends Seeder
      */
     private function createTickets(): Collection
     {
-        $tickets = Ticket::factory()->count(fake()->numberBetween(10, 16))->make();
+        $tickets = Ticket::factory()->count(fake()->numberBetween(5, 10))->make();
         $tickets->each(fn ($ticket) => $ticket->user_id = User::isRole(Roles::CLIENT)->inRandomOrder()->first()->id);
 
         return $tickets;
@@ -50,9 +50,8 @@ class TicketSeeder extends Seeder
         $takenSeats = $seatService->getTakenSeatsMap($screening);
 
         $screening->tickets()->each(function ($ticket) use ($screening, $seatService, &$takenSeats) {
-            $seats = $this->assignSeats($ticket, $takenSeats);
-            $ticket->seats()->saveMany($seats);
-            $this->calculateTicketPrices($ticket);
+            $this->assignSeats($ticket, $takenSeats);
+            $this->calculateTicketPricesOrMarkCancelled($ticket);
         });
     }
 
@@ -60,9 +59,9 @@ class TicketSeeder extends Seeder
      * Assign seats to a ticket
      * The seats are assigned randomly, but not to the same seat twice
      */
-    private function assignSeats(Ticket $ticket, array &$takenSeats): Collection
+    private function assignSeats(Ticket $ticket, array &$takenSeats): void
     {
-        $seats = Seat::factory()->count(fake()->numberBetween(1, 6))->make();
+        $seats = Seat::factory()->count(fake()->numberBetween(0, 6))->make();
 
         $seats->each(function ($seat) use (&$takenSeats) {
             do {
@@ -72,20 +71,27 @@ class TicketSeeder extends Seeder
             $takenSeats[] = [$seat->row, $seat->column];
         });
 
-        return $seats;
+        $ticket->seats()->saveMany($seats);;
     }
 
     /**
      * Calculate the prices for a ticket
      */
-    private function calculateTicketPrices(Ticket $ticket): void
+    private function calculateTicketPricesOrMarkCancelled(Ticket $ticket): void
     {
         $ticket->technology_price_addon = $ticket->calc_technology_price_addon;
         $ticket->long_movie_addon = $ticket->calc_long_movie_addon;
         $ticket->subtotal = $ticket->calc_subtotal;
         $ticket->discount = $ticket->calc_discount;
         $ticket->total = $ticket->calc_total;
-        $ticket->seat_count = $ticket->seats->count();
+
+        if($ticket->seats->count() == 0){
+            $ticket->deleted_at = now();
+            $ticket->seat_count = 0;
+        } else {
+            $ticket->seat_count = $ticket->seats->count();
+        }
+
         $ticket->save();
     }
 }

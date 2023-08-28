@@ -15,7 +15,7 @@ class ScheduleAdverts implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct()
+    public function __construct(public bool $seeding = false)
     {
 
     }
@@ -26,7 +26,7 @@ class ScheduleAdverts implements ShouldQueue
     {
         $adverts_priority_map = $advertService->getAdvertSchedulingPriorityMap();  /* [Advert => priority] */
         $adverts_quantity_map = $advertService->getAdvertQuantityMap($adverts_priority_map->keys()); /* [Advert => quantity_left] */
-        $screenings = $screeningService->getScreeningsForAdvertScheduling();
+        $screenings = $screeningService->getScreeningsForAdvertScheduling($this->seeding);
         $scheduled_adverts = [];    /* Adverts that have been scheduled, non-unique array */
 
         // Build the priority queue

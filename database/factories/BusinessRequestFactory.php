@@ -16,13 +16,13 @@ class BusinessRequestFactory extends Factory
     {
 
         return [
-            'created_at' => Carbon::now(),
+            'created_at' => fake()->dateTimeBetween('-20 months', '+1 week'),
             'updated_at' => Carbon::now(),
-            'status' => $this->faker->randomElement(Status::cases()),
-            'text' => $this->faker->paragraph(),
+            'status' => fake()->randomElement(Status::cases()),
+            'text' => fake()->paragraph(),
             'comment' => null,
-            'requestable_id' => $this->faker->randomNumber(),
-            'requestable_type' => $this->faker->randomElement(["App\Models\Advert", "App\Models\Booking"]),
+            'requestable_id' => fake()->randomNumber(),
+            'requestable_type' => fake()->randomElement(["App\Models\Advert", "App\Models\Booking"]),
         ];
     }
 }

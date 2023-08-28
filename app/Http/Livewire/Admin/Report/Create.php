@@ -11,7 +11,7 @@ class Create extends Component
 {
     public Collection $halls;
 
-    public string $selected_period = 'WEEKLY';
+    public string $selected_period = 'YEARLY';
     public int $selected_hall;
 
     public string $text = '';

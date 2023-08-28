@@ -5,12 +5,13 @@ namespace App\Services\Reporting;
 use App\Enums\Period;
 use App\Interfaces\CanReport;
 use App\Models\Screening;
-use App\Traits\Reporting\PeriodFormatter;
 use App\Traits\Reporting\FillerData;
+use App\Traits\Reporting\PeriodFormatter;
+use App\Traits\Reporting\PeriodSorter;
 
 class AdvertService implements CanReport
 {
-    use FillerData, PeriodFormatter;
+    use FillerData, PeriodFormatter, PeriodSorter;
 
     /**
      * Returns an array of adverts screenings count grouped by date
@@ -31,13 +32,13 @@ class AdvertService implements CanReport
             ->map(function ($screenings) {
                 return $screenings->sum('adverts_count');
             })
-            ->sortKeys()
             ->toArray();
 
         $filler_data = $this->buildFillerData(function () {
             return 0;
         }, $period);
 
-        return array_replace($filler_data, $data);
+        $data = array_replace($filler_data, $data);
+        return $this->sortPeriod($period, $data);
     }
 }

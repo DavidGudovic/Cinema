@@ -80,10 +80,15 @@ class ScreeningService implements CanExport
      *  Returns an EloquentCollection of screenings that have free advert slots and are upcoming
      *  Used for advert scheduling App/Jobs/ScheduleAdverts.php
      */
-    public function getScreeningsForAdvertScheduling(): EloquentCollection
+    public function getScreeningsForAdvertScheduling(bool $seeding): EloquentCollection
     {
         return Screening::with('adverts')
-            ->upcoming()
+            ->when($seeding, function ($query) {
+                return $query->seedingRandomOrder();
+            })
+            ->when(!$seeding, function ($query) {
+                return $query->upcoming();
+            })
             ->withFreeAdSlots()
             ->orderBy('start_time')
             ->get();

@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('text');
             $table->enum('period', ['WEEKLY', 'MONTHLY', 'YEARLY']);
             $table->string('PDF_path');
-            $table->string('CSV_path');
         });
     }
 

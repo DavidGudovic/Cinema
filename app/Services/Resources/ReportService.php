@@ -4,6 +4,7 @@ namespace App\Services\Resources;
 
 use App\Models\Report;
 use App\Services\UploadService;
+use Barryvdh\DomPDF\PDF;
 
 class ReportService
 {
@@ -19,12 +20,12 @@ class ReportService
      * @param string $period
      * @param int $hall
      * @param string $text
+     * @param UploadService $uploadService
      * @return void
      */
     public function generateReport(string $period, int $hall, string $text, UploadService $uploadService) : void
     {
-        $PDF_path = $uploadService->uploadPDF($text, 'reports');
-        $CSV_path = $uploadService->uploadCSV($text, 'reports');
+        $PDF = $this->generatePDF($period, $hall, $text);
 
         $report = Report::create([
             'period' => $period,
@@ -32,16 +33,13 @@ class ReportService
             'text' => $text,
             'user_id' => auth()->user()->id,
             'created_at' => now(),
+            'PDF_path' => $uploadService->uploadPDF($PDF, 'reports/' . $period . '/' . $hall . '.pdf')
         ]);
     }
 
-    public function generatePDF(string $period, int $hall, string $text) : void
+    public function generatePDF(string $period, int $hall, string $text) : PDF
     {
         //generate pdf
     }
 
-    public function generateCSV(string $period, int $hall, string $text) : void
-    {
-        //generate csv
-    }
 }

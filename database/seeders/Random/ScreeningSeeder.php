@@ -12,7 +12,7 @@ class ScreeningSeeder extends Seeder
     public function run(): void
     {
         // Doesnt save to database
-        $screenings = Screening::factory()->count(300)->make();
+        $screenings = Screening::factory()->count(6000)->make();
         $tags = Tag::all();
 
         //Calculate end_time

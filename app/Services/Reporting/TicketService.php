@@ -5,12 +5,13 @@ namespace App\Services\Reporting;
 use App\Enums\Period;
 use App\Interfaces\CanReport;
 use App\Models\Screening;
-use App\Traits\Reporting\PeriodFormatter;
 use App\Traits\Reporting\FillerData;
+use App\Traits\Reporting\PeriodFormatter;
+use App\Traits\Reporting\PeriodSorter;
 
 class TicketService implements CanReport
 {
-    use FillerData, PeriodFormatter;
+    use FillerData, PeriodFormatter, PeriodSorter;
 
     /**
      * Returns an array of tickets count grouped by date and by status
@@ -22,7 +23,9 @@ class TicketService implements CanReport
      */
     public function getReportableDataByPeriod(Period $period, int $hall_id): array
     {
-        $data = Screening::with('tickets')
+        $data = Screening::with(['tickets' => function ($query) {
+            $query->withTrashed();
+        }])
             ->fromPeriod($period)
             ->fromHall($hall_id)
             ->get()
@@ -31,11 +34,10 @@ class TicketService implements CanReport
             })
             ->map(function ($screenings) {
                 return [
-                    'Otkazane' => $screenings->flatMap->tickets->where('seat_count', '=', 0)->count(),
-                    'Ostvarene' => $screenings->flatMap->tickets->where('seat_count', '>', 0)->count(),
+                    'Otkazane' => $screenings->flatMap->tickets->where('deleted_at', '!=', null)->count(),
+                    'Ostvarene' => $screenings->flatMap->tickets->where('deleted_at', '=', null)->count(),
                 ];
             })
-            ->sortKeys()
             ->toArray();
 
         $filler_data = $this->buildFillerData(function () {
@@ -45,6 +47,8 @@ class TicketService implements CanReport
             ];
         }, $period);
 
-        return array_replace($filler_data, $data);
+
+        $data = array_replace($filler_data, $data);
+        return $this->sortPeriod($period, $data);
     }
 }

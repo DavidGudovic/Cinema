@@ -39,10 +39,8 @@ class DatabaseSeeder extends Seeder
         $this->callWithLogging(BusinessRequestSeeder::class, "Seeding adverts and bookings...\n");
         $this->callWithLogging(ReclamationSeeder::class, "Seeding reclamations...\n");
 
-        echo("Running Advert Scheduler - You should optimally have a queue worker running \n");
-        dispatch(new ScheduleAdverts());
-        echo("Job dispatched\n");
-        usleep(500000);
+        echo("Running Advert Scheduler - If you haven't please start a queue worker \n");
+        dispatch(new ScheduleAdverts(seeding: true));
         echo('Seeding complete!');
     }
 

@@ -12,9 +12,12 @@ class BookingFactory extends Factory
 {
     protected $model = Booking::class;
 
+    /**
+     * @throws \Exception
+     */
     public function definition(): array
     {
-        $start_time = fake()->dateTimeBetween('-1 week', '+1 week');
+        $start_time = fake()->dateTimeBetween('-20 months', '+2 weeks');
         $end_time = (clone $start_time)->add(new DateInterval('PT' . fake()->numberBetween(1, 3) . 'H'));
 
         return [

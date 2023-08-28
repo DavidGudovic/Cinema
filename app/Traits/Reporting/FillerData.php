@@ -40,20 +40,20 @@ trait FillerData
     {
         return [$start_date, $end_date, $incrementFunc, $format] = match ($period) {
             Period::WEEKLY => [
-                Carbon::today()->subWeek(),
-                Carbon::today(),
+                Carbon::today()->subWeek()->startOfWeek(),
+                Carbon::today()->subWeek()->endOfWeek(),
                 fn($date) => $date->addDay(),
                 $dataFormatter($period)
             ],
             Period::MONTHLY => [
-                Carbon::today()->subMonth(),
-                Carbon::today(),
-                fn($date) => $date->addWeek(),
+                Carbon::today()->subMonth()->startOfMonth(),
+                Carbon::today()->subMonth()->endOfMonth(),
+                fn($date) => $date->addDay(),
                 $dataFormatter($period)
             ],
             Period::YEARLY => [
-                Carbon::today()->subYear(),
-                Carbon::today(),
+                Carbon::today()->subYear()->startOfYear(),
+                Carbon::today()->subYear()->endOfYear(),
                 fn($date) => $date->addMonth(),
                 $dataFormatter($period)
             ],

@@ -7,11 +7,12 @@ use App\Interfaces\CanReport;
 use App\Models\Booking;
 use App\Traits\Reporting\PeriodFormatter;
 use App\Traits\Reporting\FillerData;
+use App\Traits\Reporting\PeriodSorter;
 use Carbon\Carbon;
 
 class BookingService implements CanReport
 {
-    use FillerData, PeriodFormatter;
+    use FillerData, PeriodFormatter, PeriodSorter;
 
     /**
      * Returns an array of accepted bookings for a hall/s grouped by date
@@ -40,6 +41,7 @@ class BookingService implements CanReport
             return 0;
         }, $period);
 
-        return array_replace($filler_data, $data);
+        $data = array_replace($filler_data, $data);
+        return $this->sortPeriod($period, $data);
     }
 }

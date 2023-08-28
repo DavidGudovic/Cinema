@@ -13,7 +13,7 @@ class BusinessRequestSeeder extends Seeder
 {
     public function run(): void
     {
-        $requests = BusinessRequest::factory()->count(100)->make();
+        $requests = BusinessRequest::factory()->count(3000)->make();
 
         $requests->each(function ($request) {
             $request->user_id = User::where('role', Roles::BUSINESS_CLIENT)->inRandomOrder()->first()->id;

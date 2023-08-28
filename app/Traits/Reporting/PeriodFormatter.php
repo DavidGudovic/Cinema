@@ -14,7 +14,7 @@ trait PeriodFormatter
     {
         return match ($period) {
             Period::WEEKLY => 'd/m',
-            Period::MONTHLY => 'W',
+            Period::MONTHLY => 'd',
             Period::YEARLY => 'M',
         };
     }
