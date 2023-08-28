@@ -3,68 +3,68 @@
 namespace App\Models;
 
 use App\Enums\Period;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Report extends Model
 {
     use HasFactory;
-           /**
+
+    public $timestamps = false;
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
-        'date',
+        'created_at',
         'text',
-        'duration'
-    ];
-
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-
+        'period',
+        'date_from',
+        'PDF_path',
+        'CSV_path',
+        'user_id',
+        'hall_id',
     ];
 
     /**
      * The attributes that should be cast.
      *
-     * @var array<string, string>
+     * @var string[]
      */
     protected $casts = [
-        'duration' => Period::class,
+        'created_at' => 'datetime',
+        'date_from' => 'date',
+        'period' => Period::class,
     ];
-
 
     /**
      * Eloquent relationships
      */
-
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
+    public function hall()
+    {
+        return $this->belongsTo(Hall::class);
+    }
     /**
      * Local Eloquent scopes
      */
-
-    public function scopeDuration($query, $duration){
-        return $query->where('duration', $duration);
+    public function scopeForPeriod($query, $period)
+    {
+        return $query->where('period', $period);
     }
 
-    public function scopeFromYear($query, $year){
-        return $query->whereYear('date', $year);
-    }
-
-    public function scopeFromMonth($query, $month){
-        return $query->whereMonth('date', $month);
-    }
-
-    public function scopeByUser($query, $user){
+    public function scopeFromUser($query, $user)
+    {
         return $query->where('user_id', $user->id);
     }
 
+    public function scopeForHall($query, $hall)
+    {
+        return $query->where('hall_id', $hall->id);
+    }
 }

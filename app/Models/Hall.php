@@ -43,6 +43,11 @@ class Hall extends Model
         return $this->hasMany(Screening::class);
     }
 
+    public function reports()
+    {
+        return $this->hasMany(Report::class);
+    }
+
     /**
      * Local Eloquent scopes
      */

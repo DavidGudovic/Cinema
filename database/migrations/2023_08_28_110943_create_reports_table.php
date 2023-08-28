@@ -13,11 +13,14 @@ return new class extends Migration
     {
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
-            $table->dateTime('date');
-            $table->string('text', 2000);
-            $table->enum('duration', ['MONTHLY', 'YEARLY', 'LIFETIME', 'YEAR_TO_DATE']);
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('hall_id')->constrained()->cascadeOnDelete();
+            $table->timestamp('created_at');
+            $table->date('date_from');
+            $table->string('text');
+            $table->enum('period', ['WEEKLY', 'MONTHLY', 'YEARLY']);
+            $table->string('PDF_path');
+            $table->string('CSV_path');
         });
     }
 
