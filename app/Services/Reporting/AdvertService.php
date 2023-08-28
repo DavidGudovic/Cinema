@@ -5,12 +5,12 @@ namespace App\Services\Reporting;
 use App\Enums\Period;
 use App\Interfaces\CanReport;
 use App\Models\Screening;
-use App\Traits\Reporting\DataFormatter;
+use App\Traits\Reporting\PeriodFormatter;
 use App\Traits\Reporting\FillerData;
 
 class AdvertService implements CanReport
 {
-    use FillerData, DataFormatter;
+    use FillerData, PeriodFormatter;
 
     /**
      * Returns an array of adverts screenings count grouped by date
@@ -24,7 +24,7 @@ class AdvertService implements CanReport
     {
         $data = Screening::withCount('adverts')
             ->fromPeriod($period)
-            ->fromHallOrManagedHalls($hall_id)->get()
+            ->fromHall($hall_id)->get()
             ->groupBy(function ($screening) use ($period) {
                 return $screening->start_time->format($this->getReportDataFormat($period));
             })

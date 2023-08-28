@@ -146,9 +146,14 @@ class BusinessRequest extends Model implements Requestable //pseudo superclass f
                     $query->managedBy(auth()->user()->id);
                 });
             }),
-            default => $query->whereHasMorph('requestable', [Booking::class], function ($query) use ($hallId) {
-                $query->where('hall_id', $hallId);
-            })
+            default => $query->fromHall($hallId),
         };
+    }
+
+    public function scopeFromHall($query, $hallId)
+    {
+        return $query->whereHasMorph('requestable', [Booking::class], function ($query) use ($hallId) {
+            $query->where('hall_id', $hallId);
+        });
     }
 }

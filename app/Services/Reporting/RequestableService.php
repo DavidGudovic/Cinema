@@ -20,7 +20,7 @@ class RequestableService implements CanReport
     public function getReportableDataByPeriod(Period $period, int $hall_id): array
     {
         $data = BusinessRequest::fromPeriod($period)
-            ->fromHallOrManagedHalls($hall_id)
+            ->fromHall($hall_id)
             ->get()
             ->groupBy(function ($requests) {
                 return $requests->status;

@@ -5,12 +5,12 @@ namespace App\Services\Reporting;
 use App\Enums\Period;
 use App\Interfaces\CanReport;
 use App\Models\Screening;
-use App\Traits\Reporting\DataFormatter;
+use App\Traits\Reporting\PeriodFormatter;
 use App\Traits\Reporting\FillerData;
 
 class TicketService implements CanReport
 {
-    use FillerData, DataFormatter;
+    use FillerData, PeriodFormatter;
 
     /**
      * Returns an array of tickets count grouped by date and by status
@@ -24,7 +24,7 @@ class TicketService implements CanReport
     {
         $data = Screening::with('tickets')
             ->fromPeriod($period)
-            ->fromHallOrManagedHalls($hall_id)
+            ->fromHall($hall_id)
             ->get()
             ->groupBy(function ($screening) use ($period) {
                 return $screening->start_time->format($this->getReportDataFormat($period));
