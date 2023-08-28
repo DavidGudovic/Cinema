@@ -3,13 +3,11 @@
 namespace App\Models;
 
 use App\Enums\Period;
-use App\Enums\Status;
-use App\Interfaces\Requestable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class BusinessRequest extends Model implements Requestable //pseudo superclass for Models/ Booking and Advert
+class BusinessRequest extends Model //pseudo superclass for Models/ Booking and Advert
 {
     use HasFactory, SoftDeletes;
 

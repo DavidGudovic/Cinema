@@ -2,15 +2,13 @@
 
 namespace App\Models;
 
-use App\Enums\Period;
-use App\Interfaces\Requestable;
 use App\Traits\PeriodScopes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 
-class Booking extends Model implements Requestable //pseudo extends Models/BusinessRequest
+class Booking extends Model //pseudo extends Models/BusinessRequest
 {
     use HasFactory, SoftDeletes, PeriodScopes;
 
