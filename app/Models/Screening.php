@@ -234,6 +234,6 @@ class Screening extends Model
      */
     public function scopeSeedingRandomOrder($query)
     {
-        return $query->where('start_time' > now()->subYear())->inRandomOrder()->take(3000);
+        return $query->inRandomOrder()->take(200);
     }
 }
