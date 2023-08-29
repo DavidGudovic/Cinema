@@ -18,6 +18,12 @@ class AdvertService implements CanExport
      * Returns a paginated, filtered list of adverts or a searched through list of adverts
      * All parameters are optional, if none are set, all adverts are returned, paginated by $quantity, default 10
      *
+     *   NOTE: This method getFiltered_Something_Paginated repeats in multiple services
+     *   with slight variation and has a very long parameter list
+     *   Ideally it should've been an interface implementation with a Data Transfer Object as a parameter
+     *   which would allow for a more flexible and readable implementation, plus higher re-usability of the Table components
+     *   Unfortunately that's a refactor that's simply too costly at this stage of the project
+     *
      * @param RequestableService $requestableService
      * @param string $status
      * @param int $user_id
