@@ -8,10 +8,11 @@ use Illuminate\Support\Collection;
 class ExportService
 {
     /**
+     * Generates a CSV from a passed array or collection of data, sanitized by any implementation of CanExport interface
+     *
      * @param array|Collection $data
      * @param CanExport $service
      * @return string|bool
-     * Generates a CSV from a passed array or collection of data, sanitized by any implementation of CanExport interface
      */
     public function generateCSV(array|Collection $data, CanExport $service): string|bool
     {

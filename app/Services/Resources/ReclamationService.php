@@ -11,11 +11,13 @@ class ReclamationService
 {
 
     /**
+     * Returns a paginated, optionally filtered/sorted list of requests
+     * All parameters are optional, if none are set, all requests are returned, paginated by $quantity, default 1
+     *
      * @param string $status
      * @param string $type
      * @param int $quantity
      * @return LengthAwarePaginator
-     * Returns a paginated, optionally filtered/sorted list of requests
      */
     public function getFilteredReclamationsPaginated(string $status = 'all', string $type = 'all', int $quantity = 1): LengthAwarePaginator
     {
@@ -27,10 +29,11 @@ class ReclamationService
     }
 
     /**
+     * Stores a reclamation
+     *
      * @param int $request_id
      * @param $text
      * @return void
-     * Stores a reclamation
      */
     public function storeReclamation(int $request_id, $text): void
     {
@@ -42,9 +45,10 @@ class ReclamationService
     }
 
     /**
+     * Soft deletes a reclamation
+     *
      * @param int $reclamation_id
      * @return void
-     * Soft deletes a reclamation
      */
     public function cancelReclamation(int $reclamation_id): void
     {

@@ -32,6 +32,8 @@ trait FillerData
     }
 
     /**
+     * Returns attributes needed for iterating through and building filler data based on the period
+     *
      * @param callable $dataFormatter
      * @param Period|null $period
      * @return array

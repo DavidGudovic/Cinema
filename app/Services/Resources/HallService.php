@@ -8,15 +8,13 @@ use App\Models\Screening;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Collection;
 
-/**
- * Services for App/Models/Halls.php
- */
 class HallService
 {
     /**
+     * Get all halls.
+     *
      * @param int $manager_id
      * @return EloquentCollection
-     * Get all halls.
      */
     public function getHalls(int $manager_id = 0): EloquentCollection
     {
@@ -24,11 +22,12 @@ class HallService
     }
 
     /**
+     * Returns a map of unavailable time intervals for a hall for the given $dates
+     * [[start_time, end_time], [start_time, end_time], ...]
+     *
      * @param array $dates
      * @param Hall $hall
      * @return array
-     * Returns a map of unavailable time intervals for a hall for the given $dates
-     * [[start_time, end_time], [start_time, end_time], ...]
      */
     public function getUnavailableTimeSlotsForDaysMap(array $dates, Hall $hall): array
     {
@@ -54,12 +53,13 @@ class HallService
     }
 
     /**
+     * Get an associative array of halls available at $start_time for the next $for_days.
+     * [Date => [Hall, Hall, Hall...]...]
+     *
      * @param $start_time
      * @param $end_time
      * @param $for_days
      * @return Collection
-     * Get an associative array of halls available at $start_time for the next $for_days.
-     * [Date => [Hall, Hall, Hall...]...]
      */
     public function getAvailableHallsForDateMap($start_time, $end_time, $for_days): Collection
     {
@@ -72,12 +72,13 @@ class HallService
     }
 
     /**
+     * Used to get arrays for bookings and screenings that is merged on intersect  in getAvailableDatesMap().
+     *
      * @param $relationship
      * @param $start_time
      * @param $end_time
      * @param $for_days
      * @return array
-     * Used to get arrays for bookings and screenings that is merged on intersect  in getAvailableDatesMap().
      */
     private function getHallDatesMapForRelationship($relationship, $start_time, $end_time, $for_days): array
     {

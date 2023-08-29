@@ -10,16 +10,10 @@ trait PeriodSorter
    protected function sortPeriod(Period $period, array $data): array
    {
        return match($period) {
-           Period::WEEKLY, Period::MONTHLY => $this->sort($data),
+           Period::WEEKLY, Period::MONTHLY => ksort($data),
            Period::YEARLY => $this->sortYearly($data),
        };
    }
-
-    private function sort(array $data): array
-    {
-         ksort($data);
-         return $data;
-    }
 
     private function sortYearly(array $data): array
     {

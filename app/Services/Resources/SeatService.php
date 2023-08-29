@@ -8,11 +8,12 @@ use App\Models\Seat;
 class SeatService
 {
     /**
+     * Checks if there are conflicts with the passed seats and a screening
+     * If there are conflicts, returns an array of the conflicting seats
+     *
      * @param $seats
      * @param Screening $screening
      * @return bool|array
-     *  Checks if there are conflicts with the passed seats and a screening
-     *  If there are conflicts, returns an array of the conflicting seats
      */
     public function checkHasConflicts($seats, Screening $screening): bool|array
     {
@@ -29,10 +30,11 @@ class SeatService
     }
 
     /**
-     * @param Screening $screening
-     * @return array
      * Returns an array of taken seats for a screening
      * [ [row, column], [row, column], ... ]
+     *
+     * @param Screening $screening
+     * @return array
      */
     public function getTakenSeatsMap(Screening $screening): array
     {

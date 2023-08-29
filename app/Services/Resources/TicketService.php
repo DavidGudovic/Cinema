@@ -18,10 +18,11 @@ class TicketService
 
 
     /**
+     * Get a PDF of a ticket
+     *
      * @param User $user
      * @param Ticket $ticket
      * @return DomPDF
-     * Get a PDF of a ticket
      */
     public function getTicketPDF(User $user, Ticket $ticket): DomPDF
     {
@@ -36,9 +37,10 @@ class TicketService
     }
 
     /**
+     * Get a ticket by id
+     *
      * @param int $id
      * @return Ticket
-     * Get a ticket by id
      */
     public function getTicket(int $id): Ticket
     {
@@ -48,9 +50,10 @@ class TicketService
     }
 
     /**
+     * Get all tickets for a user
+     *
      * @param User $user
      * @return EloquentCollection
-     * Get all tickets for a user
      */
     public function getUsersTickets(User $user): EloquentCollection
     {
@@ -60,9 +63,10 @@ class TicketService
     }
 
     /**
+     * Get all unique movies a user has purchased a ticket for
+     *
      * @param User $user
      * @return Collection
-     * Get all unique movies a user has purchased a ticket for
      */
     public function getUniqueMovies(User $user): Collection
     {
@@ -75,9 +79,10 @@ class TicketService
     }
 
     /**
+     * Soft deletes Ticket
+     *
      * @param Ticket $ticket
      * @return void
-     * Soft deletes Ticket
      */
     public function cancelTicket(Ticket $ticket): void
     {
@@ -85,11 +90,12 @@ class TicketService
     }
 
     /**
+     * Get all tickets for a user with optional filters, paginated
+     *
      * @param int $movie
      * @param string $status
      * @param int|null $quantity
      * @return LengthAwarePaginator
-     * Get all tickets for a user with optional filters, paginated
      */
     public function getFilteredTicketsPaginated(int $movie, string $status = 'all', ?int $quantity = 2): LengthAwarePaginator
     {
@@ -102,9 +108,10 @@ class TicketService
     }
 
     /**
+     * Gets passed an in-memory instance of a ticket model and creates a ticket with seats in the database
+     *
      * @param Ticket $ticket
      * @return Ticket
-     * Gets passed an in-memory instance of a ticket model and creates a ticket with seats in the database
      */
     public function createTicket(Ticket $ticket): Ticket
     {
@@ -123,10 +130,11 @@ class TicketService
     }
 
     /**
+     * Sends an Email to the user with the ticket
+     *
      * @param User $user
      * @param Ticket $ticket
      * @return void
-     * Sends an Email to the user with the ticket
      */
     public function sendTicketEmail(User $user, Ticket $ticket): void
     {
