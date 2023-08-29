@@ -17,7 +17,7 @@ class UploadService
     public function uploadImage($image, string $path): string|bool
     {
         $imageName = $image->getClientOriginalName();
-        return $image->copy(public_path($path), $imageName)
+        return $image->move(public_path($path), $imageName)
             ? $imageName
             : false;
     }
