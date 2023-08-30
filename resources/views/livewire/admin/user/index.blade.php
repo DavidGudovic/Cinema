@@ -37,17 +37,12 @@
 @endsection
 
 @section('table_header')
-    <x-table.header-sortable>
+    <x-table.header-sortable class="w-24">
         <x-slot:sort>id</x-slot:sort>
         ID
     </x-table.header-sortable>
 
-    <x-table.header-sortable>
-        <x-slot:sort>name</x-slot:sort>
-        Ime
-    </x-table.header-sortable>
-
-    <x-table.header-sortable>
+    <x-table.header-sortable class="w-52">
         <x-slot:sort>email</x-slot:sort>
         Email
     </x-table.header-sortable>
@@ -58,7 +53,12 @@
     </x-table.header-sortable>
 
     <x-table.header-sortable>
-        <x-slot:sort>verified_at</x-slot:sort>
+        <x-slot:sort>name</x-slot:sort>
+        Ime
+    </x-table.header-sortable>
+
+    <x-table.header-sortable>
+        <x-slot:sort>email_verified_at</x-slot:sort>
         Verifikovan
     </x-table.header-sortable>
 
@@ -74,47 +74,43 @@
     @foreach($users as $user)
         <tr class="odd:bg-dark-blue text-center relative ">
             <x-table.data>
+                <x-slot:sort>id</x-slot:sort>
                 {{$user->id}}
             </x-table.data>
 
-            <x-table.data>
-                {{$user->name}}
-            </x-table.data>
-
-            <x-table.data>
+            <x-table.data class="text-left pl-2 text-sm">
+                <x-slot:sort>email</x-slot:sort>
                 {{$user->email}}
             </x-table.data>
 
             <x-table.data>
+                <x-slot:sort>username</x-slot:sort>
                 {{$user->username}}
             </x-table.data>
 
             <x-table.data>
-                {{$user->verified_at ? 'Da' : 'Ne'}}
+                <x-slot:sort>name</x-slot:sort>
+                {{$user->name}}
             </x-table.data>
 
             <x-table.data>
-                {{$user->role}}
+                <x-slot:sort>email_verified_at</x-slot:sort>
+                {{$user->email_verified_at ? 'Da' : 'Ne'}}
+            </x-table.data>
+
+            <x-table.data>
+                <x-slot:sort>role</x-slot:sort>
+                {{$user->role->toSrLatinString()}}
             </x-table.data>
 
             <x-table.actions>
                 <x-table.actions.button>
                     <x-slot:route>
-                        {{route('users.edit', $user)}}
+                        {{route('users.update', $user)}}
                     </x-slot:route>
 
                     <x-slot:icon>
                         <i class="fa-solid fa-edit"></i>
-                    </x-slot:icon>
-                </x-table.actions.button>
-
-                <x-table.actions.button>
-                    <x-slot:route>
-                        {{route('users.show', $user)}}
-                    </x-slot:route>
-
-                    <x-slot:icon>
-                        <i class="fa-solid fa-eye"></i>
                     </x-slot:icon>
                 </x-table.actions.button>
 
