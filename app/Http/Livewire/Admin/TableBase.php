@@ -44,8 +44,9 @@ abstract class TableBase extends Component
     }
 
     /**
-     * Sorts the resource list by $this->sort_by and $this->sort_direction
-     * Only sorts the collection on the current page, doesn't change the LengthAwarePaginator
+     * Sorts the resource list by $this->sort_by and $this->sort_direction or by the passed parameters
+     * If $sort_params are passed, the collection is sorted by relation or directly by the column
+     * Only sorts the collection on the current page
      */
     public function sortDisplayedPaginatorCollection(&$paginator_list, array $sort_params = []): void
     {
