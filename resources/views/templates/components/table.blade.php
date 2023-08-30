@@ -39,7 +39,7 @@
                     @yield('table_header')
                 </tr>
                 </thead>
-                <tbody>
+                <tbody x-data="{visibleToolTip: false}">
                 @yield('table_body')
                 </tbody>
             </table>

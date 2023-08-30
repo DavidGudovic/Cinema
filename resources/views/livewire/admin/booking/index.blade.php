@@ -2,7 +2,7 @@
 
 @section('left_filters')
     <!-- Filter for Hall-->
-  <x-table.filter>
+    <x-table.filter>
         <x-slot:title>Sala</x-slot:title>
         <x-slot:model>hall_id</x-slot:model>
         <x-slot:options>
@@ -85,12 +85,12 @@
         Cena
     </x-table.header-sortable>
 
-    <th class="p-2"> Akcije </th>
+    <th class="p-2"> Akcije</th>
 @endsection
 
 @section('table_body')
     @foreach($bookings as $booking)
-        <tr x-data="{showToolTip{{$booking->id}}: false}"  class="odd:bg-dark-blue text-center relative">
+        <tr wire:key="{{$booking->id}}" class="odd:bg-dark-blue text-center relative">
 
             <x-table.data class="text-sm">
                 <x-slot:sort>businessRequest.created_at</x-slot:sort>
@@ -133,28 +133,20 @@
                 {{ $booking->businessRequest->price }}
             </x-table.data>
 
-            <x-table.data>
-                <div class="flex gap-5 justify-center items-center h-full">
-                    @if($booking->businessRequest->status == 'PENDING' && $booking->start_time > now())
-                        <a href="{{route('bookings.edit', ['booking' => $booking, 'action' => 'ACCEPT'])}}">
-                            <i class="fa-solid fa-check"></i>
-                        </a>
-                        <a href="{{route('bookings.edit', ['booking' => $booking, 'action' => 'REJECT'])}}"
-                           class="text-red-700 hover:text-white">
-                            <i class="fa-solid fa-x"></i>
-                        </a>
+            <x-table.actions>
+                <x-table.actions.button
+                    :enabled="$booking->businessRequest->status == 'PENDING' && $booking->start_time > now()">
+                    <x-slot:route> {{route('bookings.edit', ['booking' => $booking, 'action' => 'ACCEPT'])}} </x-slot:route>
+                    <x-slot:icon><i class="fa-solid fa-check"></i></x-slot:icon>
+                </x-table.actions.button>
 
-                    @else
-                        <a href="#" aria-disabled="true" class="hover:text-white opacity-10 cursor-default">
-                            <i class="fa-solid fa-check"></i>
-                        </a>
-                        <a href="#" aria-disabled="true" class="opacity-10 cursor-default text-red-700">
-                            <i class="fa-solid fa-x"></i>
-                        </a>
-
-                    @endif
-                </div>
-            </x-table.data>
+                <x-table.actions.button
+                    :enabled="$booking->businessRequest->status == 'PENDING' && $booking->start_time > now()"
+                    class="text-red-700 hover:text-white">
+                    <x-slot:route> {{route('bookings.edit', ['booking' => $booking, 'action' => 'REJECT'])}} </x-slot:route>
+                    <x-slot:icon><i class="fa-solid fa-x"></i></x-slot:icon>
+                </x-table.actions.button>
+            </x-table.actions>
         </tr>
     @endforeach
 @endsection

@@ -1,113 +1,139 @@
 @extends('templates.components.table')
 
 @section('left_filters')
-    <!-- Filter for Quantity -->
-    <div class="flex flex-col gap-1">
-        <label class="opacity-40 text-sm" for="genres">Količina</label>
-        <select wire:change="resetPage" id="genres"
-                class="border rounded cursor-pointer p-2 bg-gray-700 bg-opacity-70">
-            <option class="cursor-pointer" value=''>Sve</option>
-            <option class="cursor-pointer" value='done'>Ispunjena</option>
-            <option class="cursor-pointer" value='in_progress'>Započeta</option>
-            <option class="cursor-pointer" value='never_shown'>Nezapočeta</option>
-        </select>
-    </div>
+    <x-table.filter>
+        <x-slot:title>Verifikacija</x-slot:title>
+        <x-slot:model>is_verified</x-slot:model>
+        <x-slot:options>
+            <option value="">Svi</option>
+            <option value="true">Verifikovani</option>
+            <option value="false">Ne verifikovani</option>
+        </x-slot:options>
+    </x-table.filter>
 
-    <!-- Filter for Status -->
-    <div class="flex flex-col gap-1">
-        <label class="opacity-40 text-sm" for="status">Status</label>
-        <select wire:change="resetPage" id="status"
-                class="border rounded cursor-pointer p-2 bg-gray-700 bg-opacity-70"
-                wire:model="status">
-            <option class="cursor-pointer" value="all">Sve</option>
-            <option class="cursor-pointer" value="pending">Na čekanju</option>
-            <option class="cursor-pointer" value="accepted">Odobreno</option>
-            <option class="cursor-pointer" value="cancelled">Otkazano</option>
-            <option class="cursor-pointer" value="rejected">Odbijeno</option>
-        </select>
-    </div>
+    <x-table.filter>
+        <x-slot:title>Rola</x-slot:title>
+        <x-slot:model>role</x-slot:model>
+        <x-slot:options>
+            <option value="">Svi</option>
+            @foreach($roles as $role => $name)
+                <option value="{{$role}}">{{$name}}</option>
+            @endforeach
+        </x-slot:options>
+    </x-table.filter>
 
-    <!-- Filter for User -->
-    <div class="hidden md:flex flex-col gap-1">
-        <label class="opacity-40 text-sm" for="user_id">Korisnik ID</label>
-        <input type="number" id="user_id" min="0"
-               class="border rounded cursor-pointer p-2 bg-gray-700 bg-opacity-70 w-24"
-               wire:model="user_id" wire:change="resetPage"/>
-    </div>
-
-    <!-- Sort all or shown-->
-    <div class="flex flex-col gap-1">
-        <label class="opacity-40 text-sm" for="sort">Sortiraj</label>
-        <select id="sort" class="border rounded cursor-pointer p-2 bg-gray-700 bg-opacity-70"
-                wire:model="global_sort">
-            <option class="cursor-pointer" value='false'>Prikazano</option>
-            <option class="cursor-pointer" value='true'>Sve podatke</option>
-        </select>
-    </div>
+    <x-table.sort-options/>
 @endsection
 
 @section('right_filters')
-    <!-- Paginate quantity-->
-    <div class="hidden md:flex flex-col gap-1">
-        <label class="opacity-40 text-sm" for="sort">Prikaži</label>
-        <select wire:change="resetPage" id="sort"
-                class="border rounded cursor-pointer p-2 bg-gray-700 bg-opacity-70" wire:model="quantity">
-            <option class="cursor-pointer" value="5">5</option>
-            <option class="cursor-pointer" value="10">10</option>
-            <option class="cursor-pointer" value="15">15</option>
-            <option class="cursor-pointer" value="20">20</option>
-            <option class="cursor-pointer" value="25">25</option>
-            <option class="cursor-pointer" value="50">50</option>
-            <option class="cursor-pointer" value="100">100</option>
-        </select>
-    </div>
-    <!-- End Paginate quantity-->
 
-    <!-- Filter for User -->
-    <div class="flex md:hidden flex-col gap-1">
-        <label class="opacity-40 text-sm" for="user_id">Korisnik ID</label>
-        <input type="number" id="user_id" min="0"
-               class="border rounded cursor-pointer p-2 bg-gray-700 bg-opacity-70 w-16"
-               wire:model="user_id" wire:change="resetPage"/>
-    </div>
+    <x-table.paginate-quantity class="flex"/>
 
-    <!-- Search Bar -->
-    <div class="relative flex flex-col gap-1">
-        <label class="opacity-40 text-sm" for="search">Pretraži po</label>
-        <input id="search" type="text" wire:model.debounce.300ms="search_query" wire:change.debounce="refreshPage"
-               placeholder="Naziv, Delatnost..."
-               class="border rounded p-2 pl-8 bg-gray-700 bg-opacity-70 w-44 md:w-auto">
-        <i class="fa-solid fa-search absolute left-2 bottom-1 transform -translate-y-2/4"></i>
-    </div>
-    <!-- End Search Bar -->
+    <x-table.search-bar>
+        <x-slot:placeholder>Ime, Email, Korisničko ime</x-slot:placeholder>
+    </x-table.search-bar>
 
-    <!-- CSV -->
-    <div x-on:click="showExcelDropdown = !showExcelDropdown" x-on:click.outside="showExcelDropdown = false"
-         wire:loading.class.remove="cursor-pointer hover:text-red-700" wire:loading.class="opacity-50"
-         class=" flex items-center cursor-pointer group relative border rounded p-2 gap-2 mt-6 bg-gray-700 bg-opacity-70">
-        <span class="group-hover:text-red-700">Excel</span>
-        <i class="group-hover:text-red-700 fa-solid fa-file-csv"></i>
-        <i class="group-hover:text-red-700 fa-solid fa-angle-down fa-xs pt-1"></i>
-        <!-- Dropdown -->
-        <div x-cloak x-show="showExcelDropdown"
-             class="absolute z-10 top-10 left-0 flex flex-col justify-center p-2 bg-neutral-500 rounded-lg">
-            <a href="#" wire:click.prevent="export('global')" class="text-center w-full">Sve</a>
-            <a href="#" wire:click.prevent="export('displayed')" class="text-center w-full">Prikazano</a>
-        </div>
-        <!-- End Dropdown -->
-    </div>
-    <!-- End CSV -->
+    <x-table.csv-button/>
 @endsection
 
 @section('table_header')
+    <x-table.header-sortable>
+        <x-slot:sort>id</x-slot:sort>
+        ID
+    </x-table.header-sortable>
 
+    <x-table.header-sortable>
+        <x-slot:sort>name</x-slot:sort>
+        Ime
+    </x-table.header-sortable>
+
+    <x-table.header-sortable>
+        <x-slot:sort>email</x-slot:sort>
+        Email
+    </x-table.header-sortable>
+
+    <x-table.header-sortable>
+        <x-slot:sort>username</x-slot:sort>
+        Korisničko ime
+    </x-table.header-sortable>
+
+    <x-table.header-sortable>
+        <x-slot:sort>verified_at</x-slot:sort>
+        Verifikovan
+    </x-table.header-sortable>
+
+    <x-table.header-sortable>
+        <x-slot:sort>role</x-slot:sort>
+        Rola
+    </x-table.header-sortable>
+
+    <th class="p-2">Akcije</th>
 @endsection
 
 @section('table_body')
+    @foreach($users as $user)
+        <tr class="odd:bg-dark-blue text-center relative ">
+            <x-table.data>
+                {{$user->id}}
+            </x-table.data>
 
+            <x-table.data>
+                {{$user->name}}
+            </x-table.data>
+
+            <x-table.data>
+                {{$user->email}}
+            </x-table.data>
+
+            <x-table.data>
+                {{$user->username}}
+            </x-table.data>
+
+            <x-table.data>
+                {{$user->verified_at ? 'Da' : 'Ne'}}
+            </x-table.data>
+
+            <x-table.data>
+                {{$user->role}}
+            </x-table.data>
+
+            <x-table.actions>
+                <x-table.actions.button>
+                    <x-slot:route>
+                        {{route('users.edit', $user)}}
+                    </x-slot:route>
+
+                    <x-slot:icon>
+                        <i class="fa-solid fa-edit"></i>
+                    </x-slot:icon>
+                </x-table.actions.button>
+
+                <x-table.actions.button>
+                    <x-slot:route>
+                        {{route('users.show', $user)}}
+                    </x-slot:route>
+
+                    <x-slot:icon>
+                        <i class="fa-solid fa-eye"></i>
+                    </x-slot:icon>
+                </x-table.actions.button>
+
+                <x-table.actions.button>
+                    <x-slot:route>
+                        {{route('users.destroy', $user)}}
+                    </x-slot:route>
+
+                    <x-slot:icon>
+                        <i class="fa-solid fa-trash"></i>
+                    </x-slot:icon>
+                </x-table.actions.button>
+            </x-table.actions>
+        </tr>
+    @endforeach
 @endsection
 
 @section('pagination')
+    {{$users->links()}}
 @endsection
 
 @section('modals')

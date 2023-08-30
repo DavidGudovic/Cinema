@@ -98,7 +98,7 @@
 
 @section('table_body')
     @foreach($adverts as $advert)
-        <tr x-data="{showToolTip{{$advert->id}}: false}" class="odd:bg-dark-blue text-center relative">
+        <tr wire:key="{{$advert->id}}" class="odd:bg-dark-blue text-center relative">
 
             <x-table.data class="text-sm">
                 <x-slot:sort>businessRequest.created_at</x-slot:sort>
@@ -109,7 +109,6 @@
                 <x-slot:sort>title</x-slot:sort>
                 {{ $advert->title }}
             </x-table.data>
-
             <x-table.data-with-tooltip>
                 <x-slot:model>{{$advert->id}} </x-slot:model>
                 <x-slot:text>{{$advert->businessRequest->text}}</x-slot:text>
@@ -154,28 +153,20 @@
                 {{ $advert->businessRequest->price }}
             </x-table.data>
 
-            <x-table.data class="p-2">
-                <div class="flex gap-5 justify-center items-center h-full">
-                    @if($advert->businessRequest->status == 'PENDING')
-                        <a href="{{route('adverts.edit', ['advert' => $advert, 'action' => 'ACCEPT'])}}">
-                            <i class="fa-solid fa-check"></i>
-                        </a>
-                        <a href="{{route('adverts.edit', ['advert' => $advert, 'action' => 'REJECT'])}}"
-                           class="text-red-700 hover:text-white">
-                            <i class="fa-solid fa-x"></i>
-                        </a>
+            <x-table.actions>
+                <x-table.actions.button :enabled="$advert->businessRequest->status == 'PENDING'">
+                    <x-slot:route> {{route('adverts.edit', ['advert' => $advert, 'action' => 'ACCEPT'])}} </x-slot:route>
+                    <x-slot:icon><i class="fa-solid fa-check"></i></x-slot:icon>
+                </x-table.actions.button>
 
-                    @else
-                        <a href="#" aria-disabled="true" class="hover:text-white opacity-30 cursor-default">
-                            <i class="fa-solid fa-check"></i>
-                        </a>
-                        <a href="#" aria-disabled="true" class="opacity-30 cursor-default text-red-700">
-                            <i class="fa-solid fa-x"></i>
-                        </a>
+                <x-table.actions.button
+                    :enabled="$advert->businessRequest->status == 'PENDING'"
+                    class="text-red-700 hover:text-white">
+                    <x-slot:route> {{route('adverts.edit', ['advert' => $advert, 'action' => 'REJECT'])}} </x-slot:route>
+                    <x-slot:icon><i class="fa-solid fa-x"></i></x-slot:icon>
+                </x-table.actions.button>
+            </x-table.actions>
 
-                    @endif
-                </div>
-            </x-table.data>
         </tr>
     @endforeach
 @endsection

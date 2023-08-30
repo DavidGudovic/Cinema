@@ -110,7 +110,7 @@
 
 @section('table_body')
     @foreach($screenings as $screening)
-        <tr class="odd:bg-dark-blue text-center relative">
+        <tr wire:key="{{$screening->id}}" class="odd:bg-dark-blue text-center relative">
 
             <x-table.data class="text-start">
                 <x-slot:sort>movie_id</x-slot:sort>
@@ -153,21 +153,18 @@
             </x-table.data>
 
             <!-- Cancel Screening -->
-            <x-table.data>
-                <div class="flex gap-5 justify-center items-center h-full">
+            <x-table.actions>
                     @if($screening->start_time > now())
                         <a wire:click.prevent="$emit('showModal', {{$screening}})"
                            class="text-red-700 hover:text-white">
                             <i class="fa-solid fa-x"></i>
                         </a>
                     @else
-
                         <a href="#" aria-disabled="true" class="opacity-30 cursor-default text-red-700">
                             <i class="fa-solid fa-x"></i>
                         </a>
                     @endif
-                </div>
-            </x-table.data>
+            </x-table.actions>
             <!-- End Cancel Screening -->
         </tr>
     @endforeach

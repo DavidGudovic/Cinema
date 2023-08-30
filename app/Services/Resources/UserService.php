@@ -2,13 +2,16 @@
 
 namespace App\Services\Resources;
 
+use App\Interfaces\CanExport;
 use App\Mail\VerifyEmail;
 use App\Models\User;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 
-class UserService
+class UserService implements CanExport
 {
 
     /**
@@ -87,5 +90,27 @@ class UserService
             'name' => $newData['name'],
             'password' => Hash::make($newData['new_password']),
         ]);
+    }
+
+    /**
+     * Returns a paginated list of users with optional search query and sorting
+     *
+     * @return LengthAwarePaginator
+     */
+    public function getFilteredUsersPaginated() : LengthAwarePaginator
+    {
+        return User::paginate(10);
+    }
+
+    /**
+     * Prepares a user collection for export, adds BOM, flattens array, adds headers
+     *
+     * @implements CanExport
+     * @param array|Collection $data
+     * @return array
+     */
+    public function sanitizeForExport(array|Collection $data): array
+    {
+        // TODO: Implement sanitizeForExport() method.
     }
 }

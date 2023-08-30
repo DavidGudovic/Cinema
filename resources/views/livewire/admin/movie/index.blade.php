@@ -88,18 +88,18 @@
 
 @section('table_body')
     @foreach($movies as $movie)
-        <tr x-data="{showToolTip{{$movie->id}}: false}" class="odd:bg-dark-blue text-center relative ">
+        <tr wire:key="{{$movie->id}}" class="odd:bg-dark-blue text-center relative ">
 
             <x-table.data>
                 <x-slot:sort>title</x-slot:sort>
                 {{ $movie->title }}
             </x-table.data>
 
-           <x-table.data-with-tooltip>
-               <x-slot:model>{{$movie->id}}</x-slot:model>
-               <x-slot:text>{{$movie->description}}</x-slot:text>
-               <x-slot:position>left-36 top-0</x-slot:position>
-           </x-table.data-with-tooltip>
+            <x-table.data-with-tooltip>
+                <x-slot:model>{{$movie->id}}</x-slot:model>
+                <x-slot:text>{{$movie->description}}</x-slot:text>
+                <x-slot:position>left-36 top-0</x-slot:position>
+            </x-table.data-with-tooltip>
 
             <x-table.data>
                 <x-slot:sort>none</x-slot:sort>
@@ -131,20 +131,19 @@
                 {{ $movie->is_showcased ? 'Da' : 'Ne' }}
             </x-table.data>
 
-            <x-table.data>
-                <div class="flex gap-5 justify-center items-center h-full">
-                    <a href="{{route('screenings.create', ['movie' => $movie])}}">
-                        <i class="fa-solid fa-clapperboard"></i>
-                    </a>
-                    <a href="{{route('movies.edit', $movie)}}" class="hover:text-gray-300">
-                        <i class="fa-solid fa-pen"></i>
-                    </a>
-                    <a href="#" wire:click.prevent="openDeleteModal({{$movie->id}})"
-                       class="text-red-700 hover:text-gray-300">
-                        <i class="fa-solid fa-trash"></i>
-                    </a>
-                </div>
-            </x-table.data>
+            <x-table.actions>
+                <x-table.actions.button>
+                    <x-slot:route>{{route('screenings.create', ['movie' => $movie])}}</x-slot:route>
+                    <x-slot:icon><i class="fa-solid fa-clapperboard"></i></x-slot:icon>
+                </x-table.actions.button>
+
+                <x-table.actions.button>
+                    <x-slot:route>{{route('movies.edit', $movie)}}</x-slot:route>
+                    <x-slot:icon><i class="fa-solid fa-pen"></i></x-slot:icon>
+                </x-table.actions.button>
+
+                <x-table.actions.delete :model="$movie->id"/>
+            </x-table.actions>
         </tr>
     @endforeach
 @endsection
