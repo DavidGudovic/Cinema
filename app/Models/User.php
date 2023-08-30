@@ -77,6 +77,13 @@ class User extends Authenticatable
     * Local Eloquent scopes
     */
 
+    public function scopeFilterVerified($query, $is_verified){
+        return match($is_verified){
+            'verified' => $query->verified(),
+            'unverified' => $query->unverified(),
+            default => $query,
+        };
+    }
     public function scopeUnverified($query){
         return $query->where('email_verified_at', null);
     }
@@ -86,7 +93,9 @@ class User extends Authenticatable
     }
 
     public function scopeIsRole($query, $role){
-        return $query->where('role', $role);
+        return $query->when($role, function ($query) use ($role) {
+            return $query->where('role', $role);
+        });
     }
 
     public function scopeHasTicketsForScreening($query, $screening_id){
@@ -120,6 +129,30 @@ class User extends Authenticatable
     public function scopeHasUnresolvedReclamations($query){
         return $query->whereHas('reclamations', function($q){
             $q->where('status', '=', Status::PENDING);
+        });
+    }
+
+    public function scopeSort($query,$do_sort, $sort_by, $sort_direction){
+        return $query->when($do_sort, function ($query) use ($sort_by, $sort_direction) {
+            return $query->orderBy($sort_by, $sort_direction);
+        });
+    }
+
+    public function scopeSearch($query, $search_query){
+        return $query->when($search_query, function ($query) use ($search_query) {
+            return $query->where('name', 'LIKE', "%{$search_query}%")
+                ->orWhere('username', 'LIKE', "%{$search_query}%")
+                ->orWhere('email', 'LIKE', "%{$search_query}%")
+                ->orWhere('role', 'LIKE', "%{$search_query}%")
+                ->orWhere('id', '=', $search_query);
+        });
+    }
+
+    public function scopePaginateOptionally($query, $paginate_quantity){
+        return $query->when($paginate_quantity, function ($query) use ($paginate_quantity) {
+            return $query->paginate($paginate_quantity);
+        }, function ($query) {
+            return $query->get();
         });
     }
 

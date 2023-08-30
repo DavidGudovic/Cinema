@@ -14,7 +14,14 @@ class Index extends TableBase
 {
     /* User specific filter properties */
     public string $role = '';
-    public string $is_verified = ''; // 'true' or 'false' String cause of livewire serialization
+    public string $is_verified = ''; // 'verified' 'unverified' 'all' String cause of livewire serialization
+
+    public function mount()
+    {
+        $this->sort_by = 'name';
+        $this->sort_direction = 'ASC';
+        $this->quantity = 10;
+    }
     public function render(UserService $userService)
     {
         $users = $this->getUserList($userService);
@@ -33,7 +40,16 @@ class Index extends TableBase
      */
     public function getUserList(UserService $userService): LengthAwarePaginator|Collection
     {
-        return $userService->getFilteredUsersPaginated();
+        return $userService->getFilteredUsersPaginated(
+            role: $this->role,
+            is_verified: $this->is_verified,
+            do_sort: $this->global_sort == 'true',
+            search_query: $this->search_query,
+            sort_by: $this->sort_by,
+            sort_direction: $this->sort_direction,
+            paginate_quantity: $this->quantity
+
+        );
     }
 
     /**

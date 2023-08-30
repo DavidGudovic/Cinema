@@ -2,6 +2,7 @@
 
 namespace App\Services\Resources;
 
+use App\Enums\Roles;
 use App\Interfaces\CanExport;
 use App\Mail\VerifyEmail;
 use App\Models\User;
@@ -93,13 +94,24 @@ class UserService implements CanExport
     }
 
     /**
-     * Returns a paginated list of users with optional search query and sorting
+     * Returns a paginated list of users with optional searching/filtering and sorting
      *
-     * @return LengthAwarePaginator
+     * @param string $role
+     * @param bool|null $is_verified
+     * @param bool $do_sort
+     * @param string $search_query
+     * @param string $sort_by
+     * @param string $sort_direction
+     * @param int $paginate_quantity
+     * @return LengthAwarePaginator|Collection
      */
-    public function getFilteredUsersPaginated() : LengthAwarePaginator
+    public function getFilteredUsersPaginated(string $role = '', string $is_verified = 'all', bool $do_sort = false, string $search_query = '', string $sort_by = 'id', string $sort_direction = 'ASC', int $paginate_quantity = 0): LengthAwarePaginator|Collection
     {
-        return User::paginate(10);
+        return User::isRole($role)
+            ->filterVerified($is_verified)
+            ->search($search_query)
+            ->sort($do_sort, $sort_by, $sort_direction)
+            ->paginateOptionally($paginate_quantity);
     }
 
     /**
@@ -111,6 +123,32 @@ class UserService implements CanExport
      */
     public function sanitizeForExport(array|Collection $data): array
     {
-        // TODO: Implement sanitizeForExport() method.
+        $bom = "\xEF\xBB\xBF";
+
+        $headers = [
+            $bom . 'Ime',
+            'Korisničko ime',
+            'Email',
+            'Uloga',
+            'Verifikovan',
+        ];
+        $output = [];
+        foreach ($data as $user) {
+
+            $role = $user['role'] instanceof Roles
+                ? $user['role']->toSrLatinString()
+                : Roles::from($user['role'])->toSrLatinString();
+
+            $output[] = [
+                $user['name'],
+                $user['username'],
+                $user['email'],
+                $role,
+                $user['email_verified_at'] ? 'Da' : 'Ne',
+            ];
+        }
+
+        array_unshift($output, $headers);
+        return $output;
     }
 }

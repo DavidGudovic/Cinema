@@ -5,9 +5,9 @@
         <x-slot:title>Verifikacija</x-slot:title>
         <x-slot:model>is_verified</x-slot:model>
         <x-slot:options>
-            <option value="">Svi</option>
-            <option value="true">Verifikovani</option>
-            <option value="false">Ne verifikovani</option>
+            <option value="all">Svi</option>
+            <option value="verified">Verifikovani</option>
+            <option value="unverified">Ne verifikovani</option>
         </x-slot:options>
     </x-table.filter>
 
@@ -95,7 +95,7 @@
 
             <x-table.data>
                 <x-slot:sort>email_verified_at</x-slot:sort>
-                {{$user->email_verified_at ? 'Da' : 'Ne'}}
+                {{$user->email_verified_at?->format('d/m/y H:i') ?? 'Ne'}}
             </x-table.data>
 
             <x-table.data>
