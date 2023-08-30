@@ -43,11 +43,11 @@
 		</li>
 
 		<li>
-			<a href="{{route('reports.create')}}" class="flex items-center gap-4">
-				<i class="{{ Route::currentRouteName() === 'reports.create' ? 'fa-solid fa-play fa-2xs' : 'fa-solid fa-cogs' }}"></i>
-				<p>Konfiguracije</p>
-			</a>
-		</li>
+            <a href="{{route('home')}}" class="flex items-center gap-4">
+                <i class="{{ Route::currentRouteName() === '' ? 'fa-solid fa-play fa-2xs' : 'fa-solid fa-people-roof' }}"></i>
+                <p>Sale</p>
+            </a>
+        </li>
 		@elserole('MANAGER')
 		<li>
 			<a href="{{route('management.movies.index')}}" class="flex items-center gap-4">
