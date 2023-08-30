@@ -32,7 +32,8 @@ class Index extends TableBase
         $adverts = $this->getAdvertList($advertService, $requestableService);
 
         if ($this->global_sort == 'false') {
-            $this->sortDisplayedAdvertList($adverts, $requestableService);
+            $sortParams = $requestableService->resolveSortByParameter($this->sort_by);
+            $this->sortDisplayedPaginatorCollection($adverts, $sortParams);
         }
 
         return view('livewire.admin.advert.index', [
@@ -55,28 +56,8 @@ class Index extends TableBase
             sort_by: $this->sort_by,
             sort_direction: $this->sort_direction,
             quantity: $this->quantity,
-            );
+        );
     }
-
-    /**
-     * Sorts the movie list by $this->sort_by and $this->sort_direction
-     * Only sorts the collection on the current page, doesn't change the LengthAwarePaginator $adverts
-     * If $this->sort_by is a relationship, the relationship is used to sort the collection
-     */
-    public function sortDisplayedAdvertList(&$adverts, RequestableService $requestableService): void
-    {
-        $sortParams = $requestableService->resolveSortByParameter($this->sort_by);
-
-        $sorted = $adverts->getCollection()->sortBy(function ($advert) use ($sortParams) {
-            return $sortParams['type'] === 'relation'
-                ? $advert->businessRequest->{$sortParams['column']}
-                : $advert->{$sortParams['column']};
-        }, SORT_REGULAR, $this->sort_direction == 'DESC');
-
-        $adverts->setCollection($sorted);
-    }
-
-
 
     /**
      * Exports the advert list to a CSV file
@@ -86,8 +67,8 @@ class Index extends TableBase
     public function export(ExportService $exportService, AdvertService $advertService, RequestableService $requestableService, string $scope = 'displayed'): StreamedResponse
     {
         $data = ($scope == 'displayed')
-        ? $this->getAdvertList($advertService, $requestableService)->values()->toArray()
-        : $advertService->getFilteredAdvertsPaginated(requestableService: $requestableService,quantity: 0)->toArray();
+            ? $this->getAdvertList($advertService, $requestableService)->values()->toArray()
+            : $advertService->getFilteredAdvertsPaginated(requestableService: $requestableService, quantity: 0)->toArray();
 
         $csv = $exportService->generateCSV($data, $advertService);
 

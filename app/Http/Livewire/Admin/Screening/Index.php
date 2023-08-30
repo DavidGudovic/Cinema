@@ -35,7 +35,7 @@ class Index extends TableBase
         $screenings = $this->getScreeningsList($screeningService);
 
         if ($this->global_sort == 'false') {
-            $this->sortDisplayedScreeningsList($screenings);
+            $this->sortDisplayedPaginatorCollection($screenings);
         }
 
         return view('livewire.admin.screening.index', [
@@ -59,22 +59,6 @@ class Index extends TableBase
             quantity: $this->quantity,
         );
     }
-
-    /**
-     * Sorts the movie list by $this->sort_by and $this->sort_direction
-     * Only sorts the collection on the current page, doesn't change the LengthAwarePaginator $screenings
-     * If $this->sort_by is a relationship, the relationship is used to sort the collection
-     */
-    public function sortDisplayedScreeningsList(&$screenings): void
-    {
-        $sorted = $screenings->getCollection()->sortBy(function ($screening, $key) {
-            return $screening->{$this->sort_by};
-        }, SORT_REGULAR, $this->sort_direction == 'DESC');
-
-        $screenings->setCollection($sorted);
-    }
-
-
 
     /**
      * Exports the advert list to a CSV file

@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Interfaces\CanExport;
 use Illuminate\Support\Collection;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ExportService
 {

@@ -77,7 +77,7 @@
 
     <x-table.header-sortable>
         <x-slot:sort>businessRequest.user_id</x-slot:sort>
-        Status
+        Korisnik
     </x-table.header-sortable>
 
     <x-table.header-sortable>
@@ -133,7 +133,7 @@
                 {{ $booking->businessRequest->price }}
             </x-table.data>
 
-            <td class="p-2">
+            <x-table.data>
                 <div class="flex gap-5 justify-center items-center h-full">
                     @if($booking->businessRequest->status == 'PENDING' && $booking->start_time > now())
                         <a href="{{route('bookings.edit', ['booking' => $booking, 'action' => 'ACCEPT'])}}">
@@ -154,7 +154,7 @@
 
                     @endif
                 </div>
-            </td>
+            </x-table.data>
         </tr>
     @endforeach
 @endsection

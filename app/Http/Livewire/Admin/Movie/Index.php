@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class Index extends TableBase
 {
-
     public $genres; //mounted
     public $genre = NULL;
     public $screening_time = "with past"; // 'any' 'now' 'tomorrow' 'week' 'with past'
@@ -31,7 +30,7 @@ class Index extends TableBase
         $movies = $this->getMovieList($movieService);
 
         if ($this->global_sort == 'false') {
-            $this->sortDisplayedMovieList($movies);
+            $this->sortDisplayedPaginatorCollection($movies);
         }
 
         return view('livewire.admin.movie.index', [
@@ -64,19 +63,6 @@ class Index extends TableBase
                 sort_by: $this->sort_by,
                 sort_direction: $this->sort_direction
             );
-    }
-
-    /**
-     * Sorts the movie list by $this->sort_by and $this->sort_direction
-     * Only sorts the collection on the current page, doesn't change the LengthAwarePaginator $movies
-     */
-    public function sortDisplayedMovieList(&$movies): void
-    {
-        $sorted = $movies->getCollection()->sortBy(function ($movie, $key) {
-            return $movie->{$this->sort_by};
-        }, SORT_REGULAR, $this->sort_direction == 'DESC');
-
-        $movies->setCollection($sorted);
     }
 
     /**
