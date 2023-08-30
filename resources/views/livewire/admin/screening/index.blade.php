@@ -2,105 +2,68 @@
 
 @section('left_filters')
     <!-- Filter for Movies -->
-    <div class="flex flex-col gap-1">
-        <label class="opacity-40 text-sm" for="movie">Film</label>
-        <select wire:change="resetPage" id="movie"
-                class="border rounded cursor-pointer p-2 bg-gray-700 bg-opacity-70 w-36 md:w-auto" wire:model="movie">
+    <x-table.filter>
+        <x-slot:title>Film</x-slot:title>
+        <x-slot:model>movie</x-slot:model>
+        <x-slot:options>
             <option class="cursor-pointer" value='all'>Sve</option>
             @foreach($movies as $movie)
                 <option class="cursor-pointer" value='{{$movie->id}}'>{{$movie->title}}</option>
             @endforeach
-        </select>
-    </div>
+        </x-slot:options>
+    </x-table.filter>
+    <!-- End filter for Movies-->
 
     <!-- Filter for Halls -->
-    <div class="flex flex-col gap-1">
-        <label class="opacity-40 text-sm" for="hall">Sala</label>
-        <select wire:change="resetPage" id="hall"
-                class="border rounded cursor-pointer p-2 bg-gray-700 bg-opacity-70"
-                wire:model="hall">
+    <x-table.filter>
+        <x-slot:title>Sala</x-slot:title>
+        <x-slot:model>hall</x-slot:model>
+        <x-slot:options>
             <option class="cursor-pointer" value="all">Sve</option>
             @foreach($halls as $hall)
                 <option class="cursor-pointer" value="{{$hall->id}}">{{$hall->name}}</option>
             @endforeach
-        </select>
-    </div>
+        </x-slot:options>
+    </x-table.filter>
+    <!-- End filter for Halls-->
 
     <!-- Filter for Next Screening -->
-    <div class="flex flex-col gap-1">
-        <label class="opacity-40 text-sm" for="screening_time">Vreme</label>
-        <select wire:change="resetPage" id="screening_time"
-                class="border rounded cursor-pointer p-2 bg-gray-700 bg-opacity-70"
-                wire:model="screening_time">
-            <option class="cursor-pointer" value="any">Bilo kada</option>
-            <option class="cursor-pointer" value="now">Danas</option>
-            <option class="cursor-pointer" value="tomorrow">Sutra</option>
-            <option class="cursor-pointer" value="week">Ove nedelje</option>
-            <option class="cursor-pointer" value="with past">Sa prošlim</option>
-        </select>
-    </div>
+    <x-table.screening-time/>
+    <!-- End filter for next screening -->
 
 
     <!-- Sort all or shown MD-->
-    <div class="hidden md:flex flex-col gap-1">
-        <label class="opacity-40 text-sm" for="sort">Sortiraj</label>
-        <select id="sort" class="border rounded cursor-pointer p-2 bg-gray-700 bg-opacity-70"
-                wire:model="global_sort">
-            <option class="cursor-pointer" value='false'>Prikazano</option>
-            <option class="cursor-pointer" value='true'>Sve podatke</option>
-        </select>
-    </div>
+    <x-table.sort-options class="hidden md:flex"/>
+    <!-- End Sort all or shown MD-->
 @endsection
 
 @section('right_filters')
 
     <!-- Sort all or shown SM-->
-    <div class="md:hidden flex flex-col gap-1">
-        <label class="opacity-40 text-sm" for="sort">Sortiraj</label>
-        <select id="sort" class="border rounded cursor-pointer p-2 bg-gray-700 bg-opacity-70"
-                wire:model="global_sort">
-            <option class="cursor-pointer" value='false'>Prikazano</option>
-            <option class="cursor-pointer" value='true'>Sve podatke</option>
-        </select>
-    </div>
-    <!-- End sort all or shown -->
+    <x-table.sort-options class="md:hidden flex"/>
+    <!-- End Sort all or shown SM-->
 
     <!-- Paginate quantity-->
-    <div class="hidden md:flex flex-col gap-1">
-        <label class="opacity-40 text-sm" for="sort">Prikaži</label>
-        <select wire:change="resetPage" id="sort"
-                class="border rounded cursor-pointer p-2 bg-gray-700 bg-opacity-70" wire:model="quantity">
-            <option class="cursor-pointer" value="5">5</option>
-            <option class="cursor-pointer" value="10">10</option>
-            <option class="cursor-pointer" value="15">15</option>
-            <option class="cursor-pointer" value="20">20</option>
-            <option class="cursor-pointer" value="25">25</option>
-            <option class="cursor-pointer" value="50">50</option>
-            <option class="cursor-pointer" value="100">100</option>
-        </select>
-    </div>
+    <x-table.paginate-quantity class="hidden md:flex "/>
     <!-- End Paginate quantity-->
 
     <!-- Search Bar -->
-    <div class="relative flex flex-col gap-1">
-        <label class="opacity-40 text-sm" for="search">Pretraži po</label>
-        <input id="search" type="text" wire:model.debounce.300ms="search_query" wire:change.debounce="refreshPage"
-               placeholder="Tagu, zanru, reziseru..."
-               class="border rounded p-2 pl-8 bg-gray-700 bg-opacity-70 w-36 md:w-auto">
-        <i class="fa-solid fa-search absolute left-2 bottom-1 transform -translate-y-2/4"></i>
-    </div>
+    <x-table.search-bar>
+        <x-slot:placeholder>Tagu, zanru, reziseru</x-slot:placeholder>
+    </x-table.search-bar>
     <!-- End Search Bar -->
 
     <!-- Add Screening -->
     <div x-on:click="showAddDropdown = !showAddDropdown" x-on:click.outside="showAddDropdown = false"
          class="group relative hidden md:flex gap-2 mt-6 items-center  border rounded p-2 bg-gray-700 bg-opacity-70 cursor-pointer">
-        <spa class="group-hover:text-red-700 ">Dodaj </spa>
+        <spa class="group-hover:text-red-700 ">Dodaj</spa>
         <i class="group-hover:text-red-700 fa-solid fa-plus"></i>
         <!-- Dropdown -->
         <div x-cloak x-show="showAddDropdown"
              class="absolute z-10 top-10 left-0 flex flex-col w-max justify-center p-2 bg-neutral-500 rounded-lg">
             @foreach($movies as $movie)
-                <a href="{{route('screenings.create', [ 'movie' => $movie])}}" class="text-center w-full">{{$movie->title}}</a>
+                <a href="{{route('screenings.create', [ 'movie' => $movie])}}"
+                   class="text-center w-full">{{$movie->title}}</a>
             @endforeach
         </div>
         <!-- End Dropdown -->
@@ -108,139 +71,129 @@
     <!-- End Add Screening -->
 
     <!-- CSV -->
-    <div x-on:click="showExcelDropdown = !showExcelDropdown" x-on:click.outside="showExcelDropdown = false"
-         wire:loading.class.remove="cursor-pointer hover:text-red-700" wire:loading.class="opacity-50"
-         class=" flex items-center cursor-pointer group relative border rounded p-2 gap-2 mt-6 bg-gray-700 bg-opacity-70">
-        <span class="group-hover:text-red-700">Excel</span>
-        <i class="group-hover:text-red-700 fa-solid fa-file-csv"></i>
-        <i class="group-hover:text-red-700 fa-solid fa-angle-down fa-xs pt-1"></i>
-        <!-- Dropdown -->
-        <div x-cloak x-show="showExcelDropdown"
-             class="absolute z-10 top-10 left-0 flex flex-col w-max justify-center p-2 bg-neutral-500 rounded-lg">
-            <a href="#" wire:click.prevent="export('global')" class="text-center w-full">Sve</a>
-            <a href="#" wire:click.prevent="export('displayed')" class="text-center w-full">Prikazano</a>
-        </div>
-        <!-- End Dropdown -->
-    </div>
+    <x-table.csv-button/>
     <!-- End CSV -->
 @endsection
 
 @section('responsive_filters')
+    <!-- Add Screening -->
     <div x-on:click="showAddDropdown = !showAddDropdown" x-on:click.outside="showAddDropdown = false"
-       class="relative border rounded p-2 flex gap-2 mt-6 items-center bg-gray-700 bg-opacity-70">
+         class="relative border rounded p-2 flex gap-2 mt-6 items-center bg-gray-700 bg-opacity-70">
         <span>Dodaj </span>
         <i class="fa-solid fa-plus"></i>
         <!-- Dropdown -->
         <div x-cloak x-show="showAddDropdown"
              class="absolute z-10 top-10 left-0 flex flex-col justify-center p-2 bg-neutral-500 rounded-lg">
             @foreach($movies as $movie)
-                <a href="{{route('screenings.create', ['movie' => $movie])}}" class="text-center w-full">{{$movie->title}}</a>
+                <a href="{{route('screenings.create', ['movie' => $movie])}}"
+                   class="text-center w-full">{{$movie->title}}</a>
             @endforeach
         </div>
         <!-- End Dropdown -->
     </div>
+    <!-- End add screening -->
 
     <!-- Paginate quantity-->
-    <div class="md:hidden flex flex-col gap-1">
-        <label class="opacity-40 text-sm" for="sort">Prikaži</label>
-        <select wire:change="resetPage" id="sort"
-                class="border rounded cursor-pointer p-2 bg-gray-700 bg-opacity-70" wire:model="quantity">
-            <option class="cursor-pointer" value="5">5</option>
-            <option class="cursor-pointer" value="10">10</option>
-            <option class="cursor-pointer" value="15">15</option>
-            <option class="cursor-pointer" value="20">20</option>
-            <option class="cursor-pointer" value="25">25</option>
-            <option class="cursor-pointer" value="50">50</option>
-            <option class="cursor-pointer" value="100">100</option>
-        </select>
-    </div>
+    <x-table.paginate-quantity class="md:hidden flex"/>
     <!-- End Paginate quantity-->
 @endsection
 
 @section('table_header')
-    <th x-bind:class="{ 'bg-gray-700 bg-opacity-30': sortBy === 'movie_id' }"
-        wire:click="setSort('movie_id')" class="cursor-pointer p-2 w-48"><i
-            class="fa-solid fa-sort opacity-40 fa-xs"></i>
+    <x-table.header-sortable class="w-52">
+        <x-slot:sort>movie_id</x-slot:sort>
         Film
-    </th>
+    </x-table.header-sortable>
 
-    <th x-bind:class="{ 'bg-gray-700 bg-opacity-30': sortBy === 'hall_id' }"
-        wire:click="setSort('hall_id')" class="cursor-pointer p-2"><i
-            class="fa-solid fa-sort opacity-40 fa-xs"></i>
+    <x-table.header-sortable>
+        <x-slot:sort>hall_id</x-slot:sort>
         Sala
-    </th>
+    </x-table.header-sortable>
 
-    <th x-bind:class="{ 'bg-gray-700 bg-opacity-30': sortBy === 'start_time' }"
-        wire:click="setSort('start_time')" class="cursor-pointer p-2"><i
-            class="fa-solid fa-sort opacity-40 fa-xs"></i>
+    <x-table.header-sortable>
+        <x-slot:sort>start_time</x-slot:sort>
         Početak
-    </th>
+    </x-table.header-sortable>
 
-    <th x-bind:class="{ 'bg-gray-700 bg-opacity-30': sortBy === 'end_time' }"
-        wire:click="setSort('end_time')" class="cursor-pointer p-2"><i
-            class="fa-solid fa-sort opacity-40 fa-xs"></i>
+    <x-table.header-sortable>
+        <x-slot:sort>end_time</x-slot:sort>
         Kraj
-    </th>
-    <th class="p-2">
-        Tag
-    </th>
-    <th x-bind:class="{ 'bg-gray-700 bg-opacity-30': sortBy === 'tickets_count' }"
-        wire:click="setSort('tickets_count')" class="cursor-pointer p-2"><i
-            class="fa-solid fa-sort opacity-40 fa-xs"></i>
+    </x-table.header-sortable>
+
+    <th class="p-2"> Tag</th>
+
+    <x-table.header-sortable>
+        <x-slot:sort>tickets_count</x-slot:sort>
         Rezervacije
-    </th>
-    <th x-bind:class="{ 'bg-gray-700 bg-opacity-30': sortBy === 'adverts_count' }"
-        wire:click="setSort('adverts_count')" class="cursor-pointer p-2"><i
-            class="fa-solid fa-sort opacity-40 fa-xs"></i>
-       Reklame
-    </th>
-    <th class="cursor-pointer p-2 w-24">
-        Otkaži
-    </th>
+    </x-table.header-sortable>
+
+    <x-table.header-sortable>
+        <x-slot:sort>adverts_count</x-slot:sort>
+        Reklame
+    </x-table.header-sortable>
+
+    <th class="p-2 w-24"> Otkaži</th>
 @endsection
 
 @section('table_body')
     @foreach($screenings as $screening)
         <tr class="odd:bg-dark-blue text-center relative">
 
-            <td x-bind:class="{ 'bg-gray-700 bg-opacity-30': sortBy === 'movie_id' }"
-                class="p-2 text-start">{{ $screening->movie->title }}</td>
-            <td x-bind:class="{ 'bg-gray-700 bg-opacity-30': sortBy === 'hall_id' }"
-                class="p-2">{{ $screening->hall->name }}</td>
-            <td x-bind:class="{ 'bg-gray-700 bg-opacity-30': sortBy === 'start_time' }"
-                class="m-2">{{ Carbon\Carbon::parse($screening->start_time)->format('d/m/y H:i') }}</td>
-            <td x-bind:class="{ 'bg-gray-700 bg-opacity-30': sortBy === 'end_time' }"
-                class="p-2">{{ Carbon\Carbon::parse($screening->end_time)->format('H:i') }}</td>
-            <!-- Tags -->
-            <td class="p-2 text-sm">
+            <x-table.data class="text-start">
+                <x-slot:sort>movie_id</x-slot:sort>
+                {{ $screening->movie->title }}
+            </x-table.data>
+
+            <x-table.data>
+                <x-slot:sort>hall_id</x-slot:sort>
+                {{ $screening->hall->name }}
+            </x-table.data>
+
+            <x-table.data>
+                <x-slot:sort>start_time</x-slot:sort>
+                {{ Carbon\Carbon::parse($screening->start_time)->format('d/m/y H:i') }}
+            </x-table.data>
+
+            <x-table.data>
+                <x-slot:sort>end_time</x-slot:sort>
+                {{ Carbon\Carbon::parse($screening->end_time)->format('H:i') }}
+            </x-table.data>
+
+            <x-table.data>
+                <x-slot:sort>none</x-slot:sort>
                 @foreach($screening->tags as $tag)
                     {{$tag->name}}
                     @if(!$loop->last)
                         ,
                     @endif
                 @endforeach
-            </td>
-            <!-- End tags -->
-            <td x-bind:class="{ 'bg-gray-700 bg-opacity-30': sortBy === 'tickets_count' }"
-                class="p-2">{{ $screening->tickets_count }}</td>
-            <td x-bind:class="{ 'bg-gray-700 bg-opacity-30': sortBy === 'adverts_count' }"
-                class="p-2">{{ $screening->adverts_count }}</td>
+            </x-table.data>
+
+            <x-table.data>
+                <x-slot:sort>tickets_count</x-slot:sort>
+                {{ $screening->tickets_count }}
+            </x-table.data>
+
+            <x-table.data>
+                <x-slot:sort>adverts_count</x-slot:sort>
+                {{ $screening->adverts_count }}
+            </x-table.data>
 
             <!-- Cancel Screening -->
-            <td class="p-2">
+            <x-table.data>
                 <div class="flex gap-5 justify-center items-center h-full">
                     @if($screening->start_time > now())
-                        <a wire:click.prevent="$emit('showModal', {{$screening}})" class="text-red-700 hover:text-white">
+                        <a wire:click.prevent="$emit('showModal', {{$screening}})"
+                           class="text-red-700 hover:text-white">
                             <i class="fa-solid fa-x"></i>
                         </a>
                     @else
 
-                        <a href="#" aria-disabled="true" class="opacity-30 cursor-default text-red-700" >
+                        <a href="#" aria-disabled="true" class="opacity-30 cursor-default text-red-700">
                             <i class="fa-solid fa-x"></i>
                         </a>
                     @endif
                 </div>
-            </td>
+            </x-table.data>
             <!-- End Cancel Screening -->
         </tr>
     @endforeach

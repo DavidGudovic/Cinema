@@ -106,8 +106,7 @@ class Advert extends Model //pseudo extends Models/BusinessRequest
         return $query->where('quantity_remaining', '=', 0);
     }
     public function scopeInProgress($query){
-        return $query->where('quantity_remaining', '>', 0)
-            ->where('quantity_remaining', '<', 'quantity');
+        return $query->status('accepted')->hasRemaining();
     }
     public function scopeHasRemaining($query)
     {

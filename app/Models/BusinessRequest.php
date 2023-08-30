@@ -70,7 +70,7 @@ class BusinessRequest extends Model //pseudo superclass for Models/ Booking and 
     }
 
     public function scopeCancelled($query){
-        return $query->onlyTrashed();
+        return $query->where('status', 'CANCELLED');
     }
     #endregion
 
