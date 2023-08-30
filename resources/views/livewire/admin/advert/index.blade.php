@@ -11,15 +11,19 @@
             <option class="cursor-pointer" value='never_shown'>Nezapočeta</option>
         </x-slot:options>
     </x-table.filter>
+    <!-- End Filter for Quantity -->
 
     <!-- Filter for Status -->
     <x-table.status-filter/>
+    <!-- End Filter for Status -->
 
     <!-- Filter for User -->
     <x-table.user-filter class="md:flex hidden"/>
+    <!-- End Filter for User -->
 
     <!-- Sort all or shown-->
     <x-table.sort-options/>
+    <!-- End Sort all or shown-->
 
 @endsection
 
@@ -30,6 +34,7 @@
 
     <!-- Filter for User -->
     <x-table.user-filter class="md:hidden flex"/>
+    <!-- End Filter for User -->
 
     <!-- Search Bar -->
     <x-table.search-bar>
@@ -105,14 +110,11 @@
                 {{ $advert->title }}
             </x-table.data>
 
-            <td x-on:mouseenter="showToolTip{{$advert->id}} = true"
-                x-on:mouseleave="showToolTip{{$advert->id}} = false"
-                class="group m-2 line-clamp-2">{{ implode(' ',explode(' ', $advert->businessRequest->text, 3))}}
-                <span x-cloak x-show="showToolTip{{$advert->id}}"
-                      class=" transition-opacity bg-gray-800 text-gray-100 p-2 text-sm rounded-md  absolute left-52 top-0 z-20 w-96 h-auto">
-                    {{$advert->businessRequest->text}}
-                </span>
-            </td>
+            <x-table.data-with-tooltip>
+                <x-slot:model>{{$advert->id}} </x-slot:model>
+                <x-slot:text>{{$advert->businessRequest->text}}</x-slot:text>
+                <x-slot:position>left-52 top-0</x-slot:position>
+            </x-table.data-with-tooltip>
 
             <x-table.data>
                 <x-slot:sort>company</x-slot:sort>

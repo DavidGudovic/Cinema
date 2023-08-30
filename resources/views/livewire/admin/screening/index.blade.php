@@ -2,7 +2,7 @@
 
 @section('left_filters')
     <!-- Filter for Movies -->
-    <x-table.filter>
+    <x-table.filter class="w-32 md:w-auto">
         <x-slot:title>Film</x-slot:title>
         <x-slot:model>movie</x-slot:model>
         <x-slot:options>
@@ -48,27 +48,14 @@
     <!-- End Paginate quantity-->
 
     <!-- Search Bar -->
-    <x-table.search-bar>
+    <x-table.search-bar class="w-32 md:w-auto">
         <x-slot:placeholder>Tagu, zanru, reziseru</x-slot:placeholder>
     </x-table.search-bar>
     <!-- End Search Bar -->
 
     <!-- Add Screening -->
-    <div x-on:click="showAddDropdown = !showAddDropdown" x-on:click.outside="showAddDropdown = false"
-         class="group relative hidden md:flex gap-2 mt-6 items-center  border rounded p-2 bg-gray-700 bg-opacity-70 cursor-pointer">
-        <spa class="group-hover:text-red-700 ">Dodaj</spa>
-        <i class="group-hover:text-red-700 fa-solid fa-plus"></i>
-        <!-- Dropdown -->
-        <div x-cloak x-show="showAddDropdown"
-             class="absolute z-10 top-10 left-0 flex flex-col w-max justify-center p-2 bg-neutral-500 rounded-lg">
-            @foreach($movies as $movie)
-                <a href="{{route('screenings.create', [ 'movie' => $movie])}}"
-                   class="text-center w-full">{{$movie->title}}</a>
-            @endforeach
-        </div>
-        <!-- End Dropdown -->
-    </div>
-    <!-- End Add Screening -->
+    <x-table.add-screening-dropdown :movies="$movies" class="hidden md:flex"/>
+    <!-- End add screening -->
 
     <!-- CSV -->
     <x-table.csv-button/>
@@ -77,20 +64,7 @@
 
 @section('responsive_filters')
     <!-- Add Screening -->
-    <div x-on:click="showAddDropdown = !showAddDropdown" x-on:click.outside="showAddDropdown = false"
-         class="relative border rounded p-2 flex gap-2 mt-6 items-center bg-gray-700 bg-opacity-70">
-        <span>Dodaj </span>
-        <i class="fa-solid fa-plus"></i>
-        <!-- Dropdown -->
-        <div x-cloak x-show="showAddDropdown"
-             class="absolute z-10 top-10 left-0 flex flex-col justify-center p-2 bg-neutral-500 rounded-lg">
-            @foreach($movies as $movie)
-                <a href="{{route('screenings.create', ['movie' => $movie])}}"
-                   class="text-center w-full">{{$movie->title}}</a>
-            @endforeach
-        </div>
-        <!-- End Dropdown -->
-    </div>
+    <x-table.add-screening-dropdown :movies="$movies" class="flex md:hidden"/>
     <!-- End add screening -->
 
     <!-- Paginate quantity-->

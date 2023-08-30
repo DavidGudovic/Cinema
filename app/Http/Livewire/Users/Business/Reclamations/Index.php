@@ -3,20 +3,16 @@
 namespace App\Http\Livewire\Users\Business\Reclamations;
 
 use App\Services\Resources\ReclamationService;
+use App\Traits\WithCustomPagination;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class Index extends Component
 {
-    use WithPagination;
+    use WithCustomPagination;
 
     public $status_filter = "all";
     public $type_filter = 0;
-
-    protected function paginationView()
-    {
-        return 'pagination.custom';
-    }
 
     protected $listeners = [
         'ReclamationCancelled' => 'refresh',

@@ -36,11 +36,11 @@
     </x-table.search-bar>
 
     <!-- Add -->
-    <a href="{{route('movies.create')}}"
-       class="border rounded p-2 flex gap-2 mt-6 items-center bg-gray-700 bg-opacity-70">
+    <x-table.button>
+        <x-slot:route>{{route('movies.create')}}</x-slot:route>
         <span>Dodaj </span>
         <i class="fa-solid fa-plus"></i>
-    </a>
+    </x-table.button>
     <!-- End Add -->
 
     <!-- CSV -->
@@ -95,12 +95,11 @@
                 {{ $movie->title }}
             </x-table.data>
 
-            <td x-on:mouseenter="showToolTip{{$movie->id}} = true"
-                x-on:mouseleave="showToolTip{{$movie->id}} = false"
-                class="group m-2 line-clamp-2">{{ implode(' ',explode(' ', $movie->description, 3))}}
-                <span x-cloak x-show="showToolTip{{$movie->id}}"
-                      class=" transition-opacity bg-gray-800 text-gray-100 p-2 text-sm rounded-md  absolute left-40 top-0 z-20 w-96 h-auto">{{$movie->description}}</span>
-            </td>
+           <x-table.data-with-tooltip>
+               <x-slot:model>{{$movie->id}}</x-slot:model>
+               <x-slot:text>{{$movie->description}}</x-slot:text>
+               <x-slot:position>left-36 top-0</x-slot:position>
+           </x-table.data-with-tooltip>
 
             <x-table.data>
                 <x-slot:sort>none</x-slot:sort>

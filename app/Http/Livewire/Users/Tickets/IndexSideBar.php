@@ -4,19 +4,15 @@ namespace App\Http\Livewire\Users\Tickets;
 
 use App\Http\Livewire\SidebarBase;
 use App\Services\Resources\TicketService;
+use App\Traits\WithCustomPagination;
 use Livewire\WithPagination;
 
-/*
+/**
 * This component is used to display the global sidebar for active tickets index
 */
 class IndexSideBar extends SidebarBase
 {
-    use WithPagination;
-
-    public function paginationView()
-    {
-        return 'pagination.custom';
-    }
+    use WithCustomPagination;
 
     public function render(TicketService $ticketService)
     {

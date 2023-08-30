@@ -4,15 +4,13 @@ namespace App\Http\Livewire\Users\Tickets;
 
 use App\Models\Ticket;
 use App\Services\Resources\TicketService;
+use App\Traits\WithCustomPagination;
 use Livewire\Component;
-use Livewire\WithPagination;
 
-/*
-* This component is used to display the tickets index
-*/
 class Index extends Component
 {
-    use WithPagination;
+    use WithCustomPagination;
+
     public $status_filter = "all";
     public $movie_filter = 0;
 
@@ -26,23 +24,18 @@ class Index extends Component
     {
     }
 
-    public function paginationView()
-    {
-        return 'pagination.custom';
-    }
-
     public function render(TicketService $ticketService)
     {
         return view('livewire.users.tickets.index', [
-            'tickets' => $ticketService->getFilteredTicketsPaginated($this->movie_filter,$this->status_filter),
+            'tickets' => $ticketService->getFilteredTicketsPaginated($this->movie_filter, $this->status_filter),
             'user' => auth()->user()
         ]);
     }
 
-    /*
-    Applies status and movie filter
-    Filter passed by event raised outside of Livewire
-    */
+    /**
+     * Applies status and movie filter
+     * passed by event raised outside Livewire
+     */
     public function setTicketFilters($status, $movie): void
     {
         $this->status_filter = $status;
@@ -50,10 +43,10 @@ class Index extends Component
         $this->resetPage();
     }
 
-    /*
-    Calls TicketServices to cancel an Ticket
-    */
-    public function cancelTicket(Ticket $ticket, TicketService $ticketService) : void
+    /**
+     * Calls TicketServices to cancel a Ticket
+     */
+    public function cancelTicket(Ticket $ticket, TicketService $ticketService): void
     {
         $ticketService->cancelTicket($ticket);
     }

@@ -5,19 +5,14 @@ namespace App\Http\Livewire\Users\Business\Requests;
 use App\Http\Livewire\SidebarBase;
 use App\Models\Advert;
 use App\Services\Resources\RequestableService;
-use Livewire\WithPagination;
+use App\Traits\WithCustomPagination;
 
 /**
 * This component is used to display the global sidebar for active requests index
 */
 class IndexSideBar extends SidebarBase
 {
-    use WithPagination;
-
-    public function paginationView()
-    {
-        return 'pagination.custom';
-    }
+    use WithCustomPagination;
 
     public function render(RequestableService $requestablesService)
     {

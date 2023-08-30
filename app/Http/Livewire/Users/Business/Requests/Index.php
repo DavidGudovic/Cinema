@@ -4,12 +4,13 @@ namespace App\Http\Livewire\Users\Business\Requests;
 
 use App\Models\Advert;
 use App\Services\Resources\RequestableService;
+use App\Traits\WithCustomPagination;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class Index extends Component
 {
-    use WithPagination;
+    use WithCustomPagination;
 
     public $status_filter = "all";
     public $type_filter = 0;
@@ -23,11 +24,6 @@ class Index extends Component
 
     public function refresh()
     {
-    }
-
-    public function paginationView()
-    {
-        return 'pagination.custom';
     }
 
     public function render(RequestableService $requestableService)

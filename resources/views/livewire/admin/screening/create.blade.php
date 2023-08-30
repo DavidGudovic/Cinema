@@ -2,18 +2,22 @@
      class="relative flex justify-center items-center gap-6 w-full h-full overflow-hidden">
     <!-- Heading -->
     <div class="absolute top-6 flex flex-col justify-center items-center">
-        <p x-transition:enter="transition ease-out-in duration-700 transform"
-           x-transition:enter-start="-translate-y-[150%]"
-           x-transition:enter-end="translate-y-0" x-cloak x-show="step == 1" class="h-full text-2xl font-bold">
-            Izaberite salu</p>
-        <p x-transition:enter="transition ease-out-in duration-700 transform"
-           x-transition:enter-start="-translate-y-[150%]"
-           x-transition:enter-end="translate-y-0" x-cloak x-show="step == 2" class="h-full text-2xl font-bold">
-            Izaberite tehnologiju</p>
-        <p x-transition:enter="transition ease-out-in duration-700 transform"
-           x-transition:enter-start="-translate-y-[150%]"
-           x-transition:enter-end="translate-y-0" x-cloak x-show="step == 3" class="h-full text-2xl font-bold">
-            Izaberite vreme</p>
+
+        <x-multi-step.heading>
+            <x-slot:step>1</x-slot:step>
+            Izaberite salu
+        </x-multi-step.heading>
+
+        <x-multi-step.heading>
+            <x-slot:step>2</x-slot:step>
+            Izaberite tehnologiju
+        </x-multi-step.heading>
+
+        <x-multi-step.heading>
+            <x-slot:step>3</x-slot:step>
+            Izaberite vreme
+        </x-multi-step.heading>
+
         <div class="flex flex-wrap gap-2">
             <p><strong>Film:</strong> {{$movie->title}} </p>
             <p>
@@ -33,7 +37,7 @@
     <!-- Steps -->
     <div class="flex flex-col flex-1 h-full">
         <!-- Halls -->
-        <x-step>
+        <x-multi-step.step>
             <x-slot:step>1</x-slot:step>
             <div class="grid grid-cols-1 md:grid-cols-2 justify-center mt-12 gap-6">
                 @foreach($halls as $hall)
@@ -46,11 +50,11 @@
                     </div>
                 @endforeach
             </div>
-        </x-step>
+        </x-multi-step.step>
         <!-- End halls-->
 
         <!-- Tags -->
-        <x-step>
+        <x-multi-step.step>
             <x-slot:step>2</x-slot:step>
             <div class="flex justify-center gap-12">
                 <div class="flex flex-col md:flex-row justify-center items-center gap-6">
@@ -64,36 +68,42 @@
                     @endforeach
                 </div>
             </div>
-        </x-step>
+        </x-multi-step.step>
         <!-- End tags-->
 
         <!-- Date -->
-        <x-step>
+        <x-multi-step.step>
             <x-slot:step>3</x-slot:step>
             @livewire('admin.screening.date-picker', ['movie_duration' => $movie->duration])
-        </x-step>
+        </x-multi-step.step>
         <!-- End date-->
 
         <!-- Success message -->
-        <x-step>
+        <x-multi-step.step>
             <x-slot:step>4</x-slot:step>
             <div class="flex flex-col justify-center items-center gap-10">
                 <p class="text-xl md:text-2xl font-bold text-center">{{$amount_created}} projekcija uspešno kreirano</p>
-                <p class="text-red-700 font-bold text-center">{{$bookings_cancelled_on_intersect}} rentiranja na čekanju odbijeno</p>
+                <p class="text-red-700 font-bold text-center">{{$bookings_cancelled_on_intersect}} rentiranja na čekanju
+                    odbijeno</p>
                 <!-- Actions -->
                 <div class="flex flex-col md:flex-row justify-center mt-5 gap-6">
-                    <button wire:click="backtrack(1)" class="w-full md:w-72 p-2 border border-white rounded-xl text-center cursor-pointer hover:text-red-700">Kreiraj još za film</button>
-                    <a href="{{route('screenings.index')}}" class="w-full md:w-72 p-2 border border-white rounded-xl text-center cursor-pointer hover:text-red-700">Pregledaj projekcije</a>
+                    <button wire:click="backtrack(1)"
+                            class="w-full md:w-72 p-2 border border-white rounded-xl text-center cursor-pointer hover:text-red-700">
+                        Kreiraj još za film
+                    </button>
+                    <a href="{{route('screenings.index')}}"
+                       class="w-full md:w-72 p-2 border border-white rounded-xl text-center cursor-pointer hover:text-red-700">Pregledaj
+                        projekcije</a>
                 </div>
                 <!-- End actions -->
             </div>
-        </x-step>
+        </x-multi-step.step>
         <!-- End success message-->
     </div>
     <!-- End steps -->
 
     <!-- Breadcrumbs -->
-    <x-breadcrumbs class="absolute right-4 md:right-12"/>
+    <x-multi-step.breadcrumbs class="absolute right-4 md:right-12"/>
     <!-- End breadcrumbs -->
 
 </div>

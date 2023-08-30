@@ -21,10 +21,10 @@
         <!-- End buttons search -->
 
         <!-- Responsive third row -->
-        <div x-data="{showAddDropdown: false}" class="flex justify-between w-full md:hidden px-2">
+        <div x-data="{showAddDropdown: false}" class="flex justify-between w-full md:hidden px-4">
             @yield('responsive_filters')
         </div>
-        <!-- End responsive thrid row -->
+        <!-- End responsive third row -->
     </div>
     <!-- End actions -->
 

@@ -102,14 +102,11 @@
                 {{ $booking->hall->name }}
             </x-table.data>
 
-            <td x-on:mouseenter="showToolTip{{$booking->id}} = true"
-                x-on:mouseleave="showToolTip{{$booking->id}} = false"
-                class="group m-2 line-clamp-2">{{ implode(' ',explode(' ', $booking->businessRequest->text, 3))}}
-                <span x-cloak x-show="showToolTip{{$booking->id}}"
-                      class=" transition-opacity bg-gray-800 text-gray-100 p-2 text-sm rounded-md  absolute left-52 top-0 z-20 w-96 h-auto">
-                    {{$booking->businessRequest->text}}
-                </span>
-            </td>
+            <x-table.data-with-tooltip>
+                <x-slot:model>{{$booking->id}}</x-slot:model>
+                <x-slot:text>{{$booking->businessRequest->text}}</x-slot:text>
+                <x-slot:position>left-52 top-0</x-slot:position>
+            </x-table.data-with-tooltip>
 
             <x-table.data class="text-sm">
                 <x-slot:sort>start_time</x-slot:sort>

@@ -2,8 +2,8 @@
 
 namespace App\Http\Livewire\Admin;
 
+use App\Traits\WithCustomPagination;
 use Livewire\Component;
-use Livewire\WithPagination;
 /**
  * Base class for all admin tables
  * Contains the search bar, pagination, sorting and quantity
@@ -12,13 +12,12 @@ use Livewire\WithPagination;
  */
 abstract class TableBase extends Component
 {
-    use WithPagination;
+    use WithCustomPagination;
 
     public $search_query = ""; //search criteria
     public $sort_by = 'title';
     public $sort_direction = 'ASC';
     public $global_sort = 'true'; //sort all resources or just the ones on the current page - String because of livewire
-    public $quantity = 10; //pagination quantity
     public $status_translations = [
         'CANCELLED' => 'OTKAZAN',
         'PENDING' => 'NA ČEKANJU',
@@ -28,16 +27,6 @@ abstract class TableBase extends Component
 
     public function refresh(): void
     {
-    }
-
-    public function refreshPage(): void
-    {
-        $this->resetPage();
-    }
-
-    public function paginationView(): string
-    {
-        return 'pagination.custom';
     }
 
     /**
