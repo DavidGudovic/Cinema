@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Traits\PeriodScopes;
+use App\Traits\Scopes\PeriodScopes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;

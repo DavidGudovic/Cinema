@@ -86,6 +86,51 @@ class Reclamation extends Model
     }
 
     public function scopeFromUser($query, $user){
-        return $query->where('user_id', $user);
+        return $query->when($user, function ($query) use ($user) {
+           return $query->where('user_id', $user);
+        });
+    }
+
+    public function scopePaginateOptional($query, $paginate){
+        return $query->when($paginate != 0, function ($query) use ($paginate) {
+            return $query->paginate($paginate);
+        }, function ($query) {
+            return $query->get();
+        });
+    }
+
+    public function scopeSearch($query, $search){
+        return $query->when($search, function ($query) use ($search) {
+            return $query->whereHas('user', function ($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%');
+                $q->orWhere('email', 'like', '%' . $search . '%');
+                $q->orWhere('username', 'like', '%' . $search . '%');
+                $q->orWhere('id', (int)$search);
+            })->orWhereHas('businessRequest', function ($q) use ($search) {
+                $q->where('status', 'like', '%' . $search . '%');
+                $q->orWhere('requestable_id', 'like', '%' . $search . '%');
+                $q->orWhere('id', (int)$search);
+            });
+        });
+    }
+
+
+    public function scopeSortPolymorphic($query, bool $do_sort, string $type, string $sort_relation, string $sort_by, string $sort_direction)
+    {
+        return $do_sort
+            ? $query
+                ->when($type === 'direct', function ($q) use ($sort_by, $sort_direction) {
+                    return $q->orderBy($sort_by, $sort_direction);
+                })
+                ->when($type === 'relation', function ($q) use ($sort_relation, $sort_by, $sort_direction) {
+                    return $q->orderBy(
+                        Reclamation::select($sort_by)
+                            ->from($sort_relation)  // rtrim('business_requests') = 'business_request'
+                            ->whereColumn('reclamations.' . rtrim($sort_relation, 's') . '_id', $sort_relation . '.id')
+                            ->limit(1),
+                        $sort_direction
+                    );
+                })
+            : $query;
     }
 }
