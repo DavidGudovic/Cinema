@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Services\Resources\HallService;
+use App\Services\Resources\UserService;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
@@ -11,9 +12,12 @@ class ReportController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(HallService $hallService, UserService $userService)
     {
-        return view('admin.report.index');
+        return view('admin.report.index', [
+            'halls' => $hallService->getHalls(),
+            'managers' => $userService->getManagers(),
+        ]);
     }
 
     /**

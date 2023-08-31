@@ -81,8 +81,6 @@ class Hall extends Model
         });
     }
 
-
-    //TO BE HEAVILY MODIFIED
     public function scopeAvailableAtTime($query, $start_time, $end_time)
     {
         return $query->whereDoesntHave('bookings', function ($q) use ($start_time, $end_time) {
