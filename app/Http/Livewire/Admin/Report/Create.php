@@ -3,8 +3,7 @@
 namespace App\Http\Livewire\Admin\Report;
 
 use App\Enums\Period;
-use App\Services\Resources\ReportService;
-use App\Services\UploadService;
+use App\Services\Reporting\ReportService;
 use Illuminate\Support\Collection;
 use Livewire\Component;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -45,7 +44,7 @@ class Create extends Component
      * Validates and generates a report
      * flashes a message to session and calls streamDownload
      *
-     * @param ReportService $reportService
+     * @param \App\Services\Reporting\ReportService $reportService
      * @return StreamedResponse
      */
     public function submit(ReportService $reportService) : StreamedResponse
