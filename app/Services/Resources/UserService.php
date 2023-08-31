@@ -97,7 +97,7 @@ class UserService implements CanExport
      * Returns a paginated list of users with optional searching/filtering and sorting
      *
      * @param string $role
-     * @param bool|null $is_verified
+     * @param string $is_verified
      * @param bool $do_sort
      * @param string $search_query
      * @param string $sort_by
@@ -114,6 +114,15 @@ class UserService implements CanExport
             ->paginateOptionally($paginate_quantity);
     }
 
+    /**
+     * Returns a list of all users with Manager role
+     *
+     * @return Collection
+     */
+    public function getManagers(): Collection
+    {
+        return User::isRole(Roles::MANAGER)->get();
+    }
     /**
      * Prepares a user collection for export, adds BOM, flattens array, adds headers
      *
