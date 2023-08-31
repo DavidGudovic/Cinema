@@ -2,13 +2,17 @@
 
 namespace App\Services\Resources;
 
+use App\Interfaces\CanExport;
 use App\Models\BusinessRequest;
 use App\Models\Reclamation;
+use App\Traits\WithRelationalSort;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 
-class ReclamationService
+class ReclamationService implements CanExport
 {
+    use WithRelationalSort;
 
     /**
      * Returns a paginated, optionally filtered/sorted list of requests
@@ -16,16 +20,23 @@ class ReclamationService
      *
      * @param string $status
      * @param string $type
+     * @param int|null $user_id
+     * @param string $search_query
+     * @param bool $do_sort
+     * @param string $sort_by
+     * @param string $sort_direction
      * @param int $quantity
-     * @return LengthAwarePaginator
+     * @return LengthAwarePaginator|Collection
      */
-    public function getFilteredReclamationsPaginated(string $status = 'all', string $type = 'all', int $quantity = 1): LengthAwarePaginator
+    public function getFilteredReclamationsPaginated(string $status = 'all', string $type = 'all',?int $user_id = null, string $search_query = '', bool $do_sort = true, string $sort_by = 'created_at', string $sort_direction = 'ASC', int $quantity = 1): LengthAwarePaginator|Collection
     {
-        return Reclamation::fromUser(auth()->user()->id)
+        $sort_params = $this->resolveSortByParameter($sort_by);
+        return Reclamation::fromUser($user_id ?? auth()->user()->id)
             ->filterByStatus($status)
             ->filterByType($type)
-            ->orderBy('created_at', 'desc')
-            ->paginate($quantity);
+            ->search($search_query)
+            ->sortPolymorphic($do_sort, $sort_params['type'], $sort_params['relation'], $sort_params['column'], $sort_direction)
+            ->paginateOptional($quantity);
     }
 
     /**
@@ -54,5 +65,42 @@ class ReclamationService
     {
         $reclamation = Reclamation::findOrFail($reclamation_id);
         $reclamation->delete();
+    }
+
+    /**
+     * @param array|Collection $data
+     * @return array
+     */
+    public function sanitizeForExport(array|Collection $data): array
+    {
+        $bom = "\xEF\xBB\xBF";
+
+        $headers = [
+            $bom.'ID',
+            'Datum',
+            'Korisnik',
+            'Tekst',
+            'Status',
+            'Komentar',
+            'ZahtevID',
+            'Tip',
+        ];
+
+        $output = [];
+        foreach ($data as $reclamation) {
+            $output[] = [
+                $reclamation['id'] ?? '',
+                $reclamation['created_at'] ?? '',
+                $reclamation['user_id'] ?? '',
+                $reclamation['text'] ?? '',
+                $reclamation['status'] ?? '',
+                $reclamation['comment'] ?? '',
+                $reclamation['business_request']['id'] ?? '',
+                $reclamation['business_request']['requestable_type'] == 'App\Models\Booking' ? 'Rentiranje' : 'Oglas',
+            ];
+        }
+        array_unshift($output, $headers);
+        return $output;
+
     }
 }
