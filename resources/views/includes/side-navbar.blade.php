@@ -43,9 +43,9 @@
 		</li>
 
 		<li>
-            <a href="{{route('home')}}" class="flex items-center gap-4">
-                <i class="{{ Route::currentRouteName() === '' ? 'fa-solid fa-play fa-2xs' : 'fa-solid fa-people-roof' }}"></i>
-                <p>Sale</p>
+            <a href="{{route('admin.halls.index')}}" class="flex items-center gap-4">
+                <i class="{{ Route::currentRouteName() === 'admin.halls.index' ? 'fa-solid fa-play fa-2xs' : 'fa-solid fa-people-roof' }}"></i>
+                <p>Menadžeri sala</p>
             </a>
         </li>
 		@elserole('MANAGER')
