@@ -5,7 +5,7 @@
     {{$icon}}
 </a>
 @else
-<a href="#" aria-disabled="true" class='opacity-30 cursor-default text-red-700'>
+<a href="#" aria-disabled="true" class='opacity-50 cursor-default text-red-700'>
     {{$icon}}
 </a>
 @endif
