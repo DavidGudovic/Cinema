@@ -6,6 +6,7 @@ use App\Enums\Status;
 use App\Interfaces\CanExport;
 use App\Models\Booking;
 use App\Models\BusinessRequest;
+use App\Traits\WithRelationalSort;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -15,11 +16,12 @@ use LaravelIdea\Helper\App\Models\_IH_Booking_C;
 
 class BookingService implements CanExport
 {
+    use WithRelationalSort;
+
     /**
      * Returns a paginated, filtered list of bookings or a searched through list of bookings
      * All parameters are optional, if none are set, all bookings are returned, paginated by $quantity, default 10
      *
-     * @param RequestableService $requestableService
      * @param string $status
      * @param string $search_query
      * @param bool $do_sort
@@ -30,9 +32,9 @@ class BookingService implements CanExport
      * @param int $quantity
      * @return LengthAwarePaginator|Collection
      */
-    public function getFilteredBookingsPaginated(RequestableService $requestableService, string $status = 'all', string $search_query = '', bool $do_sort = false, string $sort_by = 'title', string $sort_direction = 'ASC', array $halls = [], int $user_id = 0, int $quantity = 0): LengthAwarePaginator|Collection
+    public function getFilteredBookingsPaginated(string $status = 'all', string $search_query = '', bool $do_sort = false, string $sort_by = 'title', string $sort_direction = 'ASC', array $halls = [], int $user_id = 0, int $quantity = 0): LengthAwarePaginator|Collection
     {
-        $sortParams = $requestableService->resolveSortByParameter($sort_by);
+        $sortParams = $this->resolveSortByParameter($sort_by);
 
         return Booking::with('businessRequest')->with('hall')
             ->fromHalls($halls)

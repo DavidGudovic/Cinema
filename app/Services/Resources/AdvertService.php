@@ -5,6 +5,7 @@ namespace App\Services\Resources;
 use App\Interfaces\CanExport;
 use App\Models\Advert;
 use App\Models\BusinessRequest;
+use App\Traits\WithRelationalSort;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
@@ -14,11 +15,12 @@ use Illuminate\Support\Facades\DB;
 
 class AdvertService implements CanExport
 {
+    use WithRelationalSort;
+
     /**
      * Returns a paginated, filtered list of adverts or a searched through list of adverts
      * All parameters are optional, if none are set, all adverts are returned, paginated by $quantity, default 10
      *
-     * @param RequestableService $requestableService
      * @param string $status
      * @param int $user_id
      * @param string $quantity_left
@@ -29,9 +31,9 @@ class AdvertService implements CanExport
      * @param int $quantity
      * @return LengthAwarePaginator|Collection
      */
-    public function getFilteredAdvertsPaginated(RequestableService $requestableService, string $status = 'all', int $user_id = 0, string $quantity_left = 'any', string $search_query = '', bool $do_sort = false, string $sort_by = 'title', string $sort_direction = 'ASC', int $quantity = 10): LengthAwarePaginator|EloquentCollection
+    public function getFilteredAdvertsPaginated(string $status = 'all', int $user_id = 0, string $quantity_left = 'any', string $search_query = '', bool $do_sort = false, string $sort_by = 'title', string $sort_direction = 'ASC', int $quantity = 10): LengthAwarePaginator|EloquentCollection
     {
-        $sortParams = $requestableService->resolveSortByParameter($sort_by);
+        $sortParams = $this->resolveSortByParameter($sort_by);
 
         return Advert::with('businessRequest')
             ->byUser($user_id)
