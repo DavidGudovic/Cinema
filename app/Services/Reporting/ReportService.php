@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Resources;
+namespace App\Services\Reporting;
 
 use App\Enums\Period;
 use App\Models\Report;
@@ -12,11 +12,11 @@ use Carbon\Carbon;
 class ReportService
 {
     public function __construct(
-        protected UploadService                              $uploadService,
-        protected \App\Services\Reporting\RequestableService $requestableService,
-        protected \App\Services\Reporting\AdvertService      $advertService,
-        protected \App\Services\Reporting\BookingService     $bookingService,
-        protected \App\Services\Reporting\TicketService      $ticketService
+        protected UploadService      $uploadService,
+        protected RequestableService $requestableService,
+        protected AdvertService      $advertService,
+        protected BookingService     $bookingService,
+        protected TicketService      $ticketService
     )
     {
     }
