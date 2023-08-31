@@ -4,6 +4,7 @@ namespace App\Traits;
 
 trait WithRelationalSort
 {
+    /* TODO refactor this to a parameter, config.. ? make it more flexible*/
     private array $relation_map = [
         'businessRequest' => 'business_requests',
         'hall' => 'halls',

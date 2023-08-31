@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits;
+namespace App\Traits\Scopes;
 
 use App\Enums\Period;
 
