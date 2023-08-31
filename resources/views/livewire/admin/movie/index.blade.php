@@ -88,8 +88,7 @@
 
 @section('table_body')
     @foreach($movies as $movie)
-        <tr wire:key="{{$movie->id}}" class="odd:bg-dark-blue text-center relative ">
-
+        <x-table.row :key="$movie->id">
             <x-table.data>
                 <x-slot:sort>title</x-slot:sort>
                 {{ $movie->title }}
@@ -144,7 +143,7 @@
 
                 <x-table.actions.delete :model="$movie->id"/>
             </x-table.actions>
-        </tr>
+        </x-table.row>
     @endforeach
 @endsection
 

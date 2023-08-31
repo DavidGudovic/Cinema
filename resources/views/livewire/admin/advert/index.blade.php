@@ -98,8 +98,7 @@
 
 @section('table_body')
     @foreach($adverts as $advert)
-        <tr wire:key="{{$advert->id}}" class="odd:bg-dark-blue text-center relative">
-
+        <x-table.row :key="$advert->id">
             <x-table.data class="text-sm">
                 <x-slot:sort>businessRequest.created_at</x-slot:sort>
                 {{ $advert->businessRequest->created_at->format('H:i d/m/y') }}
@@ -166,8 +165,7 @@
                     <x-slot:icon><i class="fa-solid fa-x"></i></x-slot:icon>
                 </x-table.actions.button>
             </x-table.actions>
-
-        </tr>
+        </x-table.row>
     @endforeach
 @endsection
 

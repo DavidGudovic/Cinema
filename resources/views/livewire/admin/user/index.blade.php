@@ -72,7 +72,7 @@
 
 @section('table_body')
     @foreach($users as $user)
-        <tr class="odd:bg-dark-blue text-center relative ">
+        <x-table.row :key="$user->id">
             <x-table.data>
                 <x-slot:sort>id</x-slot:sort>
                 {{$user->id}}
@@ -124,7 +124,7 @@
                     </x-slot:icon>
                 </x-table.actions.button>
             </x-table.actions>
-        </tr>
+        </x-table.row>
     @endforeach
 @endsection
 

@@ -110,8 +110,7 @@
 
 @section('table_body')
     @foreach($screenings as $screening)
-        <tr wire:key="{{$screening->id}}" class="odd:bg-dark-blue text-center relative">
-
+        <x-table.row :key="$screening->id">
             <x-table.data class="text-start">
                 <x-slot:sort>movie_id</x-slot:sort>
                 {{ $screening->movie->title }}
@@ -166,7 +165,7 @@
                     @endif
             </x-table.actions>
             <!-- End Cancel Screening -->
-        </tr>
+        </x-table.row>
     @endforeach
 @endsection
 
