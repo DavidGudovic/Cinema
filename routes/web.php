@@ -7,7 +7,8 @@ use App\Http\Controllers\Admin\{
     ScreeningController as ScreeningAdminController,
     UserController as UserAdminController,
     AdvertController as AdvertAdminController,
-    BookingController as BookingAdminController
+    BookingController as BookingAdminController,
+    HallController as HallAdminController
 };
 use App\Http\Controllers\Authentication\LoginController;
 use App\Http\Controllers\Authentication\RegisterController;
@@ -93,6 +94,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('users', UserAdminController::class)->only(['index', 'show', 'update', 'destroy']);
         Route::resource('reports', ReportAdminController::class)->only(['index', 'show', 'print']);
         Route::resource('reclamations', ReclamationAdminController::class)->only(['index', 'show', 'update']);
+        Route::resource('halls', HallAdminController::class)->only(['index', 'update']);
     });
     /*************************************** End public authenticated routes ***************************************/
 });
