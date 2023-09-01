@@ -14,8 +14,8 @@ trait Notifications
      */
     public function notifyOwner(HasOwner $possession, Status $status, Mailable $accept_email, Mailable $reject_email): void
     {
-        if (!empty($possession->user()->email)) {
-            Mail::to($possession->user()->email)->send(
+        if (!empty($possession->user->email)) {
+            Mail::to($possession->user->email)->send(
                 $status == Status::ACCEPTED
                     ? $accept_email
                     : $reject_email
