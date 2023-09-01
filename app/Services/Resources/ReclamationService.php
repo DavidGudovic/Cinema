@@ -2,9 +2,12 @@
 
 namespace App\Services\Resources;
 
+use App\Enums\Status;
 use App\Interfaces\CanExport;
+use App\Mail\Reclamation\AcceptEmail;
 use App\Models\BusinessRequest;
 use App\Models\Reclamation;
+use App\Traits\Notifications;
 use App\Traits\WithRelationalSort;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
@@ -12,7 +15,7 @@ use Illuminate\Support\Collection;
 
 class ReclamationService implements CanExport
 {
-    use WithRelationalSort;
+    use WithRelationalSort, Notifications;
 
     /**
      * Returns a paginated, optionally filtered/sorted list of requests
@@ -68,6 +71,9 @@ class ReclamationService implements CanExport
     }
 
     /**
+     * Prepares a reclamation list for export, adds bom, flattens array, adds headers
+     *
+     *
      * @param array|Collection $data
      * @return array
      */
@@ -102,5 +108,22 @@ class ReclamationService implements CanExport
         array_unshift($output, $headers);
         return $output;
 
+    }
+
+    /**
+     * Changes the status of a reclamation, notifies the owner
+     *
+     * @param Reclamation $reclamation
+     * @param Status $status
+     * @param string $response
+     * @return void
+     */
+    public function changeReclamationStatus(Reclamation $reclamation, Status $status,string $response): void
+    {
+        $reclamation->update([
+            'status' => $status,
+            'comment' => $response,
+        ]);
+        $this->notifyOwner($reclamation, $status, new AcceptEmail($reclamation), new AcceptEmail($reclamation));
     }
 }
