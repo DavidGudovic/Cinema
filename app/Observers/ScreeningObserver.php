@@ -10,8 +10,10 @@ use Illuminate\Support\Facades\Mail;
 
 class ScreeningObserver
 {
-    /* Calculate the screening end time and reevaluate advert schedule*/
-    public function creating(Screening $screening)
+    /**
+     * Calculate the screening end time and reevaluate advert schedule
+     */
+    public function creating(Screening $screening): void
     {
              $screening->end_time =
              $screening->start_time->addMinutes(config('settings.advertising.duration') *
@@ -20,7 +22,7 @@ class ScreeningObserver
              dispatch(new ScheduleAdverts());
     }
 
-    public function updating(Screening $screening)
+    public function updating(Screening $screening): void
     {
         $screening->end_time =
         $screening->start_time->addMinutes(config('settings.advertising.duration') *
@@ -30,7 +32,7 @@ class ScreeningObserver
     /**
      * Screenings are soft deleted therefore we're fine to use the deleted event
      */
-    public function deleted(Screening $screening)
+    public function deleted(Screening $screening): void
     {
         $user_emails = collect();
 
@@ -45,7 +47,7 @@ class ScreeningObserver
             Mail::to($email)->send(new ScreeningCancelled($screening));
         });
 
-        // Unschedule adverts
+        // Un-schedule adverts
         dispatch(new UnscheduleAdverts($screening));
     }
 }
