@@ -2,9 +2,10 @@
 
 namespace App\Traits;
 
+use App\Exceptions\RoleNotAuthorizedException;
+
 trait WithRelationalSort
 {
-    /* TODO refactor this to a parameter, config.. ? make it more flexible*/
     private array $relation_map = [
         'businessRequest' => 'business_requests',
         'hall' => 'halls',
@@ -17,10 +18,13 @@ trait WithRelationalSort
      * Used for sortPolymorphic scope
      *
      * @param string $sort_by
+     * @param array|null $relation_map
      * @return string[]
      */
-    public function resolveSortByParameter(string $sort_by): array
+    public function resolveSortByParameter(string $sort_by, array $relation_map = null): array
     {
+        $this->relation_map = $relation_map ?? $this->relation_map;
+
         $params = explode('.', $sort_by);
 
         return count($params) > 1
