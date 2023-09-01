@@ -24,9 +24,10 @@ class HallController extends Controller
     /**
      * Update the specified hall in storage.
      */
-    public function update(Request $request, Hall $hall)
+    public function update(Request $request, Hall $hall, HallService $hallService)
     {
-        //
+        $hallService->updateHallManager($request['manager'], $hall);
+        return back()->with('success', 'Hall updated successfully' );
     }
 
 }

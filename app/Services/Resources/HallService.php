@@ -104,5 +104,16 @@ class HallService
         return $map;
     }
 
+    /**
+     * @param $manager_id
+     * @param Hall $hall
+     * @return void
+     */
+    public function updateHallManager($manager_id, Hall $hall): void
+    {
+        $hall->update([
+            'user_id' => $manager_id,
+        ]);
+    }
 
 }

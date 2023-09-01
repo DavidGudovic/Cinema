@@ -91,7 +91,7 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::middleware('role:ADMIN')->prefix('admin')->group(function () {
-        Route::resource('users', UserAdminController::class)->only(['index', 'show', 'update', 'destroy']);
+        Route::resource('users', UserAdminController::class)->only(['index', 'edit', 'update', 'destroy'])->name('update', 'admin.users.update');
         Route::resource('reports', ReportAdminController::class)->only(['index', 'show', 'print']);
         Route::resource('reclamations', ReclamationAdminController::class)->only(['index', 'show', 'update']);
         Route::resource('halls', HallAdminController::class)->only(['index', 'update'])->name('index', 'admin.halls.index');
