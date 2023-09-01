@@ -107,12 +107,12 @@
 
             <x-table.actions>
                 <x-table.actions.button :enabled="$reclamation->status == 'PENDING'">
-                    <x-slot:route>{{route('reclamations.edit', [$reclamation, 'action' => 'accept'])}}</x-slot:route>
+                    <x-slot:route>{{route('reclamations.edit', [$reclamation, 'action' => 'ACCEPT'])}}</x-slot:route>
                     <x-slot:icon><i class="fa-solid fa-check"></i></x-slot:icon>
                 </x-table.actions.button>
 
                 <x-table.actions.button :enabled="$reclamation->status == 'PENDING'" class="text-red-700 hover:text-gray-50" >
-                    <x-slot:route>{{route('reclamations.edit', [$reclamation, 'action' => 'reject'])}}</x-slot:route>
+                    <x-slot:route>{{route('reclamations.edit', [$reclamation, 'action' => 'REJECT'])}}</x-slot:route>
                     <x-slot:icon><i class="fa-solid fa-x"></i></x-slot:icon>
                 </x-table.actions.button>
             </x-table.actions>
