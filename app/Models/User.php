@@ -148,6 +148,10 @@ class User extends Authenticatable
         });
     }
 
+    public function scopeWithoutSystemAccount($query){
+        return $query->where('username', '!=', 'SYSTEM');
+    }
+
     public function scopePaginateOptionally($query, $paginate_quantity){
         return $query->when($paginate_quantity, function ($query) use ($paginate_quantity) {
             return $query->paginate($paginate_quantity);

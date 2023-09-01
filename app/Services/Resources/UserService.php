@@ -72,8 +72,8 @@ class UserService implements CanExport
      */
     public function deleteUser(int $userID): void
     {
+        if($userID === auth()->user()->id) auth()->logout();
         User::destroy($userID);
-        auth()->logout();
     }
 
     /**
@@ -94,6 +94,24 @@ class UserService implements CanExport
     }
 
     /**
+     * Assigns new data to the database for the passed user
+     *
+     * @param array $newData
+     * @param User $user
+     * @return void.
+     */
+    public function updateUserByAdmin(array $newData, User $user): void
+    {
+        $user->update([
+            'username' => $newData['username'],
+            'email' => $newData['email'],
+            'name' => $newData['name'],
+            'role' => $newData['role'],
+            'password' => $newData['new_password'] ? Hash::make($newData['new_password']) : $user->password,
+        ]);
+    }
+
+    /**
      * Returns a paginated list of users with optional searching/filtering and sorting
      *
      * @param string $role
@@ -107,7 +125,8 @@ class UserService implements CanExport
      */
     public function getFilteredUsersPaginated(string $role = '', string $is_verified = 'all', bool $do_sort = false, string $search_query = '', string $sort_by = 'id', string $sort_direction = 'ASC', int $paginate_quantity = 0): LengthAwarePaginator|Collection
     {
-        return User::isRole($role)
+        return User::withoutSystemAccount()
+            ->isRole($role)
             ->filterVerified($is_verified)
             ->search($search_query)
             ->sort($do_sort, $sort_by, $sort_direction)

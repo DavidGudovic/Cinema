@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\Roles;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -20,15 +21,26 @@ class UpdateRequest extends FormRequest
     *
     * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
     */
-    public function rules(User $user): array
+    public function rules(): array
     {
         $user = $this->route('user');
-        return [
+
+        $rules = [
             'username' => 'required|unique:users,username,' . $user->id,
             'email' => 'required|email|unique:users,email,' . $user->id,
             'name' => 'required',
-            'current_password' => 'required|min:8',
-            'new_password' => 'required|min:8',
         ];
+
+        // If the admin is making the request, make password fields optional
+        if (auth()->user()->role === Roles::ADMIN) {
+            $rules['current_password'] = 'nullable|min:8';
+            $rules['new_password'] = 'nullable|min:8';
+        } else {
+            $rules['current_password'] = 'required|min:8';
+            $rules['new_password'] = 'required|min:8';
+        }
+
+        return $rules;
     }
+
 }

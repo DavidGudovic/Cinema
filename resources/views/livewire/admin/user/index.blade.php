@@ -104,9 +104,9 @@
             </x-table.data>
 
             <x-table.actions>
-                <x-table.actions.button>
+                <x-table.actions.button :enabled="$user->role != \App\Enums\Roles::ADMIN ">
                     <x-slot:route>
-                        {{route('users.update', $user)}}
+                        {{route('users.edit', $user)}}
                     </x-slot:route>
 
                     <x-slot:icon>
@@ -114,7 +114,17 @@
                     </x-slot:icon>
                 </x-table.actions.button>
 
-                <x-table.actions.button>
+                <x-table.actions.button-confirmed :name="'deleteUser'" :enabled="$user->role != \App\Enums\Roles::ADMIN"
+                                                  :method="'POST'"
+                                                  :method_overload="'DELETE'" class="text-red-700">
+                    <x-slot:title>
+                        Brisanje korisnika
+                    </x-slot:title>
+
+                    <x-slot:message>
+                        Da li ste sigurni da želite da obrišete korisnika?
+                    </x-slot:message>
+
                     <x-slot:route>
                         {{route('users.destroy', $user)}}
                     </x-slot:route>
@@ -122,7 +132,12 @@
                     <x-slot:icon>
                         <i class="fa-solid fa-trash"></i>
                     </x-slot:icon>
-                </x-table.actions.button>
+
+                    <x-slot:slot>
+                        Obriši
+                    </x-slot:slot>
+                </x-table.actions.button-confirmed>
+
             </x-table.actions>
         </x-table.row>
     @endforeach
@@ -133,6 +148,15 @@
 @endsection
 
 @section('modals')
+    @if(session()->has('message'))
+        <x-modal :shown="true" :name="'messageModal'">
+            <div class="rounded-2xl bg-neutral-800 p-4 z-20">
+                <x-close-button :modal="'messageModal'"/>
+                <p class="text-xl text-center font-bold">Brisanje korisnika</p>
+                <p class="text-center mt-4 text-green-500">{{session('message')}}</p>
+            </div>
+        </x-modal>
+    @endif
 @endsection
 
 
