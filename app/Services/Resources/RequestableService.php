@@ -3,16 +3,17 @@
 namespace App\Services\Resources;
 
 use App\Enums\Status;
-use App\Mail\Request\AcceptEmail;
-use App\Mail\Request\RejectEmail;
+use App\Mail\Reclamation\AcceptEmail;
+use App\Mail\Reclamation\RejectEmail;
 use App\Models\Advert;
 use App\Models\BusinessRequest;
+use App\Traits\Notifications;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Illuminate\Support\Facades\Mail;
 
 class RequestableService
 {
+    use Notifications;
     /**
      * Returns a paginated, filtered list of requests
      * All parameters are optional, if none are set, all requests are returned, paginated by $quantity, default 1
@@ -71,23 +72,7 @@ class RequestableService
     public function changeRequestStatus(BusinessRequest $request, Status $status, string $response): void
     {
         $request->update(['status' => $status, 'comment' => $response]);
-        $this->notifyOwner($request, $status);
-    }
 
-    /**
-     * Notifies the owner of a request with an email
-     *
-     * @param BusinessRequest $request
-     * @param Status $status
-     * @return void
-     */
-    public function notifyOwner(BusinessRequest $request, Status $status): void
-    {
-        Mail::to($request->user->email)->send(
-            $status == Status::ACCEPTED
-                ? new AcceptEmail($request)
-                : new RejectEmail($request)
-        );
+        $this->notifyOwner($request, $status, new AcceptEmail($request), new RejectEmail($request));
     }
-
 }

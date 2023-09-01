@@ -3,19 +3,21 @@
 namespace App\Models;
 
 use App\Enums\Period;
+use App\Interfaces\HasOwner;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class BusinessRequest extends Model //pseudo superclass for Models/ Booking and Advert
+class BusinessRequest extends Model implements HasOwner//pseudo superclass for Models/ Booking and Advert
 {
     use HasFactory, SoftDeletes;
 
     /**
-    * The attributes that are mass assignable.
-    *
-    * @var array<int, string>
-    */
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
     protected $fillable = [
         'status',
         'text',
@@ -26,28 +28,32 @@ class BusinessRequest extends Model //pseudo superclass for Models/ Booking and 
 
 
     /**
-    * Eloquent relationships
-    */
+     * Eloquent relationships
+     */
 
-    public function user(){
+    public function user(): BelongsTo
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function reclamation(){
+    public function reclamation()
+    {
         return $this->hasOne(Reclamation::class);
     }
 
     // Polymorphic one to one with Advert and Booking
-    public function requestable(){
+    public function requestable()
+    {
         return $this->morphTo()->withTrashed();
     }
 
     /**
-    * Local Eloquent scopes
-    */
+     * Local Eloquent scopes
+     */
 
     #region Status scopes
-    public function scopeFilterByStatus($query, $status){
+    public function scopeFilterByStatus($query, $status)
+    {
         return match ($status) {
             'pending' => $query->pending(),
             'accepted' => $query->accepted(),
@@ -57,25 +63,30 @@ class BusinessRequest extends Model //pseudo superclass for Models/ Booking and 
         };
     }
 
-    public function scopePending($query){
+    public function scopePending($query)
+    {
         return $query->where('status', 'PENDING');
     }
 
-    public function scopeAccepted($query){
+    public function scopeAccepted($query)
+    {
         return $query->where('status', 'ACCEPTED');
     }
 
-    public function scopeRejected($query){
+    public function scopeRejected($query)
+    {
         return $query->where('status', 'REJECTED');
     }
 
-    public function scopeCancelled($query){
+    public function scopeCancelled($query)
+    {
         return $query->where('status', 'CANCELLED');
     }
     #endregion
 
     #region Type scopes
-    public function scopeFilterByType($query, $type){
+    public function scopeFilterByType($query, $type)
+    {
         return match ($type) {
             'booking' => $query->booking(),
             'advert' => $query->advert(),
@@ -83,31 +94,38 @@ class BusinessRequest extends Model //pseudo superclass for Models/ Booking and 
         };
     }
 
-    public function scopeBooking($query){
+    public function scopeBooking($query)
+    {
         return $query->where('requestable_type', Booking::class);
     }
 
-    public function scopeAdvert($query){
+    public function scopeAdvert($query)
+    {
         return $query->where('requestable_type', Advert::class);
     }
+
     #endregion
-    public function scopeFromMonth($query, $month){
+    public function scopeFromMonth($query, $month)
+    {
         return $query->whereMonth('date', $month);
     }
 
-    public function scopeFromYear($query, $year){
+    public function scopeFromYear($query, $year)
+    {
         return $query->whereYear('date', $year);
     }
 
-    public function scopeFromUser($query, $user){
+    public function scopeFromUser($query, $user)
+    {
         return $query->where('user_id', $user);
     }
 
-    public function scopeHasReclamation($query){
+    public function scopeHasReclamation($query)
+    {
         return $query->whereHas('reclamation');
     }
 
-  #region Period scopes
+    #region Period scopes
     public function scopeFromPeriod($query, Period $period)
     {
         return match ($period) {
@@ -134,6 +152,7 @@ class BusinessRequest extends Model //pseudo superclass for Models/ Booking and 
         return $query->where('created_at', '>', now()->subWeek()->startOfWeek())
             ->where('created_at', '<', now()->subWeek()->endOfWeek());
     }
+
     #end region
 
     public function scopeFromHallOrManagedHalls($query, $hallId)

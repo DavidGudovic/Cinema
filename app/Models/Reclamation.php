@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
-use App\Enums\Status;
-use Illuminate\Database\Eloquent\Model;
+use App\Interfaces\HasOwner;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Reclamation extends Model
+class Reclamation extends Model implements HasOwner
 {
     use HasFactory;
-               /**
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
@@ -29,11 +31,13 @@ class Reclamation extends Model
      * Eloquent relationships
      */
 
-    public function user(){
+    public function user(): BelongsTo
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function businessRequest(){
+    public function businessRequest()
+    {
         return $this->belongsTo(BusinessRequest::class)->withTrashed();
     }
 
@@ -42,7 +46,8 @@ class Reclamation extends Model
      */
 
     #region Status scopes
-    public function scopeFilterByStatus($query, $status){
+    public function scopeFilterByStatus($query, $status)
+    {
         return match ($status) {
             'pending' => $query->pending(),
             'accepted' => $query->accepted(),
@@ -51,21 +56,25 @@ class Reclamation extends Model
         };
     }
 
-    public function scopePending($query){
+    public function scopePending($query)
+    {
         return $query->where('status', 'PENDING');
     }
 
-    public function scopeAccepted($query){
+    public function scopeAccepted($query)
+    {
         return $query->where('status', 'ACCEPTED');
     }
 
-    public function scopeRejected($query){
+    public function scopeRejected($query)
+    {
         return $query->where('status', 'REJECTED');
     }
 
     #region Type scopes
 
-    public function scopeFilterByType($query, $type){
+    public function scopeFilterByType($query, $type)
+    {
         return match ($type) {
             'advert' => $query->forAdvert(),
             'booking' => $query->forBooking(),
@@ -73,25 +82,29 @@ class Reclamation extends Model
         };
     }
 
-    public function scopeForAdvert($query){
-        return $query->whereHas('businessRequest', function($q){
+    public function scopeForAdvert($query)
+    {
+        return $query->whereHas('businessRequest', function ($q) {
             $q->where('requestable_type', Advert::class);
         });
     }
 
-    public function scopeForBooking($query){
-        return $query->whereHas('businessRequest', function($q){
+    public function scopeForBooking($query)
+    {
+        return $query->whereHas('businessRequest', function ($q) {
             $q->where('requestable_type', Booking::class);
         });
     }
 
-    public function scopeFromUser($query, $user){
+    public function scopeFromUser($query, $user)
+    {
         return $query->when($user, function ($query) use ($user) {
-           return $query->where('user_id', $user);
+            return $query->where('user_id', $user);
         });
     }
 
-    public function scopePaginateOptional($query, $paginate){
+    public function scopePaginateOptional($query, $paginate)
+    {
         return $query->when($paginate != 0, function ($query) use ($paginate) {
             return $query->paginate($paginate);
         }, function ($query) {
@@ -99,7 +112,8 @@ class Reclamation extends Model
         });
     }
 
-    public function scopeSearch($query, $search){
+    public function scopeSearch($query, $search)
+    {
         return $query->when($search, function ($query) use ($search) {
             return $query->whereHas('user', function ($q) use ($search) {
                 $q->where('name', 'like', '%' . $search . '%');
