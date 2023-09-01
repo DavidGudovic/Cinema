@@ -27,6 +27,9 @@ class ScreeningObserver
         config('settings.advertising.per_screening') + $screening->movie->duration);
     }
 
+    /**
+     * Screenings are soft deleted therefore we're fine to use the deleted event
+     */
     public function deleted(Screening $screening)
     {
         $user_emails = collect();
