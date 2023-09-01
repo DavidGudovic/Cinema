@@ -17,6 +17,7 @@
         <x-slot:model>user_id</x-slot:model>
         <x-slot:options>
             <option value="0">Sve</option>
+            <option value="">Bez menadžera</option>
             @foreach($managers as $manager)
                 <option value="{{ $manager->id }}">{{ $manager->username }}</option>
             @endforeach
@@ -98,13 +99,13 @@
 
             <x-table.data>
                 <x-slot:sort>user_id</x-slot:sort>
-                {{ $report->user->username }}
+                {{ $report->user?->username ?? 'Menadžer izbrisan' }}
             </x-table.data>
 
             <x-table.data-with-tooltip>
                 <x-slot:model>{{$report->id}}</x-slot:model>
                 <x-slot:text>{{$report->text}}</x-slot:text>
-                <x-slot:position>top-0 inset-x-0</x-slot:position>
+                <x-slot:position>top-0 right-40</x-slot:position>
             </x-table.data-with-tooltip>
 
             <x-table.data>

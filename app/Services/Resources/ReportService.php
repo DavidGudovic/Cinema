@@ -25,7 +25,7 @@ class ReportService implements CanExport
      * @param int $paginate_quantity
      * @return LengthAwarePaginator|Collection
      */
-    public function getFilteredReportsPaginated(int $hall_id = 0, int $user_id = 0, string $period = '', bool $do_sort = false, string $sort_by = 'created_at' , string $sort_direction = 'ASC', string $search_query = '', int $paginate_quantity = 10) : LengthAwarePaginator|Collection
+    public function getFilteredReportsPaginated(int $hall_id = 0, ?int $user_id = 0, string $period = '', bool $do_sort = false, string $sort_by = 'created_at' , string $sort_direction = 'ASC', string $search_query = '', int $paginate_quantity = 10) : LengthAwarePaginator|Collection
     {
         return Report::forHall($hall_id)
             ->fromUser($user_id)

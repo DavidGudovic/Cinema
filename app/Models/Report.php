@@ -67,10 +67,10 @@ class Report extends Model
         });
     }
 
-    public function scopeFromUser($query, $user)
+    public function scopeFromUser($query, $user_id)
     {
-        return $query->when($user != 0, function ($query) use ($user) {
-            return $query->where('user_id', $user->id);
+        return $query->when($user_id !== 0, function ($query) use ($user_id) {
+            return $query->where('user_id', $user_id);
         });
     }
 

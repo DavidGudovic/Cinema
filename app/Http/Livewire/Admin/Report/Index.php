@@ -51,7 +51,7 @@ class Index extends TableBase
     {
         return $reportService->getFilteredReportsPaginated(
             hall_id: $this->hall_id,
-            user_id: $this->user_id == '' ? 0 :(int)$this->user_id,
+            user_id: $this->user_id == '' ? null :(int)$this->user_id,
             period: $this->period,
             do_sort: $this->global_sort == 'true',
             sort_by: $this->sort_by,
