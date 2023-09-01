@@ -15,12 +15,13 @@ class ReclamationFactory extends Factory
 
     public function definition(): array
     {
+        $status = fake()->randomElement([Status::ACCEPTED, Status::REJECTED, Status::PENDING]);
         return [
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
-            'status' => fake()->randomElement([Status::ACCEPTED, Status::REJECTED, Status::PENDING]),
+            'status' => $status,
             'text' => $this->faker->paragraph(),
-            'comment' => $this->faker->paragraph(),
+            'comment' => $status == Status::PENDING ? null : $this->faker->paragraph(),
         ];
     }
 }

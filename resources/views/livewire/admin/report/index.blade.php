@@ -12,7 +12,7 @@
         </x-slot:options>
     </x-table.filter>
 
-    <x-table.filter>
+    <x-table.filter class="w-24 md:w-auto">
         <x-slot:title>Menadžer</x-slot:title>
         <x-slot:model>user_id</x-slot:model>
         <x-slot:options>
@@ -119,9 +119,8 @@
             </x-table.data>
 
             <x-table.actions>
-                <x-table.actions.button>
-                    <x-slot:route>#</x-slot:route>
-                    <x-slot:icon> <i class="fa-solid fa-download"></i> </x-slot:icon>
+                <x-table.actions.button :livewire='true' wire:click.prevent="exportReport({{$report}})">
+                    <x-slot:icon><i class="fa-solid fa-download"></i></x-slot:icon>
                 </x-table.actions.button>
             </x-table.actions>
         </x-table.row>
@@ -130,6 +129,17 @@
 
 @section('pagination')
     {{$reports->links()}}
+@endsection
+
+@section('modals')
+        <x-modal :name="'errorModal'" :livewire="true">
+            <x-slot:entangle>showErrorModal</x-slot:entangle>
+            <div class="relative flex flex-col gap-2 rounded-2xl bg-neutral-800 p-4 z-20">
+                <x-close-button :modal="'errorModal'" class="top-6"/>
+                <p class="text-center text-xl text-red-700">Fajl nije dostupan!</p>
+                <p class="text-center font-bold">PDF koji ste tražili nije pronađen na serveru ili je korumpiran</p>
+            </div>
+        </x-modal>
 @endsection
 
 

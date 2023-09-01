@@ -31,7 +31,7 @@
 
     <!-- Table -->
     <div class="flex flex-1 w-full text-white overflow-y-visible">
-        <div class="w-screen md:w-auto min-w-fit md:overflow-x-hidden overflow-x-scroll">
+        <div class="w-screen md:w-auto min-w-full md:overflow-x-hidden overflow-x-scroll">
             <table x-data="{ sortBy: @entangle('sort_by') }"
                    class="w-max md:w-full min-w-fit table-fixed md:overflow-x-hidden overflow-x-auto">
                 <thead class="">

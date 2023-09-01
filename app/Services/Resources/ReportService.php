@@ -5,18 +5,22 @@ namespace App\Services\Resources;
 use App\Enums\Period;
 use App\Interfaces\CanExport;
 use App\Models\Report;
+use App\Traits\Reporting\FilePathGenerator;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Storage;
 
 class ReportService implements CanExport
 {
+    use FilePathGenerator;
 
     /**
      * Returns a paginated, filtered list of reports or a searched through list of reports if $this->search_query is set
      * All parameters are optional, if none are set, all reports are returned, paginated by $quantity, default 10
      *
      * @param int $hall_id
-     * @param int $user_id
+     * @param int|null $user_id
      * @param string $period
      * @param bool $do_sort
      * @param string $sort_by
@@ -33,6 +37,17 @@ class ReportService implements CanExport
             ->search($search_query)
             ->sort($do_sort, $sort_by, $sort_direction)
             ->paginateOptional($paginate_quantity);
+    }
+
+    /**
+     * Returns a pdf file of the given report in string format, ready for streaming, or null if the report doesn't exist or is otherwise unavailable
+     *
+     * @param Report $report
+     * @return string|null
+     */
+    public function getReportPDF(Report $report) : string|null
+    {
+        return Storage::get($this->getReportFilePath($report->period, $report->hall_id, $report->date_from));
     }
 
     /**

@@ -1,4 +1,4 @@
-@props(['icon', 'route', 'enabled' => true])
+@props(['icon', 'route' => '#', 'enabled' => true])
 
 @if($enabled)
 <a {{$attributes->merge(['class'])}} href="{{$route}}">

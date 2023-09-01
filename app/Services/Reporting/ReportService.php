@@ -5,12 +5,15 @@ namespace App\Services\Reporting;
 use App\Enums\Period;
 use App\Models\Report;
 use App\Services\UploadService;
+use App\Traits\Reporting\FilePathGenerator;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Barryvdh\DomPDF\PDF as DomPDF;
 use Carbon\Carbon;
 
 class ReportService
 {
+    use FilePathGenerator;
+
     public function __construct(
         protected UploadService      $uploadService,
         protected RequestableService $requestableService,
@@ -52,7 +55,7 @@ class ReportService
         //Generate, upload
         $PDF = $this->generatePDF($period, $hall, $text);
         $date_from = $this->generateStartDate($period);
-        $PDF_path = $this->uploadService->uploadPDF($PDF, 'reports/' . $period->value . '/' . $hall . '_' . now()->format('Y-m-d_H-i') . '.pdf');
+        $PDF_path = $this->uploadService->uploadPDF($PDF, $this->getReportFilePath($period, $hall, $date_from));
 
         //Persist metadata
         Report::create([
