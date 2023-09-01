@@ -1,30 +1,31 @@
 <?php
 
+use App\Http\Controllers\{
+    Authentication\LoginController,
+    Authentication\RegisterController,
+    Authentication\VerificationController,
+    Clients\Business\AdvertController,
+    Clients\Business\BookingController,
+    Clients\Business\HallController,
+    Clients\Business\ReclamationController,
+    Clients\Business\RequestableController,
+    Clients\TicketController,
+    Clients\UserController,
+    LandingPageController,
+    Resources\MovieController,
+    Resources\ScreeningController};
+
 use App\Http\Controllers\Admin\{
+    AdvertController as AdvertAdminController,
+    BookingController as BookingAdminController,
+    HallController as HallAdminController,
     MovieController as MovieAdminController,
     ReclamationController as ReclamationAdminController,
     ReportController as ReportAdminController,
     ScreeningController as ScreeningAdminController,
-    UserController as UserAdminController,
-    AdvertController as AdvertAdminController,
-    BookingController as BookingAdminController,
-    HallController as HallAdminController
-};
-use App\Http\Controllers\Authentication\LoginController;
-use App\Http\Controllers\Authentication\RegisterController;
-use App\Http\Controllers\Authentication\VerificationController;
-use App\Http\Controllers\Clients\Business\AdvertController;
-use App\Http\Controllers\Clients\Business\BookingController;
-use App\Http\Controllers\Clients\Business\HallController;
-use App\Http\Controllers\Clients\Business\ReclamationController;
-use App\Http\Controllers\Clients\Business\RequestableController;
-use App\Http\Controllers\Clients\TicketController;
-use App\Http\Controllers\Clients\UserController;
-use App\Http\Controllers\LandingPageController;
-use App\Http\Controllers\Resources\MovieController;
-use App\Http\Controllers\Resources\ScreeningController;
-use Illuminate\Support\Facades\Route;
+    UserController as UserAdminController};
 
+use Illuminate\Support\Facades\Route;
 
 /******************************************** Public routes ******************************************************/
 /* Anyone can access these routes */
@@ -37,7 +38,7 @@ Route::resource('movie.screenings', ScreeningController::class)->only(['index'])
 /*Only guests can access these routes */
 Route::middleware('guest')->group(function () {
     Route::resource('register', RegisterController::class)->only(['create', 'store']);
-    Route::resource('login', LoginController::class)->only(['only' => 'store']);
+    Route::resource('login', LoginController::class)->only(['store']);
     Route::get('login/{id?}/{email?}', [LoginController::class, 'create'])->name('login.create');
 
     Route::name('verify.')->controller(VerificationController::class)->group(function () {
@@ -50,7 +51,6 @@ Route::middleware('guest')->group(function () {
 /******************************************** Authenticated routes ***********************************************/
 /*  Only authenticated users can access these routes */
 Route::middleware('auth')->group(function () {
-
     /***************************************  Private routes *****************************************************/
     /* Sensitive data, prevent users from accessing other users data, tickets, bookings, advertising stats etc. */
     Route::middleware('private')->group(function () {
@@ -86,19 +86,18 @@ Route::middleware('auth')->group(function () {
         Route::resource('screenings', ScreeningAdminController::class)->only('index', 'create');
         Route::resource('movies', MovieAdminController::class)->except('show', 'destroy')->name('index', 'management.movies.index');
         Route::resource('adverts', AdvertAdminController::class)->only('index', 'edit', 'update');
-        Route::resource('bookings', BookingAdminController::class)->only(['index','edit', 'update']);
+        Route::resource('bookings', BookingAdminController::class)->only(['index', 'edit', 'update']);
         Route::resource('reports', ReportAdminController::class)->only(['create', 'store']);
     });
 
     Route::middleware('role:ADMIN')->prefix('admin')->group(function () {
         Route::resource('users', UserAdminController::class)->only(['index', 'edit', 'update', 'destroy'])->name('update', 'admin.users.update');
-        Route::resource('reports', ReportAdminController::class)->only(['index', 'show', 'print']);
-        Route::resource('reclamations', ReclamationAdminController::class)->only(['index', 'show', 'update']);
+        Route::resource('reports', ReportAdminController::class)->only(['index', 'show']);
+        Route::resource('reclamations', ReclamationAdminController::class)->only(['index', 'edit', 'update']);
         Route::resource('halls', HallAdminController::class)->only(['index', 'update'])->name('index', 'admin.halls.index');
     });
     /*************************************** End public authenticated routes ***************************************/
 });
-
 /******************************************** End authenticated routes *********************************************/
 
 
