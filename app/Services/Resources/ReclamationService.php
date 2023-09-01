@@ -5,6 +5,7 @@ namespace App\Services\Resources;
 use App\Enums\Status;
 use App\Interfaces\CanExport;
 use App\Mail\Reclamation\AcceptEmail;
+use App\Mail\Reclamation\RejectEmail;
 use App\Models\BusinessRequest;
 use App\Models\Reclamation;
 use App\Traits\Notifications;
@@ -124,6 +125,6 @@ class ReclamationService implements CanExport
             'status' => $status,
             'comment' => $response,
         ]);
-        $this->notifyOwner($reclamation, $status, new AcceptEmail($reclamation), new AcceptEmail($reclamation));
+        $this->notifyOwner($reclamation, $status, new AcceptEmail($reclamation), new RejectEmail($reclamation));
     }
 }

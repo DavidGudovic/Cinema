@@ -3,8 +3,8 @@
 namespace App\Services\Resources;
 
 use App\Enums\Status;
-use App\Mail\Reclamation\AcceptEmail;
-use App\Mail\Reclamation\RejectEmail;
+use App\Mail\Request\AcceptEmail;
+use App\Mail\Request\RejectEmail;
 use App\Models\Advert;
 use App\Models\BusinessRequest;
 use App\Traits\Notifications;
