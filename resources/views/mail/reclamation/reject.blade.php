@@ -4,7 +4,7 @@
 
     Žao nam je da vas obavestimo da vaša reklamacija pod brojem #{{ $reclamation->id }} nije prihvaćena.
 
-    Zahtev povezan sa ovom reklamacijom: #{{ $reclamation->businessRequest()->id }}
+    Zahtev povezan sa ovom reklamacijom: #{{ $reclamation->businessRequest->id }}
 
     Komentar menadžera u vezi sa vašom reklamacijom:
     {{ $reclamation->comment }}

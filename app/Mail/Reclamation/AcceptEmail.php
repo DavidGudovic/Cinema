@@ -20,7 +20,7 @@ class AcceptEmail extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Reklamacija prihvaćen',
+            subject: 'Reklamacija prihvaćena',
         );
     }
 
