@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('table_advert_screening', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('advert_id')->constrained('adverts');
-            $table->foreignId('screening_id')->constrained('screenings');
+            $table->foreignId('advert_id')->constrained('adverts')->cascadeOnDelete();
+            $table->foreignId('screening_id')->constrained('screenings')->cascadeOnDelete();
         });
     }
 
