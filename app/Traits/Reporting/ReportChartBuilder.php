@@ -9,7 +9,7 @@ use App\Traits\ColorPalette;
 use Asantibanez\LivewireCharts\Models\BaseChartModel;
 
 /**
- * Extension of the ChartModelBuilder trait, attempts implementing a strategy pattern to build the data for a chart model
+ * Extension of the ChartModelBuilder trait
  */
 trait ReportChartBuilder
 {
@@ -36,6 +36,7 @@ trait ReportChartBuilder
 
     /**
      *  Builds a chart model based on the given parameters, uses an implementation of the CanReport interface to get the data
+     *
      * @param string $title
      * @param CanReport $service
      * @param array|null $colors

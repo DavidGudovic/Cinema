@@ -19,7 +19,7 @@ class MovieController extends Controller
     {
         return view('resources.movies.index', [
             'movies' => $movieService->getFilteredMoviesPaginated($request['genre'] ? [$request['genre']] : null),
-            'filters' => $genreService->getFiltersForGenres($request['genre']),
+            'filters' => $genreService->getFiltersForGenres($request['genre'] ? [$request['genre']] : null),
         ]);
     }
 
