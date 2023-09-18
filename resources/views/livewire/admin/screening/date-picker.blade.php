@@ -3,7 +3,7 @@
     <div class="flex flex-col md:flex-row gap-6">
         <!-- Calendar -->
         <div
-            class="flex flex-col w-[18rem] md:w-[25rem] h-[18rem] md:h-[23rem] rounded-xl bg-dark-blue mt-32 md:mt-0 @error('selected_dates') border border-red-700 @enderror">
+            class="flex flex-col w-[18rem] md:w-[25rem] rounded-xl bg-dark-blue mt-32 md:mt-0 @error('selected_dates') border border-red-700 @enderror">
             <div class="flex justify-between items-center border-b border-white px-6 py-4">
                 <i wire:click="displayMonth('current')"
                    class="{{$displayed_date->month == $current_date->format('m') ? 'opacity-30' : 'cursor-pointer hover:text-red-700'}} fa-solid fa-xl fa-angle-left"></i>
