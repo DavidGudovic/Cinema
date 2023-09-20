@@ -1,4 +1,4 @@
-<footer class="flex-col w-full h-fit px-10 pb-6 pt-8 bg-gray-950 text-white border-t border-gray-200 relative bottom-0 z-50">
+<footer class="flex-col w-full h-fit px-10 pb-6 md:pt-8 pt-16 bg-gray-950 text-white border-t border-gray-200 relative bottom-0 z-50">
     <div class="flex flex-wrap gap-11 justify-evenly ">
         <!-- Logo -->
 
