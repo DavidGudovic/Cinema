@@ -1,4 +1,4 @@
-<footer class="flex-col w-full h-fit px-10 py-6 bg-gray-950 text-white border-t border-gray-200 relative bottom-0 z-50">
+<footer class="flex-col w-full h-fit px-10 pb-6 pt-8 bg-gray-950 text-white border-t border-gray-200 relative bottom-0 z-50">
     <div class="flex flex-wrap gap-11 justify-evenly ">
         <!-- Logo -->
 
@@ -37,4 +37,5 @@
         </div>
         <!-- End developer -->
     </div>
+    <p class="text-center absolute top-0 inset-x-0 p-2 text-red-700 font-extrabold">Aplikacija je rađena za potrebe završnog rada na studijama iz oblasti Informacionih tehnologija i nije namenjena za korišćenje izvan tog konteksta</p>
 </footer>
