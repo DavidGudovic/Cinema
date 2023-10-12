@@ -56,11 +56,11 @@
     </div>
     @if(session()->has('conflicts'))
         <div class="flex justify-center">
-            <p class="text-red-500 text-sm">Nažalost sedišta:
+            <p class="text-red-500 text-sm">Unfortunately seats:
                 @foreach(session()->get('conflicts') as $conflict)
                     {{ chr(64 + $conflict['column']) }}{{ $conflict['row'] }}{{ $loop->last ? '' : ', ' }}
                 @endforeach
-                su rezervisana u toku vaše rezevacije.
+                have been reserved during your reservation.
             </p>
         </div>
     @endif
