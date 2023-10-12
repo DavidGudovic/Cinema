@@ -2,7 +2,7 @@
     <!-- Screen -->
     <div class="flex justify-center md:mx-14">
         <div class=" w-full h-12 border-t-4 border-white rounded-t-2xl">
-            <p class="text-center text-white">Platno</p>
+            <p class="text-center text-white">Screen</p>
         </div>
     </div>
     <!-- End Screen -->

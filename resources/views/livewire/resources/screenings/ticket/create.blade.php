@@ -14,7 +14,7 @@
                 <!-- End loading indicator-->
                 <!-- Ticket header -->
                 <p class="font-bold text-xl w-34">
-                    Račun:
+                    Bill:
                 </p>
                 <!-- Ticket items-->
                 <div class="flex flex-col w-full gap-4">
@@ -23,7 +23,7 @@
                     <div class="flex flex-row justify-between border-b-[0.0005rem] border-opacity-50 border-white gap-2">
                         <!-- Left info-->
                         <div class="flex flex-col gap-3">
-                            <span>Biskopska karta:</span>
+                            <span>Cinema ticket:</span>
                         </div>
                         <!-- Right info-->
                         <div class="flex flex-row justify-between md:w-16">
@@ -38,7 +38,7 @@
                     <div class="flex flex-row justify-between border-b-[0.0005rem] border-opacity-50 border-white gap-2">
                         <!-- Left info-->
                         <div class="flex flex-col gap-3">
-                            <span>Naknada dužine filma:</span>
+                            <span>Movie duration add-on:</span>
                         </div>
                         <!-- Right info-->
                         <div class="flex flex-row justify-between md:w-16">
@@ -53,7 +53,7 @@
                     <div class="flex flex-row justify-between border-b-[0.0005rem] border-opacity-50 border-white gap-2">
                         <!-- Left info-->
                         <div class="flex flex-col gap-3">
-                            <span>Naknada tehnologije:</span>
+                            <span>Technology add-on:</span>
                         </div>
                         <!-- Right info-->
                         <div class="flex flex-row justify-between md:w-16">
@@ -68,7 +68,7 @@
                     <div class="flex flex-row justify-between border-b-[0.0005rem] border-opacity-50 border-white gap-2">
                         <!-- Left info-->
                         <div class="flex flex-col gap-3">
-                            <span>Broj sedišta:</span>
+                            <span>Seat quantity:</span>
                         </div>
                         <!-- Right info-->
                         <div class="flex flex-row justify-between md:w-16">
@@ -83,7 +83,7 @@
                     <div class="flex flex-row justify-between border-b-[0.0005rem] border-opacity-50 border-white gap-2">
                         <!-- Left info-->
                         <div class="flex flex-col gap-3">
-                            <span>Popust:</span>
+                            <span>Discount:</span>
                         </div>
                         <!-- Right info-->
                         <div class="flex flex-row justify-between md:w-16">
@@ -101,17 +101,17 @@
             <div class="flex flex-col  gap-6 border-t border-white">
                 <!-- Footer info -->
                 <div class="flex flex-row justify-between">
-                    <p class="font-bold">Ukupno: </p>
+                    <p class="font-bold">Total: </p>
                     <p class="font-bold">{{$ticket->calc_total}} RSD</p>
                 </div>
                 <!-- End footer info-->
                 <!-- Action -->
                 <div class="flex justify-between gap-2">
                     <a wire:click.prevent="store()" class="text-center bg-transparent border rounded-xl border-white text-white p-2 md:w-48">
-                        <i class="fa-solid fa-ticket"></i> Rezerviši Kartu
+                        <i class="fa-solid fa-ticket"></i> Reserve ticket
                     </a>
                     <a wire:click.prevent="resetSelectedSeats()" class="text-center bg-transparent border rounded-xl border-white text-white p-2 md:w-48">
-                        <i class="fa-solid fa-x"></i> Otkaži rezervisanje
+                        <i class="fa-solid fa-x"></i> Cancel reservation
                     </a>
                 </div>
 
@@ -119,7 +119,7 @@
                 <!-- Discount -->
                 <p class="text-sm">
                     <span class="font-bold">*Napomena:</span>
-                    Ako rezervišete {{config('settings.pricing.seat_discount_threshold')}} ili više sedišta na jednoj ulaznici, dobijate popust od {{config('settings.pricing.seat_discount') * 100}}%. Ova posebna ponuda je naš način da Vam se zahvalimo što dolazite u naš bioskop sa porodicom ili prijateljima. Uživajte u filmu i uštedite kupovinom više karata odjednom!
+                    If you reserve {{config('settings.pricing.seat_discount_threshold')}} or more seats on a single ticket, you receive a discount of {{config('settings.pricing.seat_discount') * 100}}%. This special offer is our way of thanking you for coming to our cinema with family or friends. Enjoy the movie and save by purchasing multiple tickets at once!
                 </p>
                 <!--End Discount-->
             </div>

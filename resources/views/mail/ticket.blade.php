@@ -1,25 +1,25 @@
 @component('mail::message')
 
-Poštovani {{ $username }},
+    Dear {{ $username }},
 
-Hvala vam što ste kupili kartu za film "{{ $title }}". Radujemo se što ćete biti deo ovog filmskog doživljaja.
+    Thank you for purchasing a ticket for the movie "{{ $title }}". We look forward to having you be a part of this cinematic experience.
 
-Kliknite na sledeći link kako bi ste preuzeli PDF karte:
+    Click on the following link to download your PDF ticket:
 
-@component('mail::button', ['url' => $link])
+    @component('mail::button', ['url' => $link])
 
-Karta
+        Ticket
 
-@endcomponent
+    @endcomponent
 
-Ukoliko imate bilo kakvih pitanja ili potrebu za dodatnom pomoći, slobodno nas kontaktirajte.
+    If you have any questions or need further assistance, feel free to contact us.
 
-Hvala,
-"{{ config('app.name') }}"
+    Thank you,
+    "{{ config('app.name') }}"
 
-@component('mail::footer')
-Uživajte u filmu! Ukoliko imate problema sa štampanjem karte, možete je preuzeti i na sledećem linku: [{{ $link }}]({{ $link }})
-@endcomponent
+    @component('mail::footer')
+        Enjoy the movie! If you have trouble printing the ticket, you can also download it from the following link: [{{ $link }}]({{ $link }})
+    @endcomponent
 
 @endcomponent
 

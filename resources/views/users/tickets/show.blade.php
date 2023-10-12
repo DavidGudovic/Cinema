@@ -4,18 +4,18 @@
 <!-- Wrapper -->
 <div class="flex flex-col h-full w-full justify-center items-center md:p-14 p-4 gap-6">
     <!-- Heading -->
-    <h1 class="text-3xl font-bold text-center mb-6">Vaša karta</h1>
+    <h1 class="text-3xl font-bold text-center mb-6">Your ticket</h1>
 
     <!-- Ticket border-->
     <div class="md:mx-6 p-5 rounded-sm w-full md:w-[50rem] h-full border-white border">
         <div class="flex flex-col justify-between h-full px-2 md:px-4">
             <div class="flex flex-col gap-3 ">
                 <!-- Ticket header -->
-                <p class="font-bold text-xl">Film: {{$ticket->screening->movie->title}}</p>
-                <p class="">Vreme: {{$ticket->screening->start_time->format('d/m H:i')}}</p>
+                <p class="font-bold text-xl">Movie: {{$ticket->screening->movie->title}}</p>
+                <p class="">Start time: {{$ticket->screening->start_time->format('d/m H:i')}}</p>
                 <div class="flex flex-wrap justify-between border-b-2 border-white">
-                    <p class="w-24">Sala: {{$ticket->screening->hall_id}}</p>
-                    <p>Sedišta:
+                    <p class="w-24">Hall: {{$ticket->screening->hall_id}}</p>
+                    <p>Seats:
                         @foreach($ticket->seats->sortBy(['column','row']) as $seat)
                         {{chr(64 + $seat->column) }}{{ $seat->row }}@if(!$loop->last), @endif
                         @endforeach
@@ -25,7 +25,7 @@
 
                 <!-- Ticket billable -->
                 <p class="font-bold text-xl w-34">
-                    Račun:
+                    Bill:
                 </p>
                 <!-- Ticket items-->
                 <div class="flex flex-col w-full gap-4">
@@ -34,7 +34,7 @@
                     <div class="flex flex-row justify-between border-b-[0.0005rem] border-opacity-50 border-white gap-2">
                         <!-- Left info-->
                         <div class="flex flex-col gap-3">
-                            <span>Biskopska karta:</span>
+                            <span>Cinema ticket:</span>
                         </div>
                         <!-- Right info-->
                         <div class="flex flex-row justify-between md:w-16">
@@ -49,7 +49,7 @@
                     <div class="flex flex-row justify-between border-b-[0.0005rem] border-opacity-50 border-white gap-2">
                         <!-- Left info-->
                         <div class="flex flex-col gap-3">
-                            <span>Naknada dužine filma:</span>
+                            <span>Movie duration add-on:</span>
                         </div>
                         <!-- Right info-->
                         <div class="flex flex-row justify-between md:w-16">
@@ -64,7 +64,7 @@
                     <div class="flex flex-row justify-between border-b-[0.0005rem] border-opacity-50 border-white gap-2">
                         <!-- Left info-->
                         <div class="flex flex-col gap-3">
-                            <span>Naknada tehnologije:</span>
+                            <span>Technology add-on:</span>
                         </div>
                         <!-- Right info-->
                         <div class="flex flex-row justify-between md:w-16">
@@ -79,7 +79,7 @@
                     <div class="flex flex-row justify-between border-b-[0.0005rem] border-opacity-50 border-white gap-2">
                         <!-- Left info-->
                         <div class="flex flex-col gap-3">
-                            <span>Broj sedišta:</span>
+                            <span>Quantity of seats:</span>
                         </div>
                         <!-- Right info-->
                         <div class="flex flex-row justify-between md:w-16">
@@ -94,7 +94,7 @@
                     <div class="flex flex-row justify-between border-b-[0.0005rem] border-opacity-50 border-white gap-2">
                         <!-- Left info-->
                         <div class="flex flex-col gap-3">
-                            <span>Popust:</span>
+                            <span>Discount:</span>
                         </div>
                         <!-- Right info-->
                         <div class="flex flex-row justify-between md:w-16">
@@ -111,7 +111,7 @@
             <div class="flex flex-col  gap-6 border-t border-white">
                 <!-- Footer info -->
                 <div class="flex flex-row justify-between">
-                    <p class="font-bold">Ukupno: </p>
+                    <p class="font-bold">Total: </p>
                     <p class="font-bold">{{$ticket->total}} RSD</p>
                 </div>
                 <!-- End footer info-->
@@ -127,15 +127,14 @@
 
         <!-- Action -->
             <a href="{{route('user.tickets.print', [$user,$ticket])}}" class="text-center bg-transparent border rounded-xl border-white text-white p-2 h-10">
-                <i class="fa-regular fa-file-pdf"></i> Preuzmite PDF
+                <i class="fa-regular fa-file-pdf"></i> Download PDF
             </a>
 
         <!-- End action -->
         <!-- Discount -->
         <p class="text-sm flex-1">
-            <span class="font-bold">*Napomena:</span>
-            Poslali smo vam PDF ulaznicu na vašu e-mail adresu <span class="underline">{{auth()->user()->email}}</span>. Molimo vas da proverite svoj inbox. Ukoliko ne nađete ulaznicu u primljenim porukama, proverite folder za neželjenu poštu.
-        </p>
+            <span class="font-bold">*Notice:</span>
+            We have sent you a PDF ticket to your email address <span class="underline">{{auth()->user()->email}}</span>. Please check your inbox. If you can't find the ticket in your received messages, check your spam folder.</p>
         <!--End Discount-->
     </div>
 
