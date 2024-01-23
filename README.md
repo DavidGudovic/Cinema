@@ -17,7 +17,7 @@
 
 ![image](https://github.com/DavidGudovic/Cinema/assets/56200401/cd7e8a11-c718-4fec-9ba6-a2349f28a489)
 
-## Parts of the UI
+## Small part of the UI
 
 The UI is fully responsive.
 
